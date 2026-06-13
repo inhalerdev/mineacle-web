@@ -1,30 +1,26 @@
 <?php
 /**
- * Mineacle LiteBans Web Config
+ * Mineacle bans-only website config
  *
- * This file uses your host's environment variables:
- * DB_HOST
- * DB_NAME
- * DB_PASSWORD
- * DB_PORT
- * DB_USERNAME
+ * This file intentionally reads database credentials from environment variables.
+ * Do not hardcode DB passwords in files that can be committed or downloaded.
  */
 
 return [
     'site' => [
         'name' => 'Mineacle Network',
-        'ip' => 'mineacle.net',
-        'discord' => 'https://discord.gg/4xrYFxdSWg',
-        'support_email' => 'support@mineacle.net',
+        'ip' => getenv('SERVER_IP') ?: 'mineacle.net',
+        'discord' => getenv('DISCORD_URL') ?: 'https://discord.gg/4xrYFxdSWg',
+        'support_email' => getenv('SUPPORT_EMAIL') ?: 'support@mineacle.net',
 
-        // Later, replace this with your real checkout URL
+        // Replace with your real checkout route later.
         // Available placeholders: {id}, {uuid}, {username}
-        'unban_checkout_url' => 'https://store.mineacle.net/checkout/unban?ban={id}&uuid={uuid}&username={username}',
+        'unban_checkout_url' => getenv('UNBAN_CHECKOUT_URL') ?: 'https://store.mineacle.net/checkout/unban?ban={id}&uuid={uuid}&username={username}',
     ],
 
     'mysql' => [
         'host' => getenv('DB_HOST'),
-        'port' => (int) getenv('DB_PORT'),
+        'port' => (int) (getenv('DB_PORT') ?: 3306),
         'database' => getenv('DB_NAME'),
         'username' => getenv('DB_USERNAME'),
         'password' => getenv('DB_PASSWORD'),
@@ -32,8 +28,8 @@ return [
     ],
 
     'litebans' => [
-        'bans_table' => 'litebans_bans',
-        'history_table' => 'litebans_history',
+        'bans_table' => getenv('LITEBANS_BANS_TABLE') ?: 'litebans_bans',
+        'history_table' => getenv('LITEBANS_HISTORY_TABLE') ?: 'litebans_history',
 
         'bans' => [
             'id' => 'id',
@@ -56,11 +52,20 @@ return [
     ],
 
     'payments' => [
-        'temporary_unban_price' => '$9.99',
-        'permanent_unban_price' => '$19.99',
+        'temporary_unban_price' => getenv('TEMP_UNBAN_PRICE') ?: '$9.99',
+        'permanent_unban_price' => getenv('PERM_UNBAN_PRICE') ?: '$19.99',
     ],
 
     'page' => [
-        'limit' => 50,
+        'limit' => (int) (getenv('BAN_PAGE_LIMIT') ?: 75),
+
+        // Public page should normally show active punishments only.
+        // Set SHOW_EXPIRED_BANS=true only if you intentionally want public history.
+        'show_expired' => strtolower((string) getenv('SHOW_EXPIRED_BANS')) === 'true',
+    ],
+
+    'security' => [
+        // Never enable in production unless actively debugging.
+        'debug' => strtolower((string) getenv('APP_DEBUG')) === 'true',
     ],
 ];

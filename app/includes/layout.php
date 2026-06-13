@@ -1,5 +1,59 @@
 <?php
 declare(strict_types=1);
-require_once __DIR__.'/db.php';
-function mineacle_header(string $active='bans'): void { $c=mineacle_config(); $ip=h($c['site']['ip']); $discord=h($c['site']['discord']); $items=['home'=>['Home','index.php'],'store'=>['Store','store.php'],'bans'=>['Bans','bans.php'],'vote'=>['Vote','vote.php']]; echo '<header class="topbar"><div class="shell nav"><a class="brand" href="index.php"><span class="brand-mark">M</span><span><strong>MINEACLE</strong><small>Original Survival</small></span></a><nav class="navlinks">'; foreach($items as $key=>$item){$class=$active===$key?'active':''; echo '<a class="'.h($class).'" href="'.h($item[1]).'">'.h($item[0]).'</a>'; } echo '</nav><div class="nav-actions"><button class="pill copy-ip" data-copy="'.$ip.'"><img src="assets/copy.svg" alt=""> '.$ip.'</button><a class="pill discord" href="'.$discord.'" target="_blank" rel="noopener"><img src="assets/discord.svg" alt=""> Discord</a></div></div></header>'; }
-function mineacle_footer(): void { echo '<footer class="footer"><div class="shell footer-inner"><span>Mineacle is not affiliated with Mojang Studios or Microsoft. All trademarks belong to their respective owners.</span><span>The original survival server</span></div></footer><div class="achievement-toast" id="toast" role="status" aria-live="polite"><div class="achievement-icon"><img src="assets/copy.svg" alt=""></div><div><strong>Server IP copied</strong><span>mineacle.net</span></div></div><script src="assets/main.js"></script>'; }
+
+require_once __DIR__ . '/db.php';
+
+function mineacle_page_head(string $title): void {
+    mineacle_security_headers(false);
+    $config = mineacle_config();
+    $name = h($config['site']['name']);
+    echo '<!doctype html>';
+    echo '<html lang="en">';
+    echo '<head>';
+    echo '<meta charset="utf-8">';
+    echo '<meta name="viewport" content="width=device-width,initial-scale=1">';
+    echo '<title>' . h($title) . ' | ' . $name . '</title>';
+    echo '<meta name="description" content="Mineacle public bans portal">';
+    echo '<link rel="icon" type="image/png" href="assets/favicon.png">';
+    echo '<link rel="stylesheet" href="assets/styles.css">';
+    echo '</head>';
+}
+
+function mineacle_header(): void {
+    $config = mineacle_config();
+    $ip = h($config['site']['ip']);
+    $discord = h($config['site']['discord']);
+
+    echo '<header class="topbar">';
+    echo '<div class="shell nav">';
+    echo '<a class="brand" href="bans.php" aria-label="Mineacle bans">';
+    echo '<img class="brand-logo" src="assets/app-icon.png" alt="">';
+    echo '<span><strong>MINEACLE</strong><small>Public Bans</small></span>';
+    echo '</a>';
+
+    echo '<nav class="navlinks" aria-label="Primary">';
+    echo '<a class="active" href="bans.php">Bans</a>';
+    echo '</nav>';
+
+    echo '<div class="nav-actions">';
+    echo '<button class="pill copy-ip" data-copy="' . $ip . '"><img src="assets/copy.svg" alt=""> ' . $ip . '</button>';
+    echo '<a class="pill discord" href="' . $discord . '" target="_blank" rel="noopener"><img src="assets/discord.svg" alt=""> Discord</a>';
+    echo '</div>';
+
+    echo '</div>';
+    echo '</header>';
+}
+
+function mineacle_footer(): void {
+    echo '<footer class="footer"><div class="shell footer-inner">';
+    echo '<span>Mineacle is not affiliated with Mojang Studios or Microsoft. All trademarks belong to their respective owners.</span>';
+    echo '<span>Public punishment records</span>';
+    echo '</div></footer>';
+
+    echo '<div class="achievement-toast" id="toast" role="status" aria-live="polite">';
+    echo '<div class="achievement-icon"><img src="assets/copy.svg" alt=""></div>';
+    echo '<div><strong>Server IP copied</strong><span>mineacle.net</span></div>';
+    echo '</div>';
+
+    echo '<script src="assets/main.js"></script>';
+}

@@ -10,7 +10,6 @@ function mineacle_skin_url(string $usernameOrUuid): string {
 
 function format_litebans_time($ms): string {
     $ms = (int) $ms;
-
     if ($ms <= 0) {
         return 'Unknown';
     }
@@ -71,29 +70,35 @@ function mineacle_public_ban(array $row, array $config): array {
 
     $until = (int) ($row['until'] ?? 0);
     $activeRaw = (int) ($row['active'] ?? 0);
-    $isIpBan = (int) ($row['ipban'] ?? 0) === 1;
     $active = $activeRaw === 1 && ($until <= 0 || $until > $nowMs);
+    $ipban = (int) ($row['ipban'] ?? 0) === 1;
 
     $username = trim((string) ($row['username'] ?? ''));
-    if ($username === '') {
+    if ($username === '' || strtolower($username) === 'null') {
         $username = (string) ($row['uuid'] ?? 'Unknown');
     }
 
-    if ($isIpBan) {
+    if ($ipban) {
         $status = 'Permanently Banned';
         $statusType = 'ip';
         $canPay = false;
         $canDispute = false;
+        $duration = 'Permanent';
+        $type = 'IP Ban';
     } elseif ($active) {
         $status = 'Active';
         $statusType = 'active';
         $canPay = true;
         $canDispute = true;
+        $duration = format_litebans_duration($until);
+        $type = 'Player Ban';
     } else {
         $status = 'Expired';
         $statusType = 'expired';
         $canPay = false;
         $canDispute = true;
+        $duration = format_litebans_duration($until);
+        $type = 'Player Ban';
     }
 
     $ban = [
@@ -105,15 +110,15 @@ function mineacle_public_ban(array $row, array $config): array {
         'time' => (int) ($row['time'] ?? 0),
         'until' => $until,
         'date' => format_litebans_time($row['time'] ?? 0),
-        'duration' => $isIpBan ? 'Permanent' : format_litebans_duration($until),
-        'type' => $isIpBan ? 'IP Ban' : 'Player Ban',
+        'duration' => $duration,
+        'type' => $type,
         'status' => $status,
         'status_type' => $statusType,
         'active' => $active,
-        'ipban' => $isIpBan,
+        'ipban' => $ipban,
         'can_pay' => $canPay,
         'can_dispute' => $canDispute,
-        'price' => $canPay ? mineacle_unban_price($row, $config) : '',
+        'price' => '',
         'support_email' => $config['site']['support_email'],
         'discord' => $config['site']['discord'],
         'skin' => mineacle_skin_url($username),
@@ -121,12 +126,15 @@ function mineacle_public_ban(array $row, array $config): array {
         'unban_url' => '',
     ];
 
-    $ban['unban_url'] = $canPay ? mineacle_unban_url($ban, $config) : '';
+    if ($canPay) {
+        $ban['price'] = mineacle_unban_price($row, $config);
+        $ban['unban_url'] = mineacle_unban_url($ban, $config);
+    }
 
     return $ban;
 }
 
-function fetch_litebans_bans(string $search = '', int $limit = 50): array {
+function fetch_litebans_bans(string $search = ''): array {
     $config = mineacle_config();
     $pdo = mineacle_pdo();
 
@@ -147,46 +155,50 @@ function fetch_litebans_bans(string $search = '', int $limit = 50): array {
     $hName = quote_ident(col($config, 'history', 'name'));
     $hDate = quote_ident(col($config, 'history', 'date'));
 
-    $limit = max(1, min($limit, 100));
+    $limit = max(1, min((int) ($config['page']['limit'] ?? 75), 100));
+    $showExpired = (bool) ($config['page']['show_expired'] ?? false);
     $nowMs = (int) round(microtime(true) * 1000);
 
-    /*
-     * Public bans page policy:
-     * Only show players who are currently banned.
-     * LiteBans keeps old rows for history, so unbanned players usually remain in
-     * litebans_bans with active = 0. Filtering here makes them disappear from
-     * the public website automatically after /unban, /unbanip, or expiry.
-     */
-    $where = "b.{$bActive} = 1 AND (b.{$bUntil} <= 0 OR b.{$bUntil} > :now)";
-    $params = [
-        ':now' => $nowMs,
-    ];
+    $params = [];
 
+    if ($showExpired) {
+        $where = '1=1';
+    } else {
+        $where = "b.{$bActive} = 1 AND (b.{$bUntil} <= 0 OR b.{$bUntil} > :now)";
+        $params[':now'] = $nowMs;
+    }
+
+    $search = trim($search);
     if ($search !== '') {
         $where .= " AND (h.{$hName} LIKE :search OR b.{$bUuid} LIKE :search)";
         $params[':search'] = '%' . $search . '%';
     }
 
+    /*
+     * Public security note:
+     * We select b.ip only so LiteBans can be queried consistently if needed later,
+     * but we never return or render the IP address in the public JSON/HTML output.
+     */
     $sql = "
         SELECT
-            b.{$bId} AS id,
-            b.{$bUuid} AS uuid,
-            b.{$bIp} AS ip,
-            b.{$bReason} AS reason,
-            b.{$bStaff} AS staff_name,
-            b.{$bTime} AS time,
-            b.{$bUntil} AS until,
-            b.{$bActive} AS active,
-            b.{$bIpban} AS ipban,
-            COALESCE(h.{$hName}, b.{$bUuid}) AS username
+          b.{$bId} AS id,
+          b.{$bUuid} AS uuid,
+          b.{$bIp} AS ip,
+          b.{$bReason} AS reason,
+          b.{$bStaff} AS staff_name,
+          b.{$bTime} AS time,
+          b.{$bUntil} AS until,
+          b.{$bActive} AS active,
+          b.{$bIpban} AS ipban,
+          COALESCE(h.{$hName}, b.{$bUuid}) AS username
         FROM {$bansTable} b
         LEFT JOIN {$historyTable} h
-            ON h.{$hUuid} = b.{$bUuid}
-            AND h.{$hDate} = (
-                SELECT MAX(h2.{$hDate})
-                FROM {$historyTable} h2
-                WHERE h2.{$hUuid} = b.{$bUuid}
-            )
+          ON h.{$hUuid} = b.{$bUuid}
+          AND h.{$hDate} = (
+            SELECT MAX(h2.{$hDate})
+            FROM {$historyTable} h2
+            WHERE h2.{$hUuid} = b.{$bUuid}
+          )
         WHERE {$where}
         ORDER BY b.{$bTime} DESC
         LIMIT {$limit}
@@ -195,17 +207,17 @@ function fetch_litebans_bans(string $search = '', int $limit = 50): array {
     $stmt = $pdo->prepare($sql);
 
     foreach ($params as $key => $value) {
-        $stmt->bindValue(
-            $key,
-            $value,
-            $key === ':now' ? PDO::PARAM_INT : PDO::PARAM_STR
-        );
+        if ($key === ':now') {
+            $stmt->bindValue($key, $value, PDO::PARAM_INT);
+        } else {
+            $stmt->bindValue($key, $value, PDO::PARAM_STR);
+        }
     }
 
     $stmt->execute();
 
     return array_map(
-        fn(array $row): array => mineacle_public_ban($row, $config),
+        fn(array $row) => mineacle_public_ban($row, $config),
         $stmt->fetchAll()
     );
 }
