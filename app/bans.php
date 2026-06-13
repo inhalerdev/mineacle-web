@@ -1,6 +1,18 @@
 <?php
 declare(strict_types=1);
 
+/*
+ * Public canonical route enforcement.
+ *
+ * If someone manually visits /bans.php, redirect them to /
+ * This is PHP-level fallback routing for hosts that ignore .htaccess.
+ */
+$requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
+if (!defined('MINEACLE_INTERNAL_RENDER') && preg_match('~/bans\.php$~i', $requestPath)) {
+    header('Location: /', true, 301);
+    exit;
+}
+
 require_once __DIR__ . '/includes/layout.php';
 $config = mineacle_config();
 mineacle_page_head('Bans');

@@ -1,16 +1,16 @@
 Options -Indexes
 
-DirectoryIndex bans.php index.php
+DirectoryIndex index.php bans.php
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
 
-  # Redirect /bans.php to /
+  # Canonical redirect: /bans.php -> /
   RewriteCond %{THE_REQUEST} \s/+bans\.php[\s?] [NC]
   RewriteRule ^bans\.php$ / [R=301,L]
 
-  # Serve / from bans.php
-  RewriteRule ^$ bans.php [L]
+  # Clean root route
+  RewriteRule ^$ index.php [L]
 </IfModule>
 
 <FilesMatch "^\.">
