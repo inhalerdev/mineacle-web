@@ -14,7 +14,7 @@ mineacle_page_head('Bans');
     <div class="hero-shade" aria-hidden="true"></div>
 
     <div class="shell hero-content">
-      <img class="hero-logo" src="assets/logo-main.png" alt="Mineacle">
+      <img class="hero-logo" src="assets/logo-main.png?v=7" alt="Mineacle" width="760" height="520" style="width:min(620px,92vw);height:auto;max-height:260px;object-fit:contain;display:block;">
       <span class="tag">Player Safety Portal</span>
       <h1>Search active Mineacle bans</h1>
       <p>

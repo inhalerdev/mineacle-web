@@ -14,8 +14,8 @@ function mineacle_page_head(string $title): void {
     echo '<meta name="viewport" content="width=device-width,initial-scale=1">';
     echo '<title>' . h($title) . ' | ' . $name . '</title>';
     echo '<meta name="description" content="Mineacle public bans portal">';
-    echo '<link rel="icon" type="image/png" href="assets/favicon.png">';
-    echo '<link rel="stylesheet" href="assets/styles.css">';
+    echo '<link rel="icon" type="image/png" href="assets/favicon.png?v=7">';
+    echo '<link rel="stylesheet" href="assets/styles.css?v=7">';
     echo '</head>';
 }
 
@@ -27,7 +27,7 @@ function mineacle_header(): void {
     echo '<header class="topbar">';
     echo '<div class="shell nav">';
     echo '<a class="brand" href="bans.php" aria-label="Mineacle bans">';
-    echo '<img class="brand-logo" src="assets/app-icon.png" alt="">';
+    echo '<img class="brand-logo" src="assets/app-icon.png?v=7" alt="" width="44" height="44" style="width:44px;height:44px;max-width:44px;max-height:44px;object-fit:contain;display:block;">';
     echo '<span><strong>MINEACLE</strong><small>Public Bans</small></span>';
     echo '</a>';
 
@@ -55,5 +55,5 @@ function mineacle_footer(): void {
     echo '<div><strong>Server IP copied</strong><span>mineacle.net</span></div>';
     echo '</div>';
 
-    echo '<script src="assets/main.js"></script>';
+    echo '<script src="assets/main.js?v=7"></script>';
 }
