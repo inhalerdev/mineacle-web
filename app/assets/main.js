@@ -1,9 +1,22 @@
-
 const toast = document.getElementById("toast");
 const banList = document.getElementById("banList");
 const banSearch = document.getElementById("banSearch");
 const banCount = document.getElementById("banCount");
 const banModal = document.getElementById("banModal");
+const banPagination = document.getElementById("banPagination");
+const prevPageButton = document.getElementById("prevPage");
+const nextPageButton = document.getElementById("nextPage");
+const pageInfo = document.getElementById("pageInfo");
+
+let currentPage = 1;
+let currentPagination = {
+  page: 1,
+  per_page: 25,
+  total: 0,
+  total_pages: 1,
+  has_prev: false,
+  has_next: false
+};
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -54,6 +67,7 @@ function renderBans(rows) {
       </div>
     `;
     if (banCount) banCount.textContent = "0 shown";
+    renderPagination();
     return;
   }
 
@@ -80,18 +94,40 @@ function renderBans(rows) {
     </article>
   `).join("");
 
-  if (banCount) banCount.textContent = `${rows.length} shown`;
+  if (banCount) {
+    const start = currentPagination.total === 0 ? 0 : ((currentPagination.page - 1) * currentPagination.per_page) + 1;
+    const end = Math.min(currentPagination.page * currentPagination.per_page, currentPagination.total);
+    banCount.textContent = `${start}-${end} of ${currentPagination.total}`;
+  }
 
   document.querySelectorAll("[data-info]").forEach(button => {
     button.addEventListener("click", () => openBanInfo(button.dataset.info, rows));
   });
+
+  renderPagination();
 }
 
-async function loadBans() {
+function renderPagination() {
+  if (!banPagination || !prevPageButton || !nextPageButton || !pageInfo) return;
+
+  const shouldShow = currentPagination.total_pages > 1;
+  banPagination.hidden = !shouldShow;
+
+  pageInfo.textContent = `Page ${currentPagination.page} of ${currentPagination.total_pages}`;
+  prevPageButton.disabled = !currentPagination.has_prev;
+  nextPageButton.disabled = !currentPagination.has_next;
+
+  prevPageButton.classList.toggle("disabled", !currentPagination.has_prev);
+  nextPageButton.classList.toggle("disabled", !currentPagination.has_next);
+}
+
+async function loadBans(page = currentPage) {
   if (!banList) return;
 
+  currentPage = Math.max(1, page);
+
   const search = banSearch ? banSearch.value.trim() : "";
-  const url = `api/bans.php?search=${encodeURIComponent(search)}`;
+  const url = `api/bans.php?search=${encodeURIComponent(search)}&page=${encodeURIComponent(currentPage)}`;
 
   try {
     const response = await fetch(url, { headers: { "Accept": "application/json" } });
@@ -100,14 +136,20 @@ async function loadBans() {
     if (!payload.success) {
       banList.innerHTML = `<div class="error">${escapeHtml(payload.error || "Unable to load bans")}</div>`;
       if (banCount) banCount.textContent = "0 shown";
+      currentPagination = { page: 1, per_page: 25, total: 0, total_pages: 1, has_prev: false, has_next: false };
+      renderPagination();
       return;
     }
 
     window.mineacleBans = payload.bans || [];
+    currentPagination = payload.pagination || currentPagination;
+    currentPage = currentPagination.page || currentPage;
     renderBans(window.mineacleBans);
   } catch (error) {
     banList.innerHTML = `<div class="error">Unable to load bans right now</div>`;
     if (banCount) banCount.textContent = "0 shown";
+    currentPagination = { page: 1, per_page: 25, total: 0, total_pages: 1, has_prev: false, has_next: false };
+    renderPagination();
   }
 }
 
@@ -168,7 +210,26 @@ if (banSearch) {
   let timer = null;
   banSearch.addEventListener("input", () => {
     clearTimeout(timer);
-    timer = setTimeout(loadBans, 180);
+    timer = setTimeout(() => {
+      currentPage = 1;
+      loadBans(1);
+    }, 180);
+  });
+}
+
+if (prevPageButton) {
+  prevPageButton.addEventListener("click", () => {
+    if (currentPagination.has_prev) {
+      loadBans(currentPagination.page - 1);
+    }
+  });
+}
+
+if (nextPageButton) {
+  nextPageButton.addEventListener("click", () => {
+    if (currentPagination.has_next) {
+      loadBans(currentPagination.page + 1);
+    }
   });
 }
 
@@ -186,5 +247,4 @@ if (banModal) {
   });
 }
 
-
-loadBans();
+loadBans(1);

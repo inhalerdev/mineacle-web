@@ -57,7 +57,7 @@ return [
     ],
 
     'page' => [
-        'limit' => (int) (getenv('BAN_PAGE_LIMIT') ?: 75),
+        'limit' => (int) (getenv('BAN_PAGE_LIMIT') ?: 25),
 
         // Public page should normally show active punishments only.
         // Set SHOW_EXPIRED_BANS=true only if you intentionally want public history.

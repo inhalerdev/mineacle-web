@@ -26,3 +26,29 @@ a{color:inherit;text-decoration:none}button,input{font:inherit}button{cursor:poi
 @media(max-width:1080px){.nav{grid-template-columns:1fr;padding:14px 0}.navlinks{justify-self:stretch;overflow-x:auto}.nav-actions{justify-content:start;flex-wrap:wrap}.hero-card{grid-template-columns:1fr}.hero-logo-wrap{order:-1;padding:26px 22px 0}.hero-copy{padding:28px}.ban-toolbar{grid-template-columns:1fr}.ban-row{grid-template-columns:58px 1fr;align-items:start}.ban-reason,.ban-status,.ban-action{grid-column:2}.ban-action{justify-self:start}.rule-grid{grid-template-columns:1fr}.footer-inner{flex-direction:column;align-items:flex-start}}
 @media(max-width:680px){.shell{width:min(100% - 20px,1160px)}.page{padding-top:14px}.brand-logo{width:104px!important;max-height:58px!important}.hero h1{font-size:clamp(36px,12vw,54px)}.hero p{font-size:16px}.hero-logo{max-height:210px!important}.modal-head{grid-template-columns:58px 1fr auto}.modal-head img{width:54px;height:54px}.detail{grid-template-columns:1fr;gap:4px}.achievement-toast{top:10px;right:10px;min-width:min(294px,calc(100vw - 20px))}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+.ban-pagination{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  padding:18px 20px;
+  border-top:1px solid rgba(255,255,255,.065);
+  background:rgba(255,255,255,.025);
+}
+.ban-pagination[hidden]{
+  display:none!important;
+}
+.ban-pagination span{
+  color:var(--soft);
+  font-weight:950;
+  min-width:110px;
+  text-align:center;
+}
+.ban-pagination button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+  transform:none!important;
+  filter:none!important;
+}

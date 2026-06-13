@@ -47,18 +47,11 @@ function format_litebans_duration($until): string {
 
 function mineacle_unban_price(array $ban, array $config): string {
     $until = (int) ($ban['until'] ?? 0);
-
-    if ($until <= 0) {
-        return $config['payments']['permanent_unban_price'];
-    }
-
-    return $config['payments']['temporary_unban_price'];
+    return $until <= 0 ? $config['payments']['permanent_unban_price'] : $config['payments']['temporary_unban_price'];
 }
 
 function mineacle_unban_url(array $ban, array $config): string {
-    $template = $config['site']['unban_checkout_url'];
-
-    return strtr($template, [
+    return strtr($config['site']['unban_checkout_url'], [
         '{id}' => rawurlencode((string) ($ban['id'] ?? '')),
         '{uuid}' => rawurlencode((string) ($ban['uuid'] ?? '')),
         '{username}' => rawurlencode((string) ($ban['username'] ?? '')),
@@ -121,7 +114,7 @@ function mineacle_public_ban(array $row, array $config): array {
         'price' => '',
         'support_email' => $config['site']['support_email'],
         'discord' => $config['site']['discord'],
-        'skin' => mineacle_skin_url($username),
+        'skin' => mineacle_skin_url((string) ($row['uuid'] ?? $username)),
         'appeal_id' => 'MCL-' . str_pad((string) ($row['id'] ?? '0'), 6, '0', STR_PAD_LEFT),
         'unban_url' => '',
     ];
@@ -134,7 +127,33 @@ function mineacle_public_ban(array $row, array $config): array {
     return $ban;
 }
 
-function fetch_litebans_bans(string $search = ''): array {
+function litebans_query_parts(array $config, string $search): array {
+    $bActive = quote_ident(col($config, 'bans', 'active'));
+    $bUntil = quote_ident(col($config, 'bans', 'until'));
+    $hName = quote_ident(col($config, 'history', 'name'));
+    $bUuid = quote_ident(col($config, 'bans', 'uuid'));
+
+    $showExpired = (bool) ($config['page']['show_expired'] ?? false);
+    $nowMs = (int) round(microtime(true) * 1000);
+    $params = [];
+
+    if ($showExpired) {
+        $where = '1=1';
+    } else {
+        $where = "b.{$bActive} = 1 AND (b.{$bUntil} <= 0 OR b.{$bUntil} > :now)";
+        $params[':now'] = $nowMs;
+    }
+
+    $search = trim($search);
+    if ($search !== '') {
+        $where .= " AND (h.{$hName} LIKE :search OR b.{$bUuid} LIKE :search)";
+        $params[':search'] = '%' . $search . '%';
+    }
+
+    return [$where, $params];
+}
+
+function fetch_litebans_bans_page(string $search = '', int $page = 1): array {
     $config = mineacle_config();
     $pdo = mineacle_pdo();
 
@@ -155,30 +174,42 @@ function fetch_litebans_bans(string $search = ''): array {
     $hName = quote_ident(col($config, 'history', 'name'));
     $hDate = quote_ident(col($config, 'history', 'date'));
 
-    $limit = max(1, min((int) ($config['page']['limit'] ?? 75), 100));
-    $showExpired = (bool) ($config['page']['show_expired'] ?? false);
-    $nowMs = (int) round(microtime(true) * 1000);
+    $limit = max(1, min((int) ($config['page']['limit'] ?? 25), 100));
+    $page = max(1, $page);
+    $offset = ($page - 1) * $limit;
 
-    $params = [];
+    [$where, $params] = litebans_query_parts($config, $search);
 
-    if ($showExpired) {
-        $where = '1=1';
-    } else {
-        $where = "b.{$bActive} = 1 AND (b.{$bUntil} <= 0 OR b.{$bUntil} > :now)";
-        $params[':now'] = $nowMs;
+    $join = "
+        LEFT JOIN {$historyTable} h
+          ON h.{$hUuid} = b.{$bUuid}
+          AND h.{$hDate} = (
+            SELECT MAX(h2.{$hDate})
+            FROM {$historyTable} h2
+            WHERE h2.{$hUuid} = b.{$bUuid}
+          )
+    ";
+
+    $countSql = "
+        SELECT COUNT(*) AS total
+        FROM {$bansTable} b
+        {$join}
+        WHERE {$where}
+    ";
+
+    $countStmt = $pdo->prepare($countSql);
+    foreach ($params as $key => $value) {
+        $countStmt->bindValue($key, $value, $key === ':now' ? PDO::PARAM_INT : PDO::PARAM_STR);
+    }
+    $countStmt->execute();
+    $total = (int) ($countStmt->fetch()['total'] ?? 0);
+
+    $totalPages = max(1, (int) ceil($total / $limit));
+    if ($page > $totalPages) {
+        $page = $totalPages;
+        $offset = ($page - 1) * $limit;
     }
 
-    $search = trim($search);
-    if ($search !== '') {
-        $where .= " AND (h.{$hName} LIKE :search OR b.{$bUuid} LIKE :search)";
-        $params[':search'] = '%' . $search . '%';
-    }
-
-    /*
-     * Public security note:
-     * We select b.ip only so LiteBans can be queried consistently if needed later,
-     * but we never return or render the IP address in the public JSON/HTML output.
-     */
     $sql = "
         SELECT
           b.{$bId} AS id,
@@ -192,32 +223,41 @@ function fetch_litebans_bans(string $search = ''): array {
           b.{$bIpban} AS ipban,
           COALESCE(h.{$hName}, b.{$bUuid}) AS username
         FROM {$bansTable} b
-        LEFT JOIN {$historyTable} h
-          ON h.{$hUuid} = b.{$bUuid}
-          AND h.{$hDate} = (
-            SELECT MAX(h2.{$hDate})
-            FROM {$historyTable} h2
-            WHERE h2.{$hUuid} = b.{$bUuid}
-          )
+        {$join}
         WHERE {$where}
         ORDER BY b.{$bTime} DESC
-        LIMIT {$limit}
+        LIMIT :limit OFFSET :offset
     ";
 
     $stmt = $pdo->prepare($sql);
 
     foreach ($params as $key => $value) {
-        if ($key === ':now') {
-            $stmt->bindValue($key, $value, PDO::PARAM_INT);
-        } else {
-            $stmt->bindValue($key, $value, PDO::PARAM_STR);
-        }
+        $stmt->bindValue($key, $value, $key === ':now' ? PDO::PARAM_INT : PDO::PARAM_STR);
     }
 
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
 
-    return array_map(
+    $bans = array_map(
         fn(array $row) => mineacle_public_ban($row, $config),
         $stmt->fetchAll()
     );
+
+    return [
+        'bans' => $bans,
+        'pagination' => [
+            'page' => $page,
+            'per_page' => $limit,
+            'total' => $total,
+            'total_pages' => $totalPages,
+            'has_prev' => $page > 1,
+            'has_next' => $page < $totalPages,
+        ],
+    ];
+}
+
+// Backwards-compatible helper.
+function fetch_litebans_bans(string $search = ''): array {
+    return fetch_litebans_bans_page($search, 1)['bans'];
 }
