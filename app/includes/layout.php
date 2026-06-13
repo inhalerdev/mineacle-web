@@ -7,6 +7,7 @@ function mineacle_page_head(string $title): void {
     mineacle_security_headers(false);
     $config = mineacle_config();
     $name = h($config['site']['name']);
+
     echo '<!doctype html>';
     echo '<html lang="en">';
     echo '<head>';
@@ -14,8 +15,8 @@ function mineacle_page_head(string $title): void {
     echo '<meta name="viewport" content="width=device-width,initial-scale=1">';
     echo '<title>' . h($title) . ' | ' . $name . '</title>';
     echo '<meta name="description" content="Mineacle public bans portal">';
-    echo '<link rel="icon" type="image/png" href="assets/favicon.png?v=7">';
-    echo '<link rel="stylesheet" href="assets/styles.css?v=7">';
+    echo '<link rel="icon" type="image/png" href="assets/favicon.png?v=8">';
+    echo '<link rel="stylesheet" href="assets/styles.css?v=8">';
     echo '</head>';
 }
 
@@ -27,19 +28,13 @@ function mineacle_header(): void {
     echo '<header class="topbar">';
     echo '<div class="shell nav">';
     echo '<a class="brand" href="bans.php" aria-label="Mineacle bans">';
-    echo '<img class="brand-logo" src="assets/app-icon.png?v=7" alt="" width="44" height="44" style="width:44px;height:44px;max-width:44px;max-height:44px;object-fit:contain;display:block;">';
-    echo '<span><strong>MINEACLE</strong><small>Public Bans</small></span>';
+    echo '<img class="brand-logo" src="assets/mineacle-logo-small.png?v=8" alt="Mineacle" width="118" height="72">';
     echo '</a>';
-
-    echo '<nav class="navlinks" aria-label="Primary">';
-    echo '<a class="active" href="bans.php">Bans</a>';
-    echo '</nav>';
-
+    echo '<nav class="navlinks" aria-label="Primary"><a class="active" href="bans.php">Bans</a></nav>';
     echo '<div class="nav-actions">';
     echo '<button class="pill copy-ip" data-copy="' . $ip . '"><img src="assets/copy.svg" alt=""> ' . $ip . '</button>';
     echo '<a class="pill discord" href="' . $discord . '" target="_blank" rel="noopener"><img src="assets/discord.svg" alt=""> Discord</a>';
     echo '</div>';
-
     echo '</div>';
     echo '</header>';
 }
@@ -49,11 +44,9 @@ function mineacle_footer(): void {
     echo '<span>Mineacle is not affiliated with Mojang Studios or Microsoft. All trademarks belong to their respective owners.</span>';
     echo '<span>Public punishment records</span>';
     echo '</div></footer>';
-
     echo '<div class="achievement-toast" id="toast" role="status" aria-live="polite">';
     echo '<div class="achievement-icon"><img src="assets/copy.svg" alt=""></div>';
     echo '<div><strong>Server IP copied</strong><span>mineacle.net</span></div>';
     echo '</div>';
-
-    echo '<script src="assets/main.js?v=7"></script>';
+    echo '<script src="assets/main.js?v=8"></script>';
 }

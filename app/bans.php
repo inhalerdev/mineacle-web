@@ -9,26 +9,28 @@ mineacle_page_head('Bans');
 <?php mineacle_header(); ?>
 
 <main class="page">
-  <section class="hero">
-    <div class="hero-bg-layer" aria-hidden="true"></div>
-    <div class="hero-shade" aria-hidden="true"></div>
+  <section class="hero shell">
+    <div class="hero-card">
+      <div class="hero-copy">
+        <span class="tag">Mineacle Player Safety</span>
+        <h1>Public Ban List</h1>
+        <p>
+          Search active Mineacle punishments. This page only shows safe public LiteBans details —
+          never private player IP addresses or database secrets.
+        </p>
 
-    <div class="shell hero-content">
-      <img class="hero-logo" src="assets/logo-main.png?v=7" alt="Mineacle" width="760" height="520" style="width:min(620px,92vw);height:auto;max-height:260px;object-fit:contain;display:block;">
-      <span class="tag">Player Safety Portal</span>
-      <h1>Search active Mineacle bans</h1>
-      <p>
-        This page shows current public punishments from LiteBans.
-        Unbanned and expired players are removed automatically unless public history is enabled.
-      </p>
+        <div class="hero-actions">
+          <button class="btn primary copy-ip" data-copy="<?= h($config['site']['ip']) ?>">
+            <img src="assets/copy.svg" alt=""> Copy IP
+          </button>
+          <a class="btn soft" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
+            <img src="assets/discord.svg" alt=""> Get Help
+          </a>
+        </div>
+      </div>
 
-      <div class="hero-actions">
-        <button class="btn primary copy-ip" data-copy="<?= h($config['site']['ip']) ?>">
-          <img src="assets/copy.svg" alt=""> Copy IP
-        </button>
-        <a class="btn soft" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
-          <img src="assets/discord.svg" alt=""> Get Help
-        </a>
+      <div class="hero-logo-wrap" aria-hidden="true">
+        <img class="hero-logo" src="assets/mineacle-logo.png?v=8" alt="">
       </div>
     </div>
   </section>
@@ -36,15 +38,15 @@ mineacle_page_head('Bans');
   <section class="shell bans-section">
     <div class="ban-list-wrap">
       <div class="ban-toolbar">
-        <div>
+        <div class="ban-title">
           <span class="tag compact">Newest First</span>
-          <h2>Public Ban List</h2>
-          <p>Search by username. IP bans show the username but never expose private IP data.</p>
+          <h2>Active Bans</h2>
+          <p>Unbanned and expired players disappear automatically</p>
         </div>
 
         <div class="searchbar">
           <img src="assets/search.svg" alt="">
-          <input id="banSearch" type="search" placeholder="Search banned username..." autocomplete="off" maxlength="32">
+          <input id="banSearch" type="search" placeholder="Search username..." autocomplete="off" maxlength="32">
         </div>
 
         <div class="ban-count" id="banCount">Loading...</div>
@@ -58,17 +60,17 @@ mineacle_page_head('Bans');
     <div class="rule-grid">
       <article class="rule-card">
         <img src="assets/shield.svg" alt="">
-        <strong>Player Ban</strong>
-        <span>Eligible active bans may show a pay-to-unban option</span>
+        <strong>Player Bans</strong>
+        <span>Eligible active player bans may show an unban payment option</span>
       </article>
       <article class="rule-card">
         <img src="assets/lock.svg" alt="">
-        <strong>IP Ban</strong>
-        <span>Marked permanently banned with no public dispute or payment action</span>
+        <strong>IP Bans</strong>
+        <span>Shown as permanently banned with no public dispute or payment option</span>
       </article>
       <article class="rule-card">
         <img src="assets/info.svg" alt="">
-        <strong>Info Button</strong>
+        <strong>Info Popup</strong>
         <span>Shows reason, duration, date, appeal ID, email, Discord, and action</span>
       </article>
     </div>

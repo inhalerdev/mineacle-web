@@ -4,7 +4,6 @@ const banList = document.getElementById("banList");
 const banSearch = document.getElementById("banSearch");
 const banCount = document.getElementById("banCount");
 const banModal = document.getElementById("banModal");
-const heroLayer = document.querySelector(".hero-bg-layer");
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
@@ -187,12 +186,5 @@ if (banModal) {
   });
 }
 
-document.addEventListener("mousemove", event => {
-  if (!heroLayer || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const x = (event.clientX / window.innerWidth - 0.5) * 18;
-  const y = (event.clientY / window.innerHeight - 0.5) * 12;
-  heroLayer.style.setProperty("--mx", `${x}px`);
-  heroLayer.style.setProperty("--my", `${y}px`);
-});
 
 loadBans();
