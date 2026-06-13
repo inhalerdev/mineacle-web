@@ -19,43 +19,47 @@ mineacle_page_head('Bans');
 <?php mineacle_header(); ?>
 
 <main class="page">
-  <section class="hero shell">
-    <div class="hero-banner">
-      <div class="hero-image" aria-hidden="true"></div>
-      <div class="hero-overlay" aria-hidden="true"></div>
+  <section class="hero-shell shell">
+    <div class="hero-panel">
+      <div class="hero-bg" aria-hidden="true"></div>
 
-      <div class="hero-content">
-        <span class="tag">Mineacle Network</span>
-        <img class="hero-logo" src="assets/mineacle-logo.png?v=9" alt="Mineacle">
-        <h1>Public Ban List</h1>
-        <p>
-          Search active Mineacle punishments, copy the server IP, visit the store, vote for rewards,
-          or join Discord for help.
-        </p>
+      <div class="hero-left">
+        <img class="hero-logo" src="assets/mineacle-logo.png?v=10" alt="Mineacle">
+        <a class="deal-card" href="<?= h($config['site']['store'] ?? 'https://store.mineacle.net') ?>">
+          <span class="deal-icon"><img src="assets/basket.svg" alt=""></span>
+          <span><small>Click here to</small><strong>Browse Mineacle Store</strong></span>
+        </a>
+      </div>
 
-        <div class="hero-link-grid" aria-label="Mineacle quick links">
-          <a class="hero-link store" href="<?= h($config['site']['store'] ?? 'https://store.mineacle.net') ?>">
-            <span class="hero-link-icon"><img src="assets/basket.svg" alt=""></span>
-            <span><strong>Store</strong><small>Ranks, perks, and support</small></span>
+      <div class="hero-right">
+        <div class="hero-copy-card">
+          <span class="tag">Mineacle Network</span>
+          <h1>Public Ban List</h1>
+          <p>
+            View active Mineacle punishments, search public LiteBans records, copy the server IP,
+            vote for rewards, or contact Discord support.
+          </p>
+        </div>
+
+        <div class="quick-grid">
+          <a class="quick-link store" href="<?= h($config['site']['store'] ?? 'https://store.mineacle.net') ?>">
+            <span class="quick-icon"><img src="assets/basket.svg" alt=""></span>
+            <span><strong>Store</strong><small>Ranks and perks</small></span>
           </a>
-
-          <a class="hero-link vote" href="<?= h($config['site']['vote'] ?? 'https://vote.mineacle.net') ?>">
-            <span class="hero-link-icon"><img src="assets/vote.svg" alt=""></span>
-            <span><strong>Vote</strong><small>Claim rewards and help Mineacle grow</small></span>
+          <a class="quick-link vote" href="<?= h($config['site']['vote'] ?? 'https://vote.mineacle.net') ?>">
+            <span class="quick-icon"><img src="assets/vote.svg" alt=""></span>
+            <span><strong>Vote</strong><small>Claim rewards</small></span>
           </a>
-
-          <a class="hero-link bans active" href="/">
-            <span class="hero-link-icon"><img src="assets/hammer.svg" alt=""></span>
-            <span><strong>Bans</strong><small>View public punishment records</small></span>
+          <a class="quick-link bans active" href="#bans">
+            <span class="quick-icon"><img src="assets/hammer.svg" alt=""></span>
+            <span><strong>Bans</strong><small>Public records</small></span>
           </a>
-
-          <a class="hero-link discord" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
-            <span class="hero-link-icon"><img src="assets/discord.svg" alt=""></span>
-            <span><strong>Discord</strong><small>Appeals, help, and updates</small></span>
+          <a class="quick-link discord" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
+            <span class="quick-icon"><img src="assets/discord.svg" alt=""></span>
+            <span><strong>Discord</strong><small>Appeals and help</small></span>
           </a>
-
-          <button class="hero-link copy copy-ip" type="button" data-copy="<?= h($config['site']['ip']) ?>">
-            <span class="hero-link-icon"><img src="assets/copy.svg" alt=""></span>
+          <button class="quick-link copy copy-ip" type="button" data-copy="<?= h($config['site']['ip']) ?>">
+            <span class="quick-icon"><img src="assets/copy.svg" alt=""></span>
             <span><strong>Copy IP</strong><small><?= h($config['site']['ip']) ?></small></span>
           </button>
         </div>
@@ -115,7 +119,7 @@ mineacle_page_head('Bans');
   <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalName">
     <div class="modal-head">
       <img id="modalAvatar" src="" alt="">
-      <div>
+      <div class="modal-title">
         <h2 id="modalName">Player</h2>
         <span id="modalStatus" class="badge active">Active</span>
       </div>

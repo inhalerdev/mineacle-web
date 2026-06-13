@@ -160,7 +160,7 @@ function openBanInfo(id, rows = window.mineacleBans || []) {
   document.getElementById("modalAvatar").src = ban.skin;
   document.getElementById("modalName").textContent = ban.username;
   document.getElementById("modalStatus").className = `badge ${badgeClass(ban)}`;
-  document.getElementById("modalStatus").innerHTML = `${ban.ipban ? '<img src="assets/lock.svg" alt="">' : ""}${escapeHtml(ban.status)}`;
+  document.getElementById("modalStatus").textContent = ban.status;
 
   document.getElementById("modalReason").textContent = ban.reason;
   document.getElementById("modalType").textContent = ban.type;
