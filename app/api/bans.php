@@ -5,6 +5,9 @@ require_once __DIR__ . '/../includes/bans-lib.php';
 
 mineacle_security_headers(true);
 
+header('Content-Type: application/json; charset=utf-8');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+
 try {
     $search = trim((string) ($_GET['search'] ?? ''));
     if (mb_strlen($search) > 32) {
@@ -27,13 +30,15 @@ try {
         'error' => 'Unable to load bans right now',
     ];
 
-    try {
-        $config = mineacle_config();
-        if (!empty($config['security']['debug'])) {
-            $payload['debug'] = $e->getMessage();
-        }
-    } catch (Throwable $ignored) {
-        // Keep public error generic.
+    $debugRequested = isset($_GET['debug']) && (string) $_GET['debug'] === '1';
+
+    if ($debugRequested) {
+        $payload['debug'] = [
+            'message' => $e->getMessage(),
+            'type' => get_class($e),
+            'file' => basename($e->getFile()),
+            'line' => $e->getLine(),
+        ];
     }
 
     echo json_encode($payload, JSON_UNESCAPED_SLASHES);

@@ -1,11 +1,3 @@
-document.querySelectorAll("img[data-fallback]").forEach((image) => {
-  image.addEventListener("error", () => {
-    if (image.dataset.fallbackUsed === "true") return;
-    image.dataset.fallbackUsed = "true";
-    image.src = image.dataset.fallback;
-  });
-});
-
 const toast = document.getElementById("toast");
 const toastValue = document.getElementById("toastValue");
 const banList = document.getElementById("banList");
@@ -18,6 +10,7 @@ const nextPageButton = document.getElementById("nextPage");
 const pageInfo = document.getElementById("pageInfo");
 
 let currentPage = 1;
+let currentRows = [];
 let currentPagination = {
   page: 1,
   per_page: 25,
@@ -66,7 +59,9 @@ function actionButton(ban) {
 function renderBans(rows) {
   if (!banList) return;
 
-  if (!rows.length) {
+  currentRows = Array.isArray(rows) ? rows : [];
+
+  if (!currentRows.length) {
     banList.innerHTML = `
       <div class="empty">
         <strong>No active bans found</strong>
@@ -78,15 +73,13 @@ function renderBans(rows) {
     return;
   }
 
-  banList.innerHTML = rows.map(ban => `
+  banList.innerHTML = currentRows.map(ban => `
     <article class="ban-row">
       <img class="ban-avatar" src="${escapeHtml(ban.skin)}" alt="${escapeHtml(ban.username)}">
       <div class="ban-player">
         <div class="ban-player-line">
           <span class="ban-name">${escapeHtml(ban.username)}</span>
-          <button class="info-btn" type="button" data-info="${escapeHtml(ban.id)}" aria-label="View ${escapeHtml(ban.username)} ban info">
-            i
-          </button>
+          <button class="info-btn" type="button" data-info="${escapeHtml(ban.id)}" aria-label="View ${escapeHtml(ban.username)} ban info">i</button>
         </div>
         <span class="ban-date">${escapeHtml(ban.date)}</span>
       </div>
@@ -95,7 +88,7 @@ function renderBans(rows) {
         <div class="ban-meta">${escapeHtml(ban.type)} • ${escapeHtml(ban.duration)}</div>
       </div>
       <div class="ban-status">
-        <span class="badge ${escapeHtml(badgeClass(ban))}">${ban.ipban ? '' : ""}${escapeHtml(ban.status)}</span>
+        <span class="badge ${escapeHtml(badgeClass(ban))}">${escapeHtml(ban.status)}</span>
       </div>
       <div class="ban-action">${actionButton(ban)}</div>
     </article>
@@ -106,10 +99,6 @@ function renderBans(rows) {
     const end = Math.min(currentPagination.page * currentPagination.per_page, currentPagination.total);
     banCount.textContent = `${start}-${end} of ${currentPagination.total}`;
   }
-
-  document.querySelectorAll("[data-info]").forEach(button => {
-    button.addEventListener("click", () => openBanInfo(button.dataset.info, rows));
-  });
 
   renderPagination();
 }
@@ -128,6 +117,16 @@ function renderPagination() {
   nextPageButton.classList.toggle("disabled", !currentPagination.has_next);
 }
 
+async function readJsonSafely(response) {
+  const text = await response.text();
+
+  try {
+    return JSON.parse(text);
+  } catch (error) {
+    throw new Error(`API did not return JSON. HTTP ${response.status}. Response starts with: ${text.slice(0, 160)}`);
+  }
+}
+
 async function loadBans(page = currentPage) {
   if (!banList) return;
 
@@ -137,37 +136,44 @@ async function loadBans(page = currentPage) {
   const url = `api/bans.php?search=${encodeURIComponent(search)}&page=${encodeURIComponent(currentPage)}`;
 
   try {
-    const response = await fetch(url, { headers: { "Accept": "application/json" } });
-    const payload = await response.json();
+    const response = await fetch(url, {
+      headers: { "Accept": "application/json" },
+      cache: "no-store"
+    });
 
-    if (!payload.success) {
-      banList.innerHTML = `<div class="error">${escapeHtml(payload.error || "Unable to load bans")}</div>`;
-      if (banCount) banCount.textContent = "0 shown";
-      currentPagination = { page: 1, per_page: 25, total: 0, total_pages: 1, has_prev: false, has_next: false };
-      renderPagination();
-      return;
+    const payload = await readJsonSafely(response);
+
+    if (!response.ok || !payload.success) {
+      const detail = payload.debug?.message ? ` (${payload.debug.message})` : "";
+      throw new Error((payload.error || `HTTP ${response.status}`) + detail);
     }
 
-    window.mineacleBans = payload.bans || [];
     currentPagination = payload.pagination || currentPagination;
     currentPage = currentPagination.page || currentPage;
-    renderBans(window.mineacleBans);
+    renderBans(payload.bans || []);
   } catch (error) {
-    banList.innerHTML = `<div class="error">Unable to load bans right now</div>`;
+    console.error("Mineacle bans API failed:", error);
+    banList.innerHTML = `
+      <div class="error">
+        <strong>Unable to load bans right now</strong>
+        <span>${escapeHtml(error.message || "Check the LiteBans database connection")}</span>
+      </div>
+    `;
     if (banCount) banCount.textContent = "0 shown";
+    currentRows = [];
     currentPagination = { page: 1, per_page: 25, total: 0, total_pages: 1, has_prev: false, has_next: false };
     renderPagination();
   }
 }
 
-function openBanInfo(id, rows = window.mineacleBans || []) {
-  const ban = rows.find(row => String(row.id) === String(id));
+function openBanInfo(id) {
+  const ban = currentRows.find(row => String(row.id) === String(id));
   if (!ban || !banModal) return;
 
   document.getElementById("modalAvatar").src = ban.skin;
   document.getElementById("modalName").textContent = ban.username;
   document.getElementById("modalStatus").className = `badge ${badgeClass(ban)}`;
-  document.getElementById("modalStatus").innerHTML = `${ban.ipban ? '' : ""}${escapeHtml(ban.status)}`;
+  document.getElementById("modalStatus").textContent = ban.status;
 
   document.getElementById("modalReason").textContent = ban.reason;
   document.getElementById("modalType").textContent = ban.type;
@@ -201,14 +207,20 @@ function closeModal() {
   if (banModal) banModal.classList.remove("show");
 }
 
-document.querySelectorAll(".copy-ip").forEach(button => {
-  button.addEventListener("click", async () => {
-    const value = button.dataset.copy || "mineacle.net";
-    try {
-      await navigator.clipboard.writeText(value);
-    } catch {}
+document.addEventListener("click", (event) => {
+  const infoButton = event.target.closest("[data-info]");
+  if (infoButton) {
+    event.preventDefault();
+    openBanInfo(infoButton.dataset.info);
+    return;
+  }
+
+  const copyButton = event.target.closest(".copy-ip");
+  if (copyButton) {
+    const value = copyButton.dataset.copy || "mineacle.net";
+    navigator.clipboard?.writeText(value).catch(() => {});
     showToast(value);
-  });
+  }
 });
 
 if (banSearch) {
