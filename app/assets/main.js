@@ -1,4 +1,6 @@
 const toast = document.getElementById("toast");
+const toastTitle = document.getElementById("toastTitle");
+const toastValue = document.getElementById("toastValue");
 const banList = document.getElementById("banList");
 const banSearch = document.getElementById("banSearch");
 const banCount = document.getElementById("banCount");
@@ -28,16 +30,15 @@ function escapeHtml(value) {
   }[char]));
 }
 
-function showToast(title, subtitle) {
+function showToast(serverIp) {
   if (!toast) return;
-
-  toast.querySelector("strong").textContent = title;
-  toast.querySelector("span").textContent = subtitle;
+  if (toastTitle) toastTitle.textContent = "Server IP copied";
+  if (toastValue) toastValue.textContent = serverIp;
   toast.classList.remove("show");
   void toast.offsetWidth;
   toast.classList.add("show");
   clearTimeout(showToast.timer);
-  showToast.timer = setTimeout(() => toast.classList.remove("show"), 3000);
+  showToast.timer = setTimeout(() => toast.classList.remove("show"), 3200);
 }
 
 function badgeClass(ban) {
@@ -160,7 +161,7 @@ function openBanInfo(id, rows = window.mineacleBans || []) {
   document.getElementById("modalAvatar").src = ban.skin;
   document.getElementById("modalName").textContent = ban.username;
   document.getElementById("modalStatus").className = `badge ${badgeClass(ban)}`;
-  document.getElementById("modalStatus").textContent = ban.status;
+  document.getElementById("modalStatus").innerHTML = `${ban.ipban ? '<img src="assets/lock.svg" alt="">' : ""}${escapeHtml(ban.status)}`;
 
   document.getElementById("modalReason").textContent = ban.reason;
   document.getElementById("modalType").textContent = ban.type;
@@ -199,10 +200,8 @@ document.querySelectorAll(".copy-ip").forEach(button => {
     const value = button.dataset.copy || "mineacle.net";
     try {
       await navigator.clipboard.writeText(value);
-      showToast("IP copied", value);
-    } catch {
-      showToast("Copy IP", value);
-    }
+    } catch {}
+    showToast(value);
   });
 });
 
@@ -219,17 +218,13 @@ if (banSearch) {
 
 if (prevPageButton) {
   prevPageButton.addEventListener("click", () => {
-    if (currentPagination.has_prev) {
-      loadBans(currentPagination.page - 1);
-    }
+    if (currentPagination.has_prev) loadBans(currentPagination.page - 1);
   });
 }
 
 if (nextPageButton) {
   nextPageButton.addEventListener("click", () => {
-    if (currentPagination.has_next) {
-      loadBans(currentPagination.page + 1);
-    }
+    if (currentPagination.has_next) loadBans(currentPagination.page + 1);
   });
 }
 

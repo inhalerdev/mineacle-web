@@ -16,64 +16,57 @@ $config = mineacle_config();
 mineacle_page_head('Bans');
 ?>
 <body>
-<?php mineacle_header(); ?>
+<?php mineacle_header('bans'); ?>
 
 <main class="page">
-  <section class="hero-shell shell">
-    <div class="hero-panel">
-      <div class="hero-bg" aria-hidden="true"></div>
+  <?php mineacle_shared_hero([
+      'eyebrow' => 'Mineacle moderation',
+      'kicker' => 'Mineacle safety systems',
+      'title' => 'Public Ban List',
+      'copy' => 'Mineacle is built to feel safe, clear, and easy to use. Search active bans, review public punishment records, and see how our safety systems help protect the community.',
+      'cta_text' => 'Browse public bans',
+      'cta_anchor' => '#bans'
+  ]); ?>
 
-      <div class="hero-left">
-        <img class="hero-logo" src="assets/mineacle-logo.png?v=10.2" alt="Mineacle">
-        <a class="deal-card" href="<?= h($config['site']['store'] ?? 'https://store.mineacle.net') ?>">
-          <span class="deal-icon"><img src="assets/basket.svg" alt=""></span>
-          <span><small>Click here to</small><strong>Browse Mineacle Store</strong></span>
-        </a>
-      </div>
+  <section class="shell trust-section">
+    <div class="section-heading">
+      <span class="section-kicker">Why Mineacle takes safety seriously</span>
+      <h2>Our protection flow</h2>
+      <p>We want Mineacle to stay welcoming, polished, and safe for all ages allowed on the server. These systems help us protect players, their experience, and the community as a whole.</p>
+    </div>
 
-      <div class="hero-right">
-        <div class="hero-copy-card">
-          <span class="tag">Mineacle Network</span>
-          <h1>Public Ban List</h1>
-          <p>
-            View active Mineacle punishments, search public LiteBans records, copy the server IP,
-            vote for rewards, or contact Discord support.
-          </p>
-        </div>
-
-        <div class="quick-grid">
-          <a class="quick-link store" href="<?= h($config['site']['store'] ?? 'https://store.mineacle.net') ?>">
-            <span class="quick-icon"><img src="assets/basket.svg" alt=""></span>
-            <span><strong>Store</strong><small>Ranks and perks</small></span>
-          </a>
-          <a class="quick-link vote" href="<?= h($config['site']['vote'] ?? 'https://vote.mineacle.net') ?>">
-            <span class="quick-icon"><img src="assets/vote.svg" alt=""></span>
-            <span><strong>Vote</strong><small>Claim rewards</small></span>
-          </a>
-          <a class="quick-link bans active" href="#bans">
-            <span class="quick-icon"><img src="assets/hammer.svg" alt=""></span>
-            <span><strong>Bans</strong><small>Public records</small></span>
-          </a>
-          <a class="quick-link discord" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
-            <span class="quick-icon"><img src="assets/discord.svg" alt=""></span>
-            <span><strong>Discord</strong><small>Appeals and help</small></span>
-          </a>
-          <button class="quick-link copy copy-ip" type="button" data-copy="<?= h($config['site']['ip']) ?>">
-            <span class="quick-icon"><img src="assets/copy.svg" alt=""></span>
-            <span><strong>Copy IP</strong><small><?= h($config['site']['ip']) ?></small></span>
-          </button>
-        </div>
-      </div>
+    <div class="trust-grid">
+      <article class="trust-card">
+        <div class="trust-icon"><img src="assets/shield.svg" alt=""></div>
+        <strong>1. Mineacle Security</strong>
+        <p>Commands, access, and public-facing systems are filtered and cleaned up to keep the server easier to use and safer to navigate.</p>
+      </article>
+      <article class="trust-card">
+        <div class="trust-icon"><img src="assets/lock.svg" alt=""></div>
+        <strong>2. MineacleClientGuard</strong>
+        <p>Allowed client checks and client-side protection help reduce unsafe connections and keep the gameplay environment more trustworthy.</p>
+      </article>
+      <article class="trust-card">
+        <div class="trust-icon"><img src="assets/hammer-ban.png" alt=""></div>
+        <strong>3. Serious moderation</strong>
+        <p>Ban records exist for transparency. Major offenses are handled seriously so players understand that Mineacle is meant to stay safe and fair.</p>
+      </article>
     </div>
   </section>
 
   <section class="shell bans-section" id="bans">
+    <div class="section-heading compact">
+      <span class="section-kicker">Public records</span>
+      <h2>Active Bans</h2>
+      <p>Sorted newest to oldest. Unbanned and expired players are removed automatically.</p>
+    </div>
+
     <div class="ban-list-wrap">
       <div class="ban-toolbar">
         <div class="ban-title">
-          <span class="tag compact">Newest First</span>
-          <h2>Active Bans</h2>
-          <p>Unbanned and expired players disappear automatically</p>
+          <span class="tag compact">25 per page</span>
+          <h3>Search the ban list</h3>
+          <p>Use a username to quickly find a player</p>
         </div>
 
         <div class="searchbar">
@@ -93,24 +86,6 @@ mineacle_page_head('Bans');
         <span id="pageInfo">Page 1 of 1</span>
         <button class="btn soft" type="button" id="nextPage">Next</button>
       </div>
-    </div>
-
-    <div class="rule-grid">
-      <article class="rule-card">
-        <img src="assets/hammer.svg" alt="">
-        <strong>Player Bans</strong>
-        <span>Eligible active player bans may show an unban payment option</span>
-      </article>
-      <article class="rule-card">
-        <img src="assets/lock.svg" alt="">
-        <strong>IP Bans</strong>
-        <span>Shown as permanently banned with no public dispute or payment option</span>
-      </article>
-      <article class="rule-card">
-        <img src="assets/info.svg" alt="">
-        <strong>Info Popup</strong>
-        <span>Shows reason, duration, date, appeal ID, email, Discord, and action</span>
-      </article>
     </div>
   </section>
 </main>
