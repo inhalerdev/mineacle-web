@@ -27,7 +27,7 @@ mineacle_page_head('Bans');
 
         <a class="discord-panel" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
           <div class="discord-character-wrap">
-            <img class="discord-character" src="assets/discord-character.webp?v=foundation1.10" alt="">
+            <img class="discord-character" src="assets/discord-character.webp?v=foundation1.11" alt="">
           </div>
           <div>
             <span>Official Discord</span>
@@ -41,17 +41,17 @@ mineacle_page_head('Bans');
 
   </section>
 
-  <section class="content-section">
+  <section class="content-section explanation-section">
     <div class="section-heading">
-      <span>Player-facing moderation</span>
-      <h2>Why this page exists</h2>
-      <p>Mineacle is designed to be playful, secure, and fair. This public page gives players a simple way to understand active punishments without exposing private information.</p>
+      <span>Public moderation</span>
+      <h2>How to use this page</h2>
+      <p>This page lists active punishments only. Search a username, review the public record, and use Discord if you need support or appeal information.</p>
     </div>
 
-    <div class="info-grid">
-      <article><span>01</span><h3>Public Records</h3><p>Players can search active bans and understand why a punishment exists.</p></article>
-      <article><span>02</span><h3>Safe Experience</h3><p>Serious offenses are handled clearly so the server stays welcoming and fair.</p></article>
-      <article><span>03</span><h3>Ever-changing Server</h3><p>Events, economy updates, PvP, and survival systems work best when moderation is consistent.</p></article>
+    <div class="info-grid simple-info-grid">
+      <article><span>01</span><h3>Search active records</h3><p>Look up a player and view the current public ban information.</p></article>
+      <article><span>02</span><h3>Privacy protected</h3><p>Only player-facing moderation details are shown on this page.</p></article>
+      <article><span>03</span><h3>Updates automatically</h3><p>Expired and removed punishments disappear from the list automatically.</p></article>
     </div>
   </section>
 
