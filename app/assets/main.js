@@ -157,6 +157,7 @@ async function loadBans(page = currentPage) {
       <div class="error">
         <strong>Unable to load bans right now</strong>
         <span>${escapeHtml(error.message || "Check the LiteBans database connection")}</span>
+        <span class="error-help">Open <code>/api/bans.php?debug=1</code> and <code>/api/health.php</code> to see the real database error.</span>
       </div>
     `;
     if (banCount) banCount.textContent = "0 shown";
