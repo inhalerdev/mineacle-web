@@ -15,8 +15,8 @@ function mineacle_page_head(string $title): void {
     echo '<meta name="viewport" content="width=device-width,initial-scale=1">';
     echo '<title>' . h($title) . ' | ' . $name . '</title>';
     echo '<meta name="description" content="Mineacle public bans portal">';
-    echo '<link rel="icon" type="image/png" href="assets/favicon.png?v=12">';
-    echo '<link rel="stylesheet" href="assets/styles.css?v=12">';
+    echo '<link rel="icon" type="image/png" href="assets/favicon.png?v=12.1">';
+    echo '<link rel="stylesheet" href="assets/styles.css?v=12.1">';
     echo '</head>';
 }
 
@@ -31,7 +31,7 @@ function mineacle_header(string $active = 'bans'): void {
     echo '<div class="header-inner">';
 
     echo '<a class="brand" href="' . $home . '" aria-label="Mineacle Network">';
-    echo '<img src="assets/brand-mark.png?v=12" alt="">';
+    echo '<img src="assets/brand-mark.png?v=12.1" alt="">';
     echo '<span>Mineacle Network</span>';
     echo '</a>';
 
@@ -49,7 +49,7 @@ function mineacle_header(string $active = 'bans'): void {
 
 function mineacle_footer(): void {
     echo '<div class="mineacle-toast" id="toast" role="status" aria-live="polite">';
-    echo '<div class="mineacle-toast-icon"><img src="assets/copy.svg" alt=""></div>';
+    echo '<div class="mineacle-toast-icon"><img src="assets/copy.svg?v=12.1" alt=""></div>';
     echo '<div class="mineacle-toast-copy">';
     echo '<small>Mineacle Network</small>';
     echo '<strong>Server IP copied</strong>';
@@ -57,5 +57,5 @@ function mineacle_footer(): void {
     echo '</div>';
     echo '</div>';
 
-    echo '<script src="assets/main.js?v=12"></script>';
+    echo '<script src="assets/main.js?v=12.1"></script>';
 }

@@ -20,18 +20,15 @@ mineacle_page_head('Bans');
       <div class="hero-bg" aria-hidden="true"></div>
       <div class="hero-shade" aria-hidden="true"></div>
 
-      <div class="hero-content">
-        <img class="hero-logo" src="assets/mineacle-logo.png?v=12" alt="Mineacle">
+      <div class="hero-content hero-content-centered">
+        <div class="hero-kicker">Mineacle Network</div>
+        <img class="hero-logo" src="assets/mineacle-logo.png?v=12.1" alt="Mineacle Network">
 
         <h1>Public <span>Ban List</span></h1>
 
-        <div class="divider" aria-hidden="true">
-          <span></span><i></i><span></span>
-        </div>
+        <p>Search active punishments, review public LiteBans records, and see how Mineacle keeps the server safe, fair, and player-friendly</p>
 
-        <p>Search active punishments, review public records, and keep Mineacle safe for everyone</p>
-
-        <div class="hero-actions">
+        <div class="hero-actions hero-actions-centered">
           <a class="hero-action" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
             <img src="assets/discord.svg" alt=""> Discord
           </a>
