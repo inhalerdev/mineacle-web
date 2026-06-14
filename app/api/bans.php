@@ -25,21 +25,10 @@ try {
 } catch (Throwable $e) {
     http_response_code(500);
 
-    $payload = [
+    error_log('[MineacleBans] ' . $e->getMessage());
+
+    echo json_encode([
         'success' => false,
         'error' => 'Unable to load bans right now',
-    ];
-
-    $debugRequested = isset($_GET['debug']) && (string) $_GET['debug'] === '1';
-
-    if ($debugRequested) {
-        $payload['debug'] = [
-            'message' => $e->getMessage(),
-            'type' => get_class($e),
-            'file' => basename($e->getFile()),
-            'line' => $e->getLine(),
-        ];
-    }
-
-    echo json_encode($payload, JSON_UNESCAPED_SLASHES);
+    ], JSON_UNESCAPED_SLASHES);
 }

@@ -18,7 +18,7 @@ mineacle_page_head('Bans');
   <section class="hero-shell" aria-label="Mineacle public bans hero">
     <div class="hero-grid">
       <div class="hero-main-logo-wrap" aria-label="Mineacle main logo">
-        <img class="hero-main-logo" src="assets/mineacle-main-logo.png?v=foundation1.12.1" alt="Mineacle">
+        <img class="hero-main-logo" src="assets/mineacle-main-logo.png?v=foundation1.13" alt="Mineacle">
       </div>
 
       <div class="hero-copy">
@@ -27,7 +27,7 @@ mineacle_page_head('Bans');
 
         <a class="discord-panel" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
           <div class="discord-character-wrap">
-            <img class="discord-character" src="assets/discord-character.webp?v=foundation1.12.1" alt="">
+            <img class="discord-character" src="assets/discord-character.webp?v=foundation1.13" alt="">
           </div>
           <div>
             <span>Official Discord</span>
@@ -39,20 +39,6 @@ mineacle_page_head('Bans');
       </div>
     </div>
 
-  </section>
-
-  <section class="content-section explanation-section">
-    <div class="section-heading">
-      <span>Public moderation</span>
-      <h2>How to use this page</h2>
-      <p>This page lists active punishments only. Search a username, review the public record, and use Discord if you need support or appeal information.</p>
-    </div>
-
-    <div class="info-grid simple-info-grid">
-      <article><span>01</span><h3>Search active records</h3><p>Look up a player and view the current public ban information.</p></article>
-      <article><span>02</span><h3>Privacy protected</h3><p>Only player-facing moderation details are shown on this page.</p></article>
-      <article><span>03</span><h3>Updates automatically</h3><p>Expired and removed punishments disappear from the list automatically.</p></article>
-    </div>
   </section>
 
   <section class="bans-section" id="bans">
