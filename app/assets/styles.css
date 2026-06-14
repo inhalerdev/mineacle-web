@@ -723,3 +723,41 @@ img{
 .error .error-help{
   display:none!important;
 }
+
+
+/* Foundation V1.16 emergency page-load hotfix footer */
+.logo-only-footer{
+  margin:34px 14px 0!important;
+  min-height:180px!important;
+  padding:0!important;
+  display:grid!important;
+  place-items:center!important;
+  border-radius:26px!important;
+  border:1px solid rgba(255,136,255,.16)!important;
+  background:
+    radial-gradient(circle at center, rgba(140,60,255,.10), transparent 58%),
+    linear-gradient(180deg, rgba(14,10,24,.88), rgba(10,7,18,.96))!important;
+  overflow:hidden!important;
+  position:relative!important;
+}
+
+.logo-only-footer .footer-grid,
+.logo-only-footer .footer-brand,
+.logo-only-footer .footer-brand-copy,
+.logo-only-footer .footer-links,
+.logo-only-footer .footer-actions,
+.logo-only-footer .footer-bg-logo{
+  display:none!important;
+}
+
+.footer-only-logo{
+  width:min(520px,72vw)!important;
+  height:auto!important;
+  max-height:150px!important;
+  object-fit:contain!important;
+  display:block!important;
+  opacity:.18!important;
+  filter:grayscale(1) brightness(1.35)!important;
+  pointer-events:none!important;
+  user-select:none!important;
+}

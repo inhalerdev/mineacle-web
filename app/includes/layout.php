@@ -15,8 +15,8 @@ function mineacle_page_head(string $title): void {
     echo '<meta name="viewport" content="width=device-width,initial-scale=1">';
     echo '<title>' . h($title) . ' | ' . $name . '</title>';
     echo '<meta name="description" content="Mineacle public bans portal">';
-    echo '<link rel="stylesheet" href="assets/styles.css?v=foundation1.15">';
-    echo '<link rel="icon" type="image/png" href="assets/mineacle-square-logo.png?v=foundation1.15"></head>';
+    echo '<link rel="stylesheet" href="assets/styles.css?v=foundation1.16">';
+    echo '<link rel="icon" type="image/png" href="assets/mineacle-square-logo.png?v=foundation1.16"></head>';
 }
 
 function mineacle_header(string $active = 'bans'): void {
@@ -29,12 +29,12 @@ function mineacle_header(string $active = 'bans'): void {
 
     echo '<header class="site-header">';
     echo '<div class="header-inner">';
-    echo '<a class="header-logo-link" href="https://mineacle.net/home" aria-label="Go to Mineacle home"><img src="assets/mineacle-square-logo.png?v=foundation1.15" alt="Mineacle"></a>';
+    echo '<a class="header-logo-link" href="https://mineacle.net/home" aria-label="Go to Mineacle home"><img src="assets/mineacle-square-logo.png?v=foundation1.16" alt="Mineacle"></a>';
     echo '<nav class="main-nav" aria-label="Primary navigation">';
-    echo '<a class="' . ($active === 'home' ? 'active' : '') . '" href="' . $home . '"><img class="nav-icon icon-white" src="assets/home.svg?v=foundation1.15" alt=""><span>Home</span></a>';
-    echo '<a class="' . ($active === 'vote' ? 'active' : '') . '" href="' . $vote . '"><img class="nav-icon icon-white" src="assets/vote.svg?v=foundation1.15" alt=""><span>Vote</span></a>';
-    echo '<a class="' . ($active === 'bans' ? 'active' : '') . '" href="/"><img class="nav-icon icon-white" src="assets/hammer.svg?v=foundation1.15" alt=""><span>Bans</span></a>';
-    echo '<a class="store-link ' . ($active === 'store' ? 'active' : '') . '" href="' . $store . '"><img class="nav-icon icon-white" src="assets/store.svg?v=foundation1.15" alt=""><span>Store</span></a>';
+    echo '<a class="' . ($active === 'home' ? 'active' : '') . '" href="' . $home . '"><img class="nav-icon icon-white" src="assets/home.svg?v=foundation1.16" alt=""><span>Home</span></a>';
+    echo '<a class="' . ($active === 'vote' ? 'active' : '') . '" href="' . $vote . '"><img class="nav-icon icon-white" src="assets/vote.svg?v=foundation1.16" alt=""><span>Vote</span></a>';
+    echo '<a class="' . ($active === 'bans' ? 'active' : '') . '" href="/"><img class="nav-icon icon-white" src="assets/hammer.svg?v=foundation1.16" alt=""><span>Bans</span></a>';
+    echo '<a class="store-link ' . ($active === 'store' ? 'active' : '') . '" href="' . $store . '"><img class="nav-icon icon-white" src="assets/store.svg?v=foundation1.16" alt=""><span>Store</span></a>';
     echo '</nav>';
     echo '</div>';
     echo '</header>';
@@ -42,7 +42,7 @@ function mineacle_header(string $active = 'bans'): void {
 
 function mineacle_footer(): void {
     echo '<footer class="site-footer logo-only-footer">';
-    echo '<img class="footer-only-logo" src="assets/mineacle-main-logo.png?v=foundation1.15" alt="Mineacle">';
+    echo '<img class="footer-only-logo" src="assets/mineacle-main-logo.png?v=foundation1.16" alt="Mineacle">';
     echo '</footer>';
 
     echo '<div class="mineacle-toast" id="toast" role="status" aria-live="polite">';
@@ -50,6 +50,6 @@ function mineacle_footer(): void {
     echo '<div><small>Mineacle Network</small><strong>Server IP copied</strong><span>Join with <b id="toastValue">mineacle.net</b></span></div>';
     echo '</div>';
 
-    echo '<script src="assets/main.js?v=foundation1.15"></script>';
+    echo '<script src="assets/main.js?v=foundation1.16"></script>';
 }
 
