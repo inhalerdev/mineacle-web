@@ -44,6 +44,21 @@ function mineacle_epoch_seconds(mixed $value): int {
     return $value;
 }
 
+function mineacle_database_now_seconds(PDO $pdo): int {
+    try {
+        $value = $pdo->query('SELECT UNIX_TIMESTAMP()')->fetchColumn();
+        $seconds = (int) floor((float) $value);
+
+        if ($seconds > 0) {
+            return $seconds;
+        }
+    } catch (Throwable) {
+        // Fall back to PHP only if MySQL cannot provide current database time.
+    }
+
+    return time();
+}
+
 function mineacle_database_timezone(): DateTimeZone {
     $config = mineacle_config();
     $timezoneName = (string) ($config['site']['database_timezone'] ?? 'UTC');
@@ -111,17 +126,28 @@ function fetch_litebans_bans_page(string $search = '', int $page = 1): array {
     $page = max(1, $page);
     $offset = ($page - 1) * $limit;
 
-    $nowSeconds = time();
+    // Match LiteBans use_database_time behavior by using MySQL's current epoch for active temp-ban filtering.
+    $nowSeconds = mineacle_database_now_seconds($pdo);
     $nowMillis = $nowSeconds * 1000;
+    $nowMicros = $nowSeconds * 1000000;
+    $nowNanos = $nowSeconds * 1000000000;
 
     $where = [
         'b.`active` = 1',
-        '(b.`until` <= 0 OR b.`until` > :now_seconds OR b.`until` > :now_millis)',
+        '(
+            b.`until` <= 0
+            OR b.`until` > :now_seconds
+            OR b.`until` > :now_millis
+            OR b.`until` > :now_micros
+            OR b.`until` > :now_nanos
+        )',
     ];
 
     $params = [
         'now_seconds' => $nowSeconds,
         'now_millis' => $nowMillis,
+        'now_micros' => $nowMicros,
+        'now_nanos' => $nowNanos,
     ];
 
     $search = trim($search);
@@ -192,7 +218,33 @@ function fetch_litebans_bans_page(string $search = '', int $page = 1): array {
         $isIpBan = ((int) ($row['ipban'] ?? 0)) === 1;
         $until = (int) ($row['until'] ?? 0);
         $time = (int) ($row['time'] ?? 0);
-        $permanent = $until <= 0;
+        $untilSeconds = mineacle_epoch_seconds($until);
+        $timeSeconds = mineacle_epoch_seconds($time);
+        $permanent = $until <= 0 || $untilSeconds <= 0;
+        $temporary = !$isIpBan && !$permanent;
+
+        if ($isIpBan) {
+            $type = 'IP Ban';
+            $status = 'Permanently Banned';
+            $statusType = 'ip';
+            $canPay = false;
+            $actionLabel = 'No Action';
+            $actionType = 'ip';
+        } elseif ($temporary) {
+            $type = 'Temporary Ban';
+            $status = 'Temporarily Banned';
+            $statusType = 'temporary';
+            $canPay = false;
+            $actionLabel = 'Wait It Out';
+            $actionType = 'wait';
+        } else {
+            $type = 'Player Ban';
+            $status = 'Permanently Banned';
+            $statusType = 'active';
+            $canPay = true;
+            $actionLabel = 'Pay to Unban';
+            $actionType = 'pay';
+        }
 
         $bans[] = [
             'id' => (string) ($row['id'] ?? ''),
@@ -200,24 +252,37 @@ function fetch_litebans_bans_page(string $search = '', int $page = 1): array {
             'username' => $isIpBan && $name === '#offline#' ? '#offline#' : $name,
             'skin' => mineacle_skin_url($uuid !== '' ? $uuid : $name),
             'reason' => (string) ($row['reason'] ?? 'No reason provided'),
-            'type' => $isIpBan ? 'IP Ban' : 'Player Ban',
+            'type' => $type,
             'duration' => mineacle_format_duration($until, $time),
             'date' => mineacle_format_date($time),
-            'status' => $isIpBan || $permanent ? 'Permanently Banned' : 'Active',
-            'status_type' => $isIpBan ? 'ip' : 'active',
+            'expires' => $temporary ? mineacle_format_date($until) : ($permanent ? 'Never' : 'Unknown'),
+            'status' => $status,
+            'status_type' => $statusType,
             'ipban' => $isIpBan,
+            'temporary' => $temporary,
+            'permanent' => $permanent,
             'appeal_id' => 'MCL-' . str_pad((string) ($row['id'] ?? '0'), 6, '0', STR_PAD_LEFT),
             'support_email' => (string) ($config['site']['support_email'] ?? 'support@mineacle.net'),
             'discord' => (string) ($config['site']['discord'] ?? 'https://discord.gg/4xrYFxdSWg'),
-            'can_pay' => !$isIpBan,
-            'price' => $permanent
+            'can_pay' => $canPay,
+            'action_label' => $actionLabel,
+            'action_type' => $actionType,
+            'price' => $canPay
                 ? (string) ($config['payments']['permanent_unban_price'] ?? '$19.99')
-                : (string) ($config['payments']['temporary_unban_price'] ?? '$9.99'),
-            'unban_url' => strtr((string) ($config['site']['unban_checkout_url'] ?? '#'), [
+                : '',
+            'unban_url' => $canPay ? strtr((string) ($config['site']['unban_checkout_url'] ?? '#'), [
                 '{id}' => (string) ($row['id'] ?? ''),
                 '{uuid}' => $uuid,
                 '{username}' => $name,
-            ]),
+            ]) : '#',
+
+            // Debug-safe timestamp fields. These are not shown directly in the UI, but can be inspected
+            // in DevTools with window.mineacleCurrentBans[0] if a displayed date looks wrong.
+            'time_raw' => (string) $time,
+            'until_raw' => (string) $until,
+            'time_seconds' => $timeSeconds,
+            'until_seconds' => $untilSeconds,
+            'database_now_seconds' => $nowSeconds,
         ];
     }
 

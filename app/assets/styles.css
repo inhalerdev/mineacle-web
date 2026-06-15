@@ -1363,3 +1363,22 @@ body.modal-open{
     font-size:21px!important;
   }
 }
+
+
+/* Foundation V1.39 temporary ban treatment */
+.badge.temporary,
+.status-badge.temporary{
+  background:rgba(255,184,77,.16)!important;
+  border-color:rgba(255,184,77,.48)!important;
+  color:#fff!important;
+}
+
+.wait-btn{
+  background:rgba(255,184,77,.10)!important;
+  border:1px solid rgba(255,184,77,.26)!important;
+  color:rgba(255,255,255,.72)!important;
+}
+
+.ban-meta{
+  color:rgba(255,255,255,.62)!important;
+}

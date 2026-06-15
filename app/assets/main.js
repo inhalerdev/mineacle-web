@@ -116,6 +116,10 @@ function actionButton(ban, index) {
     return `<button class="btn soft disabled" type="button" disabled>No Action</button>`;
   }
 
+  if (ban.temporary) {
+    return `<button class="btn soft disabled wait-btn" type="button" disabled>Wait It Out</button>`;
+  }
+
   if (ban.can_pay) {
     return `<a class="btn red" href="${escapeHtml(ban.unban_url)}">${escapeHtml(ban.price)} Unban</a>`;
   }
@@ -381,12 +385,15 @@ function openBanInfo(ban) {
     if (ban.ipban) {
       actions.innerHTML = `<button class="btn soft disabled" type="button" disabled>Permanent IP Ban</button>`;
       note.textContent = "This is an IP ban. It has no public dispute or paid-unban option.";
+    } else if (ban.temporary) {
+      actions.innerHTML = `<button class="btn soft disabled wait-btn" type="button" disabled>Wait It Out</button>`;
+      note.textContent = `Temporary bans cannot be paid for. This punishment expires on ${ban.expires || "the listed expiration date"}.`;
     } else if (ban.can_pay) {
       actions.innerHTML = `
         <a class="btn red" href="${escapeHtml(ban.unban_url)}">${escapeHtml(ban.price)} Pay to be unbanned</a>
         <a class="btn soft" href="${escapeHtml(ban.discord)}" target="_blank" rel="noopener">Contact Discord</a>
       `;
-      note.textContent = "Use the payment option for eligible bans, or contact support if you believe this punishment is incorrect.";
+      note.textContent = "Use the payment option for eligible permanent bans, or contact support if you believe this punishment is incorrect.";
     } else {
       actions.innerHTML = `<a class="btn soft" href="${escapeHtml(ban.discord)}" target="_blank" rel="noopener">Contact Support</a>`;
       note.textContent = "This punishment is not currently eligible for paid unban. Contact support if you need more information.";
