@@ -77,3 +77,53 @@ body:after{content:"";position:fixed;inset:0;pointer-events:none;background:repe
     padding-left:66px!important;
   }
 }
+
+
+/* Foundation V1.23 critical override */
+
+/* Requested search icon size */
+.search-icon{
+  width:28px!important;
+  height:28px!important;
+  min-width:28px!important;
+  min-height:28px!important;
+  max-width:28px!important;
+  max-height:28px!important;
+  left:29px!important;
+}
+
+/* Keep the search text aligned after shrinking icon */
+.searchbar input{
+  padding-left:72px!important;
+}
+
+/* Header top corners rounded */
+.site-header{
+  border-radius:24px!important;
+}
+
+/* One shared container width */
+.site-header,
+.hero-shell,
+.bans-section,
+.logo-only-footer{
+  width:min(calc(100% - (var(--gap) * 2)), var(--container))!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+@media(max-width:700px){
+  .search-icon{
+    width:22px!important;
+    height:22px!important;
+    min-width:22px!important;
+    min-height:22px!important;
+    max-width:22px!important;
+    max-height:22px!important;
+    left:25px!important;
+  }
+
+  .searchbar input{
+    padding-left:58px!important;
+  }
+}
