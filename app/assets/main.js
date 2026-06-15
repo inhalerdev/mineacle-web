@@ -564,5 +564,83 @@ function bindCopyIpButtons() {
 
 bindCopyIpButtons();
 
+
+
+function formatCompactNumber(value) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number) || number < 0) {
+    return "Unavailable";
+  }
+
+  return new Intl.NumberFormat("en-US", {
+    notation: number >= 10000 ? "compact" : "standard",
+    maximumFractionDigits: 1
+  }).format(number);
+}
+
+async function updateDiscordCounts() {
+  const memberTarget = document.querySelector("[data-discord-member-count]");
+  const onlineTarget = document.querySelector("[data-discord-online-count]");
+  const discordCard = document.querySelector("[data-discord-card]");
+
+  if (!memberTarget && !onlineTarget) {
+    return;
+  }
+
+  try {
+    const response = await fetch("api/discord.php", {
+      headers: { "Accept": "application/json" },
+      cache: "no-store"
+    });
+
+    const payload = await response.json();
+
+    if (!response.ok || !payload.success) {
+      throw new Error(payload.message || "Discord count unavailable");
+    }
+
+    if (memberTarget) {
+      memberTarget.textContent = formatCompactNumber(payload.member_count);
+      memberTarget.title = `${payload.member_count.toLocaleString("en-US")} members`;
+    }
+
+    if (onlineTarget) {
+      if (payload.online_count === null || payload.online_count === undefined) {
+        onlineTarget.textContent = "Live";
+        onlineTarget.title = "Discord online count unavailable";
+      } else {
+        onlineTarget.textContent = formatCompactNumber(payload.online_count);
+        onlineTarget.title = `${payload.online_count.toLocaleString("en-US")} online`;
+      }
+    }
+
+    if (discordCard) {
+      discordCard.classList.add("discord-live");
+      discordCard.classList.remove("discord-unavailable");
+    }
+  } catch (error) {
+    console.error("Mineacle Discord count failed", error);
+
+    if (memberTarget) {
+      memberTarget.textContent = "Join";
+      memberTarget.title = "Discord member count unavailable";
+    }
+
+    if (onlineTarget) {
+      onlineTarget.textContent = "Live";
+      onlineTarget.title = "Discord online count unavailable";
+    }
+
+    if (discordCard) {
+      discordCard.classList.add("discord-unavailable");
+      discordCard.classList.remove("discord-live");
+    }
+  }
+}
+
+updateDiscordCounts();
+setInterval(updateDiscordCounts, 300000);
+
 createBanModal();
 loadBans(1);

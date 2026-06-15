@@ -1489,3 +1489,79 @@ body.modal-open{
   border:0!important;
   border-radius:16px!important;
 }
+
+
+/* Foundation V1.42 live Discord member count */
+.discord-copy{
+  min-width:0!important;
+}
+
+.discord-counts{
+  display:flex!important;
+  align-items:center!important;
+  gap:10px!important;
+  margin-top:14px!important;
+  flex-wrap:wrap!important;
+}
+
+.discord-count-card{
+  min-width:104px!important;
+  padding:10px 12px!important;
+  border-radius:15px!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  background:rgba(255,255,255,.045)!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.025)!important;
+}
+
+.discord-count-card small{
+  display:block!important;
+  margin:0 0 4px!important;
+  color:rgba(255,255,255,.55)!important;
+  font-size:10px!important;
+  font-weight:950!important;
+  letter-spacing:.11em!important;
+  text-transform:uppercase!important;
+}
+
+.discord-count-card b{
+  display:block!important;
+  color:#fff!important;
+  font-size:18px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  letter-spacing:-.025em!important;
+}
+
+.discord-panel.discord-live .discord-count-card:first-child{
+  border-color:rgba(255,136,255,.28)!important;
+  background:rgba(255,136,255,.075)!important;
+}
+
+.discord-panel.discord-live .discord-count-card:last-child{
+  border-color:rgba(67,255,156,.24)!important;
+  background:rgba(67,255,156,.06)!important;
+}
+
+.discord-panel.discord-live .discord-count-card:last-child b{
+  color:#43ff9c!important;
+}
+
+.discord-panel.discord-unavailable .discord-count-card b{
+  color:rgba(255,255,255,.76)!important;
+}
+
+@media(max-width:700px){
+  .discord-counts{
+    gap:8px!important;
+    margin-top:12px!important;
+  }
+
+  .discord-count-card{
+    min-width:96px!important;
+    padding:9px 10px!important;
+  }
+
+  .discord-count-card b{
+    font-size:16px!important;
+  }
+}

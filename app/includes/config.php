@@ -6,6 +6,7 @@ return [
         'name' => 'Mineacle Network',
         'ip' => getenv('SERVER_IP') ?: 'mineacle.net',
         'discord' => getenv('DISCORD_URL') ?: 'https://discord.gg/4xrYFxdSWg',
+        'discord_invite_code' => getenv('DISCORD_INVITE_CODE') ?: '4xrYFxdSWg',
         'home' => getenv('HOME_URL') ?: 'https://mineacle.net/home',
         'store' => getenv('STORE_URL') ?: 'https://store.mineacle.net',
         'vote' => getenv('VOTE_URL') ?: 'https://vote.mineacle.net',
