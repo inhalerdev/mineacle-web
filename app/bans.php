@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 $requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
-if (!defined('MINEACLE_INTERNAL_RENDER') && preg_match('~/bans\\.php$~i', $requestPath)) {
+if (!defined('MINEACLE_INTERNAL_RENDER') && preg_match('~/bans\.php$~i', $requestPath)) {
     header('Location: /', true, 301);
     exit;
 }
@@ -18,7 +18,7 @@ mineacle_page_head('Bans');
   <section class="hero-shell" aria-label="Mineacle public bans hero">
     <div class="hero-grid">
       <div class="hero-main-logo-wrap" aria-label="Mineacle main logo">
-        <img class="hero-main-logo" src="assets/mineacle-main-logo.png?v=foundation1.20" alt="Mineacle">
+        <img class="hero-main-logo" src="assets/mineacle-main-logo.png?v=foundation1.21" alt="Mineacle">
       </div>
 
       <div class="hero-copy">
@@ -27,18 +27,17 @@ mineacle_page_head('Bans');
 
         <a class="discord-panel" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
           <div class="discord-character-wrap">
-            <img class="discord-character" src="assets/discord-character.webp?v=foundation1.20" alt="">
+            <img class="discord-character" src="assets/discord-character.webp?v=foundation1.21" alt="">
           </div>
           <div>
             <span>Official Discord</span>
             <strong>Appeals, updates, and support</strong>
             <p>Join the Mineacle community for ban help, server news, event updates, and player support.</p>
           </div>
-          <div class="discord-arrow">→</div>
+          <div class="discord-arrow" aria-hidden="true">→</div>
         </a>
       </div>
     </div>
-
   </section>
 
   <section class="bans-section" id="bans">
@@ -57,8 +56,9 @@ mineacle_page_head('Bans');
         </div>
 
         <div class="searchbar">
-          <span class="search-mark" aria-hidden="true">⌕</span>
+          <img class="search-icon" src="assets/search-icon.png?v=foundation1.21" alt="" aria-hidden="true">
           <input id="banSearch" type="search" placeholder="Search username..." autocomplete="off" maxlength="32">
+          <button class="search-clear" id="clearSearch" type="button" aria-label="Clear search">×</button>
         </div>
 
         <div class="ban-count" id="banCount">Loading...</div>
