@@ -579,6 +579,16 @@ function formatCompactNumber(value) {
   }).format(number);
 }
 
+function formatDiscordMemberCount(value) {
+  const number = Number(value);
+
+  if (!Number.isFinite(number) || number < 0) {
+    return "Unavailable";
+  }
+
+  return number >= 100 ? "100+" : number.toLocaleString("en-US");
+}
+
 async function updateDiscordCounts() {
   const memberTarget = document.querySelector("[data-discord-member-count]");
   const onlineTarget = document.querySelector("[data-discord-online-count]");
@@ -628,7 +638,7 @@ async function updateDiscordCounts() {
 
     if (memberTarget) {
       const members = Number(payload.member_count);
-      memberTarget.textContent = formatCompactNumber(members);
+      memberTarget.textContent = formatDiscordMemberCount(members);
       memberTarget.title = `${members.toLocaleString("en-US")} members`;
     }
 
