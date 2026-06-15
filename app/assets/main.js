@@ -32,6 +32,30 @@ function badgeClass(ban) {
   return ban.status_type || "active";
 }
 
+function statusLabel(ban) {
+  if (ban.ipban) {
+    return "IP Ban";
+  }
+
+  if (ban.temporary) {
+    return "Temp Ban";
+  }
+
+  return "Perm Ban";
+}
+
+function typePillClass(ban) {
+  if (ban.ipban) {
+    return "ip";
+  }
+
+  if (ban.temporary) {
+    return "temp";
+  }
+
+  return "perm";
+}
+
 function removeExistingModal() {
   document.querySelectorAll("#banModal").forEach((modal) => modal.remove());
 }
@@ -113,18 +137,18 @@ function getBanModal() {
 
 function actionButton(ban, index) {
   if (ban.ipban) {
-    return `<button class="btn soft disabled" type="button" disabled>No Action</button>`;
+    return "";
   }
 
   if (ban.temporary) {
-    return `<button class="btn soft disabled wait-btn" type="button" disabled>Wait It Out</button>`;
+    return `<button class="btn soft disabled wait-btn compact-action" type="button" disabled>Wait It Out</button>`;
   }
 
   if (ban.can_pay) {
-    return `<a class="btn red" href="${escapeHtml(ban.unban_url)}">${escapeHtml(ban.price)} Unban</a>`;
+    return `<a class="btn red compact-action" href="${escapeHtml(ban.unban_url)}">${escapeHtml(ban.price)} Unban</a>`;
   }
 
-  return `<button class="btn soft js-info-button" type="button" data-info-index="${index}">View</button>`;
+  return `<button class="btn soft js-info-button compact-action" type="button" data-info-index="${index}">View</button>`;
 }
 
 function resetPagination() {
@@ -245,11 +269,14 @@ function renderBans(rows) {
 
       <div class="ban-reason">
         ${escapeHtml(ban.reason)}
-        <div class="ban-meta">${escapeHtml(ban.type)} • ${escapeHtml(ban.duration)}</div>
+        <div class="ban-meta">
+          <span class="ban-mini-pill ${escapeHtml(typePillClass(ban))}">${escapeHtml(statusLabel(ban))}</span>
+          <span class="ban-mini-pill duration">${escapeHtml(ban.duration)}</span>
+        </div>
       </div>
 
       <div class="ban-status">
-        <span class="badge ${escapeHtml(badgeClass(ban))}">${escapeHtml(ban.status)}</span>
+        <span class="badge ${escapeHtml(badgeClass(ban))}">${escapeHtml(statusLabel(ban))}</span>
       </div>
 
       <div class="ban-action">${actionButton(ban, index)}</div>
