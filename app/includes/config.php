@@ -10,7 +10,7 @@ return [
         'home' => getenv('HOME_URL') ?: 'https://mineacle.net/home',
         'store' => getenv('STORE_URL') ?: 'https://store.mineacle.net',
         'x' => getenv('X_URL') ?: 'https://x.com/mineaclenetwork',
-        'vote' => getenv('VOTE_URL') ?: 'https://vote.mineacle.net',
+        'vote' => getenv('VOTE_URL') ?: 'https://store.mineacle.net/vote',
         'support_email' => getenv('SUPPORT_EMAIL') ?: 'support@mineacle.net',
         'server_online' => strtolower((string) getenv('SERVER_ONLINE')) !== 'false',
         'database_timezone' => getenv('DATABASE_TIMEZONE') ?: 'UTC',
@@ -42,21 +42,21 @@ return [
     'vote_sites' => [
         [
             'name' => 'Minecraft Server List',
-            'url' => getenv('VOTE_SITE_1') ?: 'https://minecraft-server-list.com/server/520903/',
+            'url' => getenv('VOTE_SITE_1') ?: '#',
             'reward' => 'Vote Key',
         ],
         [
-            'name' => 'MinecraftServers.org',
-            'url' => getenv('VOTE_SITE_2') ?: 'https://minecraftservers.org/server/688676',
+            'name' => 'Top Minecraft Servers',
+            'url' => getenv('VOTE_SITE_2') ?: '#',
             'reward' => 'Vote Key',
         ],
         [
-            'name' => 'Minecraft-MP',
-            'url' => getenv('VOTE_SITE_3') ?: 'https://minecraft-mp.com/server-s359207',
+            'name' => 'Minecraft MP',
+            'url' => getenv('VOTE_SITE_3') ?: '#',
             'reward' => 'Vote Key',
         ],
         [
-            'name' => 'Coming Soon',
+            'name' => 'Planet Minecraft',
             'url' => getenv('VOTE_SITE_4') ?: '#',
             'reward' => 'Vote Key',
         ],
