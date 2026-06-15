@@ -9,7 +9,9 @@ header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 try {
     $search = trim((string) ($_GET['search'] ?? ''));
-    if (mb_strlen($search) > 32) $search = mb_substr($search, 0, 32);
+    if (mb_strlen($search) > 32) {
+        $search = mb_substr($search, 0, 32);
+    }
 
     $page = max(1, (int) ($_GET['page'] ?? 1));
     $payload = fetch_litebans_bans_page($search, $page);
@@ -22,5 +24,9 @@ try {
 } catch (Throwable $e) {
     http_response_code(500);
     error_log('[MineacleBans] ' . $e->getMessage());
-    echo json_encode(['success' => false, 'error' => 'Unable to load bans right now'], JSON_UNESCAPED_SLASHES);
+
+    echo json_encode([
+        'success' => false,
+        'error' => 'Unable to load bans right now',
+    ], JSON_UNESCAPED_SLASHES);
 }
