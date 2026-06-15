@@ -5,13 +5,12 @@ return [
     'site' => [
         'name' => 'Mineacle Network',
         'ip' => getenv('SERVER_IP') ?: 'mineacle.net',
-        'discord' => getenv('DISCORD_URL') ?: 'https://discord.gg/4xrYFxdSWg',
-        'discord_invite_code' => getenv('DISCORD_INVITE_CODE') ?: '4xrYFxdSWg',
+        'discord' => getenv('DISCORD_URL') ?: 'https://discord.gg/VwbwWftefM',
+        'discord_invite_code' => getenv('DISCORD_INVITE_CODE') ?: 'VwbwWftefM',
         'home' => getenv('HOME_URL') ?: 'https://mineacle.net/home',
         'store' => getenv('STORE_URL') ?: 'https://store.mineacle.net',
         'vote' => getenv('VOTE_URL') ?: 'https://vote.mineacle.net',
-        'support_email' => getenv('SUPPORT_EMAIL') ?: 'support@mineacle.net',
-        'server_online' => strtolower((string) getenv('SERVER_ONLINE')) !== 'false',
+        'support_email' => getenv('SUPPORT_EMAIL') ?: 'support@mineacle.net',        'server_online' => strtolower((string) getenv('SERVER_ONLINE')) !== 'false',
         'database_timezone' => getenv('DATABASE_TIMEZONE') ?: 'UTC',
         'unban_checkout_url' => getenv('UNBAN_CHECKOUT_URL') ?: 'https://store.mineacle.net/checkout/unban?ban={id}&uuid={uuid}&username={username}',
     ],
@@ -28,6 +27,7 @@ return [
         'history_table' => getenv('LITEBANS_HISTORY_TABLE') ?: 'litebans_history',
     ],
     'payments' => [
+        'temporary_unban_price' => getenv('TEMP_UNBAN_PRICE') ?: '$9.99',
         'permanent_unban_price' => getenv('PERM_UNBAN_PRICE') ?: '$19.99',
     ],
     'page' => [
