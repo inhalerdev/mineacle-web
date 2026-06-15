@@ -900,97 +900,130 @@ img{
 }
 
 
-/* Foundation V1.19 safe header/search fix
-   This intentionally does not modify bans.php markup or main.js behavior.
-   It restores the working V1.17 page files and fixes sizing with CSS only. */
+/* Foundation V1.20 notes-based fixes */
 
-/* Match header to hero/bans container width.
-   Hero and bans sections use 14px side margin inside .page-shell, so the header must too. */
-.page-shell > .site-header{
-  margin-left:14px!important;
-  margin-right:14px!important;
-  width:auto!important;
+/* Use one shared width model for header + hero + bans + footer containers */
+.page-shell{
+  --mineacle-container-x: 24px;
 }
 
-/* Prevent older header rules from making it full-width again. */
-.site-header{
+.site-header,
+.hero-shell,
+.bans-section,
+.site-footer{
+  margin-left:var(--mineacle-container-x)!important;
+  margin-right:var(--mineacle-container-x)!important;
+  width:auto!important;
   max-width:none!important;
 }
 
-/* Resize the existing search glyph in the bans search bar.
-   V1.17 uses a <span>⌕</span>, so size the actual existing element instead of changing HTML. */
+/* Keep header content inside aligned like other cards */
+.site-header .header-inner{
+  width:100%!important;
+  max-width:none!important;
+}
+
+/* Bigger real existing search mark */
 .searchbar{
   position:relative!important;
+  overflow:hidden!important;
 }
 
-.searchbar > span{
+.searchbar > span,
+.searchbar .search-mark{
   position:absolute!important;
-  left:18px!important;
+  left:24px!important;
   top:50%!important;
   transform:translateY(-50%)!important;
-  width:34px!important;
-  height:34px!important;
-  min-width:34px!important;
-  min-height:34px!important;
+  width:38px!important;
+  height:38px!important;
+  min-width:38px!important;
+  min-height:38px!important;
   display:grid!important;
   place-items:center!important;
-  color:#ffffff!important;
-  opacity:.82!important;
-  font-size:34px!important;
+  color:#e8d9f3!important;
+  opacity:.9!important;
+  font-size:38px!important;
   line-height:1!important;
-  font-weight:900!important;
+  font-weight:950!important;
   pointer-events:none!important;
-  text-shadow:0 0 10px rgba(255,136,255,.28)!important;
-}
-
-/* Give the bigger icon enough room */
-.searchbar input{
-  padding-left:64px!important;
-}
-
-/* Search focus glow so players know the input is active */
-.searchbar:focus-within > span{
-  opacity:1!important;
   text-shadow:
-    0 0 8px rgba(255,136,255,.55),
-    0 0 18px rgba(140,60,255,.28)!important;
+    0 0 8px rgba(255,136,255,.35),
+    0 0 16px rgba(140,60,255,.18)!important;
 }
 
-/* If a previous V1.18 search SVG is still present in your repo/browser cache,
-   this keeps it sized too, but the page file in this patch restores the span version. */
-.searchbar .search-icon{
-  position:absolute!important;
-  left:20px!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
-  width:30px!important;
-  height:30px!important;
-  min-width:30px!important;
-  min-height:30px!important;
-  max-width:30px!important;
-  max-height:30px!important;
-  object-fit:contain!important;
-  display:block!important;
-  filter:brightness(0) invert(1) opacity(.82)!important;
-  pointer-events:none!important;
+.searchbar input{
+  padding-left:76px!important;
+  padding-right:76px!important;
+}
+
+.searchbar:focus-within > span,
+.searchbar:focus-within .search-mark{
+  opacity:1!important;
+  color:#ffffff!important;
+  text-shadow:
+    0 0 10px rgba(255,136,255,.65),
+    0 0 22px rgba(140,60,255,.32)!important;
+}
+
+/* Better native search clear icon where browsers allow it */
+.searchbar input[type="search"]::-webkit-search-cancel-button{
+  -webkit-appearance:none;
+  width:34px;
+  height:34px;
+  margin-right:10px;
+  border-radius:50%;
+  cursor:pointer;
+  background:
+    linear-gradient(45deg, transparent 43%, #8aa6ff 43%, #8aa6ff 57%, transparent 57%),
+    linear-gradient(-45deg, transparent 43%, #8aa6ff 43%, #8aa6ff 57%, transparent 57%),
+    rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 0 12px rgba(140,60,255,.18);
+}
+
+.searchbar input[type="search"]::-webkit-search-cancel-button:hover{
+  background:
+    linear-gradient(45deg, transparent 43%, #ff88ff 43%, #ff88ff 57%, transparent 57%),
+    linear-gradient(-45deg, transparent 43%, #ff88ff 43%, #ff88ff 57%, transparent 57%),
+    rgba(255,136,255,.10);
+}
+
+/* Compact failed-load state */
+.ban-list .error.compact-error,
+.ban-list .error{
+  min-height:82px!important;
+  padding:24px!important;
+}
+
+.ban-list .error.compact-error strong,
+.ban-list .error strong{
+  font-size:24px!important;
+}
+
+/* Empty search result should also be compact */
+.ban-list .empty{
+  min-height:82px!important;
+  padding:24px!important;
 }
 
 @media(max-width:700px){
-  .page-shell > .site-header{
-    margin-left:0!important;
-    margin-right:0!important;
+  .page-shell{
+    --mineacle-container-x: 0px;
   }
 
-  .searchbar > span{
-    left:16px!important;
-    width:30px!important;
-    height:30px!important;
-    min-width:30px!important;
-    min-height:30px!important;
-    font-size:30px!important;
+  .searchbar > span,
+  .searchbar .search-mark{
+    left:18px!important;
+    width:32px!important;
+    height:32px!important;
+    min-width:32px!important;
+    min-height:32px!important;
+    font-size:32px!important;
   }
 
   .searchbar input{
-    padding-left:58px!important;
+    padding-left:62px!important;
+    padding-right:58px!important;
   }
 }

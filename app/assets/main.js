@@ -69,8 +69,8 @@ function renderBans(rows) {
   if (!rows.length) {
     banList.innerHTML = `
       <div class="empty">
-        <strong>No active bans found</strong>
-        <span>Try another username or check again later</span>
+        <strong>No matching active bans found</strong>
+        <span>Check the username spelling or clear the search</span>
       </div>
     `;
     if (banCount) banCount.textContent = "0 shown";
@@ -141,7 +141,11 @@ async function loadBans(page = currentPage) {
     const payload = await response.json();
 
     if (!payload.success) {
-      banList.innerHTML = `<div class="error">${escapeHtml(payload.error || "Unable to load bans")}</div>`;
+      banList.innerHTML = `
+      <div class="error compact-error">
+        <strong>Unable to load bans right now</strong>
+      </div>
+    `;
       if (banCount) banCount.textContent = "0 shown";
       currentPagination = { page: 1, per_page: 25, total: 0, total_pages: 1, has_prev: false, has_next: false };
       renderPagination();
@@ -153,7 +157,11 @@ async function loadBans(page = currentPage) {
     currentPage = currentPagination.page || currentPage;
     renderBans(window.mineacleBans);
   } catch (error) {
-    banList.innerHTML = `<div class="error">Unable to load bans right now</div>`;
+    banList.innerHTML = `
+      <div class="error compact-error">
+        <strong>Unable to load bans right now</strong>
+      </div>
+    `;
     if (banCount) banCount.textContent = "0 shown";
     currentPagination = { page: 1, per_page: 25, total: 0, total_pages: 1, has_prev: false, has_next: false };
     renderPagination();
@@ -213,12 +221,34 @@ document.querySelectorAll(".copy-ip").forEach(button => {
 
 if (banSearch) {
   let timer = null;
+
+  const runSearch = () => {
+    currentPage = 1;
+    loadBans(1);
+  };
+
   banSearch.addEventListener("input", () => {
     clearTimeout(timer);
-    timer = setTimeout(() => {
-      currentPage = 1;
-      loadBans(1);
-    }, 180);
+    timer = setTimeout(runSearch, 180);
+  });
+
+  banSearch.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      clearTimeout(timer);
+      runSearch();
+    }
+
+    if (event.key === "Escape") {
+      banSearch.value = "";
+      clearTimeout(timer);
+      runSearch();
+    }
+  });
+
+  banSearch.addEventListener("search", () => {
+    clearTimeout(timer);
+    runSearch();
   });
 }
 
