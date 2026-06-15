@@ -19,35 +19,22 @@ mineacle_page_head('Bans');
   <section class="hero-shell" aria-label="Mineacle public bans hero">
     <div class="hero-grid">
       <div class="hero-main-logo-wrap" aria-label="Mineacle main logo">
-        <img class="hero-main-logo" src="assets/mineacle-main-logo.png?v=foundation1.42" alt="Mineacle">
+        <img class="hero-main-logo" src="assets/mineacle-bans-logo.png?v=foundation1.46" alt="Mineacle Bans">
       </div>
 
       <div class="hero-copy">
         <h1>Public Ban List</h1>
         <p>Search active punishments, review public LiteBans records, and keep Mineacle safe for every player</p>
 
-        <a class="discord-panel" data-discord-card href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
+        <a class="discord-panel" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
           <div class="discord-character-wrap">
-            <img class="discord-character" src="assets/discord-character.webp?v=foundation1.42" alt="">
+            <img class="discord-character" src="assets/discord-character.webp?v=foundation1.46" alt="">
           </div>
-
-          <div class="discord-copy">
+          <div>
             <span>Official Discord</span>
             <strong>Appeals, updates, and support</strong>
             <p>Join the Mineacle community for ban help, server news, event updates, and player support.</p>
-
-            <div class="discord-counts" aria-label="Discord community counts">
-              <div class="discord-count-card">
-                <small>Members</small>
-                <b id="discordMemberCount" data-discord-member-count>Loading</b>
-              </div>
-              <div class="discord-count-card">
-                <small>Online</small>
-                <b id="discordOnlineCount" data-discord-online-count>Checking</b>
-              </div>
-            </div>
           </div>
-
           <div class="discord-arrow" aria-hidden="true">→</div>
         </a>
       </div>
@@ -70,7 +57,7 @@ mineacle_page_head('Bans');
         </div>
 
         <div class="searchbar">
-          <img class="search-icon" src="assets/search-icon.png?v=foundation1.42" alt="" aria-hidden="true">
+          <img class="search-icon" src="assets/search-icon.png?v=foundation1.46" alt="" aria-hidden="true">
           <input id="banSearch" type="search" placeholder="Search username..." autocomplete="off" maxlength="32">
           <button class="search-clear" id="clearSearch" type="button" aria-label="Clear search">×</button>
         </div>
