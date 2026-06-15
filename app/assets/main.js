@@ -275,10 +275,6 @@ function renderBans(rows) {
         </div>
       </div>
 
-      <div class="ban-status">
-        <span class="badge ${escapeHtml(badgeClass(ban))}">${escapeHtml(statusLabel(ban))}</span>
-      </div>
-
       <div class="ban-action">${actionButton(ban, index)}</div>
     </article>
   `).join("");
