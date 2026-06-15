@@ -27,8 +27,8 @@ function mineacle_epoch_seconds(mixed $value): int {
         return 0;
     }
 
-    // LiteBans stores BIGINT timestamps. Depending on storage/import path, this may be:
-    // seconds, milliseconds, microseconds, or nanoseconds.
+    // LiteBans/MySQL timestamp storage may be seconds, milliseconds,
+    // microseconds, or nanoseconds depending on version/import path.
     if ($value >= 100000000000000000) {
         return (int) floor($value / 1000000000);
     }
@@ -44,6 +44,17 @@ function mineacle_epoch_seconds(mixed $value): int {
     return $value;
 }
 
+function mineacle_database_timezone(): DateTimeZone {
+    $config = mineacle_config();
+    $timezoneName = (string) ($config['site']['database_timezone'] ?? 'UTC');
+
+    try {
+        return new DateTimeZone($timezoneName);
+    } catch (Throwable) {
+        return new DateTimeZone('UTC');
+    }
+}
+
 function mineacle_format_date(mixed $value): string {
     $seconds = mineacle_epoch_seconds($value);
 
@@ -51,17 +62,8 @@ function mineacle_format_date(mixed $value): string {
         return 'Unknown';
     }
 
-    $config = mineacle_config();
-    $timezoneName = (string) ($config['site']['timezone'] ?? 'America/New_York');
-
-    try {
-        $timezone = new DateTimeZone($timezoneName);
-    } catch (Throwable) {
-        $timezone = new DateTimeZone('America/New_York');
-    }
-
     return (new DateTimeImmutable('@' . $seconds))
-        ->setTimezone($timezone)
+        ->setTimezone(mineacle_database_timezone())
         ->format('M j, Y g:i:s A T');
 }
 

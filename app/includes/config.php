@@ -9,9 +9,8 @@ return [
         'home' => getenv('HOME_URL') ?: 'https://mineacle.net/home',
         'store' => getenv('STORE_URL') ?: 'https://store.mineacle.net',
         'vote' => getenv('VOTE_URL') ?: 'https://vote.mineacle.net',
-        'support_email' => getenv('SUPPORT_EMAIL') ?: 'support@mineacle.net',
-        'timezone' => getenv('APP_TIMEZONE') ?: 'America/New_York',
-        'server_online' => strtolower((string) getenv('SERVER_ONLINE')) !== 'false',
+        'support_email' => getenv('SUPPORT_EMAIL') ?: 'support@mineacle.net',        'server_online' => strtolower((string) getenv('SERVER_ONLINE')) !== 'false',
+        'database_timezone' => getenv('DATABASE_TIMEZONE') ?: 'UTC',
         'unban_checkout_url' => getenv('UNBAN_CHECKOUT_URL') ?: 'https://store.mineacle.net/checkout/unban?ban={id}&uuid={uuid}&username={username}',
     ],
     'mysql' => [
