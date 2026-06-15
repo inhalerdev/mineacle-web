@@ -19,7 +19,7 @@ mineacle_page_head('Bans');
   <section class="hero-shell" aria-label="Mineacle public bans hero">
     <div class="hero-grid">
       <div class="hero-main-logo-wrap" aria-label="Mineacle main logo">
-        <img class="hero-main-logo" src="/assets/mineacle-bans-logo.png" alt="Mineacle Bans">
+        <img class="hero-main-logo" src="/assets/mineacle-bans-logo.png?v=bansfull1.2" alt="Mineacle Bans">
       </div>
 
       <div class="hero-copy">
