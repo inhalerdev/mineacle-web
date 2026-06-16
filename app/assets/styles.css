@@ -3490,7 +3490,7 @@ body{
   background:
     linear-gradient(180deg, rgba(10,8,18,.28), rgba(8,7,17,.94)),
     radial-gradient(circle at 50% 48%, rgba(179,60,255,.26), transparent 28rem),
-    url("bans-hero-background.png?v=bansfull3.2") center / cover no-repeat!important;
+    url("bans-hero-background.png?v=bansfull3.3") center / cover no-repeat!important;
 }
 
 .bans-v3-hero::before{
@@ -4105,7 +4105,7 @@ body{
   display:grid!important;
   place-items:center!important;
   padding:calc(var(--v3-header-height) + 48px) 20px 72px!important;
-  background:linear-gradient(180deg, rgba(8,7,17,.25), rgba(8,7,17,.82)), radial-gradient(circle at 50% 46%, rgba(160,49,255,.25), transparent 30rem), url("bans-hero-background.png?v=bansfull3.2") center / cover no-repeat!important;
+  background:linear-gradient(180deg, rgba(8,7,17,.25), rgba(8,7,17,.82)), radial-gradient(circle at 50% 46%, rgba(160,49,255,.25), transparent 30rem), url("bans-hero-background.png?v=bansfull3.3") center / cover no-repeat!important;
 }
 
 .bans-v32-logo-only-fold::before{
@@ -4198,5 +4198,225 @@ body{
 
   .bans-v32-logo-center{
     width:min(520px, 92vw)!important;
+  }
+}
+
+
+/* Mineacle Bans v3.3: nav/text/logo polish */
+:root{
+  --v3-header-height:76px!important;
+}
+
+/* Taller header with room above and below nav controls */
+.site-header.blocaria-style-header,
+.blocaria-style-header{
+  height:76px!important;
+  min-height:76px!important;
+  background:rgba(18,15,34,.94)!important;
+  border-bottom:1px solid rgba(255,136,255,.15)!important;
+}
+
+.blocaria-nav-inner{
+  width:min(1240px, calc(100% - 32px))!important;
+  height:76px!important;
+  min-height:76px!important;
+  padding-top:10px!important;
+  padding-bottom:10px!important;
+  box-sizing:border-box!important;
+}
+
+.blocaria-nav-left,
+.blocaria-nav-right{
+  gap:16px!important;
+  height:100%!important;
+}
+
+/* Vote/Bans are professional text links, not buttons */
+.blocaria-nav-left .nav-text-link{
+  position:relative!important;
+  height:44px!important;
+  min-width:78px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 8px!important;
+  color:rgba(255,255,255,.82)!important;
+  background:transparent!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  text-decoration:none!important;
+  text-transform:uppercase!important;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
+  font-size:17px!important;
+  line-height:1!important;
+  font-weight:900!important;
+  letter-spacing:.045em!important;
+  text-shadow:none!important;
+  transition:color .16s ease, text-shadow .16s ease, transform .16s ease!important;
+}
+
+.blocaria-nav-left .nav-text-link::after{
+  content:""!important;
+  position:absolute!important;
+  left:8px!important;
+  right:8px!important;
+  bottom:2px!important;
+  height:3px!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg, #ff2458, #b33cff, #6d19ff)!important;
+  opacity:0!important;
+  transform:scaleX(.68)!important;
+  transition:opacity .16s ease, transform .16s ease!important;
+  box-shadow:0 0 16px rgba(179,60,255,.55)!important;
+}
+
+.blocaria-nav-left .nav-text-link:hover{
+  color:#fff!important;
+  transform:translateY(-1px)!important;
+  text-shadow:0 0 16px rgba(255,136,255,.30)!important;
+}
+
+.blocaria-nav-left .nav-text-link.active{
+  color:#fff!important;
+  text-shadow:0 0 18px rgba(179,60,255,.38)!important;
+}
+
+.blocaria-nav-left .nav-text-link.active::after{
+  opacity:1!important;
+  transform:scaleX(1)!important;
+}
+
+/* Keep Store and Play as Minecraft-style purple effect buttons */
+.nav-mc-button,
+.play-copy-button,
+.blocaria-nav-left .nav-store-button{
+  height:44px!important;
+  min-height:44px!important;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
+  font-size:17px!important;
+  font-weight:950!important;
+  letter-spacing:.025em!important;
+}
+
+.blocaria-nav-left .nav-store-button{
+  margin-left:2px!important;
+  min-width:108px!important;
+}
+
+/* Discord icon follows button height */
+.nav-mc-icon-button,
+.discord-square{
+  width:46px!important;
+  height:44px!important;
+  min-width:46px!important;
+  min-height:44px!important;
+}
+
+/* Player count stays right side, professional bold */
+.players-online-copy{
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
+  font-size:15px!important;
+  line-height:1.08!important;
+  font-weight:900!important;
+  letter-spacing:.025em!important;
+}
+
+/* Logo: no float, 25% smaller, red-to-purple glow */
+.bans-v32-logo-center{
+  width:min(570px, 63vw)!important;
+  animation:none!important;
+  transform:none!important;
+  filter:
+    drop-shadow(0 0 18px rgba(255, 24, 70, .62))
+    drop-shadow(0 0 34px rgba(179, 60, 255, .52))
+    drop-shadow(0 20px 54px rgba(109, 25, 255, .42))!important;
+}
+
+.bans-v32-logo-center img{
+  width:100%!important;
+  height:auto!important;
+}
+
+/* Adjust top fold for taller header */
+.bans-v32-logo-only-fold{
+  padding-top:calc(76px + 48px)!important;
+}
+
+@media(max-width:980px){
+  :root{
+    --v3-header-height:72px!important;
+  }
+
+  .site-header.blocaria-style-header,
+  .blocaria-style-header{
+    height:72px!important;
+    min-height:72px!important;
+  }
+
+  .blocaria-nav-inner{
+    height:72px!important;
+    min-height:72px!important;
+    padding-top:8px!important;
+    padding-bottom:8px!important;
+  }
+
+  .blocaria-nav-left,
+  .blocaria-nav-right{
+    gap:8px!important;
+  }
+
+  .blocaria-nav-left .nav-text-link{
+    min-width:58px!important;
+    font-size:14px!important;
+    letter-spacing:.035em!important;
+  }
+
+  .nav-mc-button,
+  .play-copy-button,
+  .blocaria-nav-left .nav-store-button{
+    height:40px!important;
+    min-height:40px!important;
+    min-width:82px!important;
+    padding:0 12px!important;
+    font-size:14px!important;
+  }
+
+  .nav-mc-icon-button,
+  .discord-square{
+    width:42px!important;
+    height:40px!important;
+    min-width:42px!important;
+    min-height:40px!important;
+  }
+
+  .bans-v32-logo-center{
+    width:min(465px, 66vw)!important;
+  }
+
+  .bans-v32-logo-only-fold{
+    padding-top:calc(72px + 42px)!important;
+  }
+}
+
+@media(max-width:640px){
+  .blocaria-nav-left .nav-text-link{
+    min-width:48px!important;
+    font-size:13px!important;
+    padding:0 4px!important;
+  }
+
+  .nav-mc-button,
+  .play-copy-button,
+  .blocaria-nav-left .nav-store-button{
+    min-width:70px!important;
+    height:36px!important;
+    min-height:36px!important;
+    padding:0 9px!important;
+    font-size:13px!important;
+  }
+
+  .bans-v32-logo-center{
+    width:min(390px, 72vw)!important;
   }
 }
