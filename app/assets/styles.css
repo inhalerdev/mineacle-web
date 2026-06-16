@@ -3116,12 +3116,6 @@ body > *:last-child{
 }
 
 
-/* Dedicated Bans full build v1.2: hard fix hero Bans logo asset */
-.hero-main-logo{
-  content:url("/assets/mineacle-bans-logo.png?v=bansfull1.3")!important;
-}
-
-
 /* Full-width top header: 25% taller, starts at top of website */
 .site-header{
   position:sticky!important;
