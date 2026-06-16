@@ -3586,3 +3586,54 @@ body > *:last-child{
     padding-right:10px!important;
   }
 }
+
+/* Shared header flush-top fix v2
+   Bans must match Vote: nav starts at the exact top edge. */
+html,
+body{
+  margin:0!important;
+  padding:0!important;
+  border:0!important;
+}
+
+body{
+  padding-top:0!important;
+  margin-top:0!important;
+}
+
+body::before,
+body::after{
+  display:none!important;
+  content:none!important;
+}
+
+.site-header{
+  position:sticky!important;
+  top:0!important;
+  inset-block-start:0!important;
+  margin-top:0!important;
+  margin-block-start:0!important;
+  padding-top:0!important;
+  transform:none!important;
+}
+
+body > .site-header:first-child,
+.site-header:first-child{
+  margin-top:0!important;
+  top:0!important;
+}
+
+.page,
+.site-page,
+.main-page,
+main{
+  margin-top:0!important;
+  padding-top:0!important;
+}
+
+/* Preserve the controlled spacing below the header only */
+.hero-shell,
+.vote-middle-shell,
+.vote-content-shell{
+  margin-top:0!important;
+}
