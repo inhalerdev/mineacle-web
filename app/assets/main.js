@@ -18,6 +18,45 @@ let currentPagination = {
   has_next: false
 };
 
+
+function isLiteBans2038Sentinel(value) {
+  const raw = Number(value);
+  if (!Number.isFinite(raw)) {
+    return false;
+  }
+
+  let seconds = raw;
+  if (raw >= 100000000000000000) {
+    seconds = Math.floor(raw / 1000000000);
+  } else if (raw >= 100000000000000) {
+    seconds = Math.floor(raw / 1000000);
+  } else if (raw >= 100000000000) {
+    seconds = Math.floor(raw / 1000);
+  }
+
+  return seconds >= 2147480000 && seconds <= 2147483647;
+}
+
+function normalizeLiteBansSentinelBan(ban) {
+  const until = ban?.until_raw ?? ban?.until_seconds ?? ban?.until;
+
+  if (!isLiteBans2038Sentinel(until)) {
+    return ban;
+  }
+
+  return {
+    ...ban,
+    temporary: false,
+    permanent: true,
+    type: ban.ipban ? "IP Ban" : "Player Ban",
+    status: "Permanently Banned",
+    status_type: ban.ipban ? "ip" : "active",
+    duration: "Permanent",
+    expires: "Never",
+    action_type: ban.ipban ? "ip" : "pay"
+  };
+}
+
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (char) => ({
     "&": "&amp;",
@@ -37,7 +76,7 @@ function statusLabel(ban) {
     return "IP Ban";
   }
 
-  if (ban.temporary && !isLiteBansPermanentSentinel(ban.until_raw ?? ban.until_seconds ?? ban.until)) {
+  if (ban.temporary) {
     return "Temp Ban";
   }
 
@@ -49,7 +88,7 @@ function typePillClass(ban) {
     return "ip";
   }
 
-  if (ban.temporary && !isLiteBansPermanentSentinel(ban.until_raw ?? ban.until_seconds ?? ban.until)) {
+  if (ban.temporary) {
     return "temp";
   }
 
@@ -140,7 +179,7 @@ function actionButton(ban, index) {
     return "";
   }
 
-  if (ban.temporary && !isLiteBansPermanentSentinel(ban.until_raw ?? ban.until_seconds ?? ban.until)) {
+  if (ban.temporary) {
     return `<button class="btn soft disabled wait-btn compact-action" type="button" disabled>Wait It Out</button>`;
   }
 
@@ -408,7 +447,7 @@ function openBanInfo(ban) {
     if (ban.ipban) {
       actions.innerHTML = `<button class="btn soft disabled" type="button" disabled>Permanent IP Ban</button>`;
       note.textContent = "This is an IP ban. It has no public dispute or paid-unban option.";
-    } else if (ban.temporary && !isLiteBansPermanentSentinel(ban.until_raw ?? ban.until_seconds ?? ban.until)) {
+    } else if (ban.temporary) {
       actions.innerHTML = `<button class="btn soft disabled wait-btn" type="button" disabled>Wait It Out</button>`;
       note.textContent = `Temporary bans cannot be paid for. This punishment expires on ${ban.expires || "the listed expiration date"}.`;
     } else if (ban.can_pay) {
@@ -742,28 +781,3 @@ initMobileNavigation();
 
 createBanModal();
 loadBans(1);
-
-
-function normalizeLiteBans2038SentinelBans() {
-  if (!Array.isArray(window.mineacleCurrentBans)) {
-    return;
-  }
-
-  window.mineacleCurrentBans = window.mineacleCurrentBans.map((ban) => {
-    const untilRaw = ban.until_raw ?? ban.until_seconds ?? ban.until;
-
-    if (!isLiteBansPermanentSentinel(untilRaw)) {
-      return ban;
-    }
-
-    return {
-      ...ban,
-      temporary: false,
-      type: ban.ipban ? "IP Ban" : "Permanent Ban",
-      status: ban.ipban ? "IP Ban" : "Permanently Banned",
-      status_type: ban.ipban ? "ip" : "active",
-      duration: "Permanent",
-      expires: "Permanent",
-    };
-  });
-}

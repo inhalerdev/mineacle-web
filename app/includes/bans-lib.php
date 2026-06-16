@@ -44,6 +44,29 @@ function mineacle_epoch_seconds(mixed $value): int {
     return $value;
 }
 
+
+function mineacle_litebans_until_seconds_sql(string $field): string {
+    return '(CASE
+        WHEN ' . $field . ' >= 100000000000000000 THEN FLOOR(' . $field . ' / 1000000000)
+        WHEN ' . $field . ' >= 100000000000000 THEN FLOOR(' . $field . ' / 1000000)
+        WHEN ' . $field . ' >= 100000000000 THEN FLOOR(' . $field . ' / 1000)
+        ELSE ' . $field . '
+    END)';
+}
+
+function mineacle_litebans_is_2038_sentinel(mixed $until): bool {
+    $seconds = mineacle_epoch_seconds($until);
+
+    return $seconds >= 2147480000 && $seconds <= 2147483647;
+}
+
+function mineacle_litebans_is_permanent(mixed $until): bool {
+    $seconds = mineacle_epoch_seconds($until);
+
+    return $seconds <= 0 || mineacle_litebans_is_2038_sentinel($until);
+}
+
+
 function mineacle_database_now_seconds(PDO $pdo): int {
     try {
         $value = $pdo->query('SELECT UNIX_TIMESTAMP()')->fetchColumn();
@@ -70,38 +93,6 @@ function mineacle_database_timezone(): DateTimeZone {
     }
 }
 
-
-
-function mineacle_is_litebans_permanent_until(mixed $until): bool {
-    if ($until === null || $until === '') {
-        return true;
-    }
-
-    $seconds = mineacle_normalize_litebans_timestamp($until);
-
-    if ($seconds <= 0) {
-        return true;
-    }
-
-    /*
-     * LiteBans / Java-era permanent or max-time sentinel values can normalize to
-     * 2147483647 seconds, which renders as Jan 19, 2038 03:14:07 UTC.
-     * That is not a real temporary-ban expiration and must never be displayed
-     * as a temporary ban date.
-     */
-    return $seconds >= 2147480000;
-}
-
-function mineacle_has_real_temporary_until(mixed $until, int $databaseNow): bool {
-    if (mineacle_is_litebans_permanent_until($until)) {
-        return false;
-    }
-
-    $seconds = mineacle_normalize_litebans_timestamp($until);
-
-    return $seconds > $databaseNow;
-}
-
 function mineacle_format_date(mixed $value): string {
     $seconds = mineacle_epoch_seconds($value);
 
@@ -115,12 +106,12 @@ function mineacle_format_date(mixed $value): string {
 }
 
 function mineacle_format_duration(mixed $until, mixed $time): string {
-    $untilSeconds = mineacle_epoch_seconds($until);
-    $timeSeconds = mineacle_epoch_seconds($time);
-
-    if ($untilSeconds <= 0) {
+    if (mineacle_litebans_is_permanent($until)) {
         return 'Permanent';
     }
+
+    $untilSeconds = mineacle_epoch_seconds($until);
+    $timeSeconds = mineacle_epoch_seconds($time);
 
     $seconds = max(0, $untilSeconds - max(1, $timeSeconds));
     if ($seconds <= 0) {
@@ -160,26 +151,19 @@ function fetch_litebans_bans_page(string $search = '', int $page = 1): array {
 
     // Match LiteBans use_database_time behavior by using MySQL's current epoch for active temp-ban filtering.
     $nowSeconds = mineacle_database_now_seconds($pdo);
-    $nowMillis = $nowSeconds * 1000;
-    $nowMicros = $nowSeconds * 1000000;
-    $nowNanos = $nowSeconds * 1000000000;
+    $untilSecondsSql = mineacle_litebans_until_seconds_sql('b.`until`');
 
     $where = [
         'b.`active` = 1',
         '(
             b.`until` <= 0
-            OR b.`until` > :now_seconds
-            OR b.`until` > :now_millis
-            OR b.`until` > :now_micros
-            OR b.`until` > :now_nanos
+            OR ' . $untilSecondsSql . ' > :now_seconds
+            OR ' . $untilSecondsSql . ' >= 2147480000
         )',
     ];
 
     $params = [
         'now_seconds' => $nowSeconds,
-        'now_millis' => $nowMillis,
-        'now_micros' => $nowMicros,
-        'now_nanos' => $nowNanos,
     ];
 
     $search = trim($search);
@@ -252,10 +236,9 @@ function fetch_litebans_bans_page(string $search = '', int $page = 1): array {
         $time = (int) ($row['time'] ?? 0);
         $untilSeconds = mineacle_epoch_seconds($until);
         $timeSeconds = mineacle_epoch_seconds($time);
-        $permanent = $until <= 0 || $untilSeconds <= 0;
-        $temporary = !$isIpBan && !$permanent;
+        $permanent = mineacle_litebans_is_permanent($until);
+        $temporary = !$isIpBan && !$permanent && $untilSeconds > $nowSeconds;
 
-        if (mineacle_is_litebans_permanent_until($row['until'] ?? null)) { $temporary = false; }
         if ($isIpBan) {
             $type = 'IP Ban';
             $status = 'Permanently Banned';
@@ -288,7 +271,7 @@ function fetch_litebans_bans_page(string $search = '', int $page = 1): array {
             'type' => $type,
             'duration' => mineacle_format_duration($until, $time),
             'date' => mineacle_format_date($time),
-            'expires' => $temporary ? mineacle_format_date($until) : ($permanent ? 'Never' : 'Unknown'),
+            'expires' => $temporary ? mineacle_format_date($until) : 'Never',
             'status' => $status,
             'status_type' => $statusType,
             'ipban' => $isIpBan,
