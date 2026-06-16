@@ -3489,7 +3489,7 @@ body{
   background:
     linear-gradient(180deg, rgba(10,8,18,.28), rgba(8,7,17,.94)),
     radial-gradient(circle at 50% 48%, rgba(179,60,255,.26), transparent 28rem),
-    url("bans-hero-background.png?v=bansfull3.8.18.188.177.166.144.8.7.6.5.4.3.2") center / cover no-repeat!important;
+    url("bans-hero-background.png?v=bansfull3.8.20.200.199.188.177.166.144.8.7.6.5.4.3.2") center / cover no-repeat!important;
 }
 
 .bans-v3-hero::before{
@@ -4104,7 +4104,7 @@ body{
   display:grid!important;
   place-items:center!important;
   padding:calc(var(--v3-header-height) + 48px) 20px 72px!important;
-  background:linear-gradient(180deg, rgba(8,7,17,.25), rgba(8,7,17,.82)), radial-gradient(circle at 50% 46%, rgba(160,49,255,.25), transparent 30rem), url("bans-hero-background.png?v=bansfull3.8.18.188.177.166.144.8.7.6.5.4.3.2") center / cover no-repeat!important;
+  background:linear-gradient(180deg, rgba(8,7,17,.25), rgba(8,7,17,.82)), radial-gradient(circle at 50% 46%, rgba(160,49,255,.25), transparent 30rem), url("bans-hero-background.png?v=bansfull3.8.20.200.199.188.177.166.144.8.7.6.5.4.3.2") center / cover no-repeat!important;
 }
 
 .bans-v32-logo-only-fold::before{
@@ -7396,4 +7396,150 @@ body,
   :root{
     --mcx-logo-w:126px;
   }
+}
+
+
+/* Mineacle Bans v3.8.19: main logo size/position only
+   Keep current logo/design, make it 15% larger, and move it upward so the nav bar cuts through higher. */
+:root{
+  --mcx-logo-w:283px; /* 246px * 1.15 */
+}
+
+/* Position rule: logo center sits at 75% of the nav height.
+   This leaves about 1/4 of the nav above the logo center while keeping logo hanging below. */
+.mcx-logo{
+  top:75%!important;
+  width:var(--mcx-logo-w)!important;
+  max-width:var(--mcx-logo-w)!important;
+  transform:translate(-50%, -50%)!important;
+}
+
+.mcx-logo:hover{
+  transform:translate(-50%, -50%) scale(1.015)!important;
+}
+
+/* Ensure nav shell still allows the larger logo to hang below the bar. */
+.mcx-header,
+.mcx-nav-shell{
+  overflow:visible!important;
+}
+
+@media(max-width:980px){
+  :root{
+    --mcx-logo-w:173px; /* 150px * 1.15 */
+  }
+
+  .mcx-logo{
+    top:75%!important;
+    transform:translate(-50%, -50%)!important;
+  }
+
+  .mcx-logo:hover{
+    transform:translate(-50%, -50%) scale(1.015)!important;
+  }
+}
+
+@media(max-width:640px){
+  :root{
+    --mcx-logo-w:145px; /* 126px * 1.15 */
+  }
+}
+
+
+/* Mineacle Bans v3.8.20: better hover/click effect for text links only
+   Store, Discord, Play, and logo placement are unchanged. */
+.mcx-link{
+  position:absolute!important;
+  isolation:isolate!important;
+  overflow:visible!important;
+  transition:
+    color .14s ease,
+    text-shadow .14s ease,
+    filter .14s ease!important;
+}
+
+/* Small purple shine behind text without changing the clickable box center. */
+.mcx-link::before{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:88px!important;
+  height:34px!important;
+  transform:translate(-50%, -50%) scale(.82)!important;
+  border-radius:8px!important;
+  background:linear-gradient(180deg, rgba(255,136,255,.16), rgba(109,25,255,.10))!important;
+  border:1px solid rgba(255,136,255,.16)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  z-index:-1!important;
+  box-shadow:0 0 22px rgba(179,60,255,.18)!important;
+  transition:opacity .14s ease, transform .14s ease, border-color .14s ease, box-shadow .14s ease!important;
+}
+
+.mcx-link::after{
+  content:""!important;
+  position:absolute!important;
+  left:50%!important;
+  bottom:3px!important;
+  width:26px!important;
+  height:2px!important;
+  transform:translateX(-50%) scaleX(0)!important;
+  border-radius:999px!important;
+  background:linear-gradient(90deg, #ff88ff, #b33cff)!important;
+  opacity:0!important;
+  pointer-events:none!important;
+  box-shadow:0 0 12px rgba(255,136,255,.50)!important;
+  transition:opacity .14s ease, transform .14s ease!important;
+}
+
+.mcx-link:hover{
+  color:#ffffff!important;
+  filter:brightness(1.16)!important;
+  text-shadow:
+    0 0 10px rgba(255,136,255,.42),
+    0 2px 0 rgba(0,0,0,.50)!important;
+}
+
+.mcx-link:hover::before{
+  opacity:1!important;
+  transform:translate(-50%, -50%) scale(1)!important;
+  border-color:rgba(255,136,255,.28)!important;
+  box-shadow:
+    0 0 22px rgba(179,60,255,.22),
+    inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+
+.mcx-link:hover::after{
+  opacity:1!important;
+  transform:translateX(-50%) scaleX(1)!important;
+}
+
+/* Click/pressed state: color changes and the shine tightens, but box does not move. */
+.mcx-link:active{
+  color:#ff88ff!important;
+  filter:brightness(.98)!important;
+  text-shadow:
+    0 0 12px rgba(255,136,255,.52),
+    0 1px 0 rgba(0,0,0,.55)!important;
+}
+
+.mcx-link:active::before{
+  opacity:1!important;
+  transform:translate(-50%, -50%) scale(.94)!important;
+  background:linear-gradient(180deg, rgba(255,136,255,.22), rgba(109,25,255,.16))!important;
+  box-shadow:
+    0 0 16px rgba(179,60,255,.28),
+    inset 0 2px 0 rgba(0,0,0,.18)!important;
+}
+
+.mcx-link:active::after{
+  opacity:1!important;
+  transform:translateX(-50%) scaleX(.72)!important;
+}
+
+/* Active page: subtle, no permanent underline bar. */
+.mcx-link.is-active{
+  color:#ffffff!important;
+  text-shadow:0 0 12px rgba(255,136,255,.24)!important;
 }
