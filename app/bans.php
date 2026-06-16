@@ -8,11 +8,8 @@ mineacle_header('bans');
 ?>
 
 <main class="bans-v3-page">
-  <section class="bans-v3-hero bans-v32-logo-only-fold" aria-label="Mineacle bans">
-    <div class="bans-v32-logo-center">
-      <img src="assets/mineacle-bans-hero-logo.png?v=bansfull3.3" alt="Mineacle Bans">
-    </div>
-  </section>
+  <section class="bans-v3-hero bans-v32-logo-only-fold bans-v34-background-fold" aria-label="Mineacle bans">
+</section>
 
   <section class="bans-v3-results" id="ban-results" aria-label="Active ban results">
     <div class="bans-v3-results-head">
