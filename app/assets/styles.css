@@ -3489,7 +3489,7 @@ body{
   background:
     linear-gradient(180deg, rgba(10,8,18,.28), rgba(8,7,17,.94)),
     radial-gradient(circle at 50% 48%, rgba(179,60,255,.26), transparent 28rem),
-    url("bans-hero-background.png?v=bansfull3.8.7.7.6.5.4.3.2") center / cover no-repeat!important;
+    url("bans-hero-background.png?v=bansfull3.8.8.8.7.6.5.4.3.2") center / cover no-repeat!important;
 }
 
 .bans-v3-hero::before{
@@ -4104,7 +4104,7 @@ body{
   display:grid!important;
   place-items:center!important;
   padding:calc(var(--v3-header-height) + 48px) 20px 72px!important;
-  background:linear-gradient(180deg, rgba(8,7,17,.25), rgba(8,7,17,.82)), radial-gradient(circle at 50% 46%, rgba(160,49,255,.25), transparent 30rem), url("bans-hero-background.png?v=bansfull3.8.7.7.6.5.4.3.2") center / cover no-repeat!important;
+  background:linear-gradient(180deg, rgba(8,7,17,.25), rgba(8,7,17,.82)), radial-gradient(circle at 50% 46%, rgba(160,49,255,.25), transparent 30rem), url("bans-hero-background.png?v=bansfull3.8.8.8.7.6.5.4.3.2") center / cover no-repeat!important;
 }
 
 .bans-v32-logo-only-fold::before{
@@ -6240,5 +6240,287 @@ body,
   .mineacle-floating-header.is-scrolled .blocaria-nav-right{
     grid-template-columns:42px 70px!important;
     column-gap:10px!important;
+  }
+}
+
+
+/* Mineacle Bans v3.8.8: true nav item box-centering
+   Center actual link/button boxes inside the nav border.
+   Do not calculate glow, shadow, underline, or hover depth as part of alignment. */
+:root{
+  --nav-height:104px;
+  --nav-item-height:44px;
+  --nav-side-gap:28px;
+  --nav-text-width:72px;
+  --nav-button-width:104px;
+  --nav-icon-width:46px;
+  --nav-logo-width:246px;
+}
+
+/* Header and inner wrapper become a clean positioning stage. */
+.site-header.blocaria-style-header.mineacle-floating-header,
+.blocaria-style-header.mineacle-floating-header,
+.site-header.blocaria-style-header.mineacle-floating-header.is-scrolled,
+.blocaria-style-header.mineacle-floating-header.is-scrolled{
+  height:var(--nav-height)!important;
+  min-height:var(--nav-height)!important;
+  box-sizing:border-box!important;
+}
+
+.mineacle-floating-header .blocaria-nav-inner,
+.mineacle-floating-header.is-scrolled .blocaria-nav-inner{
+  position:relative!important;
+  height:var(--nav-height)!important;
+  min-height:var(--nav-height)!important;
+  width:min(1380px, calc(100vw - 32px))!important;
+  max-width:1380px!important;
+  margin:0 auto!important;
+  padding:0!important;
+  display:block!important;
+  box-sizing:border-box!important;
+}
+
+/* Left group: exact centerline based on its own item boxes. */
+.mineacle-floating-header .blocaria-nav-left,
+.mineacle-floating-header.is-scrolled .blocaria-nav-left{
+  position:absolute!important;
+  left:76px!important;
+  top:50%!important;
+  height:var(--nav-item-height)!important;
+  min-height:var(--nav-item-height)!important;
+  display:grid!important;
+  grid-template-columns:var(--nav-text-width) var(--nav-text-width) var(--nav-button-width)!important;
+  column-gap:var(--nav-side-gap)!important;
+  align-items:center!important;
+  justify-content:start!important;
+  justify-items:center!important;
+  transform:translateY(-50%)!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+
+/* Right group: exact centerline based on Discord + Play boxes. */
+.mineacle-floating-header .blocaria-nav-right,
+.mineacle-floating-header.is-scrolled .blocaria-nav-right{
+  position:absolute!important;
+  right:76px!important;
+  top:50%!important;
+  height:var(--nav-item-height)!important;
+  min-height:var(--nav-item-height)!important;
+  display:grid!important;
+  grid-template-columns:var(--nav-icon-width) var(--nav-button-width)!important;
+  column-gap:var(--nav-side-gap)!important;
+  align-items:center!important;
+  justify-content:end!important;
+  justify-items:center!important;
+  transform:translateY(-50%)!important;
+  margin:0!important;
+  padding:0!important;
+  box-sizing:border-box!important;
+}
+
+/* Kill all previous per-group transforms/nudges. */
+.mineacle-floating-header .blocaria-nav-left > *,
+.mineacle-floating-header.is-scrolled .blocaria-nav-left > *,
+.mineacle-floating-header .blocaria-nav-right > *,
+.mineacle-floating-header.is-scrolled .blocaria-nav-right > *{
+  position:relative!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  margin:0!important;
+  align-self:center!important;
+  justify-self:center!important;
+  box-sizing:border-box!important;
+}
+
+/* Text links: actual boxes are centered, pseudo-elements disabled. */
+.mineacle-floating-header .nav-text-link,
+.mineacle-floating-header.is-scrolled .nav-text-link{
+  width:var(--nav-text-width)!important;
+  min-width:var(--nav-text-width)!important;
+  max-width:var(--nav-text-width)!important;
+  height:var(--nav-item-height)!important;
+  min-height:var(--nav-item-height)!important;
+  max-height:var(--nav-item-height)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0!important;
+  margin:0!important;
+  line-height:1!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  transform:none!important;
+  flex:none!important;
+}
+
+.mineacle-floating-header .nav-text-link::before,
+.mineacle-floating-header .nav-text-link::after,
+.mineacle-floating-header .nav-text-link.active::before,
+.mineacle-floating-header .nav-text-link.active::after,
+.mineacle-floating-header.is-scrolled .nav-text-link::before,
+.mineacle-floating-header.is-scrolled .nav-text-link::after,
+.mineacle-floating-header.is-scrolled .nav-text-link.active::before,
+.mineacle-floating-header.is-scrolled .nav-text-link.active::after{
+  content:none!important;
+  display:none!important;
+}
+
+/* Button boxes: Store and Play exact dimensions, centered by grid cell. */
+.mineacle-floating-header .nav-store-button,
+.mineacle-floating-header.is-scrolled .nav-store-button,
+.mineacle-floating-header .header-play-button,
+.mineacle-floating-header.is-scrolled .header-play-button{
+  width:var(--nav-button-width)!important;
+  min-width:var(--nav-button-width)!important;
+  max-width:var(--nav-button-width)!important;
+  height:var(--nav-item-height)!important;
+  min-height:var(--nav-item-height)!important;
+  max-height:var(--nav-item-height)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0 18px!important;
+  margin:0!important;
+  line-height:1!important;
+  flex:none!important;
+  box-sizing:border-box!important;
+}
+
+/* Discord button box: exact square-ish box centered by grid cell. */
+.mineacle-floating-header .header-discord-button,
+.mineacle-floating-header.is-scrolled .header-discord-button,
+.discord-square.nav-mc-icon-button{
+  width:var(--nav-icon-width)!important;
+  min-width:var(--nav-icon-width)!important;
+  max-width:var(--nav-icon-width)!important;
+  height:var(--nav-item-height)!important;
+  min-height:var(--nav-item-height)!important;
+  max-height:var(--nav-item-height)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  padding:0!important;
+  margin:0!important;
+  flex:none!important;
+  box-sizing:border-box!important;
+}
+
+/* Keep hover effects, but they are visual effects only; normal state is the true center. */
+.mineacle-floating-header .nav-store-button:hover,
+.mineacle-floating-header.is-scrolled .nav-store-button:hover,
+.mineacle-floating-header .header-play-button:hover,
+.mineacle-floating-header.is-scrolled .header-play-button:hover,
+.mineacle-floating-header .header-discord-button:hover,
+.mineacle-floating-header.is-scrolled .header-discord-button:hover{
+  transform:translateY(-2px)!important;
+}
+
+/* Main logo is centered independently and does not influence nav item alignment. */
+.header-bans-logo,
+.mineacle-floating-header.is-scrolled .header-bans-logo{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:var(--nav-logo-width)!important;
+  max-width:var(--nav-logo-width)!important;
+  transform:translate(-50%, 25px)!important;
+  margin:0!important;
+  padding:0!important;
+  z-index:20!important;
+  filter:none!important;
+}
+
+.header-bans-logo:hover,
+.mineacle-floating-header.is-scrolled .header-bans-logo:hover{
+  transform:translate(-50%, 23px) scale(1.01)!important;
+}
+
+/* Preserve symmetric floating/full-width expansion while keeping inner coordinates unchanged. */
+.site-header.blocaria-style-header.mineacle-floating-header:not(.is-scrolled),
+.blocaria-style-header.mineacle-floating-header:not(.is-scrolled){
+  left:50%!important;
+  right:auto!important;
+  width:min(1380px, calc(100vw - 48px))!important;
+  max-width:min(1380px, calc(100vw - 48px))!important;
+  transform:translateX(-50%)!important;
+}
+
+.site-header.blocaria-style-header.mineacle-floating-header.is-scrolled,
+.blocaria-style-header.mineacle-floating-header.is-scrolled{
+  left:50%!important;
+  right:auto!important;
+  width:100vw!important;
+  max-width:100vw!important;
+  transform:translateX(-50%)!important;
+}
+
+/* Responsive exact-centering version. */
+@media(max-width:1180px){
+  :root{
+    --nav-side-gap:18px;
+    --nav-text-width:58px;
+    --nav-button-width:82px;
+    --nav-icon-width:42px;
+    --nav-logo-width:200px;
+  }
+
+  .mineacle-floating-header .blocaria-nav-left,
+  .mineacle-floating-header.is-scrolled .blocaria-nav-left{
+    left:24px!important;
+  }
+
+  .mineacle-floating-header .blocaria-nav-right,
+  .mineacle-floating-header.is-scrolled .blocaria-nav-right{
+    right:24px!important;
+  }
+}
+
+@media(max-width:980px){
+  :root{
+    --nav-height:76px;
+    --nav-item-height:40px;
+    --nav-side-gap:10px;
+    --nav-text-width:48px;
+    --nav-button-width:70px;
+    --nav-icon-width:42px;
+    --nav-logo-width:150px;
+  }
+
+  .mineacle-floating-header .blocaria-nav-inner,
+  .mineacle-floating-header.is-scrolled .blocaria-nav-inner{
+    width:100%!important;
+    max-width:100%!important;
+  }
+
+  .mineacle-floating-header .blocaria-nav-left,
+  .mineacle-floating-header.is-scrolled .blocaria-nav-left{
+    left:12px!important;
+  }
+
+  .mineacle-floating-header .blocaria-nav-right,
+  .mineacle-floating-header.is-scrolled .blocaria-nav-right{
+    right:12px!important;
+  }
+
+  .header-bans-logo,
+  .mineacle-floating-header.is-scrolled .header-bans-logo{
+    transform:translate(-50%, 10px)!important;
+  }
+
+  .header-bans-logo:hover,
+  .mineacle-floating-header.is-scrolled .header-bans-logo:hover{
+    transform:translate(-50%, 8px) scale(1.01)!important;
+  }
+}
+
+@media(max-width:640px){
+  :root{
+    --nav-item-height:36px;
+    --nav-logo-width:126px;
   }
 }
