@@ -906,3 +906,54 @@ if (document.readyState === "loading") {
 } else {
   mineacleMobileMenuFix();
 }
+
+
+function mineacleMobileMenuHardFix() {
+  const header = document.getElementById("siteHeader");
+  const toggle = header ? header.querySelector(".mobile-nav-toggle") : null;
+  const menu = document.getElementById("mainNav");
+
+  if (!header || !toggle || !menu) {
+    return;
+  }
+
+  const setOpen = (open) => {
+    header.classList.toggle("mobile-open", open);
+    document.documentElement.classList.toggle("mineacle-mobile-menu-open", open);
+    toggle.setAttribute("aria-expanded", open ? "true" : "false");
+  };
+
+  toggle.addEventListener("click", (event) => {
+    event.preventDefault();
+    event.stopPropagation();
+    setOpen(!header.classList.contains("mobile-open"));
+  }, true);
+
+  menu.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => setOpen(false), true);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!header.contains(event.target)) {
+      setOpen(false);
+    }
+  }, true);
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      setOpen(false);
+    }
+  }, true);
+
+  window.addEventListener("resize", () => {
+    if (window.innerWidth > 980) {
+      setOpen(false);
+    }
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", mineacleMobileMenuHardFix);
+} else {
+  mineacleMobileMenuHardFix();
+}
