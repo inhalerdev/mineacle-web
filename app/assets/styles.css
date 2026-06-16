@@ -3489,7 +3489,7 @@ body{
   background:
     linear-gradient(180deg, rgba(10,8,18,.28), rgba(8,7,17,.94)),
     radial-gradient(circle at 50% 48%, rgba(179,60,255,.26), transparent 28rem),
-    url("bans-hero-background.png?v=bansfull3.8.10.100.9.8.7.6.5.4.3.2") center / cover no-repeat!important;
+    url("bans-hero-background.png?v=bansfull3.8.11.111.100.9.8.7.6.5.4.3.2") center / cover no-repeat!important;
 }
 
 .bans-v3-hero::before{
@@ -4104,7 +4104,7 @@ body{
   display:grid!important;
   place-items:center!important;
   padding:calc(var(--v3-header-height) + 48px) 20px 72px!important;
-  background:linear-gradient(180deg, rgba(8,7,17,.25), rgba(8,7,17,.82)), radial-gradient(circle at 50% 46%, rgba(160,49,255,.25), transparent 30rem), url("bans-hero-background.png?v=bansfull3.8.10.100.9.8.7.6.5.4.3.2") center / cover no-repeat!important;
+  background:linear-gradient(180deg, rgba(8,7,17,.25), rgba(8,7,17,.82)), radial-gradient(circle at 50% 46%, rgba(160,49,255,.25), transparent 30rem), url("bans-hero-background.png?v=bansfull3.8.11.111.100.9.8.7.6.5.4.3.2") center / cover no-repeat!important;
 }
 
 .bans-v32-logo-only-fold::before{
@@ -6717,4 +6717,138 @@ body,
     inset 0 -2px 0 rgba(18,68,14,.52),
     0 2px 0 rgba(16,51,12,.78),
     0 8px 18px rgba(58,139,42,.22)!important;
+}
+
+
+/* Mineacle Bans v3.8.11: nav click/layer hard fix + logo vertical restore */
+
+/* All visual overlays must be passive. */
+.site-header.blocaria-style-header.mineacle-floating-header::before,
+.site-header.blocaria-style-header.mineacle-floating-header::after,
+.blocaria-style-header.mineacle-floating-header::before,
+.blocaria-style-header.mineacle-floating-header::after,
+.bans-v32-logo-only-fold::before,
+.bans-v32-logo-only-fold::after,
+.bans-v34-background-fold::before,
+.bans-v34-background-fold::after{
+  pointer-events:none!important;
+}
+
+/* Header should allow interaction, but not create an invisible blocking layer. */
+.site-header.blocaria-style-header.mineacle-floating-header,
+.blocaria-style-header.mineacle-floating-header{
+  pointer-events:auto!important;
+  overflow:visible!important;
+}
+
+/* Nav controls must be the top clickable layer, above logo and all effects. */
+.mineacle-floating-header .blocaria-nav-left,
+.mineacle-floating-header.is-scrolled .blocaria-nav-left,
+.mineacle-floating-header .blocaria-nav-right,
+.mineacle-floating-header.is-scrolled .blocaria-nav-right{
+  z-index:900!important;
+  pointer-events:auto!important;
+}
+
+.mineacle-floating-header .blocaria-nav-left a,
+.mineacle-floating-header.is-scrolled .blocaria-nav-left a,
+.mineacle-floating-header .blocaria-nav-right a,
+.mineacle-floating-header.is-scrolled .blocaria-nav-right a,
+.mineacle-floating-header .blocaria-nav-right button,
+.mineacle-floating-header.is-scrolled .blocaria-nav-right button,
+.mineacle-floating-header .nav-text-link,
+.mineacle-floating-header.is-scrolled .nav-text-link,
+.mineacle-floating-header .nav-store-button,
+.mineacle-floating-header.is-scrolled .nav-store-button,
+.mineacle-floating-header .header-discord-button,
+.mineacle-floating-header.is-scrolled .header-discord-button,
+.mineacle-floating-header .header-play-button,
+.mineacle-floating-header.is-scrolled .header-play-button{
+  position:relative!important;
+  z-index:910!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+  user-select:none!important;
+}
+
+/* Logo vertical restored to the 3.8.9 visual placement and kept behind controls. */
+.header-bans-logo,
+.mineacle-floating-header.is-scrolled .header-bans-logo{
+  z-index:500!important;
+  pointer-events:auto!important;
+  transform:translate(-50%, 23px)!important;
+}
+
+.header-bans-logo:hover,
+.mineacle-floating-header.is-scrolled .header-bans-logo:hover{
+  transform:translate(-50%, 21px) scale(1.01)!important;
+}
+
+/* Restore visible hover feedback without moving the true centered box. */
+.mineacle-floating-header .nav-text-link:hover,
+.mineacle-floating-header.is-scrolled .nav-text-link:hover{
+  color:#fff!important;
+  text-shadow:0 0 16px rgba(255,136,255,.34)!important;
+  filter:brightness(1.10)!important;
+}
+
+.mineacle-floating-header .nav-store-button:hover,
+.mineacle-floating-header.is-scrolled .nav-store-button:hover{
+  filter:brightness(1.12)!important;
+  border-color:rgba(255,230,255,.62)!important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.28),
+    inset 0 -4px 0 rgba(35,0,75,.42),
+    0 5px 0 rgba(28,0,56,.70),
+    0 0 28px rgba(174,38,255,.38),
+    0 18px 30px rgba(174,38,255,.28)!important;
+}
+
+.mineacle-floating-header .header-discord-button:hover,
+.mineacle-floating-header.is-scrolled .header-discord-button:hover{
+  filter:brightness(1.12)!important;
+  border-color:rgba(220,226,255,.72)!important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.28),
+    inset 0 -4px 0 rgba(0,0,80,.38),
+    0 5px 0 rgba(15,10,72,.70),
+    0 0 24px rgba(88,101,242,.42),
+    0 18px 30px rgba(88,101,242,.28)!important;
+}
+
+/* Green play hover. */
+.mineacle-floating-header .header-play-button:hover,
+.mineacle-floating-header.is-scrolled .header-play-button:hover,
+.play-copy-button.nav-mc-button:hover{
+  filter:brightness(1.10)!important;
+  border-color:rgba(221,255,202,.68)!important;
+  background:
+    linear-gradient(180deg, #5dbb43 0%, #429c2f 50%, #327a24 100%)!important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.28),
+    inset 0 -4px 0 rgba(18,68,14,.48),
+    0 5px 0 rgba(16,51,12,.78),
+    0 0 26px rgba(83,190,61,.36),
+    0 18px 30px rgba(58,139,42,.28)!important;
+}
+
+/* Never let global transform-none rules erase hover visibility; hover is visual only. */
+.mineacle-floating-header .nav-store-button,
+.mineacle-floating-header.is-scrolled .nav-store-button,
+.mineacle-floating-header .header-play-button,
+.mineacle-floating-header.is-scrolled .header-play-button,
+.mineacle-floating-header .header-discord-button,
+.mineacle-floating-header.is-scrolled .header-discord-button{
+  pointer-events:auto!important;
+}
+
+/* Maintain true box centering while restoring interaction. */
+.mineacle-floating-header .blocaria-nav-left,
+.mineacle-floating-header.is-scrolled .blocaria-nav-left{
+  top:50%!important;
+}
+
+.mineacle-floating-header .blocaria-nav-right,
+.mineacle-floating-header.is-scrolled .blocaria-nav-right{
+  top:50%!important;
 }
