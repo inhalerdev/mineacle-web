@@ -1,141 +1,95 @@
 <?php
 declare(strict_types=1);
 
-$requestPath = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH) ?: '';
-if (!defined('MINEACLE_INTERNAL_RENDER') && preg_match('~/bans\.php$~i', $requestPath)) {
-    header('Location: /', true, 301);
-    exit;
-}
-
 require_once __DIR__ . '/includes/layout.php';
 
 $config = mineacle_config();
-mineacle_page_head('Bans');
+$discordUrl = (string) ($config['site']['discord'] ?? 'https://discord.gg/VwbwWftefM');
+$appealEmail = (string) ($config['site']['appeal_email'] ?? 'support@mineacle.net');
+$serverIp = (string) ($config['site']['ip'] ?? 'mineacle.net');
+
+mineacle_page_head('Bans | Mineacle Network');
+mineacle_header('bans');
 ?>
-<body>
-<main class="page-shell">
-  <?php mineacle_header('bans'); ?>
 
-  <section class="hero-shell" aria-label="Mineacle public bans hero">
-    <div class="hero-grid">
-      <div class="hero-main-logo-wrap" aria-label="Mineacle main logo">
-        <img class="hero-main-logo" src="assets/mineacle-bans-logo.png?v=bansfull1.8.1" alt="Mineacle Bans">
+<main class="bans-page-shell">
+  <section class="bans-hero-redesign" aria-label="Mineacle punishments information">
+    <div class="bans-hero-bg" aria-hidden="true"></div>
+
+    <div class="bans-hero-left">
+      <span class="eyebrow">Mineacle Safety Center</span>
+      <h1>Public Ban List</h1>
+      <p>Search active punishments, review LiteBans records, and find the right appeal option without digging through Discord messages.</p>
+
+      <div class="bans-hero-actions">
+        <a class="btn red" href="#bans-list">Search Bans</a>
+        <a class="btn soft" href="<?= h($discordUrl) ?>" target="_blank" rel="noopener">Discord Appeal</a>
       </div>
+    </div>
 
-      <div class="hero-copy">
-        <h1>Public Ban List</h1>
-        <p>Search active punishments, review public LiteBans records, and keep Mineacle safe for every player</p>
-
-        <a class="discord-panel" href="<?= h($config['site']['discord']) ?>" target="_blank" rel="noopener">
-          <div class="discord-character-wrap">
-            <img class="discord-character" src="assets/discord-character.webp?v=bansfull1.8.1" alt="">
-          </div>
-          <div>
-            <span>Official Discord</span>
-            <strong>Appeals, updates, and support</strong>
-            <p>Join the Mineacle community for ban help, server news, event updates, and player support.</p>
-          </div>
-          <div class="discord-arrow" aria-hidden="true">→</div>
-        </a>
-      </div>
+    <div class="bans-hero-info-grid">
+      <article class="bans-info-card">
+        <span>Live Records</span>
+        <strong>Active Only</strong>
+        <p>Expired punishments are filtered out automatically.</p>
+      </article>
+      <article class="bans-info-card">
+        <span>Appeals</span>
+        <strong>Email + Discord</strong>
+        <p>Use the info popup on any punishment to appeal.</p>
+      </article>
+      <article class="bans-info-card">
+        <span>Payments</span>
+        <strong>Permanent Only</strong>
+        <p>Temporary bans show Wait It Out instead of payment.</p>
+      </article>
+      <article class="bans-info-card">
+        <span>Timezone</span>
+        <strong>Central Time</strong>
+        <p>Dates are displayed in Arkansas server time.</p>
+      </article>
     </div>
   </section>
 
-  <section class="bans-section" id="bans">
-    <div class="section-heading">
-      <span>Public Records</span>
-      <h2>Active Bans</h2>
-      <p>Newest punishments are shown first. Unbanned and expired players disappear automatically.</p>
+  <section class="bans-toolbar-redesign" id="bans-list" aria-label="Search active punishments">
+    <div class="bans-toolbar-copy">
+      <span class="eyebrow">Search Records</span>
+      <h2>Active punishments</h2>
+      <p>Search by Minecraft username, then open the info button for reason, date, duration, appeal links, and status.</p>
     </div>
 
-    <div class="ban-list-wrap">
-      <div class="ban-toolbar">
-        <div class="ban-title">
-          <h3>Search the ban list</h3>
-          <p>Search by username</p>
-        </div>
-
-        <div class="searchbar">
-          <img class="search-icon" src="assets/search-icon.png?v=bansfull1.8.1" alt="" aria-hidden="true">
-          <input id="banSearch" type="search" placeholder="Search username..." autocomplete="off" maxlength="32">
-          <button class="search-clear" id="clearSearch" type="button" aria-label="Clear search">×</button>
-        </div>
-
-        <div class="ban-count" id="banCount">Loading...</div>
+    <form class="search-card js-ban-search-form" role="search">
+      <label class="sr-only" for="ban-search">Search bans</label>
+      <div class="search-input-wrap">
+        <img src="assets/search-icon.png?v=bansfull2.0" alt="" aria-hidden="true">
+        <input id="ban-search" class="js-ban-search" type="search" name="q" autocomplete="off" placeholder="Search a Minecraft username">
       </div>
-
-      <div class="ban-list" id="banList">
-        <div class="empty">Loading LiteBans data...</div>
-      </div>
-
-      <div class="ban-pagination" id="banPagination" hidden>
-        <button class="btn soft" type="button" id="prevPage">Previous</button>
-        <span id="pageInfo">Page 1 of 1</span>
-        <button class="btn soft" type="button" id="nextPage">Next</button>
-      </div>
-    </div>
+      <button class="btn red" type="submit">Search</button>
+      <button class="btn soft js-ban-clear" type="button">Clear</button>
+    </form>
   </section>
 
-  <?php mineacle_footer(); ?>
+  <section class="bans-list-section" aria-label="Ban results">
+    <div class="bans-list-header">
+      <div>
+        <span class="eyebrow">Results</span>
+        <h2>Ban records</h2>
+      </div>
+      <div class="bans-list-meta js-ban-meta">Loading records</div>
+    </div>
+
+    <div class="ban-table-shell">
+      <div class="ban-table js-ban-table" aria-live="polite">
+        <div class="ban-loading">Loading active bans</div>
+      </div>
+    </div>
+
+    <div class="pagination-row">
+      <button class="btn soft js-ban-prev" type="button">Previous</button>
+      <span class="page-indicator js-ban-page">Page 1</span>
+      <button class="btn soft js-ban-next" type="button">Next</button>
+    </div>
+  </section>
 </main>
 
-<div class="modal" id="banModal" aria-hidden="true">
-  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalName">
-    <button class="modal-close" type="button" data-close-modal aria-label="Close">×</button>
-
-    <div class="modal-hero">
-      <div class="modal-avatar-wrap">
-        <img id="modalAvatar" src="" alt="">
-      </div>
-
-      <div class="modal-title">
-        <span class="eyebrow">Ban Details</span>
-        <h2 id="modalName">Player</h2>
-        <div class="modal-badges">
-          <span id="modalStatus" class="status-badge">Active</span>
-          <span id="modalTypeBadge" class="type-badge">Player Ban</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="detail-grid">
-      <article class="detail-card reason-card">
-        <span>Reason</span>
-        <strong id="modalReason">No reason provided</strong>
-      </article>
-
-      <article class="detail-card">
-        <span>Duration</span>
-        <strong id="modalDuration">Unknown</strong>
-      </article>
-
-      <article class="detail-card">
-        <span>Date</span>
-        <strong id="modalDate">Unknown</strong>
-      </article>
-
-      <article class="detail-card">
-        <span>Appeal ID</span>
-        <strong id="modalAppeal">MCL-000000</strong>
-      </article>
-
-      <article class="detail-card">
-        <span>Support Email</span>
-        <strong id="modalEmail">support@mineacle.net</strong>
-      </article>
-
-      <article class="detail-card">
-        <span>Discord</span>
-        <strong id="modalDiscord">discord.gg/4xrYFxdSWg</strong>
-      </article>
-    </div>
-
-    <div class="modal-actions" id="modalActions"></div>
-
-    <p class="modal-note" id="modalNote">
-      Use the payment option for eligible bans, or contact support if you believe this punishment is incorrect.
-    </p>
-  </div>
-</div>
-</body>
-</html>
+<?php mineacle_footer(); ?>
