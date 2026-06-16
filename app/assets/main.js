@@ -823,3 +823,32 @@ if (document.readyState === "loading") {
 } else {
   mineaclePlayCopyOnlyClean();
 }
+
+
+function mineacleIsolatedNavPlayCopy() {
+  document.querySelectorAll(".mcx-play[data-copy-ip]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const ip = button.getAttribute("data-copy-ip") || "mineacle.net";
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(ip).catch(() => {});
+      }
+
+      const toast = document.getElementById("toast");
+      const toastValue = document.getElementById("toastValue");
+      if (toastValue) {
+        toastValue.textContent = ip;
+      }
+      if (toast) {
+        toast.classList.add("show");
+        window.clearTimeout(window.mineacleToastTimer);
+        window.mineacleToastTimer = window.setTimeout(() => toast.classList.remove("show"), 2600);
+      }
+    });
+  });
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", mineacleIsolatedNavPlayCopy);
+} else {
+  mineacleIsolatedNavPlayCopy();
+}
