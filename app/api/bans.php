@@ -9,8 +9,8 @@ header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 try {
     $search = trim((string) ($_GET['search'] ?? ''));
-    if (mb_strlen($search) > 32) {
-        $search = mb_substr($search, 0, 32);
+    if (strlen($search) > 32) {
+        $search = substr($search, 0, 32);
     }
 
     $page = max(1, (int) ($_GET['page'] ?? 1));
