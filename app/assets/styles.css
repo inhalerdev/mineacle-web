@@ -10536,3 +10536,148 @@ body{
     margin-top:-118px!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.37: mobile nav restore + 20% lighter blur
+   - Keeps the mobile popup menu disabled, but restores the actual fixed mobile nav/header surface
+   - Lets the scenic background run under the nav without a black band
+   - Lightens hero-image blur by 20%: 5px -> 4px on desktop and mobile
+   - Keeps the bans section pulled up over the scenic background */
+.bans-v34-background-fold::before,
+.bans-v32-logo-only-fold::before,
+.bans-v3-hero::before{
+  filter:blur(4px) saturate(.94) brightness(.76)!important;
+  transform:scale(1.035)!important;
+}
+
+@media(max-width:980px){
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before{
+    filter:blur(4px) saturate(.94) brightness(.76)!important;
+    transform:scale(1.025)!important;
+  }
+
+  .mcx-header.site-header.mineacle-floating-header,
+  .mcx-header.site-header.mineacle-floating-header.is-scrolled,
+  #siteHeader.mcx-header{
+    display:block!important;
+    position:fixed!important;
+    top:0!important;
+    left:0!important;
+    right:0!important;
+    width:100vw!important;
+    max-width:100vw!important;
+    height:var(--mcx-mobile-nav-h, 76px)!important;
+    min-height:var(--mcx-mobile-nav-h, 76px)!important;
+    overflow:visible!important;
+    background:
+      linear-gradient(180deg, rgba(11,7,22,.32) 0%, rgba(11,7,22,.16) 62%, rgba(11,7,22,0) 100%)!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:0 1px 0 rgba(207,92,255,.44)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    z-index:2147483000!important;
+  }
+
+  #siteHeader.mcx-header::before{
+    content:""!important;
+    position:absolute!important;
+    inset:0!important;
+    background:
+      linear-gradient(180deg, rgba(5,3,12,.12) 0%, rgba(5,3,12,.04) 70%, rgba(5,3,12,0) 100%)!important;
+    pointer-events:none!important;
+    z-index:0!important;
+  }
+
+  #siteHeader.mcx-header::after{
+    display:none!important;
+    content:none!important;
+  }
+
+  #siteHeader.mcx-header .mcx-nav-shell,
+  .mcx-nav-shell{
+    display:block!important;
+    position:relative!important;
+    width:100vw!important;
+    max-width:100vw!important;
+    height:var(--mcx-mobile-nav-h, 76px)!important;
+    min-height:var(--mcx-mobile-nav-h, 76px)!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:visible!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    z-index:2147483001!important;
+  }
+
+  #siteHeader.mcx-header .mcx-link,
+  #siteHeader.mcx-header .mcx-button,
+  #siteHeader.mcx-header .mcx-discord,
+  #siteHeader.mcx-header .mcx-play{
+    display:none!important;
+  }
+
+  #siteHeader.mcx-header .mcx-logo,
+  .mcx-logo{
+    display:block!important;
+    visibility:visible!important;
+    opacity:1!important;
+    position:absolute!important;
+    left:50%!important;
+    top:calc(var(--mcx-mobile-nav-h, 76px) - (var(--mcx-mobile-logo-w, 172px) * .54 * .25))!important;
+    width:var(--mcx-mobile-logo-w, 172px)!important;
+    max-width:var(--mcx-mobile-logo-w, 172px)!important;
+    height:auto!important;
+    transform:translate(-50%, -50%)!important;
+    overflow:visible!important;
+    pointer-events:auto!important;
+    z-index:2147483003!important;
+    filter:drop-shadow(0 9px 16px rgba(0,0,0,.42)) drop-shadow(0 0 16px rgba(174,70,255,.26))!important;
+  }
+
+  #siteHeader.mcx-header .mcx-logo img,
+  .mcx-logo img{
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    max-height:none!important;
+    object-fit:contain!important;
+  }
+
+  /* Mobile popup stays disabled for now, but the header/nav bar is no longer disabled. */
+  #mainNav.main-nav.mcx-mobile-menu,
+  #siteHeader #mainNav.main-nav.mcx-mobile-menu{
+    display:none!important;
+    pointer-events:none!important;
+    opacity:0!important;
+    visibility:hidden!important;
+  }
+
+  .mobile-nav-toggle,
+  #siteHeader .mobile-nav-toggle,
+  .mcx-header .mobile-nav-toggle{
+    display:none!important;
+    pointer-events:none!important;
+    opacity:0!important;
+    visibility:hidden!important;
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero{
+    padding-top:0!important;
+    margin-top:0!important;
+  }
+
+  .bans-section{
+    margin-top:-148px!important;
+  }
+}
+
+@media(max-width:640px){
+  .bans-section{
+    margin-top:-132px!important;
+  }
+}
