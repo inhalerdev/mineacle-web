@@ -14,29 +14,29 @@ mineacle_header('bans');
             <div class="ban-hero-copy">
                 <span class="ban-hero-kicker">Mineacle Enforcement</span>
                 <h1>Public Ban Records</h1>
-                <p>Active bans are listed openly so players can see how Mineacle keeps Survival fair. MineacleClientGuard and staff review suspicious client, movement, combat, and building patterns before action is taken.</p>
+                <p>Active bans are shown publicly so players can understand how Mineacle protects Survival. Client signals, movement, combat, and building patterns are reviewed before action is taken.</p>
             </div>
 
             <div class="guard-info-tiles" aria-label="What MineacleClientGuard watches for">
                 <article class="guard-info-tile">
                     <span class="guard-info-number">01</span>
                     <h2>Allowed clients</h2>
-                    <p>Checks client brand signals when available and compares them to the launchers and loaders we allow. One signal helps review, but does not decide everything by itself.</p>
+                    <p>Reviews client brand signals when they are available and compares them with the launchers and loaders allowed on Mineacle.</p>
                 </article>
                 <article class="guard-info-tile">
                     <span class="guard-info-number">02</span>
                     <h2>Movement review</h2>
-                    <p>Watches for movement that does not line up with normal Minecraft physics, including fly-like motion, odd vertical changes, and reduced knockback.</p>
+                    <p>Looks for movement that does not match normal Minecraft behavior, including fly-like motion, odd vertical changes, and reduced knockback.</p>
                 </article>
                 <article class="guard-info-tile">
                     <span class="guard-info-number">03</span>
                     <h2>Combat &amp; building</h2>
-                    <p>Looks for repeated patterns around attack timing, aura-like hits, fast placement, auto placement, and scaffold-style building.</p>
+                    <p>Checks for repeated patterns around attack timing, aura-like hits, fast placement, auto placement, and scaffold-style building.</p>
                 </article>
                 <article class="guard-info-tile">
                     <span class="guard-info-number">04</span>
                     <h2>Evidence over time</h2>
-                    <p>Flags build a history first. Lower confidence alerts staff, repeated patterns raise violations, and obvious repeat abuse can lead to automatic action.</p>
+                    <p>One odd moment is not enough. Alerts build a history first, then repeated clear patterns can lead to stronger action.</p>
                 </article>
             </div>
         </div>

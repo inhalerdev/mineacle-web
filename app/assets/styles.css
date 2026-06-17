@@ -12338,3 +12338,450 @@ textarea,
     width:100%!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.46: nav/tile border match + lower records + nav-style records buttons
+   - Moves Active bans below the guard tiles instead of crowding them
+   - Matches guard tile opacity, stroke, and internal glow to the floating nav bar
+   - Smooths the hero fade into the below-fold dark surface
+   - Makes records buttons use the same static/hover/pressed language as the nav Store/Play buttons
+   - Tightens hero/results fonts into the same clean sans-serif family used by the nav */
+:root{
+  --mineacle-sans-stack:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mineacle-nav-surface-v46:rgba(18,15,34,.46);
+  --mineacle-nav-line-v46:rgba(203,88,255,.20);
+  --mineacle-nav-line-hover-v46:rgba(255,202,255,.38);
+  --mineacle-nav-glow-v46:rgba(203,88,255,.055);
+  --mineacle-page-dark-v46:#06030c;
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea,
+.ban-hero-copy,
+.ban-hero-copy h1,
+.ban-hero-copy p,
+.ban-hero-kicker,
+.bans-v3-kicker,
+.guard-info-tile,
+.guard-info-tile h2,
+.guard-info-tile p,
+.bans-v3-results,
+.bans-v3-results h2,
+.bans-v3-search,
+.bans-v3-search input,
+.bans-v3-search .btn,
+.pagination-row .btn,
+.page-indicator{
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif!important;
+}
+
+/* Hero image stays sharp but gets a nav-colored tint and a slower, cleaner fade into the page color. */
+.bans-v34-background-fold,
+.bans-v32-logo-only-fold,
+.bans-v3-hero,
+.bans-records-hero{
+  background:var(--mineacle-page-dark-v46)!important;
+}
+
+.bans-v34-background-fold::before,
+.bans-v32-logo-only-fold::before,
+.bans-v3-hero::before,
+.bans-records-hero::before{
+  inset:0!important;
+  background:url("bans-hero-background-v35.png?v=bansfull3.8.46") center center / cover no-repeat!important;
+  filter:none!important;
+  transform:none!important;
+  opacity:1!important;
+}
+
+.bans-v34-background-fold::after,
+.bans-v32-logo-only-fold::after,
+.bans-v3-hero::after,
+.bans-records-hero::after{
+  display:block!important;
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  pointer-events:none!important;
+  opacity:1!important;
+  background:
+    linear-gradient(180deg,
+      rgba(18,15,34,.20) 0%,
+      rgba(18,15,34,.26) 18%,
+      rgba(18,15,34,.34) 44%,
+      rgba(18,15,34,.48) 64%,
+      rgba(13,8,24,.72) 82%,
+      rgba(8,4,15,.92) 94%,
+      var(--mineacle-page-dark-v46) 100%),
+    radial-gradient(circle at 50% 22%, rgba(203,88,255,.08), transparent 38rem)!important;
+  z-index:1!important;
+}
+
+.bans-v34-background-fold > *,
+.bans-v32-logo-only-fold > *,
+.bans-v3-hero > *,
+.bans-records-hero > *{
+  position:relative!important;
+  z-index:2!important;
+}
+
+/* Nav surface: lighter, more transparent line, and a tiny internal glow like the requested direction. */
+.mcx-header.site-header.mineacle-floating-header,
+#siteHeader.mcx-header{
+  background:var(--mineacle-nav-surface-v46)!important;
+  border:1px solid var(--mineacle-nav-line-v46)!important;
+  box-shadow:
+    inset 0 0 8px var(--mineacle-nav-glow-v46),
+    inset 0 1px 0 rgba(255,255,255,.050),
+    0 14px 34px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(8px) saturate(112%)!important;
+  -webkit-backdrop-filter:blur(8px) saturate(112%)!important;
+}
+
+.mcx-header.site-header.mineacle-floating-header.is-scrolled,
+#siteHeader.mcx-header.is-scrolled{
+  background:var(--mineacle-nav-surface-v46)!important;
+  border-top:0!important;
+  border-left:0!important;
+  border-right:0!important;
+  border-bottom:1px solid var(--mineacle-nav-line-v46)!important;
+  border-radius:0!important;
+  box-shadow:
+    inset 0 -7px 11px -11px rgba(203,88,255,.14),
+    inset 0 1px 0 rgba(255,255,255,.040),
+    0 8px 24px rgba(0,0,0,.16)!important;
+}
+
+/* Hero/result font cleanup: less oversized, closer to the nav/button typography. */
+.ban-hero-kicker,
+.bans-v3-kicker{
+  font-weight:850!important;
+  letter-spacing:.105em!important;
+  font-size:12px!important;
+  text-transform:uppercase!important;
+}
+
+.ban-hero-copy h1{
+  font-size:clamp(40px, 4.2vw, 62px)!important;
+  line-height:1.06!important;
+  font-weight:820!important;
+  letter-spacing:-.024em!important;
+  text-shadow:0 2px 0 rgba(0,0,0,.42), 0 0 18px rgba(203,88,255,.10)!important;
+}
+
+.ban-hero-copy p{
+  max-width:730px!important;
+  font-size:clamp(16px, 1.15vw, 18px)!important;
+  line-height:1.68!important;
+  font-weight:520!important;
+  letter-spacing:-.004em!important;
+  color:rgba(245,239,255,.84)!important;
+}
+
+/* Guard tiles now use the same surface, transparent stroke, and short internal glow as the nav. */
+.guard-info-tiles{
+  margin-top:72px!important;
+  gap:30px!important;
+}
+
+.guard-info-tile{
+  min-height:250px!important;
+  padding:28px 26px 26px!important;
+  border-radius:22px!important;
+  border:1px solid var(--mineacle-nav-line-v46)!important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.050) 0%, rgba(255,255,255,.018) 100%),
+    var(--mineacle-nav-surface-v46)!important;
+  box-shadow:
+    inset 0 0 8px var(--mineacle-nav-glow-v46),
+    inset 0 1px 0 rgba(255,255,255,.050),
+    0 14px 32px rgba(0,0,0,.19)!important;
+  backdrop-filter:blur(8px) saturate(112%)!important;
+  -webkit-backdrop-filter:blur(8px) saturate(112%)!important;
+}
+
+.guard-info-number{
+  min-width:38px!important;
+  height:28px!important;
+  border-radius:9px!important;
+  border:1px solid rgba(203,88,255,.22)!important;
+  background:rgba(18,15,34,.42)!important;
+  color:#ffd8ff!important;
+  font-weight:850!important;
+  letter-spacing:.04em!important;
+}
+
+.guard-info-tile h2{
+  margin:22px 0 13px!important;
+  font-size:17px!important;
+  line-height:1.24!important;
+  font-weight:780!important;
+  letter-spacing:-.008em!important;
+  color:#f7f2ff!important;
+}
+
+.guard-info-tile p{
+  font-size:13.5px!important;
+  line-height:1.66!important;
+  font-weight:470!important;
+  letter-spacing:-.001em!important;
+  color:rgba(235,228,246,.78)!important;
+}
+
+/* Move records panel down below the tiles and let the image fade blend behind it. */
+.bans-v3-results,
+.bans-section{
+  margin-top:30px!important;
+  position:relative!important;
+  z-index:6!important;
+}
+
+.bans-v3-results{
+  background:rgba(8,5,16,.82)!important;
+  border:1px solid rgba(203,88,255,.16)!important;
+  box-shadow:
+    inset 0 0 9px rgba(203,88,255,.055),
+    0 20px 44px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(7px) saturate(110%)!important;
+  -webkit-backdrop-filter:blur(7px) saturate(110%)!important;
+}
+
+.bans-v3-results-head{
+  background:linear-gradient(180deg, rgba(18,15,34,.56), rgba(10,6,18,.78))!important;
+  border-bottom:1px solid rgba(203,88,255,.15)!important;
+  box-shadow:inset 0 0 8px rgba(203,88,255,.05), inset 0 1px 0 rgba(255,255,255,.045)!important;
+}
+
+.bans-v3-results-head h2{
+  font-size:clamp(30px, 2.85vw, 42px)!important;
+  line-height:1.10!important;
+  font-weight:810!important;
+  letter-spacing:-.020em!important;
+}
+
+.bans-list-meta,
+.page-indicator{
+  font-weight:780!important;
+  letter-spacing:.015em!important;
+}
+
+/* Search/input layout: straightened and matched to nav button dimensions. */
+.bans-v3-search,
+.bans-v31-results-search{
+  grid-template-columns:minmax(0, 1fr) 104px 104px!important;
+  gap:14px!important;
+  align-items:center!important;
+  padding:24px!important;
+  background:linear-gradient(180deg, rgba(18,15,34,.44), rgba(10,6,18,.66))!important;
+  border-top:1px solid rgba(203,88,255,.12)!important;
+  border-bottom:1px solid rgba(203,88,255,.12)!important;
+}
+
+.bans-v3-search input,
+.bans-v31-results-search input{
+  height:44px!important;
+  min-height:44px!important;
+  border-radius:4px!important;
+  border:1px solid rgba(203,88,255,.20)!important;
+  background:rgba(6,4,12,.58)!important;
+  color:#fff!important;
+  font-size:14px!important;
+  font-weight:650!important;
+  letter-spacing:0!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.040)!important;
+}
+
+.bans-v3-search input:focus,
+.bans-v31-results-search input:focus{
+  border-color:rgba(255,202,255,.38)!important;
+  box-shadow:
+    inset 0 0 8px rgba(203,88,255,.08),
+    0 0 0 3px rgba(203,88,255,.070)!important;
+}
+
+/* Purple action buttons: exact Store-button family for Search and any red/action buttons. */
+.bans-v3-results .btn,
+.bans-v3-search .btn,
+.pagination-row .btn,
+.ban-action .btn{
+  width:auto!important;
+  height:44px!important;
+  min-height:44px!important;
+  min-width:104px!important;
+  padding:0 18px!important;
+  border-radius:4px!important;
+  border:2px solid rgba(255,202,255,.40)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  color:#fff!important;
+  text-decoration:none!important;
+  text-transform:uppercase!important;
+  text-shadow:0 2px 0 rgba(40,0,80,.65)!important;
+  font-size:13px!important;
+  font-weight:950!important;
+  letter-spacing:.040em!important;
+  line-height:1!important;
+  transition:filter .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease, transform .08s ease!important;
+}
+
+.bans-v3-search .btn.red,
+.bans-v3-results .btn.red,
+.ban-action .btn.red{
+  background:linear-gradient(180deg, #cb58ff 0%, #9e16ff 50%, #6f00c8 100%)!important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.22),
+    inset 0 -4px 0 rgba(35,0,75,.42),
+    0 5px 0 rgba(28,0,56,.70),
+    0 12px 24px rgba(124,0,255,.24)!important;
+}
+
+.bans-v3-search .btn.red:hover,
+.bans-v3-results .btn.red:hover,
+.ban-action .btn.red:hover{
+  filter:brightness(1.12)!important;
+  border-color:rgba(255,230,255,.62)!important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.28),
+    inset 0 -4px 0 rgba(35,0,75,.42),
+    0 5px 0 rgba(28,0,56,.70),
+    0 0 28px rgba(174,38,255,.38),
+    0 18px 30px rgba(174,38,255,.28)!important;
+}
+
+/* Soft buttons follow the nav text-link surface instead of a mismatched generic panel. */
+.bans-v3-search .btn.soft,
+.bans-v3-results .btn.soft,
+.pagination-row .btn.soft,
+.ban-action .btn.soft{
+  background:linear-gradient(180deg, rgba(18,15,34,.54), rgba(18,15,34,.40))!important;
+  border-color:rgba(203,88,255,.22)!important;
+  color:rgba(255,255,255,.88)!important;
+  text-shadow:0 2px 0 rgba(0,0,0,.50)!important;
+  box-shadow:
+    inset 0 0 8px rgba(203,88,255,.050),
+    inset 0 1px 0 rgba(255,255,255,.050),
+    0 5px 0 rgba(0,0,0,.30),
+    0 10px 18px rgba(0,0,0,.15)!important;
+}
+
+.bans-v3-search .btn.soft:hover,
+.bans-v3-results .btn.soft:hover,
+.pagination-row .btn.soft:hover,
+.ban-action .btn.soft:hover{
+  color:#fff!important;
+  border-color:rgba(255,136,255,.34)!important;
+  filter:brightness(1.08)!important;
+  box-shadow:
+    inset 0 0 9px rgba(203,88,255,.080),
+    inset 0 1px 0 rgba(255,255,255,.070),
+    0 5px 0 rgba(0,0,0,.30),
+    0 0 22px rgba(179,60,255,.16)!important;
+}
+
+.bans-v3-results .btn:active,
+.bans-v3-search .btn:active,
+.pagination-row .btn:active,
+.ban-action .btn:active{
+  transform:translateY(3px)!important;
+  filter:brightness(.94)!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.16),
+    inset 0 -2px 0 rgba(35,0,75,.35),
+    0 2px 0 rgba(0,0,0,.42),
+    0 8px 18px rgba(124,0,255,.14)!important;
+}
+
+.pagination-row{
+  gap:20px!important;
+  padding-top:30px!important;
+}
+
+@media(max-width:1280px){
+  .bans-v3-results,
+  .bans-section{
+    margin-top:26px!important;
+  }
+}
+
+@media(max-width:980px){
+  .mcx-header.site-header.mineacle-floating-header,
+  .mcx-header.site-header.mineacle-floating-header.is-scrolled,
+  #siteHeader.mcx-header{
+    background:rgba(18,15,34,.42)!important;
+    border:0!important;
+    box-shadow:inset 0 -1px 0 rgba(203,88,255,.16)!important;
+    backdrop-filter:blur(7px) saturate(112%)!important;
+    -webkit-backdrop-filter:blur(7px) saturate(112%)!important;
+  }
+
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before{
+    background:url("bans-hero-background-mobile-v36.png?v=bansfull3.8.46") center top / cover no-repeat!important;
+    filter:none!important;
+    transform:none!important;
+  }
+
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after,
+  .bans-records-hero::after{
+    background:
+      linear-gradient(180deg,
+        rgba(18,15,34,.20) 0%,
+        rgba(18,15,34,.28) 24%,
+        rgba(18,15,34,.44) 58%,
+        rgba(10,6,18,.76) 84%,
+        var(--mineacle-page-dark-v46) 100%)!important;
+  }
+
+  .ban-hero-copy h1{
+    font-size:clamp(34px, 9.2vw, 48px)!important;
+    letter-spacing:-.020em!important;
+  }
+
+  .ban-hero-copy p{
+    font-size:15px!important;
+    line-height:1.64!important;
+  }
+
+  .guard-info-tiles{
+    margin-top:46px!important;
+    gap:16px!important;
+  }
+
+  .guard-info-tile{
+    min-height:204px!important;
+  }
+
+  .bans-v3-results,
+  .bans-section{
+    width:calc(100% - 28px)!important;
+    margin-top:24px!important;
+  }
+
+  .bans-v3-search,
+  .bans-v31-results-search{
+    grid-template-columns:1fr!important;
+    gap:12px!important;
+  }
+
+  .bans-v3-search .btn,
+  .bans-v3-results .btn,
+  .pagination-row .btn{
+    width:100%!important;
+  }
+}
+
+@media(max-width:640px){
+  .bans-v3-results,
+  .bans-section{
+    margin-top:22px!important;
+  }
+}
