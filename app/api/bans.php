@@ -1,14 +1,14 @@
 <?php
+
 declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/bans-lib.php';
 
-mineacle_security_headers(true);
 header('Content-Type: application/json; charset=utf-8');
-header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
 
 try {
-    $search = trim((string) ($_GET['search'] ?? ''));
+    $search = trim((string) ($_GET['search'] ?? $_GET['q'] ?? ''));
+
     if (strlen($search) > 32) {
         $search = substr($search, 0, 32);
     }
