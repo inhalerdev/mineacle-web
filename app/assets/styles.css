@@ -13971,3 +13971,44 @@ main,
     margin-top:38px!important;
   }
 }
+
+/* Mineacle Bans v3.8.53: extend hero background ~10% lower */
+.bans-v34-background-fold,
+.bans-v32-logo-only-fold,
+.bans-v3-hero,
+.bans-records-hero{
+  min-height:900px!important;
+  height:110svh!important;
+  max-height:1080px!important;
+}
+
+@media(max-width:1280px){
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:860px!important;
+    height:108svh!important;
+    max-height:1020px!important;
+  }
+}
+
+@media(max-width:980px){
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:780px!important;
+    height:101svh!important;
+  }
+}
+
+@media(max-width:640px){
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:740px!important;
+    height:97svh!important;
+  }
+}
