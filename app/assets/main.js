@@ -361,7 +361,7 @@
         const navDiscord = document.querySelector(".mcx-discord");
         if (navDiscord) {
             navDiscord.setAttribute("aria-label", `Join Discord — ${discordOnlineMembersText}`);
-            navDiscord.setAttribute("title", discordOnlineMembersText);
+            navDiscord.removeAttribute("title");
         }
     }
 

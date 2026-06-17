@@ -18,7 +18,7 @@ function mineacle_page_head(string $title): void {
     echo '<title>' . h($title) . ' | ' . $name . '</title>';
     echo '<meta name="description" content="Mineacle public bans portal">';
     echo '<link rel="icon" type="image/png" href="assets/mineacle-square-logo.png?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199.188.177.166.144.8.7.6.5.4.3.2">';
-    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle3.8.79">';
+    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle3.8.80">';
     echo '</head>';
 }
 
@@ -38,7 +38,7 @@ function mineacle_header(string $active = 'bans'): void {
     echo '<a class="mcx-logo" href="' . $bans . '" aria-label="Refresh Mineacle Bans">';
     echo '<img src="assets/mineacle-bans-hero-logo.png?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199" alt="Mineacle Bans">';
     echo '</a>';
-    echo '<a class="mcx-discord" href="' . $discord . '" target="_blank" rel="noopener" aria-label="Join Discord" title="Join Discord">';
+    echo '<a class="mcx-discord" href="' . $discord . '" target="_blank" rel="noopener" aria-label="Join Discord">';
     echo '<span class="mcx-discord-members" id="navDiscordOnline" aria-hidden="true">Members Online</span>';
     echo '<img src="assets/discord.svg?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199" alt="">';
     echo '</a>';
@@ -73,5 +73,5 @@ function mineacle_footer(): void {
     echo '</div>';
     echo '</footer>';
     echo '<div class="mineacle-toast" id="toast" role="status" aria-live="polite"><div class="toast-mark">✓</div><div><small>Mineacle Network</small><strong>Server IP copied</strong><span>Join with <b id="toastValue">mineacle.net</b></span></div></div>';
-    echo '<script src="assets/main.js?v=banssingle3.8.79"></script>';
+    echo '<script src="assets/main.js?v=banssingle3.8.80"></script>';
 }
