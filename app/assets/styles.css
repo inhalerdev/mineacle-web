@@ -13493,3 +13493,218 @@ main{
     padding-top:calc(var(--mcx-mobile-nav-h, 76px) + 132px)!important;
   }
 }
+
+/* Mineacle Bans v3.8.50: search X + purple below-fold blend + equal hero rhythm
+   - Removes the separate Clear button and places a compact X inside the search field
+   - Stops the hero/below-fold seam from falling to true black
+   - Uses a stronger final hero gradient into the actual purple-blue page surface
+   - Gives hero text, tiles, and records board more equal vertical spacing */
+:root{
+  --mineacle-v50-page:#080513;
+  --mineacle-v50-page-soft:#0d071b;
+  --mineacle-v50-panel:#10091d;
+  --mineacle-v50-gap:78px;
+  --mineacle-v49-dark:var(--mineacle-v50-page);
+}
+
+html,
+body,
+.page-shell,
+.site-main,
+main,
+.bans-v3-page{
+  background:linear-gradient(180deg, var(--mineacle-v50-page-soft) 0%, var(--mineacle-v50-page) 62%, #070411 100%)!important;
+}
+
+/* Stronger bottom 10-14% ramp, but it lands on the site's purple-black surface instead of hard black. */
+.bans-v34-background-fold::after,
+.bans-v32-logo-only-fold::after,
+.bans-v3-hero::after,
+.bans-records-hero::after{
+  background:
+    linear-gradient(180deg,
+      rgba(18,15,34,.36) 0%,
+      rgba(18,15,34,.38) 30%,
+      rgba(14,9,26,.50) 55%,
+      rgba(11,7,22,.66) 72%,
+      rgba(9,6,18,.84) 84%,
+      var(--mineacle-v50-page-soft) 91%,
+      var(--mineacle-v50-page) 100%),
+    radial-gradient(circle at 50% 18%, rgba(203,88,255,.080), transparent 34rem),
+    linear-gradient(90deg,
+      rgba(8,4,16,.28) 0%,
+      rgba(18,15,34,.16) 24%,
+      rgba(18,15,34,.16) 76%,
+      rgba(8,4,16,.28) 100%)!important;
+}
+
+.bans-v34-background-fold,
+.bans-v32-logo-only-fold,
+.bans-v3-hero,
+.bans-records-hero{
+  min-height:940px!important;
+  height:100vh!important;
+}
+
+.ban-hero-content{
+  padding-top:clamp(250px, 26vh, 320px)!important;
+}
+
+.ban-hero-copy{
+  margin-bottom:0!important;
+}
+
+.guard-info-tiles{
+  margin-top:var(--mineacle-v50-gap)!important;
+}
+
+.bans-section,
+.bans-v3-results{
+  margin-top:var(--mineacle-v50-gap)!important;
+}
+
+/* The records board sits on the same purple/blue floor color the hero fades into. */
+.bans-v3-results,
+.bans-section,
+.ban-table-shell,
+.bans-v3-results-head,
+.bans-v3-search,
+.bans-v31-results-search,
+.pagination-row{
+  background-color:transparent!important;
+}
+
+.bans-v3-results{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.035) 0%, rgba(255,255,255,.010) 100%),
+    rgba(16,9,29,.52)!important;
+}
+
+.bans-v3-results-head{
+  background:rgba(16,9,29,.42)!important;
+}
+
+.bans-v3-search,
+.bans-v31-results-search{
+  grid-template-columns:minmax(0, 1fr) 116px!important;
+  gap:12px!important;
+  background:rgba(8,5,18,.32)!important;
+}
+
+.ban-search-field{
+  position:relative!important;
+  display:block!important;
+  min-width:0!important;
+  width:100%!important;
+}
+
+.ban-search-field input,
+.bans-v3-search .ban-search-field input,
+.bans-v31-results-search .ban-search-field input{
+  width:100%!important;
+  padding-right:52px!important;
+}
+
+.ban-search-clear,
+.bans-v3-search .ban-search-clear,
+.bans-v31-results-search .ban-search-clear{
+  position:absolute!important;
+  right:8px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  width:32px!important;
+  height:32px!important;
+  min-width:32px!important;
+  min-height:32px!important;
+  padding:0!important;
+  border-radius:6px!important;
+  border:1px solid rgba(203,88,255,.20)!important;
+  background:linear-gradient(180deg, rgba(255,255,255,.070) 0%, rgba(255,255,255,.020) 100%), rgba(18,15,34,.46)!important;
+  color:rgba(245,238,255,.86)!important;
+  box-shadow:
+    inset 0 0 8px rgba(203,88,255,.050),
+    inset 0 1px 0 rgba(255,255,255,.060),
+    0 7px 14px rgba(0,0,0,.18)!important;
+  cursor:pointer!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
+  font-size:20px!important;
+  line-height:1!important;
+  font-weight:650!important;
+  letter-spacing:0!important;
+  text-decoration:none!important;
+  transition:transform .08s ease, border-color .12s ease, box-shadow .12s ease, background .12s ease, color .12s ease!important;
+  z-index:2!important;
+}
+
+.ban-search-clear:hover,
+.bans-v3-search .ban-search-clear:hover,
+.bans-v31-results-search .ban-search-clear:hover{
+  border-color:rgba(255,136,255,.34)!important;
+  background:linear-gradient(180deg, rgba(255,255,255,.095) 0%, rgba(255,255,255,.030) 100%), rgba(24,16,42,.58)!important;
+  color:#fff!important;
+  box-shadow:
+    inset 0 0 9px rgba(203,88,255,.075),
+    inset 0 1px 0 rgba(255,255,255,.080),
+    0 8px 16px rgba(0,0,0,.20)!important;
+}
+
+.ban-search-clear:active,
+.bans-v3-search .ban-search-clear:active,
+.bans-v31-results-search .ban-search-clear:active{
+  transform:translateY(calc(-50% + 1px))!important;
+}
+
+@media(max-width:980px){
+  :root{
+    --mineacle-v50-gap:48px;
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:740px!important;
+    height:82vh!important;
+  }
+
+  .ban-hero-content{
+    padding-top:calc(var(--mcx-mobile-nav-h, 76px) + 154px)!important;
+  }
+
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after,
+  .bans-records-hero::after{
+    background:
+      linear-gradient(180deg,
+        rgba(18,15,34,.34) 0%,
+        rgba(18,15,34,.38) 38%,
+        rgba(12,7,24,.58) 68%,
+        rgba(9,6,18,.82) 86%,
+        var(--mineacle-v50-page-soft) 94%,
+        var(--mineacle-v50-page) 100%),
+      radial-gradient(circle at 50% 18%, rgba(203,88,255,.070), transparent 24rem)!important;
+  }
+
+  .bans-v3-search,
+  .bans-v31-results-search{
+    grid-template-columns:1fr!important;
+  }
+}
+
+@media(max-width:640px){
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:700px!important;
+    height:80vh!important;
+  }
+
+  .ban-hero-content{
+    padding-top:calc(var(--mcx-mobile-nav-h, 76px) + 140px)!important;
+  }
+}

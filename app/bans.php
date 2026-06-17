@@ -52,9 +52,11 @@ mineacle_header('bans');
 
         <form class="bans-v3-search js-ban-search-form bans-v31-results-search" id="banSearchForm" role="search">
             <label class="sr-only" for="banSearch">Search bans</label>
-            <input id="banSearch" class="js-ban-search" type="search" name="q" autocomplete="off" placeholder="Search Minecraft username">
+            <div class="ban-search-field">
+                <input id="banSearch" class="js-ban-search" type="search" name="q" autocomplete="off" placeholder="Search Minecraft username">
+                <button class="ban-search-clear js-ban-clear" id="clearSearch" type="button" aria-label="Clear search" title="Clear search">×</button>
+            </div>
             <button class="btn red" type="submit">Search</button>
-            <button class="btn soft js-ban-clear" id="clearSearch" type="button">Clear</button>
         </form>
 
         <div class="ban-table-shell">
