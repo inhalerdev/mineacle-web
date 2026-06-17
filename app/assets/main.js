@@ -34,7 +34,7 @@
         has_prev: false,
         has_next: false
     };
-    let discordOnlineMembersText = "Online members";
+    let discordOnlineMembersText = "Members Online";
 
     function assetUrl(filename) {
         return new URL(filename, assetRoot).toString();
@@ -349,11 +349,25 @@
     }
 
     function formatDiscordCount(count) {
-        if (!count) return "Online members";
-        return `${count.toLocaleString()} online members`;
+        if (!count) return "Members Online";
+        return `${count.toLocaleString()} Members Online`;
+    }
+
+    function updateDiscordMemberDisplays(text) {
+        discordOnlineMembersText = text || "Members Online";
+        setText("singleModalDiscordCount", discordOnlineMembersText);
+        setText("navDiscordOnline", discordOnlineMembersText);
+
+        const navDiscord = document.querySelector(".mcx-discord");
+        if (navDiscord) {
+            navDiscord.setAttribute("aria-label", `Join Discord — ${discordOnlineMembersText}`);
+            navDiscord.setAttribute("title", discordOnlineMembersText);
+        }
     }
 
     async function loadDiscordMemberCount() {
+        updateDiscordMemberDisplays(discordOnlineMembersText);
+
         try {
             const response = await fetch("api/discord.php", { headers: { "Accept": "application/json" }, cache: "no-store" });
             if (!response.ok) return;
@@ -362,8 +376,7 @@
             const count = extractDiscordCount(payload);
             if (!count) return;
 
-            discordOnlineMembersText = formatDiscordCount(count);
-            setText("singleModalDiscordCount", discordOnlineMembersText);
+            updateDiscordMemberDisplays(formatDiscordCount(count));
         } catch (error) {
             console.error("Mineacle Discord count failed", error);
         }
