@@ -10681,3 +10681,357 @@ body{
     margin-top:-132px!important;
   }
 }
+
+/* Mineacle Bans v3.8.38: public records hero + ClientGuard info tiles
+   - Adds the Public Ban Records content block into the scenic hero
+   - Uses four ClientGuard info tiles on desktop and a horizontal swipe row on mobile
+   - Extends the scenic hero vertically and smooths the fade into dark purple-black
+   - Unblurs the image another 20% from v3.8.37: 4px -> 3.2px */
+
+body{
+  background:linear-gradient(180deg, #130821 0%, #0d0617 44%, #07040d 72%, #030107 100%)!important;
+}
+
+.bans-v34-background-fold,
+.bans-v32-logo-only-fold,
+.bans-v3-hero,
+.bans-records-hero{
+  min-height:940px!important;
+  height:110vh!important;
+  display:block!important;
+  place-items:unset!important;
+  padding:0!important;
+  margin:0!important;
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+}
+
+.bans-v34-background-fold::before,
+.bans-v32-logo-only-fold::before,
+.bans-v3-hero::before,
+.bans-records-hero::before{
+  inset:-16px!important;
+  background:url("bans-hero-background-v35.png?v=bansfull3.8.38") center 8% / cover no-repeat!important;
+  filter:blur(3.2px) saturate(.96) brightness(.78)!important;
+  transform:scale(1.028)!important;
+}
+
+.bans-v34-background-fold::after,
+.bans-v32-logo-only-fold::after,
+.bans-v3-hero::after,
+.bans-records-hero::after{
+  background:
+    linear-gradient(180deg,
+      rgba(5,3,12,.06) 0%,
+      rgba(11,7,22,.08) 16%,
+      rgba(18,10,32,.14) 34%,
+      rgba(20,12,36,.24) 52%,
+      rgba(17,10,31,.44) 68%,
+      rgba(12,7,23,.70) 82%,
+      rgba(7,4,14,.91) 94%,
+      #030107 100%),
+    radial-gradient(circle at 50% 18%, rgba(173,84,255,.13), transparent 38rem),
+    linear-gradient(90deg, rgba(5,3,12,.22), rgba(5,3,12,.03) 25%, rgba(5,3,12,.03) 75%, rgba(5,3,12,.22))!important;
+}
+
+.ban-hero-content{
+  position:relative!important;
+  z-index:4!important;
+  width:min(var(--v3-max-width, 1180px), calc(100% - 40px))!important;
+  margin:0 auto!important;
+  padding-top:clamp(170px, 20vh, 235px)!important;
+}
+
+.ban-hero-copy{
+  max-width:760px!important;
+  color:#fff!important;
+  text-shadow:0 4px 20px rgba(0,0,0,.55)!important;
+}
+
+.ban-hero-kicker{
+  display:inline-flex!important;
+  align-items:center!important;
+  min-height:34px!important;
+  padding:0 14px!important;
+  border:1px solid rgba(255,136,255,.36)!important;
+  border-radius:999px!important;
+  color:#ff88ff!important;
+  background:rgba(18,8,32,.50)!important;
+  box-shadow:0 0 24px rgba(173,84,255,.18), inset 0 1px 0 rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(10px)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  letter-spacing:.12em!important;
+  text-transform:uppercase!important;
+}
+
+.ban-hero-copy h1{
+  max-width:820px!important;
+  margin:18px 0 14px!important;
+  color:#fff!important;
+  font-size:clamp(44px, 6vw, 82px)!important;
+  line-height:.90!important;
+  letter-spacing:-.065em!important;
+  text-transform:uppercase!important;
+  font-weight:950!important;
+  text-shadow:0 5px 0 rgba(0,0,0,.52), 0 0 34px rgba(176,84,255,.22)!important;
+}
+
+.ban-hero-copy p{
+  max-width:720px!important;
+  margin:0!important;
+  color:rgba(238,229,255,.88)!important;
+  font-size:clamp(16px, 1.55vw, 20px)!important;
+  line-height:1.55!important;
+  font-weight:700!important;
+}
+
+.guard-info-tiles{
+  display:grid!important;
+  grid-template-columns:repeat(4, minmax(0, 1fr))!important;
+  gap:16px!important;
+  margin-top:34px!important;
+}
+
+.guard-info-tile{
+  position:relative!important;
+  min-height:188px!important;
+  padding:20px 18px 18px!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  border-radius:22px!important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.105) 0%, rgba(255,255,255,.045) 100%),
+    linear-gradient(135deg, rgba(55,24,86,.54), rgba(13,7,24,.74))!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -2px 0 rgba(0,0,0,.28),
+    0 18px 34px rgba(0,0,0,.28),
+    0 0 24px rgba(163,80,255,.12)!important;
+  backdrop-filter:blur(14px) saturate(115%)!important;
+  -webkit-backdrop-filter:blur(14px) saturate(115%)!important;
+  overflow:hidden!important;
+}
+
+.guard-info-tile::before{
+  content:""!important;
+  position:absolute!important;
+  left:0!important;
+  right:0!important;
+  top:0!important;
+  height:3px!important;
+  background:linear-gradient(90deg, rgba(255,136,255,.08), rgba(255,136,255,.74), rgba(105,83,255,.42), rgba(255,136,255,.08))!important;
+  opacity:.95!important;
+}
+
+.guard-info-number{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:38px!important;
+  height:28px!important;
+  border-radius:10px!important;
+  color:#ffb9ff!important;
+  background:rgba(255,136,255,.12)!important;
+  border:1px solid rgba(255,136,255,.22)!important;
+  font-size:12px!important;
+  font-weight:950!important;
+  letter-spacing:.08em!important;
+}
+
+.guard-info-tile h2{
+  margin:16px 0 9px!important;
+  color:#fff!important;
+  font-size:20px!important;
+  line-height:1.05!important;
+  letter-spacing:-.035em!important;
+  font-weight:950!important;
+  text-transform:none!important;
+}
+
+.guard-info-tile p{
+  margin:0!important;
+  color:rgba(231,223,246,.78)!important;
+  font-size:14px!important;
+  line-height:1.48!important;
+  font-weight:650!important;
+}
+
+.bans-v3-results,
+.bans-section{
+  position:relative!important;
+  z-index:6!important;
+  margin-top:-310px!important;
+}
+
+.bans-v3-results{
+  padding-top:0!important;
+}
+
+.bans-v3-results-head{
+  padding:24px 26px!important;
+  margin-bottom:0!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  border-bottom:0!important;
+  border-radius:24px 24px 0 0!important;
+  background:linear-gradient(180deg, rgba(20,10,34,.78), rgba(11,6,21,.92))!important;
+  box-shadow:0 18px 44px rgba(0,0,0,.20), inset 0 1px 0 rgba(255,255,255,.10)!important;
+  backdrop-filter:blur(12px)!important;
+  -webkit-backdrop-filter:blur(12px)!important;
+}
+
+@media(max-width:1180px){
+  .guard-info-tiles{
+    grid-template-columns:repeat(2, minmax(0, 1fr))!important;
+  }
+}
+
+@media(max-width:980px){
+  html,
+  body{
+    background:linear-gradient(180deg, #130821 0%, #0d0617 48%, #07040d 76%, #030107 100%)!important;
+  }
+
+  .mcx-header.site-header.mineacle-floating-header,
+  .mcx-header.site-header.mineacle-floating-header.is-scrolled,
+  #siteHeader.mcx-header{
+    background:linear-gradient(180deg, rgba(10,6,19,.34) 0%, rgba(10,6,19,.16) 62%, rgba(10,6,19,0) 100%)!important;
+    box-shadow:0 1px 0 rgba(207,92,255,.40), 0 12px 28px rgba(0,0,0,.08)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:830px!important;
+    height:94vh!important;
+    padding-top:0!important;
+  }
+
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before{
+    inset:-16px!important;
+    background:url("bans-hero-background-mobile-v36.png?v=bansfull3.8.38") center top / cover no-repeat!important;
+    filter:blur(3.2px) saturate(.96) brightness(.78)!important;
+    transform:scale(1.025)!important;
+  }
+
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after,
+  .bans-records-hero::after{
+    background:
+      linear-gradient(180deg,
+        rgba(6,4,13,.04) 0%,
+        rgba(12,7,23,.08) 18%,
+        rgba(18,11,33,.18) 38%,
+        rgba(16,9,30,.40) 62%,
+        rgba(12,7,24,.72) 82%,
+        rgba(5,3,10,.96) 100%),
+      radial-gradient(circle at 50% 16%, rgba(167,84,255,.11), transparent 24rem)!important;
+  }
+
+  .ban-hero-content{
+    width:calc(100% - 28px)!important;
+    padding-top:150px!important;
+  }
+
+  .ban-hero-copy{
+    max-width:100%!important;
+    text-align:left!important;
+  }
+
+  .ban-hero-copy h1{
+    max-width:620px!important;
+    margin-top:14px!important;
+    font-size:clamp(36px, 11vw, 54px)!important;
+    line-height:.92!important;
+  }
+
+  .ban-hero-copy p{
+    max-width:620px!important;
+    font-size:15px!important;
+    line-height:1.48!important;
+  }
+
+  .guard-info-tiles{
+    display:flex!important;
+    grid-template-columns:none!important;
+    gap:12px!important;
+    margin-top:24px!important;
+    padding:2px 2px 14px!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x mandatory!important;
+    -webkit-overflow-scrolling:touch!important;
+    scrollbar-width:none!important;
+  }
+
+  .guard-info-tiles::-webkit-scrollbar{
+    display:none!important;
+  }
+
+  .guard-info-tile{
+    flex:0 0 min(82vw, 330px)!important;
+    min-height:178px!important;
+    padding:18px 16px 16px!important;
+    border-radius:20px!important;
+    scroll-snap-align:start!important;
+  }
+
+  .guard-info-tile h2{
+    font-size:19px!important;
+  }
+
+  .guard-info-tile p{
+    font-size:13px!important;
+  }
+
+  .bans-v3-results,
+  .bans-section{
+    margin-top:-230px!important;
+  }
+
+  .bans-v3-results-head{
+    padding:20px 18px!important;
+    align-items:flex-start!important;
+  }
+}
+
+@media(max-width:640px){
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:790px!important;
+    height:90vh!important;
+  }
+
+  .ban-hero-content{
+    padding-top:135px!important;
+  }
+
+  .ban-hero-copy h1{
+    font-size:39px!important;
+  }
+
+  .bans-v3-results,
+  .bans-section{
+    margin-top:-205px!important;
+  }
+}
+
+@media(max-width:390px){
+  .ban-hero-copy h1{
+    font-size:36px!important;
+  }
+
+  .guard-info-tile{
+    flex-basis:86vw!important;
+  }
+}
