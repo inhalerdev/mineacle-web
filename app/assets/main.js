@@ -427,12 +427,28 @@
     });
   }
 
+
+  function updateMobileViewportVars() {
+    const viewport = window.visualViewport;
+    const height = viewport ? viewport.height : window.innerHeight;
+    if (!height) return;
+    document.documentElement.style.setProperty("--mcx-real-vh", `${Math.round(height)}px`);
+  }
+
   function bindMobileNavigation() {
     const header = document.getElementById("siteHeader");
     const toggle = header ? $(".mobile-nav-toggle", header) : null;
     const menu = document.getElementById("mainNav");
 
     if (!header || !toggle || !menu) return;
+
+    updateMobileViewportVars();
+    window.addEventListener("resize", updateMobileViewportVars, { passive: true });
+    window.addEventListener("orientationchange", updateMobileViewportVars, { passive: true });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", updateMobileViewportVars, { passive: true });
+      window.visualViewport.addEventListener("scroll", updateMobileViewportVars, { passive: true });
+    }
 
     const setOpen = (open) => {
       header.classList.toggle("mobile-open", open);
