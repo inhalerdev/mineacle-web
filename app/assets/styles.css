@@ -9675,6 +9675,9 @@ body,
    Extends the opened mobile panel vertically so all four nav buttons are visible without an internal mini-scroll. */
 @media (max-width: 980px){
   :root{
+    /* CSS fallback so IDE/static analysis can resolve the property.
+       main.js still overwrites this with the live visual viewport height on mobile Safari. */
+    --mcx-real-vh:100dvh;
     --mcx-mobile-panel-top:calc(env(safe-area-inset-top, 0px) + var(--mcx-mobile-nav-h) + 82px);
     --mcx-mobile-panel-bottom:max(18px, env(safe-area-inset-bottom, 0px));
     --mcx-mobile-panel-gutter:18px;
