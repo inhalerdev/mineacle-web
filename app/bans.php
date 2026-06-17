@@ -14,29 +14,29 @@ mineacle_header('bans');
             <div class="ban-hero-copy">
                 <span class="ban-hero-kicker">Mineacle Enforcement</span>
                 <h1>Public Ban Records</h1>
-                <p>Active bans are listed publicly so players can see how Mineacle protects Survival. MineacleClientGuard and staff review patterns around hacked clients, unfair combat, movement abuse, and unsafe automation.</p>
+                <p>Active bans are listed openly so players can see how Mineacle keeps Survival fair. MineacleClientGuard and staff review suspicious client, movement, combat, and building patterns before action is taken.</p>
             </div>
 
             <div class="guard-info-tiles" aria-label="What MineacleClientGuard watches for">
                 <article class="guard-info-tile">
                     <span class="guard-info-number">01</span>
-                    <h2>Allowed client signals</h2>
-                    <p>Reads client brand data when available and compares it against the allowed-client list. Useful signal, never the only proof.</p>
+                    <h2>Allowed clients</h2>
+                    <p>Checks client brand signals when available and compares them to the launchers and loaders we allow. One signal helps review, but does not decide everything by itself.</p>
                 </article>
                 <article class="guard-info-tile">
                     <span class="guard-info-number">02</span>
-                    <h2>Movement &amp; knockback</h2>
-                    <p>Reviews fly-like movement, abnormal vertical behavior, strange air states, reduced knockback, and velocity canceling.</p>
+                    <h2>Movement review</h2>
+                    <p>Watches for movement that does not line up with normal Minecraft physics, including fly-like motion, odd vertical changes, and reduced knockback.</p>
                 </article>
                 <article class="guard-info-tile">
                     <span class="guard-info-number">03</span>
-                    <h2>Combat &amp; build patterns</h2>
-                    <p>Looks for automated timing, repeated aura-like combat, fast place, auto place, and scaffold-style building patterns.</p>
+                    <h2>Combat &amp; building</h2>
+                    <p>Looks for repeated patterns around attack timing, aura-like hits, fast placement, auto placement, and scaffold-style building.</p>
                 </article>
                 <article class="guard-info-tile">
                     <span class="guard-info-number">04</span>
                     <h2>Evidence over time</h2>
-                    <p>Violations stack before action. Staff alerts come first, repeated confidence increases violations, and obvious repeated patterns can autoban.</p>
+                    <p>Flags build a history first. Lower confidence alerts staff, repeated patterns raise violations, and obvious repeat abuse can lead to automatic action.</p>
                 </article>
             </div>
         </div>

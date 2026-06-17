@@ -12028,3 +12028,313 @@ textarea{
     margin-top:-78px!important;
   }
 }
+
+/* Mineacle Bans v3.8.44: nav-opacity match, lower records panel, cleaner serious sans
+   - Moves Active bans lower so it no longer crowds the guard tiles
+   - Lightens floating/full-width nav surfaces and makes their stroke more transparent
+   - Matches guard tile opacity to the nav surface
+   - Restyles records buttons to follow the nav button static/hover/pressed language
+   - Cleans hero/results typography into a more professional sans-serif style */
+
+:root{
+  --mineacle-ui-surface:rgba(18,15,34,.60);
+  --mineacle-ui-surface-hover:rgba(24,18,44,.72);
+  --mineacle-ui-line:rgba(203,88,255,.24);
+  --mineacle-ui-line-strong:rgba(255,136,255,.42);
+  --mineacle-ui-glow:rgba(203,88,255,.11);
+  --mineacle-ui-text:#f7f2ff;
+  --mineacle-ui-muted:rgba(232,224,244,.78);
+  --mineacle-font:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html,
+body,
+button,
+input,
+select,
+textarea,
+.ban-hero-copy,
+.bans-v3-results,
+.guard-info-tile{
+  font-family:var(--mineacle-font)!important;
+  letter-spacing:normal!important;
+}
+
+/* Floating desktop nav and full-width scrolled nav use a lighter translucent surface. */
+.mcx-header.site-header.mineacle-floating-header,
+#siteHeader.mcx-header{
+  background:var(--mineacle-ui-surface)!important;
+  border:1px solid var(--mineacle-ui-line)!important;
+  box-shadow:
+    inset 0 0 10px var(--mineacle-ui-glow),
+    inset 0 1px 0 rgba(255,255,255,.055),
+    0 12px 34px rgba(0,0,0,.22)!important;
+  backdrop-filter:blur(6px) saturate(110%)!important;
+  -webkit-backdrop-filter:blur(6px) saturate(110%)!important;
+}
+
+.mcx-header.site-header.mineacle-floating-header.is-scrolled,
+#siteHeader.mcx-header.is-scrolled{
+  background:rgba(18,15,34,.64)!important;
+  border-top:0!important;
+  border-left:0!important;
+  border-right:0!important;
+  border-bottom:1px solid rgba(203,88,255,.25)!important;
+  box-shadow:
+    inset 0 -8px 14px -14px rgba(203,88,255,.20),
+    0 8px 24px rgba(0,0,0,.18)!important;
+}
+
+.mcx-nav-shell{
+  background:transparent!important;
+}
+
+/* Hero type: serious, clean, and close to the nav/button language. */
+.ban-hero-kicker,
+.bans-v3-kicker{
+  font-family:var(--mineacle-font)!important;
+  font-weight:800!important;
+  letter-spacing:.11em!important;
+  color:#ff9dff!important;
+}
+
+.ban-hero-copy h1{
+  font-family:var(--mineacle-font)!important;
+  font-size:clamp(42px, 4.65vw, 66px)!important;
+  line-height:1.05!important;
+  font-weight:780!important;
+  letter-spacing:-.035em!important;
+  color:#fff!important;
+  text-shadow:0 2px 0 rgba(0,0,0,.42), 0 0 20px rgba(203,88,255,.12)!important;
+}
+
+.ban-hero-copy p{
+  font-family:var(--mineacle-font)!important;
+  max-width:790px!important;
+  font-size:clamp(16px, 1.15vw, 18px)!important;
+  line-height:1.72!important;
+  font-weight:520!important;
+  letter-spacing:-.006em!important;
+  color:var(--mineacle-ui-muted)!important;
+}
+
+/* Guard tiles now match the lighter nav opacity instead of reading heavier than the header. */
+.guard-info-tiles{
+  margin-top:82px!important;
+  gap:28px!important;
+}
+
+.guard-info-tile{
+  min-height:248px!important;
+  padding:28px 24px 26px!important;
+  border:1px solid var(--mineacle-ui-line)!important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.070) 0%, rgba(255,255,255,.026) 100%),
+    var(--mineacle-ui-surface)!important;
+  box-shadow:
+    inset 0 0 10px var(--mineacle-ui-glow),
+    inset 0 1px 0 rgba(255,255,255,.055),
+    0 16px 36px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(6px) saturate(108%)!important;
+  -webkit-backdrop-filter:blur(6px) saturate(108%)!important;
+}
+
+.guard-info-number{
+  color:#ffd8ff!important;
+  border-color:rgba(255,136,255,.25)!important;
+  background:rgba(255,136,255,.11)!important;
+  font-weight:800!important;
+}
+
+.guard-info-tile h2{
+  font-family:var(--mineacle-font)!important;
+  margin:22px 0 13px!important;
+  font-size:17px!important;
+  line-height:1.25!important;
+  font-weight:760!important;
+  letter-spacing:-.012em!important;
+  color:var(--mineacle-ui-text)!important;
+}
+
+.guard-info-tile p{
+  font-family:var(--mineacle-font)!important;
+  font-size:13.5px!important;
+  line-height:1.68!important;
+  font-weight:470!important;
+  letter-spacing:-.002em!important;
+  color:rgba(235,228,246,.76)!important;
+}
+
+/* Move Active bans down and reduce the cramped overlap under the tiles. */
+.bans-v3-results,
+.bans-section{
+  margin-top:-72px!important;
+}
+
+.bans-v3-results-head{
+  background:linear-gradient(180deg, rgba(18,15,34,.72), rgba(11,7,22,.88))!important;
+  border-color:rgba(203,88,255,.18)!important;
+  box-shadow:
+    inset 0 0 10px rgba(203,88,255,.075),
+    inset 0 1px 0 rgba(255,255,255,.055),
+    0 16px 40px rgba(0,0,0,.22)!important;
+}
+
+.bans-v3-results-head h2{
+  font-family:var(--mineacle-font)!important;
+  font-size:clamp(32px, 3.0vw, 44px)!important;
+  line-height:1.08!important;
+  font-weight:780!important;
+  letter-spacing:-.032em!important;
+}
+
+.bans-list-meta{
+  font-family:var(--mineacle-font)!important;
+  font-weight:760!important;
+  letter-spacing:.02em!important;
+}
+
+.bans-v3-search,
+.bans-v31-results-search{
+  grid-template-columns:minmax(320px, 1fr) 112px 112px!important;
+  gap:14px!important;
+  padding:24px!important;
+  border-color:rgba(203,88,255,.16)!important;
+  background:linear-gradient(180deg, rgba(18,15,34,.50), rgba(12,7,22,.70))!important;
+}
+
+.bans-v3-search input,
+.bans-v31-results-search input{
+  height:50px!important;
+  border-radius:7px!important;
+  border:1px solid rgba(203,88,255,.18)!important;
+  background:rgba(6,4,12,.54)!important;
+  font-family:var(--mineacle-font)!important;
+  font-size:14px!important;
+  font-weight:650!important;
+  letter-spacing:-.002em!important;
+}
+
+.bans-v3-search input:focus,
+.bans-v31-results-search input:focus{
+  border-color:rgba(255,136,255,.42)!important;
+  box-shadow:0 0 0 3px rgba(255,85,255,.09), inset 0 0 10px rgba(203,88,255,.055)!important;
+}
+
+/* Records buttons match the nav button style: beveled static, brighter hover, pressed down on click. */
+.bans-v3-results .btn,
+.bans-v3-search .btn,
+.pagination-row .btn,
+.ban-action .btn{
+  height:50px!important;
+  min-height:50px!important;
+  min-width:0!important;
+  border-radius:6px!important;
+  border:2px solid rgba(255,202,255,.30)!important;
+  font-family:var(--mineacle-font)!important;
+  font-size:13px!important;
+  font-weight:850!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+  color:#fff!important;
+  text-shadow:0 2px 0 rgba(0,0,0,.46)!important;
+  transition:transform .08s ease, filter .12s ease, box-shadow .12s ease, background .12s ease!important;
+}
+
+.bans-v3-search .btn.red,
+.bans-v3-results .btn.red,
+.ban-action .btn.red{
+  background:linear-gradient(180deg, #d95aff 0%, #a814ea 58%, #6800b7 100%)!important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.23),
+    inset 0 -4px 0 rgba(65,0,110,.44),
+    0 5px 0 rgba(42,0,70,.70),
+    0 12px 22px rgba(174,58,255,.22)!important;
+}
+
+.bans-v3-search .btn.soft,
+.bans-v3-results .btn.soft,
+.pagination-row .btn.soft,
+.ban-action .btn.soft{
+  background:linear-gradient(180deg, rgba(41,31,62,.86) 0%, rgba(22,16,35,.92) 100%)!important;
+  border-color:rgba(203,88,255,.22)!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.08),
+    inset 0 -3px 0 rgba(0,0,0,.34),
+    0 5px 0 rgba(0,0,0,.36),
+    0 12px 20px rgba(0,0,0,.18)!important;
+}
+
+.bans-v3-results .btn:hover,
+.bans-v3-search .btn:hover,
+.pagination-row .btn:hover,
+.ban-action .btn:hover{
+  filter:brightness(1.08) saturate(1.08)!important;
+  transform:translateY(-1px)!important;
+}
+
+.bans-v3-results .btn:active,
+.bans-v3-search .btn:active,
+.pagination-row .btn:active,
+.ban-action .btn:active{
+  transform:translateY(4px)!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.12),
+    inset 0 -2px 0 rgba(0,0,0,.30),
+    0 1px 0 rgba(0,0,0,.55)!important;
+}
+
+.ban-table-shell{
+  border-color:rgba(203,88,255,.16)!important;
+  background:rgba(8,5,16,.90)!important;
+}
+
+@media(max-width:1280px){
+  .bans-v3-results,
+  .bans-section{
+    margin-top:-58px!important;
+  }
+}
+
+@media(max-width:980px){
+  .mcx-header.site-header.mineacle-floating-header,
+  .mcx-header.site-header.mineacle-floating-header.is-scrolled,
+  #siteHeader.mcx-header{
+    background:rgba(18,15,34,.40)!important;
+    border:0!important;
+    box-shadow:inset 0 -1px 0 rgba(203,88,255,.18)!important;
+    backdrop-filter:blur(5px) saturate(110%)!important;
+    -webkit-backdrop-filter:blur(5px) saturate(110%)!important;
+  }
+
+  .ban-hero-copy h1{
+    font-size:clamp(34px, 9.2vw, 48px)!important;
+    font-weight:760!important;
+  }
+
+  .guard-info-tiles{
+    margin-top:52px!important;
+    gap:16px!important;
+  }
+
+  .guard-info-tile{
+    min-height:216px!important;
+  }
+
+  .bans-v3-results,
+  .bans-section{
+    margin-top:-42px!important;
+  }
+
+  .bans-v3-search,
+  .bans-v31-results-search{
+    grid-template-columns:1fr!important;
+    gap:11px!important;
+  }
+
+  .bans-v3-search .btn,
+  .bans-v3-results .btn,
+  .pagination-row .btn{
+    width:100%!important;
+  }
+}
