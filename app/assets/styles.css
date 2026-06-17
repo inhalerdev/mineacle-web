@@ -15098,3 +15098,200 @@ main,
     font-size:14px!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.59: modal appeal CTA full-width + note alignment
+   Based on the marked screenshot:
+   - Appeal button fills the same left/right content rails as the info cards
+   - Bottom copy aligns inside those rails and moves upward
+   - Modal is made more compact without changing the site language */
+#banModal .modal-content,
+#banModal .modal-card,
+#banModal .ban-modal-card,
+.ban-modal-card{
+  padding-bottom:clamp(26px, 2.2vw, 36px)!important;
+}
+
+#banModal .modal-details,
+#banModal .ban-detail-grid,
+#banModal .modal-grid,
+.ban-detail-grid,
+.ban-modal-detail-grid{
+  width:min(100%, 1080px)!important;
+  max-width:1080px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* Target the real appeal wrapper/button and override the old 2-column/filler setup. */
+#banModal .modal-appeal-wrap,
+#banModal .appeal-discord-wrap,
+#banModal .ban-appeal-wrap,
+#banModal .discord-appeal-wrap,
+.modal-appeal-wrap,
+.appeal-discord-wrap,
+.ban-appeal-wrap,
+.discord-appeal-wrap{
+  width:min(100%, 1080px)!important;
+  max-width:1080px!important;
+  margin:clamp(12px, 1.1vw, 16px) auto 0!important;
+  padding:0!important;
+  display:block!important;
+  grid-template-columns:none!important;
+  gap:0!important;
+}
+
+#banModal .modal-appeal-wrap::after,
+#banModal .appeal-discord-wrap::after,
+#banModal .ban-appeal-wrap::after,
+#banModal .discord-appeal-wrap::after,
+.modal-appeal-wrap::after,
+.appeal-discord-wrap::after,
+.ban-appeal-wrap::after,
+.discord-appeal-wrap::after{
+  content:none!important;
+  display:none!important;
+}
+
+#banModal .modal-appeal-button,
+#banModal .appeal-discord-card,
+#banModal .ban-appeal-discord,
+#banModal .discord-appeal-button,
+.modal-appeal-button,
+.appeal-discord-card,
+.ban-appeal-discord,
+.discord-appeal-button{
+  width:100%!important;
+  max-width:100%!important;
+  min-width:0!important;
+  min-height:96px!important;
+  height:96px!important;
+  margin:0!important;
+  border-radius:16px!important;
+  box-sizing:border-box!important;
+  display:grid!important;
+  grid-template-columns:86px minmax(0, 1fr) auto!important;
+  align-items:center!important;
+  column-gap:18px!important;
+  padding:12px 22px 12px 14px!important;
+}
+
+#banModal .modal-appeal-button img,
+#banModal .appeal-discord-card img,
+#banModal .ban-appeal-discord img,
+#banModal .discord-appeal-button img,
+.modal-appeal-button img,
+.appeal-discord-card img,
+.ban-appeal-discord img,
+.discord-appeal-button img{
+  width:66px!important;
+  height:66px!important;
+  object-fit:contain!important;
+  justify-self:center!important;
+}
+
+#banModal .modal-appeal-button strong,
+#banModal .appeal-discord-card strong,
+#banModal .ban-appeal-discord strong,
+#banModal .discord-appeal-button strong,
+.modal-appeal-button strong,
+.appeal-discord-card strong,
+.ban-appeal-discord strong,
+.discord-appeal-button strong{
+  font-size:clamp(21px, 1.85vw, 30px)!important;
+  line-height:1.02!important;
+  letter-spacing:.01em!important;
+  max-width:none!important;
+  white-space:normal!important;
+}
+
+#banModal .modal-appeal-button .modal-appeal-count,
+#banModal .appeal-discord-card .modal-appeal-count,
+#banModal .ban-appeal-discord .modal-appeal-count,
+#banModal .discord-appeal-button .modal-appeal-count,
+.modal-appeal-count{
+  justify-self:end!important;
+  white-space:nowrap!important;
+  font-size:clamp(12px, .9vw, 15px)!important;
+  line-height:1!important;
+  padding:13px 18px!important;
+  border-radius:999px!important;
+}
+
+#banModal .modal-note,
+#banModal .ban-modal-note,
+#banModal .appeal-note,
+.modal-note,
+.ban-modal-note,
+.appeal-note{
+  width:min(100%, 1080px)!important;
+  max-width:1080px!important;
+  margin:clamp(12px, 1vw, 16px) auto 0!important;
+  padding:0!important;
+  font-size:clamp(15px, 1.05vw, 18px)!important;
+  line-height:1.4!important;
+  color:rgba(239,230,255,.74)!important;
+}
+
+#banModal .modal-detail-card,
+#banModal .ban-detail-card,
+.modal-detail-card,
+.ban-detail-card{
+  min-height:88px!important;
+  padding:20px 24px!important;
+}
+
+@media(max-width: 760px){
+  #banModal .modal-appeal-button,
+  #banModal .appeal-discord-card,
+  #banModal .ban-appeal-discord,
+  #banModal .discord-appeal-button,
+  .modal-appeal-button,
+  .appeal-discord-card,
+  .ban-appeal-discord,
+  .discord-appeal-button{
+    height:auto!important;
+    min-height:112px!important;
+    grid-template-columns:70px minmax(0, 1fr)!important;
+    grid-template-areas:
+      "avatar text"
+      "avatar count"!important;
+    row-gap:8px!important;
+    padding:14px 16px!important;
+  }
+
+  #banModal .modal-appeal-button img,
+  #banModal .appeal-discord-card img,
+  #banModal .ban-appeal-discord img,
+  #banModal .discord-appeal-button img,
+  .modal-appeal-button img,
+  .appeal-discord-card img,
+  .ban-appeal-discord img,
+  .discord-appeal-button img{
+    width:58px!important;
+    height:58px!important;
+    grid-area:avatar!important;
+  }
+
+  #banModal .modal-appeal-button strong,
+  #banModal .appeal-discord-card strong,
+  #banModal .ban-appeal-discord strong,
+  #banModal .discord-appeal-button strong,
+  .modal-appeal-button strong,
+  .appeal-discord-card strong,
+  .ban-appeal-discord strong,
+  .discord-appeal-button strong{
+    grid-area:text!important;
+    font-size:21px!important;
+  }
+
+  #banModal .modal-appeal-button .modal-appeal-count,
+  #banModal .appeal-discord-card .modal-appeal-count,
+  #banModal .ban-appeal-discord .modal-appeal-count,
+  #banModal .discord-appeal-button .modal-appeal-count,
+  .modal-appeal-count{
+    grid-area:count!important;
+    justify-self:start!important;
+    padding:10px 14px!important;
+  }
+}
