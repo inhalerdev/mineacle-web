@@ -15851,3 +15851,99 @@ html body #banModal.ban-popup-v70 .modal-note{
     justify-self:start!important;
   }
 }
+
+
+/* v3.8.71 — modal edge matches ClientGuard tiles + player head aligns with detail boxes */
+
+/* Replace the thick/hot popup border with the same subtle translucent tile/window edge. */
+html body #banModal.ban-popup-v70 .modal-card.ban-popup-card-v70{
+  border:1px solid var(--mineacle-ui-line, rgba(203,88,255,.24))!important;
+  border-radius:22px!important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.070) 0%, rgba(255,255,255,.026) 100%),
+    rgba(18,15,34,.60)!important;
+  box-shadow:
+    inset 0 0 10px var(--mineacle-ui-glow, rgba(203,88,255,.11)),
+    inset 0 1px 0 rgba(255,255,255,.055),
+    0 16px 36px rgba(0,0,0,.24)!important;
+  backdrop-filter:blur(6px) saturate(108%)!important;
+  -webkit-backdrop-filter:blur(6px) saturate(108%)!important;
+}
+
+/* Use one shared content rail so header/avatar, detail cards, Discord button, and note all key off the same left edge. */
+html body #banModal.ban-popup-v70 .ban-popup-rail-v70{
+  width:min(100%, 760px)!important;
+  max-width:760px!important;
+  margin:0 auto!important;
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:12px!important;
+}
+
+/* Header is now the same width as the detail grid. The avatar starts exactly where Type/Duration/Appeal ID cards start. */
+html body #banModal.ban-popup-v70 .ban-popup-header-v70{
+  width:100%!important;
+  max-width:100%!important;
+  margin:0 0 16px!important;
+  display:grid!important;
+  grid-template-columns:minmax(0, 1fr) 48px!important;
+  align-items:start!important;
+  gap:18px!important;
+}
+
+html body #banModal.ban-popup-v70 .ban-popup-player-v70{
+  width:100%!important;
+  max-width:100%!important;
+  display:grid!important;
+  grid-template-columns:58px minmax(0, 1fr)!important;
+  align-items:center!important;
+  gap:14px!important;
+  justify-self:start!important;
+}
+
+/* Keep the detail grid on the exact same rail as the player head. */
+html body #banModal.ban-popup-v70 .ban-popup-details-v70,
+html body #banModal.ban-popup-v70 .detail-grid{
+  width:100%!important;
+  max-width:100%!important;
+  margin:0!important;
+  justify-self:stretch!important;
+}
+
+/* Match detail card edge to ClientGuard tile edge too. */
+html body #banModal.ban-popup-v70 .detail{
+  border:1px solid var(--mineacle-ui-line, rgba(203,88,255,.24))!important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.070) 0%, rgba(255,255,255,.026) 100%),
+    rgba(18,15,34,.60)!important;
+  box-shadow:
+    inset 0 0 10px var(--mineacle-ui-glow, rgba(203,88,255,.11)),
+    inset 0 1px 0 rgba(255,255,255,.055)!important;
+}
+
+/* Discord CTA and bottom copy remain aligned to the same left edge as the Type/Duration/Appeal ID cards. */
+html body #banModal.ban-popup-v70 .ban-popup-discord-wrap-v70,
+html body #banModal.ban-popup-v70 .modal-appeal-wrap,
+html body #banModal.ban-popup-v70 .ban-popup-note-v70,
+html body #banModal.ban-popup-v70 .modal-note{
+  justify-self:stretch!important;
+  margin-left:0!important;
+  margin-right:0!important;
+}
+
+/* Close button keeps the same small control style without adding a second modal edge. */
+html body #banModal.ban-popup-v70 .ban-popup-close-v70,
+html body #banModal.ban-popup-v70 .close-modal{
+  border:1px solid rgba(255,255,255,.14)!important;
+  border-radius:12px!important;
+}
+
+@media(max-width:900px){
+  html body #banModal.ban-popup-v70 .ban-popup-rail-v70,
+  html body #banModal.ban-popup-v70 .ban-popup-header-v70,
+  html body #banModal.ban-popup-v70 .ban-popup-details-v70,
+  html body #banModal.ban-popup-v70 .detail-grid{
+    width:100%!important;
+    max-width:100%!important;
+  }
+}
