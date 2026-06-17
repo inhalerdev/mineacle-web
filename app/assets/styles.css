@@ -15536,3 +15536,97 @@ main,
     max-width:100%!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.62: floating/full-width nav edge glitch fix
+   Removes the doubled purple outline on the nav and forces the nav edge treatment
+   to match the site's static window/tile containers: one transparent stroke,
+   one very small internal glow, no stacked external ring. */
+
+@media (min-width: 981px){
+  #siteHeader.mcx-header,
+  #siteHeader.mcx-header.site-header,
+  .mcx-header.site-header,
+  .site-header.blocaria-style-header.mineacle-floating-header{
+    border:0!important;
+    outline:0!important;
+    box-shadow:none!important;
+    background:transparent!important;
+  }
+
+  #siteHeader .mcx-nav-shell,
+  #siteHeader.mcx-header .mcx-nav-shell,
+  .mcx-header .mcx-nav-shell{
+    border:1px solid rgba(203,88,255,.34)!important;
+    outline:0!important;
+    border-radius:26px!important;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,136,255,.045), transparent 30rem),
+      linear-gradient(180deg, rgba(18,15,34,.68) 0%, rgba(12,8,22,.72) 100%)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.070),
+      inset 0 0 10px rgba(203,88,255,.070),
+      inset 0 -1px 0 rgba(42,10,70,.40),
+      0 18px 42px rgba(0,0,0,.24)!important;
+    overflow:visible!important;
+    clip-path:none!important;
+  }
+
+  /* Kill older decorative border pseudo-layers that produced the visible double-line/ring. */
+  #siteHeader .mcx-nav-shell::before,
+  #siteHeader .mcx-nav-shell::after,
+  #siteHeader.mcx-header .mcx-nav-shell::before,
+  #siteHeader.mcx-header .mcx-nav-shell::after,
+  .mcx-header .mcx-nav-shell::before,
+  .mcx-header .mcx-nav-shell::after{
+    content:none!important;
+    display:none!important;
+    opacity:0!important;
+    border:0!important;
+    box-shadow:none!important;
+    background:none!important;
+  }
+
+  /* Same single-stroke treatment after scroll/full-width state. */
+  #siteHeader.is-scrolled .mcx-nav-shell,
+  #siteHeader.mcx-header.is-scrolled .mcx-nav-shell,
+  .mcx-header.is-scrolled .mcx-nav-shell,
+  .site-header.is-scrolled .mcx-nav-shell{
+    border:1px solid rgba(203,88,255,.30)!important;
+    background:
+      radial-gradient(circle at 50% 0%, rgba(255,136,255,.038), transparent 30rem),
+      linear-gradient(180deg, rgba(18,15,34,.72) 0%, rgba(12,8,22,.76) 100%)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.060),
+      inset 0 0 9px rgba(203,88,255,.060),
+      inset 0 -1px 0 rgba(42,10,70,.38),
+      0 14px 34px rgba(0,0,0,.22)!important;
+  }
+}
+
+@media (max-width: 980px){
+  #siteHeader.mcx-header,
+  #siteHeader.mcx-header.site-header,
+  .mcx-header.site-header{
+    border:0!important;
+    outline:0!important;
+    box-shadow:none!important;
+  }
+
+  #siteHeader .mcx-nav-shell,
+  #siteHeader.mcx-header .mcx-nav-shell,
+  .mcx-header .mcx-nav-shell{
+    outline:0!important;
+    box-shadow:none!important;
+  }
+
+  #siteHeader .mcx-nav-shell::before,
+  #siteHeader .mcx-nav-shell::after,
+  #siteHeader.mcx-header .mcx-nav-shell::before,
+  #siteHeader.mcx-header .mcx-nav-shell::after,
+  .mcx-header .mcx-nav-shell::before,
+  .mcx-header .mcx-nav-shell::after{
+    content:none!important;
+    display:none!important;
+  }
+}
