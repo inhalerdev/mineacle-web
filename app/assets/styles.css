@@ -15100,1527 +15100,16 @@ main,
 }
 
 
-/* Mineacle Bans v3.8.59: modal appeal CTA full-width + note alignment
-   Based on the marked screenshot:
-   - Appeal button fills the same left/right content rails as the info cards
-   - Bottom copy aligns inside those rails and moves upward
-   - Modal is made more compact without changing the site language */
-#banModal .modal-content,
-#banModal .modal-card,
-#banModal .ban-modal-card,
-.ban-modal-card{
-  padding-bottom:clamp(26px, 2.2vw, 36px)!important;
-}
-
-#banModal .modal-details,
-#banModal .ban-detail-grid,
-#banModal .modal-grid,
-.ban-detail-grid,
-.ban-modal-detail-grid{
-  width:min(100%, 1080px)!important;
-  max-width:1080px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-}
-
-/* Target the real appeal wrapper/button and override the old 2-column/filler setup. */
-#banModal .modal-appeal-wrap,
-#banModal .appeal-discord-wrap,
-#banModal .ban-appeal-wrap,
-#banModal .discord-appeal-wrap,
-.modal-appeal-wrap,
-.appeal-discord-wrap,
-.ban-appeal-wrap,
-.discord-appeal-wrap{
-  width:min(100%, 1080px)!important;
-  max-width:1080px!important;
-  margin:clamp(12px, 1.1vw, 16px) auto 0!important;
-  padding:0!important;
-  display:block!important;
-  grid-template-columns:none!important;
-  gap:0!important;
-}
-
-#banModal .modal-appeal-wrap::after,
-#banModal .appeal-discord-wrap::after,
-#banModal .ban-appeal-wrap::after,
-#banModal .discord-appeal-wrap::after,
-.modal-appeal-wrap::after,
-.appeal-discord-wrap::after,
-.ban-appeal-wrap::after,
-.discord-appeal-wrap::after{
-  content:none!important;
-  display:none!important;
-}
-
-#banModal .modal-appeal-button,
-#banModal .appeal-discord-card,
-#banModal .ban-appeal-discord,
-#banModal .discord-appeal-button,
-.modal-appeal-button,
-.appeal-discord-card,
-.ban-appeal-discord,
-.discord-appeal-button{
-  width:100%!important;
-  max-width:100%!important;
-  min-width:0!important;
-  min-height:96px!important;
-  height:96px!important;
-  margin:0!important;
-  border-radius:16px!important;
-  box-sizing:border-box!important;
-  display:grid!important;
-  grid-template-columns:86px minmax(0, 1fr) auto!important;
-  align-items:center!important;
-  column-gap:18px!important;
-  padding:12px 22px 12px 14px!important;
-}
-
-#banModal .modal-appeal-button img,
-#banModal .appeal-discord-card img,
-#banModal .ban-appeal-discord img,
-#banModal .discord-appeal-button img,
-.modal-appeal-button img,
-.appeal-discord-card img,
-.ban-appeal-discord img,
-.discord-appeal-button img{
-  width:66px!important;
-  height:66px!important;
-  object-fit:contain!important;
-  justify-self:center!important;
-}
-
-#banModal .modal-appeal-button strong,
-#banModal .appeal-discord-card strong,
-#banModal .ban-appeal-discord strong,
-#banModal .discord-appeal-button strong,
-.modal-appeal-button strong,
-.appeal-discord-card strong,
-.ban-appeal-discord strong,
-.discord-appeal-button strong{
-  font-size:clamp(21px, 1.85vw, 30px)!important;
-  line-height:1.02!important;
-  letter-spacing:.01em!important;
-  max-width:none!important;
-  white-space:normal!important;
-}
-
-#banModal .modal-appeal-button .modal-appeal-count,
-#banModal .appeal-discord-card .modal-appeal-count,
-#banModal .ban-appeal-discord .modal-appeal-count,
-#banModal .discord-appeal-button .modal-appeal-count,
-.modal-appeal-count{
-  justify-self:end!important;
-  white-space:nowrap!important;
-  font-size:clamp(12px, .9vw, 15px)!important;
-  line-height:1!important;
-  padding:13px 18px!important;
-  border-radius:999px!important;
-}
-
-#banModal .modal-note,
-#banModal .ban-modal-note,
-#banModal .appeal-note,
-.modal-note,
-.ban-modal-note,
-.appeal-note{
-  width:min(100%, 1080px)!important;
-  max-width:1080px!important;
-  margin:clamp(12px, 1vw, 16px) auto 0!important;
-  padding:0!important;
-  font-size:clamp(15px, 1.05vw, 18px)!important;
-  line-height:1.4!important;
-  color:rgba(239,230,255,.74)!important;
-}
-
-#banModal .modal-detail-card,
-#banModal .ban-detail-card,
-.modal-detail-card,
-.ban-detail-card{
-  min-height:88px!important;
-  padding:20px 24px!important;
-}
-
-@media(max-width: 760px){
-  #banModal .modal-appeal-button,
-  #banModal .appeal-discord-card,
-  #banModal .ban-appeal-discord,
-  #banModal .discord-appeal-button,
-  .modal-appeal-button,
-  .appeal-discord-card,
-  .ban-appeal-discord,
-  .discord-appeal-button{
-    height:auto!important;
-    min-height:112px!important;
-    grid-template-columns:70px minmax(0, 1fr)!important;
-    grid-template-areas:
-      "avatar text"
-      "avatar count"!important;
-    row-gap:8px!important;
-    padding:14px 16px!important;
-  }
-
-  #banModal .modal-appeal-button img,
-  #banModal .appeal-discord-card img,
-  #banModal .ban-appeal-discord img,
-  #banModal .discord-appeal-button img,
-  .modal-appeal-button img,
-  .appeal-discord-card img,
-  .ban-appeal-discord img,
-  .discord-appeal-button img{
-    width:58px!important;
-    height:58px!important;
-    grid-area:avatar!important;
-  }
-
-  #banModal .modal-appeal-button strong,
-  #banModal .appeal-discord-card strong,
-  #banModal .ban-appeal-discord strong,
-  #banModal .discord-appeal-button strong,
-  .modal-appeal-button strong,
-  .appeal-discord-card strong,
-  .ban-appeal-discord strong,
-  .discord-appeal-button strong{
-    grid-area:text!important;
-    font-size:21px!important;
-  }
-
-  #banModal .modal-appeal-button .modal-appeal-count,
-  #banModal .appeal-discord-card .modal-appeal-count,
-  #banModal .ban-appeal-discord .modal-appeal-count,
-  #banModal .discord-appeal-button .modal-appeal-count,
-  .modal-appeal-count{
-    grid-area:count!important;
-    justify-self:start!important;
-    padding:10px 14px!important;
-  }
-}
-
-
-/* Mineacle Bans v3.8.60: modal appeal width matches info pills, not player-head rail
-   The detail pills live in the inner 2-column details grid; the appeal CTA and note now use that exact rail.
-   This intentionally does NOT stretch to the wider modal header/player-head alignment. */
-
-#banModal .modal-details,
-#banModal .modal-grid,
-#banModal .ban-detail-grid,
-#banModal .ban-modal-detail-grid,
-.modal-details,
-.modal-grid,
-.ban-detail-grid,
-.ban-modal-detail-grid{
-  --mineacle-modal-detail-rail:min(100%, 960px);
-  width:var(--mineacle-modal-detail-rail)!important;
-  max-width:var(--mineacle-modal-detail-rail)!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-}
-
-/* Appeal block rail = same width as the existing info pill grid only. */
-#banModal .modal-appeal-wrap,
-#banModal .appeal-discord-wrap,
-#banModal .ban-appeal-wrap,
-#banModal .discord-appeal-wrap,
-.modal-appeal-wrap,
-.appeal-discord-wrap,
-.ban-appeal-wrap,
-.discord-appeal-wrap{
-  width:min(100%, 960px)!important;
-  max-width:960px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  display:block!important;
-  grid-template-columns:none!important;
-  padding:0!important;
-}
-
-/* Button fills that pill rail, not the full modal/player-head rail. */
-#banModal .modal-appeal-button,
-#banModal .appeal-discord-card,
-#banModal .ban-appeal-discord,
-#banModal .discord-appeal-button,
-.modal-appeal-button,
-.appeal-discord-card,
-.ban-appeal-discord,
-.discord-appeal-button{
-  width:100%!important;
-  max-width:960px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  box-sizing:border-box!important;
-}
-
-/* Bottom copy uses the exact same pill rail. */
-#banModal .modal-note,
-#banModal .ban-modal-note,
-#banModal .appeal-note,
-.modal-note,
-.ban-modal-note,
-.appeal-note{
-  width:min(100%, 960px)!important;
-  max-width:960px!important;
-  margin-left:auto!important;
-  margin-right:auto!important;
-  box-sizing:border-box!important;
-}
-
-/* Keep the top header/player head wider if earlier rules set it, so only the CTA/note shrink. */
-#banModal .modal-hero,
-#banModal .ban-modal-hero,
-.ban-modal-hero{
-  max-width:none!important;
-}
-
-/* Slightly more compact while keeping the button readable. */
-#banModal .modal-appeal-button,
-#banModal .appeal-discord-card,
-#banModal .ban-appeal-discord,
-#banModal .discord-appeal-button,
-.modal-appeal-button,
-.appeal-discord-card,
-.ban-appeal-discord,
-.discord-appeal-button{
-  min-height:88px!important;
-  height:88px!important;
-  grid-template-columns:78px minmax(0, 1fr) auto!important;
-  padding:10px 18px 10px 12px!important;
-  column-gap:16px!important;
-}
-
-#banModal .modal-appeal-button img,
-#banModal .appeal-discord-card img,
-#banModal .ban-appeal-discord img,
-#banModal .discord-appeal-button img,
-.modal-appeal-button img,
-.appeal-discord-card img,
-.ban-appeal-discord img,
-.discord-appeal-button img{
-  width:58px!important;
-  height:58px!important;
-}
-
-#banModal .modal-appeal-button strong,
-#banModal .appeal-discord-card strong,
-#banModal .ban-appeal-discord strong,
-#banModal .discord-appeal-button strong,
-.modal-appeal-button strong,
-.appeal-discord-card strong,
-.ban-appeal-discord strong,
-.discord-appeal-button strong{
-  font-size:clamp(20px, 1.65vw, 27px)!important;
-}
-
-#banModal .modal-note,
-#banModal .ban-modal-note,
-#banModal .appeal-note,
-.modal-note,
-.ban-modal-note,
-.appeal-note{
-  margin-top:12px!important;
-  font-size:clamp(14px, .98vw, 17px)!important;
-}
-
-@media(max-width: 760px){
-  #banModal .modal-details,
-  #banModal .modal-grid,
-  #banModal .ban-detail-grid,
-  #banModal .ban-modal-detail-grid,
-  .modal-details,
-  .modal-grid,
-  .ban-detail-grid,
-  .ban-modal-detail-grid,
-  #banModal .modal-appeal-wrap,
-  #banModal .appeal-discord-wrap,
-  #banModal .ban-appeal-wrap,
-  #banModal .discord-appeal-wrap,
-  .modal-appeal-wrap,
-  .appeal-discord-wrap,
-  .ban-appeal-wrap,
-  .discord-appeal-wrap,
-  #banModal .modal-note,
-  #banModal .ban-modal-note,
-  #banModal .appeal-note,
-  .modal-note,
-  .ban-modal-note,
-  .appeal-note{
-    width:100%!important;
-    max-width:100%!important;
-  }
-
-  #banModal .modal-appeal-button,
-  #banModal .appeal-discord-card,
-  #banModal .ban-appeal-discord,
-  #banModal .discord-appeal-button,
-  .modal-appeal-button,
-  .appeal-discord-card,
-  .ban-appeal-discord,
-  .discord-appeal-button{
-    width:100%!important;
-    max-width:100%!important;
-    height:auto!important;
-    min-height:104px!important;
-  }
-}
-
-
-/* Mineacle Bans v3.8.61: force appeal CTA 20% shorter horizontally
-   Direct fix: the Discord appeal button and note are now 80% of the modal info-pill rail on desktop. */
-@media (min-width: 761px){
-  #banModal .modal-appeal-wrap,
-  #banModal .appeal-discord-wrap,
-  #banModal .ban-appeal-wrap,
-  #banModal .discord-appeal-wrap,
-  body #banModal .modal-appeal-wrap,
-  body #banModal .appeal-discord-wrap,
-  body #banModal .ban-appeal-wrap,
-  body #banModal .discord-appeal-wrap,
-  .modal.show #banModal .modal-appeal-wrap,
-  .modal.show #banModal .appeal-discord-wrap,
-  .modal.show #banModal .ban-appeal-wrap,
-  .modal.show #banModal .discord-appeal-wrap{
-    width:80%!important;
-    max-width:768px!important;
-    min-width:0!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-    display:block!important;
-    align-self:center!important;
-    justify-self:center!important;
-    flex:0 0 auto!important;
-    grid-template-columns:none!important;
-  }
-
-  #banModal .modal-appeal-button,
-  #banModal .appeal-discord-card,
-  #banModal .ban-appeal-discord,
-  #banModal .discord-appeal-button,
-  body #banModal .modal-appeal-button,
-  body #banModal .appeal-discord-card,
-  body #banModal .ban-appeal-discord,
-  body #banModal .discord-appeal-button,
-  .modal.show #banModal .modal-appeal-button,
-  .modal.show #banModal .appeal-discord-card,
-  .modal.show #banModal .ban-appeal-discord,
-  .modal.show #banModal .discord-appeal-button{
-    width:100%!important;
-    max-width:100%!important;
-    min-width:0!important;
-    margin-left:0!important;
-    margin-right:0!important;
-    box-sizing:border-box!important;
-  }
-
-  #banModal .modal-note,
-  #banModal .ban-modal-note,
-  #banModal .appeal-note,
-  body #banModal .modal-note,
-  body #banModal .ban-modal-note,
-  body #banModal .appeal-note,
-  .modal.show #banModal .modal-note,
-  .modal.show #banModal .ban-modal-note,
-  .modal.show #banModal .appeal-note{
-    width:80%!important;
-    max-width:768px!important;
-    min-width:0!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
-    box-sizing:border-box!important;
-  }
-}
-
-@media (max-width: 760px){
-  #banModal .modal-appeal-wrap,
-  #banModal .modal-appeal-button,
-  #banModal .modal-note{
-    width:100%!important;
-    max-width:100%!important;
-  }
-}
-
-
-/* Mineacle Bans v3.8.62: floating/full-width nav edge glitch fix
-   Removes the doubled purple outline on the nav and forces the nav edge treatment
-   to match the site's static window/tile containers: one transparent stroke,
-   one very small internal glow, no stacked external ring. */
-
-@media (min-width: 981px){
-  #siteHeader.mcx-header,
-  #siteHeader.mcx-header.site-header,
-  .mcx-header.site-header,
-  .site-header.blocaria-style-header.mineacle-floating-header{
-    border:0!important;
-    outline:0!important;
-    box-shadow:none!important;
-    background:transparent!important;
-  }
-
-  #siteHeader .mcx-nav-shell,
-  #siteHeader.mcx-header .mcx-nav-shell,
-  .mcx-header .mcx-nav-shell{
-    border:1px solid rgba(203,88,255,.34)!important;
-    outline:0!important;
-    border-radius:26px!important;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.045), transparent 30rem),
-      linear-gradient(180deg, rgba(18,15,34,.68) 0%, rgba(12,8,22,.72) 100%)!important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.070),
-      inset 0 0 10px rgba(203,88,255,.070),
-      inset 0 -1px 0 rgba(42,10,70,.40),
-      0 18px 42px rgba(0,0,0,.24)!important;
-    overflow:visible!important;
-    clip-path:none!important;
-  }
-
-  /* Kill older decorative border pseudo-layers that produced the visible double-line/ring. */
-  #siteHeader .mcx-nav-shell::before,
-  #siteHeader .mcx-nav-shell::after,
-  #siteHeader.mcx-header .mcx-nav-shell::before,
-  #siteHeader.mcx-header .mcx-nav-shell::after,
-  .mcx-header .mcx-nav-shell::before,
-  .mcx-header .mcx-nav-shell::after{
-    content:none!important;
-    display:none!important;
-    opacity:0!important;
-    border:0!important;
-    box-shadow:none!important;
-    background:none!important;
-  }
-
-  /* Same single-stroke treatment after scroll/full-width state. */
-  #siteHeader.is-scrolled .mcx-nav-shell,
-  #siteHeader.mcx-header.is-scrolled .mcx-nav-shell,
-  .mcx-header.is-scrolled .mcx-nav-shell,
-  .site-header.is-scrolled .mcx-nav-shell{
-    border:1px solid rgba(203,88,255,.30)!important;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.038), transparent 30rem),
-      linear-gradient(180deg, rgba(18,15,34,.72) 0%, rgba(12,8,22,.76) 100%)!important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.060),
-      inset 0 0 9px rgba(203,88,255,.060),
-      inset 0 -1px 0 rgba(42,10,70,.38),
-      0 14px 34px rgba(0,0,0,.22)!important;
-  }
-}
-
-@media (max-width: 980px){
-  #siteHeader.mcx-header,
-  #siteHeader.mcx-header.site-header,
-  .mcx-header.site-header{
-    border:0!important;
-    outline:0!important;
-    box-shadow:none!important;
-  }
-
-  #siteHeader .mcx-nav-shell,
-  #siteHeader.mcx-header .mcx-nav-shell,
-  .mcx-header .mcx-nav-shell{
-    outline:0!important;
-    box-shadow:none!important;
-  }
-
-  #siteHeader .mcx-nav-shell::before,
-  #siteHeader .mcx-nav-shell::after,
-  #siteHeader.mcx-header .mcx-nav-shell::before,
-  #siteHeader.mcx-header .mcx-nav-shell::after,
-  .mcx-header .mcx-nav-shell::before,
-  .mcx-header .mcx-nav-shell::after{
-    content:none!important;
-    display:none!important;
-  }
-}
-
-
-/* Mineacle Bans v3.8.63: restore desktop scroll-expanded nav
-   v3.8.62 fixed the double-line border, but it also kept the scrolled nav feeling like the floating nav.
-   This restores the previous expand-on-scroll behavior while keeping the cleaner single-stroke edge effect. */
-
-@media (min-width: 981px){
-  /* Shared cleanup: no stacked border/pseudo rings on either state. */
-  #siteHeader.mcx-header,
-  #siteHeader.mcx-header.site-header,
-  .mcx-header.site-header{
-    border:0!important;
-    outline:0!important;
-    box-shadow:none!important;
-  }
-
-  #siteHeader .mcx-nav-shell::before,
-  #siteHeader .mcx-nav-shell::after,
-  #siteHeader.mcx-header .mcx-nav-shell::before,
-  #siteHeader.mcx-header .mcx-nav-shell::after,
-  .mcx-header .mcx-nav-shell::before,
-  .mcx-header .mcx-nav-shell::after{
-    content:none!important;
-    display:none!important;
-    opacity:0!important;
-    border:0!important;
-    box-shadow:none!important;
-    background:none!important;
-  }
-
-  /* Floating state: centered framed container. */
-  #siteHeader.mcx-header:not(.is-scrolled),
-  #siteHeader.mcx-header.site-header:not(.is-scrolled),
-  .mcx-header.site-header:not(.is-scrolled){
-    position:fixed!important;
-    top:0!important;
-    left:0!important;
-    right:0!important;
-    width:100%!important;
-    max-width:100%!important;
-    background:transparent!important;
-    pointer-events:none!important;
-  }
-
-  #siteHeader.mcx-header:not(.is-scrolled) .mcx-nav-shell,
-  #siteHeader.mcx-header.site-header:not(.is-scrolled) .mcx-nav-shell,
-  .mcx-header.site-header:not(.is-scrolled) .mcx-nav-shell{
-    width:min(calc(100vw - 220px), 1500px)!important;
-    max-width:1500px!important;
-    margin:24px auto 0!important;
-    pointer-events:auto!important;
-    border:1px solid rgba(203,88,255,.34)!important;
-    border-radius:26px!important;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.045), transparent 30rem),
-      linear-gradient(180deg, rgba(18,15,34,.68) 0%, rgba(12,8,22,.72) 100%)!important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.070),
-      inset 0 0 10px rgba(203,88,255,.070),
-      inset 0 -1px 0 rgba(42,10,70,.40),
-      0 18px 42px rgba(0,0,0,.24)!important;
-    overflow:visible!important;
-    clip-path:none!important;
-  }
-
-  /* Scrolled state: full-width bar restored. */
-  #siteHeader.mcx-header.is-scrolled,
-  #siteHeader.mcx-header.site-header.is-scrolled,
-  .mcx-header.site-header.is-scrolled,
-  .site-header.is-scrolled{
-    position:fixed!important;
-    top:0!important;
-    left:0!important;
-    right:0!important;
-    width:100vw!important;
-    max-width:100vw!important;
-    margin:0!important;
-    padding:0!important;
-    background:transparent!important;
-    border:0!important;
-    border-radius:0!important;
-    box-shadow:none!important;
-    pointer-events:none!important;
-    transform:none!important;
-  }
-
-  #siteHeader.mcx-header.is-scrolled .mcx-nav-shell,
-  #siteHeader.mcx-header.site-header.is-scrolled .mcx-nav-shell,
-  .mcx-header.site-header.is-scrolled .mcx-nav-shell,
-  .site-header.is-scrolled .mcx-nav-shell{
-    width:100vw!important;
-    max-width:100vw!important;
-    min-width:100vw!important;
-    margin:0!important;
-    padding-left:max(46px, env(safe-area-inset-left, 0px))!important;
-    padding-right:max(46px, env(safe-area-inset-right, 0px))!important;
-    pointer-events:auto!important;
-    border-radius:0!important;
-    border-top:0!important;
-    border-left:0!important;
-    border-right:0!important;
-    border-bottom:1px solid rgba(203,88,255,.30)!important;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.038), transparent 32rem),
-      linear-gradient(180deg, rgba(18,15,34,.76) 0%, rgba(12,8,22,.80) 100%)!important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.055),
-      inset 0 0 9px rgba(203,88,255,.060),
-      inset 0 -1px 0 rgba(42,10,70,.36),
-      0 14px 34px rgba(0,0,0,.22)!important;
-    overflow:visible!important;
-    clip-path:none!important;
-  }
-}
-
-@media (max-width: 1280px) and (min-width: 981px){
-  #siteHeader.mcx-header:not(.is-scrolled) .mcx-nav-shell,
-  #siteHeader.mcx-header.site-header:not(.is-scrolled) .mcx-nav-shell,
-  .mcx-header.site-header:not(.is-scrolled) .mcx-nav-shell{
-    width:min(calc(100vw - 96px), 1380px)!important;
-  }
-}
-
-
-/* Mineacle Bans v3.8.64: modal grid condense
-   Converts the ban info popup into a tighter center grid:
-   - all modal content is constrained to one shared grid rail
-   - player head and title are scaled down to fit that rail
-   - detail cards, appeal CTA, and note align inside the same green-box style content area
-   - Discord CTA is 20% shorter than the rail and left-aligned inside it
-   - modal height is reduced with smaller cards, text, gaps, and padding */
-
-#banModal .modal-card{
-  --modal-grid-rail:min(100%, 1080px);
-  --modal-cta-width:min(80%, 864px);
-  width:min(92vw, 1320px)!important;
-  max-width:1320px!important;
-  max-height:min(90svh, 860px)!important;
-  overflow:auto!important;
-  padding:clamp(28px, 3.2vw, 46px) clamp(34px, 5.2vw, 70px)!important;
-  border:1px solid rgba(203,88,255,.38)!important;
-  border-radius:28px!important;
-  background:
-    radial-gradient(circle at 14% 0%, rgba(255,136,255,.06), transparent 26rem),
-    linear-gradient(180deg, rgba(18,15,34,.78) 0%, rgba(10,6,18,.88) 100%)!important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.07),
-    inset 0 0 12px rgba(203,88,255,.07),
-    inset 0 -1px 0 rgba(42,10,70,.38),
-    0 28px 70px rgba(0,0,0,.42)!important;
-}
-
-#banModal .modal-card,
-#banModal .modal-card *{
-  box-sizing:border-box!important;
-}
-
-#banModal .modal-head{
-  width:var(--modal-grid-rail)!important;
-  max-width:var(--modal-grid-rail)!important;
-  margin:0 auto clamp(18px, 2vw, 24px)!important;
-  display:grid!important;
-  grid-template-columns:86px minmax(0, 1fr) 52px!important;
-  align-items:center!important;
-  gap:18px!important;
-}
-
-#banModal #modalAvatar{
-  width:86px!important;
-  height:86px!important;
-  border-radius:16px!important;
-  object-fit:cover!important;
-  justify-self:start!important;
-}
-
-#banModal .modal-title{
-  min-width:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  align-items:flex-start!important;
-  justify-content:center!important;
-  gap:10px!important;
-}
-
-#banModal .modal-title h2,
-#banModal #modalName{
-  margin:0!important;
-  font-size:clamp(38px, 4.1vw, 62px)!important;
-  line-height:.92!important;
-  letter-spacing:-.045em!important;
-  font-weight:900!important;
-  max-width:100%!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-  white-space:nowrap!important;
-}
-
-#banModal .modal-title .status-badge,
-#banModal .modal-title .ban-type-pill,
-#banModal #modalStatus{
-  min-height:38px!important;
-  height:38px!important;
-  padding:0 24px!important;
-  border-radius:10px!important;
-  border:1px solid rgba(255,88,190,.48)!important;
-  background:
-    linear-gradient(180deg, rgba(255,88,190,.20), rgba(135,29,119,.22)),
-    rgba(18,15,34,.56)!important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.10),
-    inset 0 -1px 0 rgba(72,14,66,.28),
-    0 0 14px rgba(255,88,190,.10)!important;
-  color:#ffe9fb!important;
-  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
-  font-size:14px!important;
-  font-weight:900!important;
-  letter-spacing:.075em!important;
-  line-height:1!important;
-  text-transform:uppercase!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  width:auto!important;
-  max-width:max-content!important;
-}
-
-#banModal .close-modal{
-  width:52px!important;
-  height:52px!important;
-  min-width:52px!important;
-  border-radius:14px!important;
-  justify-self:end!important;
-  align-self:start!important;
-  margin:0!important;
-  border:1px solid rgba(255,255,255,.15)!important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035)),
-    rgba(18,15,34,.72)!important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.16),
-    inset 0 -2px 0 rgba(0,0,0,.28),
-    0 10px 22px rgba(0,0,0,.20),
-    0 0 18px rgba(203,88,255,.10)!important;
-  color:#fff!important;
-  font-size:30px!important;
-  font-weight:800!important;
-  line-height:1!important;
-  transition:filter .12s ease, border-color .12s ease, box-shadow .12s ease, transform .08s ease!important;
-}
-
-#banModal .close-modal:hover{
-  filter:brightness(1.10)!important;
-  border-color:rgba(255,210,255,.28)!important;
-  transform:translateY(-1px)!important;
-}
-
-#banModal .close-modal:active{
-  filter:brightness(.94)!important;
-  transform:translateY(1px)!important;
-}
-
-#banModal .detail-grid{
-  width:var(--modal-grid-rail)!important;
-  max-width:var(--modal-grid-rail)!important;
-  margin:0 auto!important;
-  display:grid!important;
-  grid-template-columns:repeat(2, minmax(0, 1fr))!important;
-  gap:14px 18px!important;
-}
-
-#banModal .detail{
-  min-height:78px!important;
-  border-radius:16px!important;
-  padding:18px 22px!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  gap:7px!important;
-  background:
-    linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.018)),
-    rgba(18,15,34,.54)!important;
-  border:1px solid rgba(255,255,255,.055)!important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.045),
-    inset 0 -1px 0 rgba(42,10,70,.16)!important;
-}
-
-#banModal .detail span{
-  font-size:14px!important;
-  line-height:1!important;
-  font-weight:900!important;
-  letter-spacing:.075em!important;
-  text-transform:uppercase!important;
-  color:#ff88ff!important;
-}
-
-#banModal .detail strong{
-  font-size:clamp(18px, 1.45vw, 25px)!important;
-  line-height:1.12!important;
-  font-weight:850!important;
-  letter-spacing:-.015em!important;
-  color:#fff!important;
-  overflow-wrap:anywhere!important;
-}
-
-#banModal .modal-appeal-wrap{
-  width:var(--modal-grid-rail)!important;
-  max-width:var(--modal-grid-rail)!important;
-  margin:14px auto 0!important;
-  padding:0!important;
-  display:block!important;
-}
-
-#banModal .modal-appeal-button{
-  width:var(--modal-cta-width)!important;
-  max-width:864px!important;
-  min-width:0!important;
-  height:88px!important;
-  min-height:88px!important;
-  margin:0!important;
-  display:grid!important;
-  grid-template-columns:76px minmax(0, 1fr) auto!important;
-  align-items:center!important;
-  gap:15px!important;
-  padding:10px 18px 10px 12px!important;
-  border-radius:15px!important;
-}
-
-#banModal .modal-appeal-art{
-  width:60px!important;
-  height:60px!important;
-  border-radius:13px!important;
-  display:grid!important;
-  place-items:center!important;
-}
-
-#banModal .modal-appeal-art img{
-  width:56px!important;
-  height:56px!important;
-  object-fit:contain!important;
-}
-
-#banModal .modal-appeal-copy{
-  min-width:0!important;
-}
-
-#banModal .modal-appeal-copy small{
-  font-size:11px!important;
-  line-height:1!important;
-  letter-spacing:.14em!important;
-  font-weight:900!important;
-}
-
-#banModal .modal-appeal-copy strong{
-  font-size:clamp(20px, 1.65vw, 27px)!important;
-  line-height:1.02!important;
-  letter-spacing:.005em!important;
-  font-weight:900!important;
-  max-width:100%!important;
-}
-
-#banModal .modal-appeal-count{
-  font-size:clamp(11px, .9vw, 14px)!important;
-  padding:12px 16px!important;
-  white-space:nowrap!important;
-}
-
-#banModal .modal-actions{
-  display:none!important;
-}
-
-#banModal .modal-note{
-  width:var(--modal-cta-width)!important;
-  max-width:864px!important;
-  margin:12px auto 0!important;
-  margin-left:calc((100% - var(--modal-grid-rail)) / 2)!important;
-  padding:0!important;
-  font-size:clamp(14px, 1vw, 17px)!important;
-  line-height:1.35!important;
-  color:rgba(239,230,255,.72)!important;
-}
-
-/* Align note to the same left edge as the CTA when the modal rail is narrower than the card. */
-@supports (width: min(1px, 1px)){
-  #banModal .modal-note{
-    width:var(--modal-cta-width)!important;
-  }
-}
-
-@media(max-width:900px){
-  #banModal .modal-card{
-    width:min(94vw, 760px)!important;
-    padding:26px 22px!important;
-  }
-
-  #banModal .modal-head{
-    grid-template-columns:72px minmax(0, 1fr) 48px!important;
-    gap:14px!important;
-  }
-
-  #banModal #modalAvatar{
-    width:72px!important;
-    height:72px!important;
-    border-radius:14px!important;
-  }
-
-  #banModal .modal-title h2,
-  #banModal #modalName{
-    font-size:clamp(34px, 8vw, 48px)!important;
-  }
-
-  #banModal .detail-grid{
-    grid-template-columns:1fr!important;
-    gap:12px!important;
-  }
-
-  #banModal .detail{
-    min-height:72px!important;
-    padding:16px 18px!important;
-  }
-
-  #banModal .modal-appeal-button,
-  #banModal .modal-note{
-    width:100%!important;
-    max-width:100%!important;
-    margin-left:0!important;
-  }
-
-  #banModal .modal-appeal-button{
-    height:auto!important;
-    min-height:104px!important;
-    grid-template-columns:64px minmax(0,1fr)!important;
-    grid-template-areas:"art copy" "art count"!important;
-    row-gap:8px!important;
-  }
-
-  #banModal .modal-appeal-art{grid-area:art!important;}
-  #banModal .modal-appeal-copy{grid-area:copy!important;}
-  #banModal .modal-appeal-count{
-    grid-area:count!important;
-    justify-self:start!important;
-  }
-}
-
-
-/* Mineacle Bans v3.8.65: restore v3.8.59 header behavior + keep edge fix
-   Fixes the v3.8.63 scroll-up/off-left nav regression.
-   Header behavior is restored to the known-good v3.8.59 model:
-   - floating state: centered with left:50% + translateX(-50%)
-   - scrolled state: expands full width while staying centered
-   - edge effect: one transparent purple stroke, tiny internal glow, no double-line pseudo ring */
-
-@media (min-width: 981px){
-  .mcx-header.site-header.mineacle-floating-header,
-  #siteHeader.mcx-header.site-header.mineacle-floating-header{
-    position:fixed!important;
-    top:22px!important;
-    left:50%!important;
-    right:auto!important;
-    width:min(var(--mcx-nav-w, 1380px), calc(100vw - 48px))!important;
-    max-width:none!important;
-    height:var(--mcx-nav-h, 104px)!important;
-    min-height:var(--mcx-nav-h, 104px)!important;
-    transform:translateX(-50%)!important;
-    margin:0!important;
-    padding:0!important;
-    border-radius:22px!important;
-    border:1px solid rgba(203,88,255,.34)!important;
-    outline:0!important;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.045), transparent 30rem),
-      linear-gradient(180deg, rgba(18,15,34,.68) 0%, rgba(12,8,22,.72) 100%)!important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.070),
-      inset 0 0 10px rgba(203,88,255,.070),
-      inset 0 -1px 0 rgba(42,10,70,.40),
-      0 18px 42px rgba(0,0,0,.24)!important;
-    backdrop-filter:blur(18px)!important;
-    -webkit-backdrop-filter:blur(18px)!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-    pointer-events:auto!important;
-    z-index:10000!important;
-    transition:top .22s ease, width .22s ease, border-radius .22s ease, background .22s ease, box-shadow .22s ease, border-color .22s ease!important;
-  }
-
-  .mcx-header.site-header.mineacle-floating-header.is-scrolled,
-  #siteHeader.mcx-header.site-header.mineacle-floating-header.is-scrolled{
-    top:0!important;
-    left:50%!important;
-    right:auto!important;
-    width:100vw!important;
-    max-width:100vw!important;
-    min-width:100vw!important;
-    transform:translateX(-50%)!important;
-    border-radius:0!important;
-    border-left:0!important;
-    border-right:0!important;
-    border-top:0!important;
-    border-bottom:1px solid rgba(203,88,255,.30)!important;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.038), transparent 32rem),
-      linear-gradient(180deg, rgba(18,15,34,.76) 0%, rgba(12,8,22,.80) 100%)!important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.055),
-      inset 0 0 9px rgba(203,88,255,.060),
-      inset 0 -1px 0 rgba(42,10,70,.36),
-      0 14px 34px rgba(0,0,0,.22)!important;
-  }
-
-  /* Inner shell returns to v3.8.59 sizing so absolute nav items remain stable. */
-  .mcx-nav-shell,
-  #siteHeader .mcx-nav-shell,
-  #siteHeader.mcx-header .mcx-nav-shell,
-  .mcx-header .mcx-nav-shell{
-    position:relative!important;
-    width:min(var(--mcx-nav-w, 1380px), calc(100vw - 32px))!important;
-    max-width:var(--mcx-nav-w, 1380px)!important;
-    min-width:0!important;
-    height:var(--mcx-nav-h, 104px)!important;
-    min-height:var(--mcx-nav-h, 104px)!important;
-    margin:0 auto!important;
-    padding:0!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-    pointer-events:none!important;
-    border:0!important;
-    outline:0!important;
-    background:transparent!important;
-    box-shadow:none!important;
-    clip-path:none!important;
-  }
-
-  .mcx-header.is-scrolled .mcx-nav-shell,
-  #siteHeader.mcx-header.is-scrolled .mcx-nav-shell,
-  #siteHeader.mcx-header.site-header.mineacle-floating-header.is-scrolled .mcx-nav-shell{
-    width:min(var(--mcx-nav-w, 1380px), calc(100vw - 32px))!important;
-    max-width:var(--mcx-nav-w, 1380px)!important;
-    min-width:0!important;
-    margin:0 auto!important;
-    padding:0!important;
-    border:0!important;
-    background:transparent!important;
-    box-shadow:none!important;
-  }
-
-  /* Remove only the duplicate decorative rings; header itself owns the single edge now. */
-  .mcx-nav-shell::before,
-  .mcx-nav-shell::after,
-  #siteHeader .mcx-nav-shell::before,
-  #siteHeader .mcx-nav-shell::after,
-  #siteHeader.mcx-header .mcx-nav-shell::before,
-  #siteHeader.mcx-header .mcx-nav-shell::after,
-  .mcx-header .mcx-nav-shell::before,
-  .mcx-header .mcx-nav-shell::after,
-  .mcx-header::before,
-  .mcx-header::after,
-  #siteHeader.mcx-header::before,
-  #siteHeader.mcx-header::after{
-    content:none!important;
-    display:none!important;
-    opacity:0!important;
-    border:0!important;
-    box-shadow:none!important;
-    background:none!important;
-    pointer-events:none!important;
-  }
-
-  .mcx-link,
-  .mcx-button,
-  .mcx-discord,
-  .mcx-play,
-  .mcx-logo{
-    pointer-events:auto!important;
-  }
-}
-
-@media (max-width: 980px){
-  #siteHeader.mcx-header,
-  .mcx-header.site-header.mineacle-floating-header{
-    left:0!important;
-    right:0!important;
-    transform:none!important;
-  }
-}
-
-
-/* Mineacle Bans v3.8.66: restore stable v3.8.59 header behavior and rebuild modal grid */
+/* v3.8.68 — b01 rollback hardfix
+   Targeted to commit b01/v3.8.58 markup. Replaces the bad later header overrides,
+   keeps one clean container edge, and truly compresses the live ban modal. */
+
+/* Header/nav: single edge only, no nav-shell border/surface, no pseudo outline. */
 @media (min-width:981px){
-  .site-header::before,
-  .site-header::after,
-  .mineacle-floating-header::before,
-  .mineacle-floating-header::after,
-  #siteHeader::before,
-  #siteHeader::after,
-  .mcx-header::before,
-  .mcx-header::after,
-  .mcx-nav-shell::before,
-  .mcx-nav-shell::after,
-  #siteHeader .mcx-nav-shell::before,
-  #siteHeader .mcx-nav-shell::after{
-    content:none!important;
-    display:none!important;
-    opacity:0!important;
-    border:0!important;
-    background:none!important;
-    box-shadow:none!important;
-    pointer-events:none!important;
-  }
-
-  .mcx-header.site-header.mineacle-floating-header,
-  #siteHeader.mcx-header.site-header.mineacle-floating-header{
-    position:fixed!important;
-    top:22px!important;
-    left:50%!important;
-    right:auto!important;
-    width:min(var(--mcx-nav-w, 1380px), calc(100vw - 48px))!important;
-    max-width:none!important;
-    min-width:0!important;
-    height:var(--mcx-nav-h, 104px)!important;
-    min-height:var(--mcx-nav-h, 104px)!important;
-    margin:0!important;
-    padding:0!important;
-    transform:translateX(-50%)!important;
-    border-radius:22px!important;
-    border:1px solid rgba(203,88,255,.34)!important;
-    outline:0!important;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.045), transparent 30rem),
-      linear-gradient(180deg, rgba(18,15,34,.68) 0%, rgba(12,8,22,.72) 100%)!important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.07),
-      inset 0 0 10px rgba(203,88,255,.07),
-      inset 0 -1px 0 rgba(42,10,70,.40),
-      0 18px 42px rgba(0,0,0,.24)!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-    pointer-events:auto!important;
-    z-index:10000!important;
-    transition:top .22s ease, width .22s ease, border-radius .22s ease, background .22s ease, box-shadow .22s ease, border-color .22s ease!important;
-  }
-
-  .mcx-header.site-header.mineacle-floating-header.is-scrolled,
-  #siteHeader.mcx-header.site-header.mineacle-floating-header.is-scrolled{
-    top:0!important;
-    left:50%!important;
-    right:auto!important;
-    width:100vw!important;
-    max-width:100vw!important;
-    min-width:100vw!important;
-    margin:0!important;
-    padding:0!important;
-    transform:translateX(-50%)!important;
-    border-radius:0!important;
-    border-top:0!important;
-    border-left:0!important;
-    border-right:0!important;
-    border-bottom:1px solid rgba(203,88,255,.30)!important;
-    outline:0!important;
-    background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.038), transparent 32rem),
-      linear-gradient(180deg, rgba(18,15,34,.76) 0%, rgba(12,8,22,.80) 100%)!important;
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.055),
-      inset 0 0 9px rgba(203,88,255,.060),
-      inset 0 -1px 0 rgba(42,10,70,.36),
-      0 14px 34px rgba(0,0,0,.22)!important;
-  }
-
-  .mcx-nav-shell,
-  #siteHeader .mcx-nav-shell,
-  #siteHeader.mcx-header .mcx-nav-shell,
-  .mcx-header .mcx-nav-shell,
-  .mcx-header.is-scrolled .mcx-nav-shell,
-  #siteHeader.mcx-header.is-scrolled .mcx-nav-shell{
-    position:relative!important;
-    width:min(var(--mcx-nav-w, 1380px), calc(100vw - 32px))!important;
-    max-width:var(--mcx-nav-w, 1380px)!important;
-    min-width:0!important;
-    height:var(--mcx-nav-h, 104px)!important;
-    min-height:var(--mcx-nav-h, 104px)!important;
-    margin:0 auto!important;
-    padding:0!important;
-    overflow:visible!important;
-    box-sizing:border-box!important;
-    pointer-events:none!important;
-    border:0!important;
-    outline:0!important;
-    background:transparent!important;
-    box-shadow:none!important;
-    clip-path:none!important;
-  }
-
-  .mcx-link,
-  .mcx-button,
-  .mcx-discord,
-  .mcx-play,
-  .mcx-logo{
-    pointer-events:auto!important;
-  }
-}
-
-#banModal{
-  --modal-panel:rgba(18,15,34,.78);
-  --modal-line:rgba(203,88,255,.36);
-  --modal-rail:min(100%, 920px);
-  --modal-cta:min(80%, 736px);
-}
-
-#banModal .modal-card{
-  width:min(78vw, 1120px)!important;
-  max-width:1120px!important;
-  max-height:min(88svh, 760px)!important;
-  overflow:auto!important;
-  padding:34px 44px!important;
-  border:1px solid var(--modal-line)!important;
-  border-radius:26px!important;
-  background:
-    radial-gradient(circle at 14% 0%, rgba(255,136,255,.055), transparent 24rem),
-    linear-gradient(180deg, rgba(18,15,34,.78), rgba(10,6,18,.88))!important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.07),
-    inset 0 0 12px rgba(203,88,255,.07),
-    inset 0 -1px 0 rgba(42,10,70,.38),
-    0 28px 70px rgba(0,0,0,.42)!important;
-}
-
-#banModal .modal-grid-rail{
-  width:var(--modal-rail)!important;
-  max-width:920px!important;
-  margin:0 auto!important;
-  display:grid!important;
-  grid-template-columns:1fr!important;
-  gap:14px!important;
-}
-
-#banModal .modal-head{
-  width:100%!important;
-  margin:0!important;
-  display:grid!important;
-  grid-template-columns:72px minmax(0, 1fr) 50px!important;
-  gap:16px!important;
-  align-items:center!important;
-}
-
-#banModal #modalAvatar{
-  width:72px!important;
-  height:72px!important;
-  border-radius:14px!important;
-  object-fit:cover!important;
-}
-
-#banModal .modal-title{
-  min-width:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  gap:9px!important;
-  align-items:flex-start!important;
-}
-
-#banModal #modalName{
-  margin:0!important;
-  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
-  font-size:clamp(34px, 3.55vw, 52px)!important;
-  line-height:.95!important;
-  font-weight:900!important;
-  letter-spacing:-.045em!important;
-  white-space:nowrap!important;
-  overflow:hidden!important;
-  text-overflow:ellipsis!important;
-}
-
-#banModal #modalStatus{
-  min-height:36px!important;
-  height:36px!important;
-  padding:0 22px!important;
-  border-radius:9px!important;
-  border:1px solid rgba(255,88,190,.48)!important;
-  background:
-    linear-gradient(180deg, rgba(255,88,190,.20), rgba(135,29,119,.22)),
-    rgba(18,15,34,.56)!important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.10),
-    inset 0 -1px 0 rgba(72,14,66,.28),
-    0 0 14px rgba(255,88,190,.10)!important;
-  color:#ffe9fb!important;
-  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
-  font-size:13px!important;
-  font-weight:900!important;
-  letter-spacing:.08em!important;
-  text-transform:uppercase!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  justify-content:center!important;
-  width:auto!important;
-  max-width:max-content!important;
-}
-
-#banModal .close-modal{
-  width:50px!important;
-  height:50px!important;
-  border-radius:13px!important;
-  justify-self:end!important;
-  align-self:start!important;
-  margin:0!important;
-  border:1px solid rgba(255,255,255,.15)!important;
-  background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035)), rgba(18,15,34,.72)!important;
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.16),
-    inset 0 -2px 0 rgba(0,0,0,.28),
-    0 10px 22px rgba(0,0,0,.20),
-    0 0 18px rgba(203,88,255,.10)!important;
-  color:#fff!important;
-  font-size:28px!important;
-  line-height:1!important;
-  font-weight:800!important;
-}
-
-#banModal .detail-grid{
-  width:100%!important;
-  margin:12px 0 0!important;
-  display:grid!important;
-  grid-template-columns:repeat(2, minmax(0, 1fr))!important;
-  gap:12px 16px!important;
-}
-
-#banModal .detail{
-  min-height:72px!important;
-  padding:16px 20px!important;
-  border-radius:15px!important;
-  display:flex!important;
-  flex-direction:column!important;
-  justify-content:center!important;
-  gap:7px!important;
-  background:linear-gradient(180deg, rgba(255,255,255,.035), rgba(255,255,255,.018)), rgba(18,15,34,.54)!important;
-  border:1px solid rgba(255,255,255,.055)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.045), inset 0 -1px 0 rgba(42,10,70,.16)!important;
-}
-
-#banModal .detail span{
-  font-size:13px!important;
-  line-height:1!important;
-  font-weight:900!important;
-  letter-spacing:.08em!important;
-  text-transform:uppercase!important;
-  color:#ff88ff!important;
-}
-
-#banModal .detail strong{
-  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
-  font-size:clamp(17px, 1.35vw, 23px)!important;
-  line-height:1.12!important;
-  font-weight:850!important;
-  color:#fff!important;
-  overflow-wrap:anywhere!important;
-}
-
-#banModal .modal-appeal-wrap{
-  width:100%!important;
-  margin:14px 0 0!important;
-  padding:0!important;
-  display:block!important;
-}
-
-#banModal .modal-appeal-button{
-  width:var(--modal-cta)!important;
-  max-width:736px!important;
-  min-width:0!important;
-  height:82px!important;
-  min-height:82px!important;
-  margin:0!important;
-  display:grid!important;
-  grid-template-columns:68px minmax(0,1fr) auto!important;
-  align-items:center!important;
-  gap:14px!important;
-  padding:9px 16px 9px 10px!important;
-  border-radius:14px!important;
-  box-sizing:border-box!important;
-}
-
-#banModal .modal-appeal-art{
-  width:56px!important;
-  height:56px!important;
-  border-radius:12px!important;
-  display:grid!important;
-  place-items:center!important;
-}
-
-#banModal .modal-appeal-art img{
-  width:52px!important;
-  height:52px!important;
-  object-fit:contain!important;
-}
-
-#banModal .modal-appeal-copy small{
-  font-size:10px!important;
-  line-height:1!important;
-  letter-spacing:.14em!important;
-  font-weight:900!important;
-}
-
-#banModal .modal-appeal-copy strong{
-  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
-  font-size:clamp(19px, 1.5vw, 25px)!important;
-  line-height:1.02!important;
-  font-weight:900!important;
-  letter-spacing:.005em!important;
-}
-
-#banModal .modal-appeal-count{
-  font-size:12px!important;
-  padding:10px 14px!important;
-  white-space:nowrap!important;
-}
-
-#banModal .modal-actions{
-  display:none!important;
-}
-
-#banModal .modal-note{
-  width:var(--modal-cta)!important;
-  max-width:736px!important;
-  margin:0!important;
-  padding:0!important;
-  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
-  font-size:15px!important;
-  line-height:1.35!important;
-  font-weight:700!important;
-  color:rgba(239,230,255,.72)!important;
-}
-
-@media(max-width:900px){
-  #banModal .modal-card{
-    width:min(94vw, 760px)!important;
-    padding:26px 22px!important;
-  }
-
-  #banModal .modal-grid-rail{
-    width:100%!important;
-    max-width:100%!important;
-  }
-
-  #banModal .modal-head{
-    grid-template-columns:64px minmax(0, 1fr) 46px!important;
-    gap:12px!important;
-  }
-
-  #banModal #modalAvatar{
-    width:64px!important;
-    height:64px!important;
-  }
-
-  #banModal #modalName{
-    font-size:clamp(32px, 8vw, 44px)!important;
-  }
-
-  #banModal .detail-grid{
-    grid-template-columns:1fr!important;
-  }
-
-  #banModal .modal-appeal-button,
-  #banModal .modal-note{
-    width:100%!important;
-    max-width:100%!important;
-  }
-
-  #banModal .modal-appeal-button{
-    height:auto!important;
-    min-height:96px!important;
-    grid-template-columns:58px minmax(0,1fr)!important;
-    grid-template-areas:"art copy" "art count"!important;
-    row-gap:7px!important;
-  }
-
-  #banModal .modal-appeal-art{grid-area:art!important;}
-  #banModal .modal-appeal-copy{grid-area:copy!important;}
-  #banModal .modal-appeal-count{
-    grid-area:count!important;
-    justify-self:start!important;
-  }
-}
-
-
-/* v3.8.67 hardfix: clean header surface + truly condensed modal grid */
-
-/* HEADER: one surface only. Header owns the border/background; nav shell is transparent. */
-@media (min-width:981px){
-  html body header#siteHeader.mcx-clean-header-v67,
-  html body header#siteHeader.mcx-clean-header-v67.site-header,
-  html body header#siteHeader.mcx-clean-header-v67.mcx-header,
-  html body header#siteHeader.mcx-clean-header-v67.mineacle-floating-header{
+  html body #siteHeader.mcx-edge-v68,
+  html body #siteHeader.mcx-edge-v68.site-header,
+  html body #siteHeader.mcx-edge-v68.mcx-header,
+  html body #siteHeader.mcx-edge-v68.mineacle-floating-header{
     position:fixed!important;
     top:22px!important;
     left:50%!important;
@@ -16634,18 +15123,18 @@ main,
     padding:0!important;
     transform:translate3d(-50%,0,0)!important;
     border-radius:22px!important;
-    border:1px solid rgba(203,88,255,.34)!important;
+    border:1px solid rgba(203,88,255,.26)!important;
     outline:0!important;
     background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.045), transparent 30rem),
-      linear-gradient(180deg, rgba(18,15,34,.68), rgba(12,8,22,.72))!important;
+      radial-gradient(circle at 50% 0%, rgba(255,136,255,.035), transparent 30rem),
+      linear-gradient(180deg, rgba(18,15,34,.62), rgba(12,8,22,.68))!important;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.07),
-      inset 0 0 10px rgba(203,88,255,.07),
-      inset 0 -1px 0 rgba(42,10,70,.40),
-      0 18px 42px rgba(0,0,0,.24)!important;
-    backdrop-filter:blur(18px)!important;
-    -webkit-backdrop-filter:blur(18px)!important;
+      inset 0 1px 0 rgba(255,255,255,.055),
+      inset 0 0 9px rgba(203,88,255,.055),
+      inset 0 -1px 0 rgba(42,10,70,.30),
+      0 16px 38px rgba(0,0,0,.22)!important;
+    backdrop-filter:blur(14px) saturate(108%)!important;
+    -webkit-backdrop-filter:blur(14px) saturate(108%)!important;
     overflow:visible!important;
     box-sizing:border-box!important;
     pointer-events:auto!important;
@@ -16653,47 +15142,51 @@ main,
     transition:top .22s ease,width .22s ease,border-radius .22s ease,background .22s ease,box-shadow .22s ease,border-color .22s ease!important;
   }
 
-  html body header#siteHeader.mcx-clean-header-v67.is-scrolled,
-  html body header#siteHeader.mcx-clean-header-v67.site-header.is-scrolled,
-  html body header#siteHeader.mcx-clean-header-v67.mcx-header.is-scrolled,
-  html body header#siteHeader.mcx-clean-header-v67.mineacle-floating-header.is-scrolled{
+  html body #siteHeader.mcx-edge-v68.is-scrolled,
+  html body #siteHeader.mcx-edge-v68.site-header.is-scrolled,
+  html body #siteHeader.mcx-edge-v68.mcx-header.is-scrolled,
+  html body #siteHeader.mcx-edge-v68.mineacle-floating-header.is-scrolled{
     top:0!important;
     left:50%!important;
     right:auto!important;
     width:100vw!important;
     max-width:100vw!important;
     min-width:100vw!important;
+    margin:0!important;
+    padding:0!important;
     transform:translate3d(-50%,0,0)!important;
     border-radius:0!important;
     border-top:0!important;
     border-left:0!important;
     border-right:0!important;
-    border-bottom:1px solid rgba(203,88,255,.30)!important;
+    border-bottom:1px solid rgba(203,88,255,.24)!important;
+    outline:0!important;
     background:
-      radial-gradient(circle at 50% 0%, rgba(255,136,255,.038), transparent 32rem),
-      linear-gradient(180deg, rgba(18,15,34,.76), rgba(12,8,22,.80))!important;
+      radial-gradient(circle at 50% 0%, rgba(255,136,255,.032), transparent 32rem),
+      linear-gradient(180deg, rgba(18,15,34,.70), rgba(12,8,22,.76))!important;
     box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.055),
-      inset 0 0 9px rgba(203,88,255,.060),
-      inset 0 -1px 0 rgba(42,10,70,.36),
-      0 14px 34px rgba(0,0,0,.22)!important;
+      inset 0 1px 0 rgba(255,255,255,.045),
+      inset 0 0 8px rgba(203,88,255,.050),
+      inset 0 -1px 0 rgba(42,10,70,.30),
+      0 12px 30px rgba(0,0,0,.20)!important;
   }
 
-  html body header#siteHeader.mcx-clean-header-v67::before,
-  html body header#siteHeader.mcx-clean-header-v67::after,
-  html body header#siteHeader.mcx-clean-header-v67 .mcx-nav-shell::before,
-  html body header#siteHeader.mcx-clean-header-v67 .mcx-nav-shell::after{
+  html body #siteHeader.mcx-edge-v68::before,
+  html body #siteHeader.mcx-edge-v68::after,
+  html body #siteHeader.mcx-edge-v68 .mcx-nav-shell::before,
+  html body #siteHeader.mcx-edge-v68 .mcx-nav-shell::after{
     content:none!important;
     display:none!important;
     opacity:0!important;
-    border:0!important;
     background:none!important;
+    border:0!important;
+    outline:0!important;
     box-shadow:none!important;
     pointer-events:none!important;
   }
 
-  html body header#siteHeader.mcx-clean-header-v67 .mcx-nav-shell,
-  html body header#siteHeader.mcx-clean-header-v67.is-scrolled .mcx-nav-shell{
+  html body #siteHeader.mcx-edge-v68 .mcx-nav-shell,
+  html body #siteHeader.mcx-edge-v68.is-scrolled .mcx-nav-shell{
     position:relative!important;
     width:min(var(--mcx-nav-w, 1380px), calc(100vw - 32px))!important;
     max-width:var(--mcx-nav-w, 1380px)!important;
@@ -16703,7 +15196,6 @@ main,
     margin:0 auto!important;
     padding:0!important;
     overflow:visible!important;
-    box-sizing:border-box!important;
     pointer-events:none!important;
     border:0!important;
     outline:0!important;
@@ -16715,85 +15207,73 @@ main,
     clip-path:none!important;
   }
 
-  html body header#siteHeader.mcx-clean-header-v67 .mcx-link,
-  html body header#siteHeader.mcx-clean-header-v67 .mcx-button,
-  html body header#siteHeader.mcx-clean-header-v67 .mcx-discord,
-  html body header#siteHeader.mcx-clean-header-v67 .mcx-play,
-  html body header#siteHeader.mcx-clean-header-v67 .mcx-logo{
+  html body #siteHeader.mcx-edge-v68 .mcx-link,
+  html body #siteHeader.mcx-edge-v68 .mcx-button,
+  html body #siteHeader.mcx-edge-v68 .mcx-discord,
+  html body #siteHeader.mcx-edge-v68 .mcx-play,
+  html body #siteHeader.mcx-edge-v68 .mcx-logo{
     pointer-events:auto!important;
   }
 }
 
 @media (max-width:980px){
-  html body header#siteHeader.mcx-clean-header-v67{
+  html body #siteHeader.mcx-edge-v68{
     left:0!important;
     right:0!important;
     transform:none!important;
   }
 }
 
-/* MODAL: hard target the unique modal class and shrink the whole popup + all content. */
-html body #banModal.mineacle-grid-modal-v67{
-  --modal-rail:780px;
-  --modal-cta:624px;
+/* Modal: hard target the actual live popup classes added in main.js. */
+html body #banModal.modal-grid-v68{
+  padding:18px!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-card.modal-grid-card-v67{
-  width:min(72vw, 960px)!important;
-  max-width:960px!important;
+html body #banModal.modal-grid-v68 .modal-card.modal-card-v68{
+  width:min(76vw, 940px)!important;
+  max-width:940px!important;
   min-width:0!important;
   max-height:86svh!important;
-  padding:28px 34px!important;
   overflow:auto!important;
+  padding:28px 34px!important;
   border-radius:24px!important;
-  border:1px solid rgba(203,88,255,.36)!important;
+  border:1px solid rgba(203,88,255,.34)!important;
   background:
-    radial-gradient(circle at 14% 0%, rgba(255,136,255,.055), transparent 22rem),
-    linear-gradient(180deg, rgba(18,15,34,.78), rgba(10,6,18,.88))!important;
+    radial-gradient(circle at 16% 0%, rgba(255,136,255,.055), transparent 22rem),
+    linear-gradient(180deg, rgba(18,15,34,.78), rgba(10,6,18,.90))!important;
   box-shadow:
-    inset 0 1px 0 rgba(255,255,255,.07),
-    inset 0 0 12px rgba(203,88,255,.07),
-    inset 0 -1px 0 rgba(42,10,70,.38),
-    0 28px 70px rgba(0,0,0,.42)!important;
+    inset 0 1px 0 rgba(255,255,255,.06),
+    inset 0 0 11px rgba(203,88,255,.06),
+    inset 0 -1px 0 rgba(42,10,70,.34),
+    0 24px 62px rgba(0,0,0,.44)!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-grid-rail{
-  width:min(100%, var(--modal-rail))!important;
-  max-width:var(--modal-rail)!important;
-  margin:0 auto!important;
-  display:grid!important;
-  grid-template-columns:1fr!important;
-  gap:12px!important;
-}
-
-html body #banModal.mineacle-grid-modal-v67 .modal-head{
-  width:100%!important;
-  margin:0!important;
+html body #banModal.modal-grid-v68 .modal-head{
+  width:min(100%, 760px)!important;
+  max-width:760px!important;
+  margin:0 auto 18px!important;
   display:grid!important;
   grid-template-columns:62px minmax(0,1fr) 46px!important;
   gap:14px!important;
   align-items:center!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 #modalAvatar{
+html body #banModal.modal-grid-v68 #modalAvatar{
   width:62px!important;
   height:62px!important;
   border-radius:13px!important;
   object-fit:cover!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-title{
+html body #banModal.modal-grid-v68 .modal-title{
   min-width:0!important;
-  display:flex!important;
-  flex-direction:column!important;
-  gap:8px!important;
-  align-items:flex-start!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 #modalName{
-  margin:0!important;
+html body #banModal.modal-grid-v68 .modal-title h2,
+html body #banModal.modal-grid-v68 #modalName{
+  margin:0 0 8px!important;
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
-  font-size:clamp(32px,3.15vw,46px)!important;
+  font-size:clamp(32px,3.1vw,46px)!important;
   line-height:.95!important;
   font-weight:900!important;
   letter-spacing:-.045em!important;
@@ -16802,148 +15282,202 @@ html body #banModal.mineacle-grid-modal-v67 #modalName{
   text-overflow:ellipsis!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 #modalStatus{
-  min-height:32px!important;
+html body #banModal.modal-grid-v68 #modalStatus{
+  width:auto!important;
+  min-width:76px!important;
   height:32px!important;
+  min-height:32px!important;
   padding:0 18px!important;
   border-radius:8px!important;
+  border:1px solid rgba(255,136,255,.28)!important;
+  background:
+    linear-gradient(180deg, rgba(255,136,255,.13), rgba(118,41,177,.11)),
+    rgba(18,15,34,.46)!important;
+  color:#ffd8ff!important;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
   font-size:12px!important;
   font-weight:900!important;
-  letter-spacing:.08em!important;
+  letter-spacing:.055em!important;
+  line-height:1!important;
   text-transform:uppercase!important;
-  border:1px solid rgba(255,88,190,.48)!important;
-  background:linear-gradient(180deg,rgba(255,88,190,.20),rgba(135,29,119,.22)),rgba(18,15,34,.56)!important;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.10),inset 0 -1px 0 rgba(72,14,66,.28),0 0 14px rgba(255,88,190,.10)!important;
+  box-shadow:
+    inset 0 0 8px rgba(203,88,255,.07),
+    inset 0 1px 0 rgba(255,255,255,.05)!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .close-modal{
+html body #banModal.modal-grid-v68 .close-modal{
   width:46px!important;
   height:46px!important;
   min-width:46px!important;
   border-radius:12px!important;
   justify-self:end!important;
   align-self:start!important;
-  margin:0!important;
   font-size:26px!important;
+  line-height:1!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .detail-grid{
-  width:100%!important;
-  margin:10px 0 0!important;
+html body #banModal.modal-grid-v68 .detail-grid{
+  width:min(100%, 760px)!important;
+  max-width:760px!important;
+  margin:0 auto 12px!important;
   display:grid!important;
-  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  grid-template-columns:repeat(2, minmax(0, 1fr))!important;
   gap:10px 14px!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .detail{
-  min-height:66px!important;
-  padding:14px 18px!important;
+html body #banModal.modal-grid-v68 .detail{
+  min-height:64px!important;
+  padding:13px 16px!important;
   border-radius:14px!important;
-  gap:6px!important;
+  background:rgba(255,255,255,.032)!important;
+  border:1px solid rgba(255,255,255,.035)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.028)!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .detail span{
+html body #banModal.modal-grid-v68 .detail span:first-child{
+  margin-bottom:5px!important;
+  color:#ff88ff!important;
   font-size:12px!important;
-  letter-spacing:.08em!important;
+  font-weight:900!important;
+  letter-spacing:.055em!important;
+  text-transform:uppercase!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .detail strong{
+html body #banModal.modal-grid-v68 .detail strong{
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
   font-size:clamp(16px,1.18vw,21px)!important;
-  line-height:1.12!important;
-  font-weight:850!important;
+  line-height:1.14!important;
+  font-weight:800!important;
+  letter-spacing:-.012em!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-appeal-wrap{
-  width:100%!important;
-  margin:12px 0 0!important;
-  padding:0!important;
+html body #banModal.modal-grid-v68 .modal-appeal-wrap{
+  width:min(100%, 760px)!important;
+  max-width:760px!important;
+  margin:12px auto 0!important;
   display:block!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-appeal-button{
-  width:min(80%, var(--modal-cta))!important;
-  max-width:var(--modal-cta)!important;
+html body #banModal.modal-grid-v68 .modal-appeal-button{
+  width:80%!important;
+  max-width:608px!important;
   min-width:0!important;
-  height:76px!important;
   min-height:76px!important;
+  height:76px!important;
   margin:0!important;
   display:grid!important;
-  grid-template-columns:60px minmax(0,1fr) auto!important;
-  gap:12px!important;
+  grid-template-columns:58px minmax(0,1fr) auto!important;
   align-items:center!important;
+  gap:12px!important;
   padding:8px 14px 8px 9px!important;
   border-radius:13px!important;
-  box-sizing:border-box!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-appeal-art{
+html body #banModal.modal-grid-v68 .modal-appeal-art{
   width:50px!important;
   height:50px!important;
   border-radius:11px!important;
-  display:grid!important;
-  place-items:center!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-appeal-art img{
+html body #banModal.modal-grid-v68 .modal-appeal-art img{
   width:46px!important;
-  height:46px!important;
+  height:52px!important;
   object-fit:contain!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-appeal-copy small{
+html body #banModal.modal-grid-v68 .modal-appeal-copy small{
   font-size:9px!important;
   line-height:1!important;
   letter-spacing:.14em!important;
+  margin-bottom:2px!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-appeal-copy strong{
+html body #banModal.modal-grid-v68 .modal-appeal-copy strong{
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
   font-size:clamp(17px,1.28vw,22px)!important;
   line-height:1.03!important;
   font-weight:900!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-appeal-count{
+html body #banModal.modal-grid-v68 .modal-appeal-count{
   font-size:11px!important;
   padding:9px 12px!important;
   white-space:nowrap!important;
 }
 
-html body #banModal.mineacle-grid-modal-v67 .modal-actions{
+html body #banModal.modal-grid-v68 .modal-actions,
+html body #banModal.modal-grid-v68 .modal-actions:empty{
   display:none!important;
-}
-
-html body #banModal.mineacle-grid-modal-v67 .modal-note{
-  width:min(80%, var(--modal-cta))!important;
-  max-width:var(--modal-cta)!important;
   margin:0!important;
   padding:0!important;
+}
+
+html body #banModal.modal-grid-v68 .modal-note{
+  width:min(80%, 608px)!important;
+  max-width:608px!important;
+  margin:10px auto 0!important;
+  margin-left:calc((100% - min(100%, 760px)) / 2)!important;
+  padding:0!important;
+  color:rgba(216,204,230,.80)!important;
   font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif!important;
   font-size:14px!important;
   line-height:1.35!important;
   font-weight:700!important;
-  color:rgba(239,230,255,.72)!important;
 }
 
-@media(max-width:900px){
-  html body #banModal.mineacle-grid-modal-v67 .modal-card.modal-grid-card-v67{
-    width:min(94vw,720px)!important;
-    padding:24px 20px!important;
+@media(max-width:760px){
+  html body #banModal.modal-grid-v68{
+    padding:12px!important;
   }
 
-  html body #banModal.mineacle-grid-modal-v67 .modal-grid-rail{
+  html body #banModal.modal-grid-v68 .modal-card.modal-card-v68{
+    width:calc(100vw - 24px)!important;
+    max-height:calc(100svh - 24px)!important;
+    padding:18px!important;
+    border-radius:22px!important;
+  }
+
+  html body #banModal.modal-grid-v68 .modal-head{
     width:100%!important;
-    max-width:100%!important;
+    grid-template-columns:58px minmax(0,1fr) 44px!important;
+    gap:12px!important;
+    margin-bottom:14px!important;
   }
 
-  html body #banModal.mineacle-grid-modal-v67 .detail-grid{
+  html body #banModal.modal-grid-v68 #modalAvatar{
+    width:58px!important;
+    height:58px!important;
+  }
+
+  html body #banModal.modal-grid-v68 #modalName{
+    font-size:30px!important;
+  }
+
+  html body #banModal.modal-grid-v68 .detail-grid{
+    width:100%!important;
     grid-template-columns:1fr!important;
+    gap:10px!important;
   }
 
-  html body #banModal.mineacle-grid-modal-v67 .modal-appeal-button,
-  html body #banModal.mineacle-grid-modal-v67 .modal-note{
+  html body #banModal.modal-grid-v68 .modal-appeal-wrap,
+  html body #banModal.modal-grid-v68 .modal-appeal-button,
+  html body #banModal.modal-grid-v68 .modal-note{
     width:100%!important;
     max-width:100%!important;
+    margin-left:0!important;
+  }
+
+  html body #banModal.modal-grid-v68 .modal-appeal-button{
+    height:auto!important;
+    min-height:82px!important;
+    grid-template-columns:54px minmax(0,1fr)!important;
+    grid-template-areas:"art copy" "art count"!important;
+  }
+
+  html body #banModal.modal-grid-v68 .modal-appeal-art{grid-area:art!important;}
+  html body #banModal.modal-grid-v68 .modal-appeal-copy{grid-area:copy!important;}
+  html body #banModal.modal-grid-v68 .modal-appeal-count{
+    grid-area:count!important;
+    justify-self:start!important;
   }
 }
