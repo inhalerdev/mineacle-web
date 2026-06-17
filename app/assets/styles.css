@@ -14826,3 +14826,275 @@ main,
     min-height:118px!important;
   }
 }
+
+/* Mineacle Bans v3.8.58: actual modal compact alignment pass
+   Uses the real modal class names from main.js so the Discord appeal CTA, status pill, and modal spacing are corrected. */
+
+#banModal.mineacle-js-modal{
+  padding:18px!important;
+}
+
+#banModal .modal-card{
+  width:min(1040px, calc(100vw - 56px))!important;
+  max-height:calc(100svh - 36px)!important;
+  padding:26px 30px 28px!important;
+  border-radius:26px!important;
+  border:1.5px solid rgba(203,88,255,.32)!important;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(255,136,255,.075), transparent 24rem),
+    linear-gradient(180deg, rgba(22,15,35,.78) 0%, rgba(12,7,22,.91) 100%)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.07),
+    inset 0 0 14px rgba(203,88,255,.065),
+    0 0 0 1px rgba(255,255,255,.022),
+    0 0 26px rgba(203,88,255,.15),
+    0 22px 66px rgba(0,0,0,.54)!important;
+}
+
+#banModal .modal-head{
+  margin-bottom:22px!important;
+  gap:18px!important;
+  align-items:flex-start!important;
+}
+
+#banModal #modalAvatar{
+  width:78px!important;
+  height:78px!important;
+  border-radius:17px!important;
+  box-shadow:0 10px 22px rgba(0,0,0,.28)!important;
+}
+
+#banModal .modal-title h2{
+  margin:2px 0 8px!important;
+  font-size:clamp(34px, 4.2vw, 52px)!important;
+  line-height:.98!important;
+  letter-spacing:-.04em!important;
+  font-weight:850!important;
+}
+
+/* Match modal label pill to the ban-slot pill shape/style, not the old rounded modal badge. */
+#banModal .status-badge,
+#banModal .status-badge.ban-type-pill,
+#banModal #modalStatus{
+  width:auto!important;
+  min-width:88px!important;
+  height:34px!important;
+  min-height:34px!important;
+  padding:0 15px!important;
+  border-radius:7px!important;
+  border:1px solid rgba(255,136,255,.28)!important;
+  background:
+    linear-gradient(180deg, rgba(255,136,255,.13), rgba(118,41,177,.11)),
+    rgba(18,15,34,.46)!important;
+  color:#ffd8ff!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  letter-spacing:.055em!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+  text-shadow:0 1px 0 rgba(0,0,0,.55)!important;
+  box-shadow:
+    inset 0 0 8px rgba(203,88,255,.070),
+    inset 0 1px 0 rgba(255,255,255,.052)!important;
+  pointer-events:none!important;
+}
+
+#banModal .status-badge.ip,
+#banModal .status-badge.ban-type-ip,
+#banModal #modalStatus.ip,
+#banModal #modalStatus.ban-type-ip{
+  border-color:rgba(255,104,147,.32)!important;
+  background:
+    linear-gradient(180deg, rgba(255,104,147,.16), rgba(138,35,78,.12)),
+    rgba(18,15,34,.46)!important;
+  color:#ffbdd1!important;
+}
+
+#banModal .close-modal{
+  width:44px!important;
+  height:44px!important;
+  min-width:44px!important;
+  border-radius:12px!important;
+  font-size:27px!important;
+  line-height:1!important;
+}
+
+#banModal .detail-grid{
+  width:min(100%, 980px)!important;
+  display:grid!important;
+  grid-template-columns:repeat(2, minmax(0, 1fr))!important;
+  gap:12px 16px!important;
+  margin:0 auto 14px!important;
+}
+
+#banModal .detail{
+  min-height:62px!important;
+  padding:13px 16px!important;
+  border-radius:15px!important;
+  border:1px solid rgba(255,255,255,.035)!important;
+  background:rgba(255,255,255,.032)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.028)!important;
+}
+
+#banModal .detail span:first-child{
+  margin-bottom:5px!important;
+  color:#ff88ff!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  letter-spacing:.055em!important;
+  text-transform:uppercase!important;
+}
+
+#banModal .detail strong{
+  font-size:18px!important;
+  line-height:1.18!important;
+  font-weight:800!important;
+  letter-spacing:-.012em!important;
+}
+
+/* The actual Discord CTA is .modal-appeal-wrap/.modal-appeal-button. Make it span and align with the detail grid. */
+#banModal .modal-appeal-wrap{
+  width:min(100%, 980px)!important;
+  display:block!important;
+  margin:14px auto 0!important;
+}
+
+#banModal .modal-appeal-button{
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  min-height:88px!important;
+  display:grid!important;
+  grid-template-columns:68px minmax(0, 1fr) auto!important;
+  align-items:center!important;
+  gap:16px!important;
+  padding:12px 18px!important;
+  border-radius:17px!important;
+}
+
+#banModal .modal-appeal-art{
+  width:58px!important;
+  height:58px!important;
+  border-radius:14px!important;
+}
+
+#banModal .modal-appeal-art img{
+  width:54px!important;
+  height:62px!important;
+}
+
+#banModal .modal-appeal-copy small{
+  margin-bottom:3px!important;
+  font-size:10px!important;
+  letter-spacing:.12em!important;
+}
+
+#banModal .modal-appeal-copy strong{
+  font-size:clamp(18px, 2.1vw, 25px)!important;
+  line-height:1.0!important;
+  letter-spacing:.012em!important;
+}
+
+#banModal .modal-appeal-count{
+  min-height:34px!important;
+  padding:0 13px!important;
+  font-size:12px!important;
+  border-radius:999px!important;
+}
+
+#banModal .modal-actions:empty{
+  display:none!important;
+  margin:0!important;
+  padding:0!important;
+}
+
+#banModal .modal-actions:not(:empty){
+  width:min(100%, 980px)!important;
+  margin:14px auto 0!important;
+}
+
+#banModal .modal-note{
+  width:min(100%, 980px)!important;
+  margin:14px auto 0!important;
+  padding:0!important;
+  color:rgba(216,204,230,.80)!important;
+  font-size:16px!important;
+  line-height:1.35!important;
+  font-weight:720!important;
+}
+
+@media(max-width:760px){
+  #banModal.mineacle-js-modal{
+    padding:12px!important;
+  }
+
+  #banModal .modal-card{
+    width:calc(100vw - 24px)!important;
+    max-height:calc(100svh - 24px)!important;
+    padding:18px!important;
+    border-radius:22px!important;
+  }
+
+  #banModal .modal-head{
+    gap:12px!important;
+    margin-bottom:16px!important;
+  }
+
+  #banModal #modalAvatar{
+    width:62px!important;
+    height:62px!important;
+    border-radius:14px!important;
+  }
+
+  #banModal .modal-title h2{
+    font-size:31px!important;
+  }
+
+  #banModal .detail-grid{
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+    width:100%!important;
+    margin-bottom:12px!important;
+  }
+
+  #banModal .detail{
+    min-height:58px!important;
+    padding:12px 14px!important;
+  }
+
+  #banModal .modal-appeal-wrap{
+    width:100%!important;
+    margin-top:12px!important;
+  }
+
+  #banModal .modal-appeal-button{
+    min-height:82px!important;
+    grid-template-columns:56px minmax(0,1fr)!important;
+    gap:12px!important;
+    padding:12px 14px!important;
+  }
+
+  #banModal .modal-appeal-count{
+    grid-column:2!important;
+    width:max-content!important;
+    margin-top:3px!important;
+  }
+
+  #banModal .modal-appeal-art{
+    grid-row:1 / span 2!important;
+    width:50px!important;
+    height:50px!important;
+  }
+
+  #banModal .modal-appeal-art img{
+    width:48px!important;
+    height:56px!important;
+  }
+
+  #banModal .modal-note{
+    width:100%!important;
+    margin-top:12px!important;
+    font-size:14px!important;
+  }
+}
