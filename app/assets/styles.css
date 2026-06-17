@@ -15461,3 +15461,78 @@ main,
     min-height:104px!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.61: force appeal CTA 20% shorter horizontally
+   Direct fix: the Discord appeal button and note are now 80% of the modal info-pill rail on desktop. */
+@media (min-width: 761px){
+  #banModal .modal-appeal-wrap,
+  #banModal .appeal-discord-wrap,
+  #banModal .ban-appeal-wrap,
+  #banModal .discord-appeal-wrap,
+  body #banModal .modal-appeal-wrap,
+  body #banModal .appeal-discord-wrap,
+  body #banModal .ban-appeal-wrap,
+  body #banModal .discord-appeal-wrap,
+  .modal.show #banModal .modal-appeal-wrap,
+  .modal.show #banModal .appeal-discord-wrap,
+  .modal.show #banModal .ban-appeal-wrap,
+  .modal.show #banModal .discord-appeal-wrap{
+    width:80%!important;
+    max-width:768px!important;
+    min-width:0!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    display:block!important;
+    align-self:center!important;
+    justify-self:center!important;
+    flex:0 0 auto!important;
+    grid-template-columns:none!important;
+  }
+
+  #banModal .modal-appeal-button,
+  #banModal .appeal-discord-card,
+  #banModal .ban-appeal-discord,
+  #banModal .discord-appeal-button,
+  body #banModal .modal-appeal-button,
+  body #banModal .appeal-discord-card,
+  body #banModal .ban-appeal-discord,
+  body #banModal .discord-appeal-button,
+  .modal.show #banModal .modal-appeal-button,
+  .modal.show #banModal .appeal-discord-card,
+  .modal.show #banModal .ban-appeal-discord,
+  .modal.show #banModal .discord-appeal-button{
+    width:100%!important;
+    max-width:100%!important;
+    min-width:0!important;
+    margin-left:0!important;
+    margin-right:0!important;
+    box-sizing:border-box!important;
+  }
+
+  #banModal .modal-note,
+  #banModal .ban-modal-note,
+  #banModal .appeal-note,
+  body #banModal .modal-note,
+  body #banModal .ban-modal-note,
+  body #banModal .appeal-note,
+  .modal.show #banModal .modal-note,
+  .modal.show #banModal .ban-modal-note,
+  .modal.show #banModal .appeal-note{
+    width:80%!important;
+    max-width:768px!important;
+    min-width:0!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    box-sizing:border-box!important;
+  }
+}
+
+@media (max-width: 760px){
+  #banModal .modal-appeal-wrap,
+  #banModal .modal-appeal-button,
+  #banModal .modal-note{
+    width:100%!important;
+    max-width:100%!important;
+  }
+}
