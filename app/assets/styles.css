@@ -10405,3 +10405,134 @@ body,
     margin-top:-74px!important;
   }
 }
+
+/* Mineacle Bans v3.8.36: lighter scenic blur + stronger overlap + mobile vertical hero
+   - Desktop scenic background keeps only a light blur and fades into a dark purple-black footer tone
+   - Bans section is pulled closer toward the header/background fold
+   - Mobile uses the supplied vertical scenic image, extends beneath the fixed header, and avoids a dark nav bar band */
+
+.bans-v34-background-fold::before,
+.bans-v32-logo-only-fold::before,
+.bans-v3-hero::before{
+  background:url("bans-hero-background-v35.png?v=bansfull3.8.36") center 10% / cover no-repeat!important;
+  filter:blur(5px) saturate(.92) brightness(.74)!important;
+  transform:scale(1.04)!important;
+}
+
+.bans-v34-background-fold::after,
+.bans-v32-logo-only-fold::after,
+.bans-v3-hero::after{
+  background:
+    linear-gradient(180deg, rgba(8,5,16,.04) 0%, rgba(15,10,28,.10) 22%, rgba(20,12,34,.18) 42%, rgba(16,9,29,.44) 68%, rgba(12,7,24,.78) 86%, rgba(6,4,12,.95) 96%, #04020a 100%),
+    radial-gradient(circle at 50% 20%, rgba(167,84,255,.12), transparent 36rem),
+    linear-gradient(90deg, rgba(6,3,12,.18), rgba(6,3,12,.02) 24%, rgba(6,3,12,.02) 76%, rgba(6,3,12,.18))!important;
+}
+
+.bans-v34-background-fold{
+  min-height:720px!important;
+  height:80vh!important;
+  padding-top:calc(var(--v34-header-height) + 36px)!important;
+}
+
+.bans-v32-logo-only-fold{
+  min-height:720px!important;
+  height:80vh!important;
+}
+
+.bans-section{
+  margin-top:-225px!important;
+}
+
+.section-heading,
+.bans-section .section-heading{
+  margin-bottom:16px!important;
+}
+
+body{
+  background:linear-gradient(180deg, #12081f 0%, #0a0613 52%, #04020a 100%)!important;
+}
+
+@media(max-width:980px){
+  html,
+  body{
+    background:linear-gradient(180deg, #12081f 0%, #0b0616 54%, #04020a 100%)!important;
+  }
+
+  .mcx-header.site-header.mineacle-floating-header,
+  .mcx-header.site-header.mineacle-floating-header.is-scrolled,
+  #siteHeader.mcx-header{
+    background:transparent!important;
+    box-shadow:none!important;
+    border-bottom:0!important;
+  }
+
+  #siteHeader.mcx-header::before{
+    content:""!important;
+    position:absolute!important;
+    inset:0!important;
+    background:linear-gradient(180deg, rgba(9,6,18,.14) 0%, rgba(9,6,18,.06) 58%, rgba(9,6,18,0) 100%)!important;
+    pointer-events:none!important;
+    z-index:0!important;
+  }
+
+  .mcx-nav-shell{
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero{
+    min-height:560px!important;
+    height:62vh!important;
+    padding-top:0!important;
+    margin-top:0!important;
+  }
+
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before{
+    inset:-12px!important;
+    background:url("bans-hero-background-mobile-v36.png?v=bansfull3.8.36") center top / cover no-repeat!important;
+    filter:blur(5px) saturate(.92) brightness(.74)!important;
+    transform:scale(1.03)!important;
+  }
+
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after{
+    background:
+      linear-gradient(180deg, rgba(10,7,20,.05) 0%, rgba(14,9,27,.12) 18%, rgba(18,11,33,.22) 42%, rgba(15,9,29,.48) 70%, rgba(10,6,20,.80) 88%, rgba(5,3,10,.96) 100%),
+      radial-gradient(circle at 50% 16%, rgba(167,84,255,.10), transparent 22rem)!important;
+  }
+
+  .page-shell,
+  .site-main,
+  main,
+  .bans-page,
+  .bans-v32-logo-only-fold,
+  .bans-v34-background-fold,
+  .bans-hero,
+  .hero,
+  .page-hero{
+    margin-top:0!important;
+    padding-top:0!important;
+  }
+
+  .bans-section{
+    margin-top:-132px!important;
+  }
+}
+
+@media(max-width:640px){
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero{
+    min-height:520px!important;
+    height:60vh!important;
+  }
+
+  .bans-section{
+    margin-top:-118px!important;
+  }
+}
