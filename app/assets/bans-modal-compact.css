@@ -1,6 +1,0 @@
-/* Deprecated v3.8.73 modal patch. v3.8.74 replaces it with bans-modal-single.css/js. */
-#banModal.ban-popup-v70:not(.mineacle-ban-modal-single),
-.ban-popup-v70:not(.mineacle-ban-modal-single){
-    display:none!important;
-    pointer-events:none!important;
-}

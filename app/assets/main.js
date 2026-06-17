@@ -1,579 +1,1066 @@
 (() => {
-  "use strict";
+    "use strict";
 
-  const $ = (selector, root = document) => root.querySelector(selector);
-  const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
-  const byIdOrClass = (id, selector) => document.getElementById(id) || $(selector);
+    const MODAL_ID = "banModal";
+    const MODAL_STYLE_ID = "mineacle-ban-modal-single-style";
+    const DISCORD_FALLBACK = "https://discord.gg/VwbwWftefM";
+    const SUPPORT_FALLBACK = "support@mineacle.net";
+    const LOGO_FALLBACK = "mineacle-square-logo.png";
+    const MASCOT_FALLBACK = "discord-character.png";
 
-  const banList = byIdOrClass("banList", ".js-ban-table");
-  const banSearchForm = byIdOrClass("banSearchForm", ".js-ban-search-form");
-  const banSearch = byIdOrClass("banSearch", ".js-ban-search");
-  const clearSearch = byIdOrClass("clearSearch", ".js-ban-clear");
-  const banCount = byIdOrClass("banCount", ".js-ban-meta");
-  const banPagination = byIdOrClass("banPagination", ".pagination-row");
-  const prevPageButton = byIdOrClass("prevPage", ".js-ban-prev");
-  const nextPageButton = byIdOrClass("nextPage", ".js-ban-next");
-  const pageInfo = byIdOrClass("pageInfo", ".js-ban-page");
+    const $ = (selector, root = document) => root.querySelector(selector);
+    const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+    const byIdOrClass = (id, selector) => document.getElementById(id) || $(selector);
 
-  const currentScript = document.currentScript || document.querySelector('script[src$="assets/main.js"], script[src$="/main.js"]');
-  const assetRoot = currentScript ? new URL(".", currentScript.src) : new URL("assets/", window.location.href);
+    const banList = byIdOrClass("banList", ".js-ban-table");
+    const banSearchForm = byIdOrClass("banSearchForm", ".js-ban-search-form");
+    const banSearch = byIdOrClass("banSearch", ".js-ban-search");
+    const clearSearch = byIdOrClass("clearSearch", ".js-ban-clear");
+    const banCount = byIdOrClass("banCount", ".js-ban-meta");
+    const banPagination = byIdOrClass("banPagination", ".pagination-row");
+    const prevPageButton = byIdOrClass("prevPage", ".js-ban-prev");
+    const nextPageButton = byIdOrClass("nextPage", ".js-ban-next");
+    const pageInfo = byIdOrClass("pageInfo", ".js-ban-page");
 
-  function assetUrl(filename) {
-    return new URL(filename, assetRoot).toString();
-  }
+    const currentScript = document.currentScript || document.querySelector('script[src$="assets/main.js"], script[src*="/main.js"]');
+    const assetRoot = currentScript ? new URL(".", currentScript.src) : new URL("assets/", window.location.href);
 
-  let currentPage = 1;
-  let currentRows = [];
-  let currentPagination = {
-    page: 1,
-    per_page: 25,
-    total: 0,
-    total_pages: 1,
-    has_prev: false,
-    has_next: false
-  };
-  let discordOnlineMembersText = "Online members";
-
-  function escapeHtml(value) {
-    return String(value ?? "").replace(/[&<>"']/g, (char) => ({
-      "&": "&amp;",
-      "<": "&lt;",
-      ">": "&gt;",
-      "\"": "&quot;",
-      "'": "&#039;"
-    }[char]));
-  }
-
-  function normalizeBan(raw = {}) {
-    const username = raw.username || raw.name || raw.player || "Unknown";
-    const discord = raw.discord || raw.appeal_discord || "https://discord.gg/VwbwWftefM";
-    const temporary = Boolean(raw.temporary || raw.temp || raw.type === "Temp Ban" || raw.status_type === "temp");
-    const ipban = Boolean(raw.ipban || raw.ip_ban || raw.type === "IP Ban");
-    const canPay = Boolean(raw.can_pay || raw.canPay || raw.action_type === "pay");
-
-    return {
-      ...raw,
-      username,
-      skin: raw.skin || raw.avatar || `https://minotar.net/avatar/${encodeURIComponent(username)}/64`,
-      reason: raw.reason || "No reason provided",
-      date: raw.date || raw.created_at || raw.created || "Unknown",
-      duration: raw.duration || raw.remaining || raw.expires_in || (temporary ? "Temporary" : "Permanent"),
-      expires: raw.expires || raw.expires_at || "",
-      status: raw.status || (ipban ? "IP Ban" : temporary ? "Temporary Ban" : "Permanent Ban"),
-      type: raw.type || (ipban ? "IP Ban" : temporary ? "Temp Ban" : "Perm Ban"),
-      status_type: raw.status_type || (ipban ? "ip" : temporary ? "temp" : "perm"),
-      appeal_id: raw.appeal_id || raw.id || raw.uuid || "MCL-000000",
-      support_email: raw.support_email || raw.appeal_email || "support@mineacle.net",
-      discord,
-      appeal_discord: discord,
-      unban_url: raw.unban_url || raw.pay_url || "https://store.mineacle.net",
-      price: raw.price || "Pay",
-      temporary,
-      ipban,
-      can_pay: canPay
+    let currentPage = 1;
+    let currentRows = [];
+    let currentPagination = {
+        page: 1,
+        per_page: 25,
+        total: 0,
+        total_pages: 1,
+        has_prev: false,
+        has_next: false
     };
-  }
+    let discordOnlineMembersText = "Online members";
 
-  function statusLabel(ban) {
-    if (ban.ipban) return "IP Ban";
-    if (ban.temporary) return "Temp Ban";
-    return "Perm Ban";
-  }
-
-  function renderPagination() {
-    if (!banPagination || !prevPageButton || !nextPageButton || !pageInfo) return;
-
-    const totalPages = Math.max(1, Number(currentPagination.total_pages || 1));
-    const total = Number(currentPagination.total || 0);
-    const perPage = Math.max(1, Number(currentPagination.per_page || 25));
-    const shouldShow = total > perPage && totalPages > 1;
-
-    banPagination.hidden = !shouldShow;
-    banPagination.style.display = shouldShow ? "flex" : "none";
-    pageInfo.textContent = shouldShow ? `Page ${currentPagination.page || 1} of ${totalPages}` : "";
-
-    prevPageButton.disabled = !currentPagination.has_prev;
-    nextPageButton.disabled = !currentPagination.has_next;
-    prevPageButton.classList.toggle("disabled", !currentPagination.has_prev);
-    nextPageButton.classList.toggle("disabled", !currentPagination.has_next);
-  }
-
-  function setCountText(text) {
-    if (banCount) banCount.textContent = text;
-  }
-
-  function renderEmptyState() {
-    if (!banList) return;
-
-    currentRows = [];
-    banList.innerHTML = `
-      <div class="empty compact-state">
-        <strong>No matching active bans found</strong>
-        <span>Check the username spelling or clear the search</span>
-      </div>
-    `;
-    setCountText("0 shown");
-    renderPagination();
-  }
-
-  function renderLoadError() {
-    if (!banList) return;
-
-    currentRows = [];
-    currentPagination = { page: 1, per_page: 25, total: 0, total_pages: 1, has_prev: false, has_next: false };
-    banList.innerHTML = `
-      <div class="error compact-state">
-        <strong>Unable to load bans right now</strong>
-      </div>
-    `;
-    setCountText("0 shown");
-    renderPagination();
-  }
-
-  function actionButton(ban, index) {
-    if (ban.ipban) {
-      return `<button class="ban-type-pill ban-type-ip js-info-button" type="button" data-info-index="${index}" aria-label="View IP ban details">IP Ban</button>`;
-    }
-    if (ban.temporary || ban.action_type === "wait") {
-      return `<button class="ban-type-pill ban-type-temp js-info-button" type="button" data-info-index="${index}" aria-label="View temporary ban details">Wait It Out</button>`;
-    }
-    if (ban.can_pay && ban.action_type !== "view") {
-      return `<a class="btn red" href="${escapeHtml(ban.unban_url)}">${escapeHtml(ban.price)} Unban</a>`;
-    }
-    return `<button class="btn soft info-btn js-info-button" type="button" data-info-index="${index}">View</button>`;
-  }
-
-  function renderBans(rows) {
-    if (!banList) return;
-
-    currentRows = Array.isArray(rows) ? rows.map(normalizeBan) : [];
-    window.mineacleCurrentBans = currentRows;
-
-    if (!currentRows.length) {
-      renderEmptyState();
-      return;
+    function assetUrl(filename) {
+        return new URL(filename, assetRoot).toString();
     }
 
-    banList.innerHTML = currentRows.map((ban, index) => `
-      <article class="ban-row" data-ban-index="${index}">
-        <img class="ban-avatar" src="${escapeHtml(ban.skin)}" alt="${escapeHtml(ban.username)}" loading="lazy">
-        <div class="ban-player">
-          <div class="ban-player-line">
-            <strong class="ban-name">${escapeHtml(ban.username)}</strong>
-            <button class="info-btn js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(ban.username)} ban details">i</button>
-          </div>
-          <span class="ban-date">${escapeHtml(ban.date)}</span>
-        </div>
-        <div class="ban-reason">${escapeHtml(ban.reason)}</div>
-        <div class="ban-status">
-          <button class="badge ban-type-pill ${escapeHtml(ban.status_type)} js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(statusLabel(ban))} details">${escapeHtml(statusLabel(ban))}</button>
-          <span class="ban-meta">${escapeHtml(ban.duration)}</span>
-        </div>
-        <div class="ban-action">${actionButton(ban, index)}</div>
-      </article>
-    `).join("");
-
-    const total = Number(currentPagination.total || currentRows.length);
-    const perPage = Number(currentPagination.per_page || 25);
-    const page = Number(currentPagination.page || 1);
-    const start = total === 0 ? 0 : ((page - 1) * perPage) + 1;
-    const end = Math.min(page * perPage, total);
-    setCountText(`${start}-${end} of ${total}`);
-    renderPagination();
-  }
-
-  async function readJson(response) {
-    const text = await response.text();
-    try {
-      return JSON.parse(text);
-    } catch (error) {
-      console.error("Mineacle bans API returned invalid JSON", error, text.slice(0, 300));
-      return null;
+    function escapeHtml(value) {
+        return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            "\"": "&quot;",
+            "'": "&#039;"
+        }[char]));
     }
-  }
 
-  async function loadBans(page = currentPage) {
-    if (!banList) return;
-
-    currentPage = Math.max(1, Number(page) || 1);
-    const search = banSearch ? banSearch.value.trim() : "";
-    const url = `api/bans.php?search=${encodeURIComponent(search)}&page=${encodeURIComponent(currentPage)}`;
-
-    try {
-      const response = await fetch(url, { headers: { "Accept": "application/json" }, cache: "no-store" });
-      const payload = await readJson(response);
-
-      if (!response.ok || !payload || !payload.success) {
-        console.error("Mineacle bans failed", { status: response.status, payload });
-        renderLoadError();
-        return;
-      }
-
-      currentPagination = payload.pagination || currentPagination;
-      currentPage = Number(currentPagination.page || currentPage);
-      renderBans(payload.bans || []);
-    } catch (error) {
-      console.error("Mineacle bans request failed", error);
-      renderLoadError();
+    function safeUrl(value, fallback = "#") {
+        const raw = String(value || "").trim();
+        if (!raw) return fallback;
+        if (/^(https?:)?\/\//i.test(raw) || raw.startsWith("mailto:")) return raw;
+        return fallback;
     }
-  }
 
-  function updateClearButton() {
-    if (!clearSearch || !banSearch) return;
-    const hasValue = banSearch.value.trim().length > 0;
-    clearSearch.classList.toggle("show", hasValue);
-    clearSearch.hidden = !hasValue;
-    banSearch.classList.toggle("has-value", hasValue);
-  }
+    function isTemporary(raw = {}) {
+        return Boolean(raw.temporary || raw.temp || raw.type === "Temp Ban" || raw.status_type === "temp");
+    }
 
-  function createBanModal() {
-    const existing = document.getElementById("banModal");
-    if (existing) return existing;
+    function isIpBan(raw = {}) {
+        return Boolean(raw.ipban || raw.ip_ban || raw.type === "IP Ban" || raw.status_type === "ip");
+    }
 
-    const modal = document.createElement("div");
-    modal.className = "modal mineacle-js-modal ban-popup-v70";
-    modal.id = "banModal";
-    modal.setAttribute("aria-hidden", "true");
-    modal.innerHTML = `
-      <div class="modal-card ban-popup-card-v70" role="dialog" aria-modal="true" aria-labelledby="modalName">
-        <div class="ban-popup-rail-v70">
-          <header class="ban-popup-header-v70">
-            <div class="ban-popup-player-v70">
-              <img id="modalAvatar" src="" alt="">
-              <div class="modal-title ban-popup-title-v70">
-                <h2 id="modalName">Player</h2>
-                <span class="status-badge ban-type-pill" id="modalStatus">Ban</span>
-              </div>
+    function normalizeBan(raw = {}) {
+        const username = raw.username || raw.name || raw.player || "Unknown";
+        const temporary = isTemporary(raw);
+        const ipban = isIpBan(raw);
+        const statusType = raw.status_type || (ipban ? "ip" : temporary ? "temp" : "perm");
+        const discord = raw.discord || raw.appeal_discord || DISCORD_FALLBACK;
+        const canPay = Boolean(raw.can_pay || raw.canPay || raw.action_type === "pay");
+
+        return {
+            ...raw,
+            username,
+            skin: raw.skin || raw.avatar || `https://minotar.net/avatar/${encodeURIComponent(username)}/64`,
+            reason: raw.reason || "No reason provided",
+            date: raw.date || raw.created_at || raw.created || "Unknown",
+            duration: raw.duration || raw.remaining || raw.expires_in || (temporary ? "Temporary" : "Permanent"),
+            expires: raw.expires || raw.expires_at || "",
+            status: raw.status || (ipban ? "IP Ban" : temporary ? "Temporary Ban" : "Permanent Ban"),
+            type: raw.type || (ipban ? "IP Ban" : temporary ? "Temp Ban" : "Perm Ban"),
+            status_type: statusType,
+            appeal_id: raw.appeal_id || raw.id || raw.uuid || "MCL-000000",
+            support_email: raw.support_email || raw.appeal_email || SUPPORT_FALLBACK,
+            discord,
+            appeal_discord: discord,
+            unban_url: raw.unban_url || raw.pay_url || "https://store.mineacle.net",
+            price: raw.price || "Pay",
+            temporary,
+            ipban,
+            can_pay: canPay
+        };
+    }
+
+    function statusLabel(ban) {
+        if (ban.ipban) return "IP Ban";
+        if (ban.temporary) return "Temp Ban";
+        return "Perm Ban";
+    }
+
+    function renderPagination() {
+        if (!banPagination || !prevPageButton || !nextPageButton || !pageInfo) return;
+
+        const totalPages = Math.max(1, Number(currentPagination.total_pages || 1));
+        const total = Number(currentPagination.total || 0);
+        const perPage = Math.max(1, Number(currentPagination.per_page || 25));
+        const shouldShow = total > perPage && totalPages > 1;
+
+        banPagination.hidden = !shouldShow;
+        banPagination.style.display = shouldShow ? "flex" : "none";
+        pageInfo.textContent = shouldShow ? `Page ${currentPagination.page || 1} of ${totalPages}` : "";
+        prevPageButton.disabled = !currentPagination.has_prev;
+        nextPageButton.disabled = !currentPagination.has_next;
+        prevPageButton.classList.toggle("disabled", !currentPagination.has_prev);
+        nextPageButton.classList.toggle("disabled", !currentPagination.has_next);
+    }
+
+    function setCountText(text) {
+        if (banCount) banCount.textContent = text;
+    }
+
+    function renderEmptyState() {
+        if (!banList) return;
+        currentRows = [];
+        window.mineacleCurrentBans = currentRows;
+        banList.innerHTML = `
+            <div class="empty compact-state">
+                <strong>No matching active bans found</strong>
+                <span>Check the username spelling or clear the search</span>
             </div>
-            <button class="close-modal ban-popup-close-v70" type="button" data-close-modal aria-label="Close ban details">×</button>
-          </header>
-
-          <section class="detail-grid ban-popup-details-v70">
-            <article class="detail"><span>Type</span><strong id="modalTypeBadge">Ban</strong></article>
-            <article class="detail"><span>Reason</span><strong id="modalReason">No reason provided</strong></article>
-            <article class="detail"><span>Duration</span><strong id="modalDuration">Unknown</strong></article>
-            <article class="detail"><span>Date</span><strong id="modalDate">Unknown</strong></article>
-            <article class="detail"><span>Appeal ID</span><strong id="modalAppeal">MCL-000000</strong></article>
-            <article class="detail"><span>Support Email</span><strong id="modalEmail">support@mineacle.net</strong></article>
-          </section>
-
-          <div class="modal-appeal-wrap ban-popup-discord-wrap-v70">
-            <a class="modal-appeal-button ban-popup-discord-v70" id="modalAppealButton" href="https://discord.gg/VwbwWftefM" target="_blank" rel="noopener">
-              <span class="modal-appeal-art"><img src="" id="modalAppealMascot" alt=""></span>
-              <span class="modal-appeal-copy"><small>Appeal support</small><strong>Join Discord to appeal</strong></span>
-              <span class="modal-appeal-count" id="modalDiscordCount">Online members</span>
-            </a>
-          </div>
-
-          <div class="modal-actions" id="modalActions"></div>
-          <p class="modal-note ban-popup-note-v70" id="modalNote">Use Discord if you need staff to review the punishment.</p>
-        </div>
-      </div>
-    `;
-    document.body.appendChild(modal);
-
-    const fallbackAvatar = modal.querySelector("#modalAvatar");
-    if (fallbackAvatar) {
-      fallbackAvatar.src = assetUrl("mineacle-square-logo.png");
-      fallbackAvatar.alt = "Mineacle";
+        `;
+        setCountText("0 shown");
+        renderPagination();
     }
 
-    const appealMascot = modal.querySelector("#modalAppealMascot");
-    if (appealMascot) {
-      appealMascot.src = assetUrl("appeal-wumpus.webp");
-      appealMascot.alt = "Discord appeal support";
+    function renderLoadError() {
+        if (!banList) return;
+        currentRows = [];
+        window.mineacleCurrentBans = currentRows;
+        currentPagination = { page: 1, per_page: 25, total: 0, total_pages: 1, has_prev: false, has_next: false };
+        banList.innerHTML = `
+            <div class="error compact-state">
+                <strong>Unable to load bans right now</strong>
+            </div>
+        `;
+        setCountText("0 shown");
+        renderPagination();
     }
 
-    return modal;
-  }
-
-  function safeText(id, value) {
-    const element = document.getElementById(id);
-    if (element) element.textContent = value ?? "";
-  }
-
-  function openBanInfoByIndex(index) {
-    const numericIndex = Number(index);
-    if (!Number.isInteger(numericIndex) || numericIndex < 0) return;
-    const ban = currentRows[numericIndex];
-    if (!ban) return;
-    openBanInfo(ban);
-  }
-
-
-  function extractDiscordCount(payload) {
-    if (!payload || typeof payload !== "object") return null;
-    const candidates = [
-      payload.online_members,
-      payload.online,
-      payload.presence_count,
-      payload.presenceCount,
-      payload.approximate_presence_count,
-      payload.member_count,
-      payload.members,
-      payload.approximate_member_count,
-      payload.count,
-      payload.data && payload.data.online_members,
-      payload.data && payload.data.online,
-      payload.data && payload.data.presence_count,
-      payload.data && payload.data.member_count,
-      payload.data && payload.data.members
-    ];
-    for (const value of candidates) {
-      const number = Number(value);
-      if (Number.isFinite(number) && number > 0) return Math.round(number);
-    }
-    return null;
-  }
-
-  function formatDiscordCount(count) {
-    if (!count) return "Online members";
-    return `${count.toLocaleString()} online members`;
-  }
-
-  async function loadDiscordMemberCount() {
-    try {
-      const response = await fetch("api/discord.php", { headers: { "Accept": "application/json" }, cache: "no-store" });
-      if (!response.ok) return;
-      const payload = await readJson(response);
-      const count = extractDiscordCount(payload);
-      if (!count) return;
-      discordOnlineMembersText = formatDiscordCount(count);
-      const liveCounter = document.getElementById("modalDiscordCount");
-      if (liveCounter) liveCounter.textContent = discordOnlineMembersText;
-    } catch (error) {
-      console.error("Mineacle Discord count failed", error);
-    }
-  }
-
-  function openBanInfo(rawBan) {
-    const ban = normalizeBan(rawBan);
-    const modal = createBanModal();
-    const avatar = document.getElementById("modalAvatar");
-
-    if (avatar) {
-      avatar.src = ban.skin;
-      avatar.alt = ban.username;
-    }
-
-    safeText("modalName", ban.username);
-    safeText("modalStatus", statusLabel(ban));
-    safeText("modalTypeBadge", ban.type);
-    safeText("modalReason", ban.reason);
-    safeText("modalDuration", ban.duration);
-    safeText("modalDate", ban.date);
-    safeText("modalAppeal", ban.appeal_id);
-    safeText("modalEmail", ban.support_email);
-
-    const status = document.getElementById("modalStatus");
-    if (status) status.className = `status-badge ban-type-pill ${ban.status_type}`;
-
-    const appealButton = document.getElementById("modalAppealButton");
-    if (appealButton) appealButton.href = ban.discord;
-    const discordCount = document.getElementById("modalDiscordCount");
-    if (discordCount) discordCount.textContent = discordOnlineMembersText;
-
-    const actions = document.getElementById("modalActions");
-    const note = document.getElementById("modalNote");
-
-    if (actions && note) {
-      actions.innerHTML = "";
-      if (ban.ipban) {
-        note.textContent = "This is an IP ban. Use Discord if you need staff to review the punishment.";
-      } else if (ban.temporary) {
-        note.textContent = `Temporary bans cannot be paid for. This punishment expires on ${ban.expires || "the listed expiration date"}.`;
-      } else if (ban.can_pay) {
-        actions.innerHTML = `<a class="btn red" href="${escapeHtml(ban.unban_url)}">${escapeHtml(ban.price)} Pay to be unbanned</a>`;
-        note.textContent = "Eligible permanent bans may use the payment option, or Discord if the punishment should be reviewed.";
-      } else {
-        note.textContent = "This punishment is not currently eligible for paid unban. Use Discord if you need more information.";
-      }
-    }
-
-    modal.classList.add("show");
-    modal.setAttribute("aria-hidden", "false");
-    document.body.classList.add("modal-open");
-  }
-
-  function closeModal() {
-    const modal = document.getElementById("banModal");
-    if (!modal) return;
-    modal.classList.remove("show");
-    modal.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
-  }
-
-  function bindBanUi() {
-    if (banSearchForm) {
-      banSearchForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        currentPage = 1;
-        updateClearButton();
-        loadBans(1);
-      });
-    }
-
-    if (banSearch) {
-      let timer = null;
-      banSearch.addEventListener("input", () => {
-        window.clearTimeout(timer);
-        updateClearButton();
-        timer = window.setTimeout(() => loadBans(1), 180);
-      });
-      banSearch.addEventListener("keydown", (event) => {
-        if (event.key === "Escape") {
-          banSearch.value = "";
-          updateClearButton();
-          loadBans(1);
+    function actionButton(ban, index) {
+        if (ban.ipban) {
+            return `<button class="ban-type-pill ban-type-ip js-info-button" type="button" data-info-index="${index}" aria-label="View IP ban details">IP Ban</button>`;
         }
-      });
-      updateClearButton();
+
+        if (ban.temporary || ban.action_type === "wait") {
+            return `<button class="ban-type-pill ban-type-temp js-info-button" type="button" data-info-index="${index}" aria-label="View temporary ban details">Wait It Out</button>`;
+        }
+
+        if (ban.can_pay && ban.action_type !== "view") {
+            return `<a class="btn red" href="${escapeHtml(safeUrl(ban.unban_url, "https://store.mineacle.net"))}">${escapeHtml(ban.price)} Unban</a>`;
+        }
+
+        return `<button class="btn soft info-btn js-info-button" type="button" data-info-index="${index}">View</button>`;
     }
 
-    if (clearSearch && banSearch) {
-      clearSearch.addEventListener("click", () => {
-        banSearch.value = "";
-        banSearch.focus();
-        updateClearButton();
-        loadBans(1);
-      });
+    function renderBans(rows) {
+        if (!banList) return;
+
+        currentRows = Array.isArray(rows) ? rows.map(normalizeBan) : [];
+        window.mineacleCurrentBans = currentRows;
+
+        if (!currentRows.length) {
+            renderEmptyState();
+            return;
+        }
+
+        banList.innerHTML = currentRows.map((ban, index) => `
+            <article class="ban-row" data-ban-index="${index}">
+                <img class="ban-avatar" src="${escapeHtml(ban.skin)}" alt="${escapeHtml(ban.username)}" loading="lazy">
+
+                <div class="ban-player">
+                    <div class="ban-player-line">
+                        <strong class="ban-name">${escapeHtml(ban.username)}</strong>
+                        <button class="info-btn js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(ban.username)} ban details">i</button>
+                    </div>
+                    <span class="ban-date">${escapeHtml(ban.date)}</span>
+                </div>
+
+                <div class="ban-reason">${escapeHtml(ban.reason)}</div>
+
+                <div class="ban-status">
+                    <button class="badge ban-type-pill ${escapeHtml(ban.status_type)} js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(statusLabel(ban))} details">${escapeHtml(statusLabel(ban))}</button>
+                    <span class="ban-meta">${escapeHtml(ban.duration)}</span>
+                </div>
+
+                <div class="ban-action">${actionButton(ban, index)}</div>
+            </article>
+        `).join("");
+
+        const total = Number(currentPagination.total || currentRows.length);
+        const perPage = Number(currentPagination.per_page || 25);
+        const page = Number(currentPagination.page || 1);
+        const start = total === 0 ? 0 : ((page - 1) * perPage) + 1;
+        const end = Math.min(page * perPage, total);
+
+        setCountText(`${start}-${end} of ${total}`);
+        renderPagination();
     }
 
-    if (prevPageButton) {
-      prevPageButton.addEventListener("click", () => {
-        if (currentPagination.has_prev) loadBans(Number(currentPagination.page || 1) - 1);
-      });
-    }
-
-    if (nextPageButton) {
-      nextPageButton.addEventListener("click", () => {
-        if (currentPagination.has_next) loadBans(Number(currentPagination.page || 1) + 1);
-      });
-    }
-
-    document.addEventListener("click", (event) => {
-      const infoButton = event.target.closest(".info-btn, .js-info-button, [data-info-index]");
-      if (infoButton) {
-        event.preventDefault();
-        openBanInfoByIndex(infoButton.dataset.infoIndex);
-        return;
-      }
-
-      if (event.target.closest("[data-close-modal]")) {
-        event.preventDefault();
-        closeModal();
-        return;
-      }
-
-      const modal = document.getElementById("banModal");
-      if (modal && event.target === modal) closeModal();
-    });
-
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") closeModal();
-    });
-  }
-
-  function showCopyToast(ip) {
-    const toast = document.getElementById("toast");
-    const toastValue = document.getElementById("toastValue");
-    if (!toast) return;
-
-    if (toastValue) toastValue.textContent = ip;
-    toast.classList.add("show", "center-popup");
-    window.clearTimeout(window.mineacleToastTimer);
-    window.mineacleToastTimer = window.setTimeout(() => toast.classList.remove("show", "center-popup"), 2300);
-  }
-
-  function bindCopyIpButtons() {
-    $$('[data-copy-ip]').forEach((button) => {
-      button.addEventListener("click", async () => {
-        const ip = button.dataset.copyIp || button.getAttribute("data-copy-ip") || "mineacle.net";
+    async function readJson(response) {
+        const text = await response.text();
         try {
-          if (navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(ip);
+            return JSON.parse(text);
         } catch (error) {
-          console.error("Mineacle copy IP failed", error);
+            console.error("Mineacle bans API returned invalid JSON", error, text.slice(0, 300));
+            return null;
         }
-        button.classList.add("copied");
-        showCopyToast(ip);
-        window.setTimeout(() => button.classList.remove("copied"), 1400);
-      });
-    });
-  }
+    }
 
-  function bindMobileNavigation() {
-    const header = document.getElementById("siteHeader");
-    const toggle = header ? $(".mobile-nav-toggle", header) : null;
-    const menu = document.getElementById("mainNav");
+    async function loadBans(page = currentPage) {
+        if (!banList) return;
 
-    if (!header || !toggle || !menu) return;
+        currentPage = Math.max(1, Number(page) || 1);
+        const search = banSearch ? banSearch.value.trim() : "";
+        const url = `api/bans.php?search=${encodeURIComponent(search)}&page=${encodeURIComponent(currentPage)}`;
 
-    const setOpen = (open) => {
-      header.classList.toggle("mobile-open", open);
-      document.documentElement.classList.toggle("mineacle-mobile-menu-open", open);
-      document.body.classList.toggle("mobile-nav-open", open);
-      toggle.setAttribute("aria-expanded", open ? "true" : "false");
-      toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
-      menu.setAttribute("aria-hidden", open ? "false" : "true");
-    };
+        try {
+            const response = await fetch(url, { headers: { "Accept": "application/json" }, cache: "no-store" });
+            const payload = await readJson(response);
 
-    toggle.addEventListener("pointerdown", () => {
-      toggle.dataset.nextOpen = header.classList.contains("mobile-open") ? "false" : "true";
-    }, { capture: true });
+            if (!response.ok || !payload || !payload.success) {
+                console.error("Mineacle bans failed", { status: response.status, payload });
+                renderLoadError();
+                return;
+            }
 
-    toggle.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      const nextOpen = toggle.dataset.nextOpen === "true";
-      setOpen(nextOpen);
-    }, { capture: true });
+            currentPagination = payload.pagination || currentPagination;
+            currentPage = Number(currentPagination.page || currentPage);
+            renderBans(payload.bans || []);
+        } catch (error) {
+            console.error("Mineacle bans request failed", error);
+            renderLoadError();
+        }
+    }
 
-    $$('a, button', menu).forEach((item) => {
-      item.addEventListener("click", () => setOpen(false));
-    });
+    function updateClearButton() {
+        if (!clearSearch || !banSearch) return;
 
-    document.addEventListener("click", (event) => {
-      if (!header.contains(event.target)) setOpen(false);
-    }, { capture: true });
+        const hasValue = banSearch.value.trim().length > 0;
+        clearSearch.classList.toggle("show", hasValue);
+        clearSearch.hidden = !hasValue;
+        banSearch.classList.toggle("has-value", hasValue);
+    }
 
-    document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape") setOpen(false);
-    }, { capture: true });
+    function installBanModalStyles() {
+        if (document.getElementById(MODAL_STYLE_ID)) return;
 
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 980) setOpen(false);
-    });
+        const style = document.createElement("style");
+        style.id = MODAL_STYLE_ID;
+        style.textContent = `/* Mineacle Bans single rebuilt info modal v3.8.76 */
 
-    setOpen(false);
-  }
+#banModal.mineacle-ban-modal-single,
+.mineacle-ban-modal-single{
+    position:fixed!important;
+    inset:0!important;
+    z-index:2147483640!important;
+    display:none!important;
+    place-items:center!important;
+    padding:22px!important;
+    background:
+        radial-gradient(circle at 50% 38%, rgba(142,70,255,.20), transparent 28rem),
+        rgba(0,0,0,.76)!important;
+    backdrop-filter:blur(10px)!important;
+    pointer-events:none!important;
+}
 
-  function floatingHeaderScroll() {
-    const header = document.getElementById("siteHeader");
-    if (!header) return;
+#banModal.mineacle-ban-modal-single.is-open,
+.mineacle-ban-modal-single.is-open{
+    display:grid!important;
+    pointer-events:auto!important;
+}
 
-    const update = () => header.classList.toggle("is-scrolled", window.scrollY > 28);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-  }
+.mineacle-ban-modal-single[aria-hidden="true"]{
+    display:none!important;
+}
 
-  function init() {
-    createBanModal();
-    loadDiscordMemberCount();
-    bindBanUi();
-    bindCopyIpButtons();
-    bindMobileNavigation();
-    floatingHeaderScroll();
-    loadBans(1);
-  }
+.mineacle-ban-card-single{
+    width:min(760px, calc(100vw - 44px))!important;
+    max-height:calc(100vh - 44px)!important;
+    overflow:hidden auto!important;
+    position:relative!important;
+    border-radius:24px!important;
+    border:1px solid rgba(255,136,255,.34)!important;
+    background:
+        radial-gradient(circle at 14% 0%, rgba(255,136,255,.10), transparent 18rem),
+        linear-gradient(180deg, rgba(28,16,42,.98), rgba(10,5,19,.99))!important;
+    box-shadow:
+        0 28px 84px rgba(0,0,0,.62),
+        0 0 0 1px rgba(255,255,255,.04) inset,
+        0 0 42px rgba(255,85,255,.10)!important;
+    padding:32px 36px 28px!important;
+    color:#fff!important;
+    font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
+}
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init, { once: true });
-  } else {
-    init();
-  }
+.mineacle-ban-card-single::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    background:linear-gradient(90deg, transparent, rgba(255,136,255,.06), transparent);
+    opacity:.7;
+}
 
-  window.mineacleOpenBanInfoByIndex = openBanInfoByIndex;
-  window.mineacleOpenBanInfo = openBanInfo;
-  window.mineacleCloseBanInfo = closeModal;
+.mineacle-ban-rail-single{
+    width:min(100%, 654px)!important;
+    margin:0 auto!important;
+    position:relative!important;
+    z-index:1!important;
+}
+
+.mineacle-ban-head-single{
+    display:grid!important;
+    grid-template-columns:minmax(0, 1fr) 52px!important;
+    align-items:center!important;
+    gap:20px!important;
+    margin:0 0 22px!important;
+}
+
+.mineacle-ban-player-single{
+    min-width:0!important;
+    display:flex!important;
+    align-items:center!important;
+    gap:18px!important;
+}
+
+.mineacle-ban-avatar-single{
+    width:70px!important;
+    height:70px!important;
+    flex:0 0 70px!important;
+    border-radius:18px!important;
+    image-rendering:pixelated!important;
+    background:rgba(255,255,255,.08)!important;
+    box-shadow:0 0 0 1px rgba(255,255,255,.08) inset!important;
+    object-fit:cover!important;
+}
+
+.mineacle-ban-title-single{
+    min-width:0!important;
+}
+
+.mineacle-ban-name-single{
+    margin:0 0 9px!important;
+    font-size:clamp(30px, 5.1vw, 54px)!important;
+    line-height:.92!important;
+    letter-spacing:-.065em!important;
+    font-weight:950!important;
+    color:#fff!important;
+    text-shadow:0 3px 0 rgba(0,0,0,.18), 0 0 24px rgba(255,255,255,.08)!important;
+    overflow-wrap:anywhere!important;
+}
+
+.mineacle-ban-status-single{
+    display:inline-flex!important;
+    align-items:center!important;
+    min-height:30px!important;
+    padding:0 14px!important;
+    border-radius:9px!important;
+    border:1px solid rgba(255,136,255,.35)!important;
+    background:rgba(255,136,255,.12)!important;
+    color:#ffd1ff!important;
+    text-transform:uppercase!important;
+    letter-spacing:.12em!important;
+    font-size:12px!important;
+    font-weight:950!important;
+}
+
+.mineacle-ban-status-single.ip,
+.mineacle-ban-status-single.ban-type-ip{
+    border-color:rgba(255,82,118,.44)!important;
+    background:rgba(255,82,118,.13)!important;
+    color:#ffd0dc!important;
+}
+
+.mineacle-ban-status-single.temp,
+.mineacle-ban-status-single.ban-type-temp{
+    border-color:rgba(255,188,84,.46)!important;
+    background:rgba(255,188,84,.14)!important;
+    color:#ffe3a8!important;
+}
+
+.mineacle-ban-close-single{
+    width:52px!important;
+    height:52px!important;
+    border-radius:14px!important;
+    display:grid!important;
+    place-items:center!important;
+    border:1px solid rgba(255,255,255,.15)!important;
+    background:rgba(255,255,255,.055)!important;
+    color:#fff!important;
+    font:inherit!important;
+    font-size:34px!important;
+    line-height:1!important;
+    font-weight:900!important;
+    cursor:pointer!important;
+    box-shadow:0 10px 24px rgba(0,0,0,.22)!important;
+}
+
+.mineacle-ban-close-single:hover,
+.mineacle-ban-close-single:focus-visible{
+    border-color:rgba(255,136,255,.42)!important;
+    background:rgba(255,136,255,.13)!important;
+    outline:none!important;
+}
+
+.mineacle-ban-details-single{
+    display:grid!important;
+    grid-template-columns:repeat(2, minmax(0, 1fr))!important;
+    gap:12px!important;
+    margin:0!important;
+}
+
+.mineacle-ban-info-pill-single{
+    min-width:0!important;
+    min-height:72px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+    padding:13px 16px!important;
+    border-radius:15px!important;
+    border:1px solid rgba(255,255,255,.075)!important;
+    background:linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.028))!important;
+    box-shadow:0 0 0 1px rgba(255,255,255,.018) inset!important;
+}
+
+.mineacle-ban-info-pill-single span{
+    display:block!important;
+    margin:0 0 6px!important;
+    color:#ff88ff!important;
+    text-transform:uppercase!important;
+    letter-spacing:.12em!important;
+    font-size:11px!important;
+    line-height:1.05!important;
+    font-weight:950!important;
+}
+
+.mineacle-ban-info-pill-single strong{
+    display:block!important;
+    min-width:0!important;
+    color:#fff!important;
+    font-size:18px!important;
+    line-height:1.12!important;
+    font-weight:950!important;
+    letter-spacing:-.035em!important;
+    overflow-wrap:anywhere!important;
+}
+
+.mineacle-ban-appeal-single{
+    display:grid!important;
+    grid-template-columns:64px minmax(0, 1fr) auto!important;
+    align-items:center!important;
+    gap:18px!important;
+    min-height:92px!important;
+    margin:14px 0 0!important;
+    padding:12px 18px!important;
+    border-radius:18px!important;
+    color:#fff!important;
+    text-decoration:none!important;
+    border:1px solid rgba(160,146,255,.65)!important;
+    background:linear-gradient(135deg, #6d75ff 0%, #6f61ff 44%, #4f3dea 100%)!important;
+    box-shadow:0 8px 0 rgba(38,24,132,.70), 0 0 0 1px rgba(255,255,255,.11) inset!important;
+}
+
+.mineacle-ban-appeal-single:hover,
+.mineacle-ban-appeal-single:focus-visible{
+    transform:translateY(-1px)!important;
+    box-shadow:0 9px 0 rgba(38,24,132,.72), 0 0 0 1px rgba(255,255,255,.15) inset, 0 0 28px rgba(107,117,255,.24)!important;
+    outline:none!important;
+}
+
+.mineacle-ban-appeal-art-single{
+    width:64px!important;
+    height:64px!important;
+    display:grid!important;
+    place-items:center!important;
+    border-radius:15px!important;
+    background:rgba(255,255,255,.10)!important;
+    overflow:hidden!important;
+}
+
+.mineacle-ban-appeal-art-single img{
+    width:100%!important;
+    height:100%!important;
+    object-fit:contain!important;
+    display:block!important;
+}
+
+.mineacle-ban-appeal-copy-single{
+    min-width:0!important;
+}
+
+.mineacle-ban-appeal-copy-single small{
+    display:block!important;
+    margin:0 0 3px!important;
+    color:#efeaff!important;
+    text-transform:uppercase!important;
+    letter-spacing:.13em!important;
+    font-size:11px!important;
+    font-weight:950!important;
+}
+
+.mineacle-ban-appeal-copy-single strong{
+    display:block!important;
+    color:#fff!important;
+    text-transform:uppercase!important;
+    letter-spacing:-.035em!important;
+    font-size:clamp(20px, 3.3vw, 32px)!important;
+    line-height:.96!important;
+    font-weight:950!important;
+    text-shadow:0 3px 0 rgba(0,0,0,.18)!important;
+}
+
+.mineacle-ban-appeal-count-single{
+    justify-self:end!important;
+    min-height:42px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    padding:0 18px!important;
+    white-space:nowrap!important;
+    border-radius:999px!important;
+    background:rgba(255,255,255,.12)!important;
+    border:1px solid rgba(255,255,255,.14)!important;
+    color:#fff!important;
+    text-transform:uppercase!important;
+    letter-spacing:.06em!important;
+    font-size:13px!important;
+    font-weight:950!important;
+}
+
+.mineacle-ban-actions-single{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    flex-wrap:wrap!important;
+    gap:10px!important;
+    margin:18px 0 0!important;
+}
+
+.mineacle-ban-actions-single:empty{
+    display:none!important;
+}
+
+.mineacle-ban-actions-single .btn,
+.mineacle-ban-pay-single{
+    min-height:48px!important;
+    border-radius:999px!important;
+    padding:0 22px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    font-weight:950!important;
+    color:#fff!important;
+    text-decoration:none!important;
+    background:linear-gradient(135deg,#ff72bd,#a83cff)!important;
+    box-shadow:0 0 24px rgba(198,70,255,.24)!important;
+}
+
+.mineacle-ban-note-single{
+    margin:18px 0 0!important;
+    color:#bdb1cc!important;
+    text-align:center!important;
+    font-size:15px!important;
+    line-height:1.4!important;
+    font-weight:800!important;
+}
+
+body.modal-open{
+    overflow:hidden!important;
+}
+@media (max-width:760px){
+    #banModal.mineacle-ban-modal-single,
+    .mineacle-ban-modal-single{
+        align-items:start!important;
+        padding:14px!important;
+        overflow:auto!important;
+    }
+
+    .mineacle-ban-card-single{
+        width:min(100%, 560px)!important;
+        max-height:none!important;
+        padding:24px 18px 22px!important;
+        border-radius:22px!important;
+    }
+
+    .mineacle-ban-rail-single{
+        width:100%!important;
+    }
+
+    .mineacle-ban-head-single{
+        grid-template-columns:minmax(0, 1fr) 46px!important;
+        gap:12px!important;
+        margin-bottom:16px!important;
+    }
+
+    .mineacle-ban-player-single{
+        gap:13px!important;
+    }
+
+    .mineacle-ban-avatar-single{
+        width:58px!important;
+        height:58px!important;
+        flex-basis:58px!important;
+        border-radius:15px!important;
+    }
+
+    .mineacle-ban-close-single{
+        width:46px!important;
+        height:46px!important;
+        border-radius:13px!important;
+        font-size:30px!important;
+    }
+
+    .mineacle-ban-details-single{
+        gap:10px!important;
+    }
+
+    .mineacle-ban-info-pill-single{
+        min-height:68px!important;
+        padding:12px!important;
+        border-radius:14px!important;
+    }
+
+    .mineacle-ban-info-pill-single strong{
+        font-size:16px!important;
+    }
+
+    .mineacle-ban-appeal-single{
+        grid-template-columns:52px minmax(0, 1fr)!important;
+        min-height:84px!important;
+        gap:12px!important;
+        padding:12px!important;
+    }
+
+    .mineacle-ban-appeal-art-single{
+        width:52px!important;
+        height:52px!important;
+    }
+
+    .mineacle-ban-appeal-count-single{
+        grid-column:1 / -1!important;
+        justify-self:stretch!important;
+        min-height:36px!important;
+        font-size:12px!important;
+    }
+}
+
+@media (max-width:520px){
+    .mineacle-ban-card-single{
+        padding:20px 14px 18px!important;
+    }
+
+    .mineacle-ban-name-single{
+        font-size:30px!important;
+    }
+
+    .mineacle-ban-status-single{
+        min-height:28px!important;
+        padding:0 11px!important;
+        font-size:11px!important;
+    }
+
+    .mineacle-ban-details-single{
+        grid-template-columns:1fr!important;
+    }
+
+    .mineacle-ban-info-pill-single{
+        min-height:60px!important;
+    }
+
+    .mineacle-ban-appeal-copy-single strong{
+        font-size:21px!important;
+    }
+
+    .mineacle-ban-note-single{
+        text-align:left!important;
+    }
+}
+`;
+        document.head.appendChild(style);
+    }
+
+    function createBanModal() {
+        const existing = document.getElementById(MODAL_ID);
+        if (existing && existing.classList.contains("mineacle-ban-modal-single")) return existing;
+
+        if (existing) existing.remove();
+
+        const modal = document.createElement("div");
+        modal.id = MODAL_ID;
+        modal.className = "mineacle-ban-modal-single";
+        modal.setAttribute("aria-hidden", "true");
+        modal.innerHTML = `
+            <section class="mineacle-ban-card-single" role="dialog" aria-modal="true" aria-labelledby="singleModalName">
+                <div class="mineacle-ban-rail-single">
+                    <header class="mineacle-ban-head-single">
+                        <div class="mineacle-ban-player-single">
+                            <img class="mineacle-ban-avatar-single" id="singleModalAvatar" src="${escapeHtml(assetUrl(LOGO_FALLBACK))}" alt="">
+                            <div class="mineacle-ban-title-single">
+                                <h2 class="mineacle-ban-name-single" id="singleModalName">Player</h2>
+                                <span class="mineacle-ban-status-single" id="singleModalStatus">Ban</span>
+                            </div>
+                        </div>
+                        <button class="mineacle-ban-close-single" type="button" data-single-ban-close aria-label="Close ban details">×</button>
+                    </header>
+
+                    <section class="mineacle-ban-details-single" aria-label="Ban details">
+                        <article class="mineacle-ban-info-pill-single"><span>Type</span><strong id="singleModalType">Ban</strong></article>
+                        <article class="mineacle-ban-info-pill-single"><span>Reason</span><strong id="singleModalReason">No reason provided</strong></article>
+                        <article class="mineacle-ban-info-pill-single"><span>Duration</span><strong id="singleModalDuration">Unknown</strong></article>
+                        <article class="mineacle-ban-info-pill-single"><span>Date</span><strong id="singleModalDate">Unknown</strong></article>
+                        <article class="mineacle-ban-info-pill-single"><span>Appeal ID</span><strong id="singleModalAppeal">MCL-000000</strong></article>
+                        <article class="mineacle-ban-info-pill-single"><span>Support Email</span><strong id="singleModalEmail">${escapeHtml(SUPPORT_FALLBACK)}</strong></article>
+                    </section>
+
+                    <a class="mineacle-ban-appeal-single" id="singleModalDiscord" href="${escapeHtml(DISCORD_FALLBACK)}" target="_blank" rel="noopener">
+                        <span class="mineacle-ban-appeal-art-single"><img id="singleModalMascot" src="${escapeHtml(assetUrl(MASCOT_FALLBACK))}" alt="Discord appeal support"></span>
+                        <span class="mineacle-ban-appeal-copy-single"><small>Appeal Support</small><strong>Join Discord to appeal</strong></span>
+                        <span class="mineacle-ban-appeal-count-single" id="singleModalDiscordCount">Online members</span>
+                    </a>
+
+                    <div class="mineacle-ban-actions-single" id="singleModalActions"></div>
+                    <p class="mineacle-ban-note-single" id="singleModalNote">Use Discord if you need staff to review the punishment</p>
+                </div>
+            </section>
+        `;
+
+        document.body.appendChild(modal);
+        return modal;
+    }
+
+    function setText(id, value) {
+        const node = document.getElementById(id);
+        if (node) node.textContent = String(value ?? "");
+    }
+
+    function openBanInfoByIndex(index) {
+        const numericIndex = Number(index);
+        if (!Number.isInteger(numericIndex) || numericIndex < 0) return;
+
+        const ban = currentRows[numericIndex];
+        if (!ban) return;
+
+        openBanInfo(ban);
+    }
+
+    function extractDiscordCount(payload) {
+        if (!payload || typeof payload !== "object") return null;
+
+        const candidates = [
+            payload.online_members,
+            payload.online,
+            payload.presence_count,
+            payload.presenceCount,
+            payload.approximate_presence_count,
+            payload.member_count,
+            payload.members,
+            payload.approximate_member_count,
+            payload.count,
+            payload.data && payload.data.online_members,
+            payload.data && payload.data.online,
+            payload.data && payload.data.presence_count,
+            payload.data && payload.data.member_count,
+            payload.data && payload.data.members
+        ];
+
+        for (const value of candidates) {
+            const number = Number(value);
+            if (Number.isFinite(number) && number > 0) return Math.round(number);
+        }
+
+        return null;
+    }
+
+    function formatDiscordCount(count) {
+        if (!count) return "Online members";
+        return `${count.toLocaleString()} online members`;
+    }
+
+    async function loadDiscordMemberCount() {
+        try {
+            const response = await fetch("api/discord.php", { headers: { "Accept": "application/json" }, cache: "no-store" });
+            if (!response.ok) return;
+
+            const payload = await readJson(response);
+            const count = extractDiscordCount(payload);
+            if (!count) return;
+
+            discordOnlineMembersText = formatDiscordCount(count);
+            setText("singleModalDiscordCount", discordOnlineMembersText);
+        } catch (error) {
+            console.error("Mineacle Discord count failed", error);
+        }
+    }
+
+    function openBanInfo(rawBan) {
+        installBanModalStyles();
+
+        const ban = normalizeBan(rawBan || {});
+        const modal = createBanModal();
+
+        const avatar = document.getElementById("singleModalAvatar");
+        if (avatar) {
+            avatar.src = ban.skin || assetUrl(LOGO_FALLBACK);
+            avatar.alt = ban.username;
+        }
+
+        setText("singleModalName", ban.username);
+        setText("singleModalStatus", statusLabel(ban));
+        setText("singleModalType", ban.type);
+        setText("singleModalReason", ban.reason);
+        setText("singleModalDuration", ban.duration);
+        setText("singleModalDate", ban.date);
+        setText("singleModalAppeal", ban.appeal_id);
+        setText("singleModalEmail", ban.support_email);
+        setText("singleModalDiscordCount", discordOnlineMembersText);
+
+        const status = document.getElementById("singleModalStatus");
+        if (status) status.className = `mineacle-ban-status-single ${escapeHtml(ban.status_type)}`;
+
+        const discordButton = document.getElementById("singleModalDiscord");
+        if (discordButton) discordButton.href = safeUrl(ban.discord, DISCORD_FALLBACK);
+
+        const mascot = document.getElementById("singleModalMascot");
+        if (mascot) mascot.src = assetUrl(MASCOT_FALLBACK);
+
+        const actions = document.getElementById("singleModalActions");
+        const note = document.getElementById("singleModalNote");
+
+        if (actions) actions.innerHTML = "";
+        if (note) {
+            if (ban.ipban) {
+                note.textContent = "This is an IP ban. Use Discord if you need staff to review the punishment";
+            } else if (ban.temporary) {
+                note.textContent = `Temporary bans cannot be paid for. This punishment expires on ${ban.expires || "the listed expiration date"}`;
+            } else if (ban.can_pay) {
+                if (actions) {
+                    actions.innerHTML = `<a class="mineacle-ban-pay-single" href="${escapeHtml(safeUrl(ban.unban_url, "https://store.mineacle.net"))}">${escapeHtml(ban.price)} Pay to be unbanned</a>`;
+                }
+                note.textContent = "Eligible permanent bans may use the payment option, or Discord if the punishment should be reviewed";
+            } else {
+                note.textContent = "This punishment is not currently eligible for paid unban. Use Discord if you need more information";
+            }
+        }
+
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+
+        const close = modal.querySelector("[data-single-ban-close]");
+        if (close) close.focus({ preventScroll: true });
+    }
+
+    function closeModal() {
+        const modal = document.getElementById(MODAL_ID);
+        if (!modal) return;
+
+        modal.classList.remove("is-open", "show");
+        modal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+    }
+
+    function bindBanUi() {
+        if (banSearchForm) {
+            banSearchForm.addEventListener("submit", (event) => {
+                event.preventDefault();
+                currentPage = 1;
+                updateClearButton();
+                loadBans(1);
+            });
+        }
+
+        if (banSearch) {
+            let timer = null;
+
+            banSearch.addEventListener("input", () => {
+                window.clearTimeout(timer);
+                updateClearButton();
+                timer = window.setTimeout(() => loadBans(1), 180);
+            });
+
+            banSearch.addEventListener("keydown", (event) => {
+                if (event.key === "Escape") {
+                    banSearch.value = "";
+                    updateClearButton();
+                    loadBans(1);
+                }
+            });
+
+            updateClearButton();
+        }
+
+        if (clearSearch && banSearch) {
+            clearSearch.addEventListener("click", () => {
+                banSearch.value = "";
+                banSearch.focus();
+                updateClearButton();
+                loadBans(1);
+            });
+        }
+
+        if (prevPageButton) {
+            prevPageButton.addEventListener("click", () => {
+                if (currentPagination.has_prev) loadBans(Number(currentPagination.page || 1) - 1);
+            });
+        }
+
+        if (nextPageButton) {
+            nextPageButton.addEventListener("click", () => {
+                if (currentPagination.has_next) loadBans(Number(currentPagination.page || 1) + 1);
+            });
+        }
+
+        document.addEventListener("click", (event) => {
+            const closeButton = event.target.closest("[data-single-ban-close]");
+            if (closeButton) {
+                event.preventDefault();
+                closeModal();
+                return;
+            }
+
+            const modal = document.getElementById(MODAL_ID);
+            if (modal && event.target === modal) {
+                event.preventDefault();
+                closeModal();
+                return;
+            }
+
+            const infoButton = event.target.closest(".info-btn, .js-info-button, [data-info-index], .ban-type-pill");
+            if (!infoButton) return;
+
+            const index = infoButton.dataset ? infoButton.dataset.infoIndex : null;
+            if (index === undefined || index === null || index === "") return;
+
+            event.preventDefault();
+            openBanInfoByIndex(index);
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") closeModal();
+        });
+    }
+
+    function showCopyToast(ip) {
+        const toast = document.getElementById("toast");
+        const toastValue = document.getElementById("toastValue");
+        if (!toast) return;
+
+        if (toastValue) toastValue.textContent = ip;
+        toast.classList.add("show", "center-popup");
+
+        window.clearTimeout(window.mineacleToastTimer);
+        window.mineacleToastTimer = window.setTimeout(() => toast.classList.remove("show", "center-popup"), 2300);
+    }
+
+    function bindCopyIpButtons() {
+        $$('[data-copy-ip]').forEach((button) => {
+            button.addEventListener("click", async () => {
+                const ip = button.dataset.copyIp || button.getAttribute("data-copy-ip") || "mineacle.net";
+
+                try {
+                    if (navigator.clipboard && navigator.clipboard.writeText) await navigator.clipboard.writeText(ip);
+                } catch (error) {
+                    console.error("Mineacle copy IP failed", error);
+                }
+
+                button.classList.add("copied");
+                showCopyToast(ip);
+                window.setTimeout(() => button.classList.remove("copied"), 1400);
+            });
+        });
+    }
+
+    function bindMobileNavigation() {
+        const header = document.getElementById("siteHeader");
+        const toggle = header ? $(".mobile-nav-toggle", header) : null;
+        const menu = document.getElementById("mainNav");
+
+        if (!header || !toggle || !menu) return;
+
+        const setOpen = (open) => {
+            header.classList.toggle("mobile-open", open);
+            document.documentElement.classList.toggle("mineacle-mobile-menu-open", open);
+            document.body.classList.toggle("mobile-nav-open", open);
+            toggle.setAttribute("aria-expanded", open ? "true" : "false");
+            toggle.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
+            menu.setAttribute("aria-hidden", open ? "false" : "true");
+        };
+
+        toggle.addEventListener("pointerdown", () => {
+            toggle.dataset.nextOpen = header.classList.contains("mobile-open") ? "false" : "true";
+        }, { capture: true });
+
+        toggle.addEventListener("click", (event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            event.stopImmediatePropagation();
+
+            const nextOpen = toggle.dataset.nextOpen === "true";
+            setOpen(nextOpen);
+        }, { capture: true });
+
+        $$('a, button', menu).forEach((item) => {
+            item.addEventListener("click", () => setOpen(false));
+        });
+
+        document.addEventListener("click", (event) => {
+            if (!header.contains(event.target)) setOpen(false);
+        }, { capture: true });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key === "Escape") setOpen(false);
+        }, { capture: true });
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 980) setOpen(false);
+        });
+
+        setOpen(false);
+    }
+
+    function floatingHeaderScroll() {
+        const header = document.getElementById("siteHeader");
+        if (!header) return;
+
+        const update = () => header.classList.toggle("is-scrolled", window.scrollY > 28);
+        update();
+        window.addEventListener("scroll", update, { passive: true });
+    }
+
+    function init() {
+        installBanModalStyles();
+        createBanModal();
+        loadDiscordMemberCount();
+        bindBanUi();
+        bindCopyIpButtons();
+        bindMobileNavigation();
+        floatingHeaderScroll();
+        loadBans(1);
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", init, { once: true });
+    } else {
+        init();
+    }
+
+    window.mineacleOpenBanInfoByIndex = openBanInfoByIndex;
+    window.mineacleOpenBanInfo = openBanInfo;
+    window.mineacleCloseBanInfo = closeModal;
 })();
