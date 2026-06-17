@@ -13708,3 +13708,117 @@ main,
     padding-top:calc(var(--mcx-mobile-nav-h, 76px) + 140px)!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.51: search X visibility + nav-matched button interaction
+   - Search clear X only appears when the username search field has text
+   - Search button typography now mirrors the Store/Play nav button font treatment
+   - Search button, secondary controls, and search X share the same pressed/click animation language */
+.ban-search-field .ban-search-clear,
+.bans-v3-search .ban-search-field .ban-search-clear,
+.bans-v31-results-search .ban-search-field .ban-search-clear{
+  opacity:0!important;
+  visibility:hidden!important;
+  pointer-events:none!important;
+  transform:translateY(-50%) scale(.88)!important;
+}
+
+.ban-search-field input:not(:placeholder-shown) + .ban-search-clear,
+.bans-v3-search .ban-search-field input:not(:placeholder-shown) + .ban-search-clear,
+.bans-v31-results-search .ban-search-field input:not(:placeholder-shown) + .ban-search-clear{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+  transform:translateY(-50%) scale(1)!important;
+}
+
+.ban-search-field .ban-search-clear:hover,
+.bans-v3-search .ban-search-field .ban-search-clear:hover,
+.bans-v31-results-search .ban-search-field .ban-search-clear:hover{
+  transform:translateY(-50%) scale(1.04)!important;
+  filter:brightness(1.12)!important;
+}
+
+.ban-search-field .ban-search-clear:active,
+.bans-v3-search .ban-search-field .ban-search-clear:active,
+.bans-v31-results-search .ban-search-field .ban-search-clear:active{
+  transform:translateY(calc(-50% + 2px)) scale(.94)!important;
+  filter:brightness(.94)!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.12),
+    inset 0 -2px 0 rgba(35,0,75,.34),
+    0 2px 0 rgba(0,0,0,.34),
+    0 6px 14px rgba(0,0,0,.18)!important;
+}
+
+/* Use :has as a backup for browsers that keep search placeholders hidden after autofill. */
+.bans-v3-search:has(.js-ban-search[value]:not([value=""])) .ban-search-clear,
+.bans-v31-results-search:has(.js-ban-search[value]:not([value=""])) .ban-search-clear{
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:auto!important;
+}
+
+.bans-v3-search .btn.red,
+.bans-v31-results-search .btn.red,
+.bans-v3-results .btn.red{
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif!important;
+  font-size:17px!important;
+  font-weight:950!important;
+  letter-spacing:.025em!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+  text-shadow:0 2px 0 rgba(40,0,80,.65)!important;
+  height:46px!important;
+  min-height:46px!important;
+  border-radius:4px!important;
+  border:2px solid rgba(255,202,255,.40)!important;
+  background:linear-gradient(180deg, #cb58ff 0%, #9e16ff 50%, #6f00c8 100%)!important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.22),
+    inset 0 -4px 0 rgba(35,0,75,.42),
+    0 5px 0 rgba(28,0,56,.70),
+    0 12px 24px rgba(124,0,255,.24)!important;
+  transition:transform .08s ease, filter .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease!important;
+}
+
+.bans-v3-search .btn.red:hover,
+.bans-v31-results-search .btn.red:hover,
+.bans-v3-results .btn.red:hover{
+  filter:brightness(1.12)!important;
+  border-color:rgba(255,230,255,.62)!important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.28),
+    inset 0 -4px 0 rgba(35,0,75,.42),
+    0 5px 0 rgba(28,0,56,.70),
+    0 0 28px rgba(174,38,255,.38),
+    0 18px 30px rgba(174,38,255,.28)!important;
+}
+
+.bans-v3-search .btn.red:active,
+.bans-v31-results-search .btn.red:active,
+.bans-v3-results .btn.red:active{
+  transform:translateY(3px)!important;
+  filter:brightness(.92)!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.16),
+    inset 0 -2px 0 rgba(35,0,75,.45),
+    0 2px 0 rgba(28,0,56,.70),
+    0 8px 18px rgba(124,0,255,.22)!important;
+}
+
+/* Secondary records controls inherit the nav-link pressed feel while staying dark/static. */
+.bans-v3-results .btn.soft,
+.pagination-row .btn.soft,
+.ban-action .btn.soft{
+  transition:transform .08s ease, color .14s ease, filter .14s ease, border-color .12s ease, box-shadow .12s ease!important;
+}
+
+.bans-v3-results .btn.soft:active,
+.pagination-row .btn.soft:active,
+.ban-action .btn.soft:active{
+  transform:translateY(2px)!important;
+  color:#ff88ff!important;
+  filter:brightness(.94)!important;
+}
+
