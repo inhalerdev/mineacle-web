@@ -11813,3 +11813,60 @@ textarea{
     margin-top:-64px!important;
   }
 }
+
+/* Mineacle Bans v3.8.42: remove hero image blur/tint/gradient
+   The scenic artwork is shown cleanly now. Older overlays remain in the file for rollback,
+   but this final override wins so IntelliJ and the browser keep the current asset paths. */
+
+.bans-v34-background-fold,
+.bans-v32-logo-only-fold,
+.bans-v3-hero,
+.bans-records-hero{
+  background:#05030b!important;
+}
+
+.bans-v34-background-fold::before,
+.bans-v32-logo-only-fold::before,
+.bans-v3-hero::before,
+.bans-records-hero::before{
+  inset:0!important;
+  background:url("bans-hero-background-v35.png?v=bansfull3.8.42") center center / cover no-repeat!important;
+  filter:none!important;
+  transform:none!important;
+  opacity:1!important;
+  image-rendering:auto!important;
+}
+
+.bans-v34-background-fold::after,
+.bans-v32-logo-only-fold::after,
+.bans-v3-hero::after,
+.bans-records-hero::after{
+  display:none!important;
+  content:none!important;
+  background:none!important;
+  opacity:0!important;
+}
+
+@media(max-width:980px){
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before{
+    inset:0!important;
+    background:url("bans-hero-background-mobile-v36.png?v=bansfull3.8.42") center top / cover no-repeat!important;
+    filter:none!important;
+    transform:none!important;
+    opacity:1!important;
+    image-rendering:auto!important;
+  }
+
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after,
+  .bans-records-hero::after{
+    display:none!important;
+    content:none!important;
+    background:none!important;
+    opacity:0!important;
+  }
+}
