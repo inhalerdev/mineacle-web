@@ -14663,3 +14663,166 @@ main,
     width:100%!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.57: compact modal appeal alignment
+   - Discord appeal CTA aligns to the same two-column grid width as the detail pills
+   - Modal vertical spacing is tightened so the popup uses less screen height
+   - Bottom appeal copy is moved upward and aligned with modal content width
+   - Modal close X keeps the same compact nav/search-X style and pressed feedback */
+
+#banModal .modal-card,
+#banModal .ban-modal-card,
+.ban-modal .modal-card,
+.ban-modal-card{
+  padding-top:clamp(32px, 3.1vw, 48px)!important;
+  padding-bottom:clamp(30px, 3vw, 44px)!important;
+}
+
+#banModal .modal-body,
+#banModal .ban-modal-body,
+.ban-modal .modal-body,
+.ban-modal-body{
+  gap:clamp(18px, 2vw, 26px)!important;
+}
+
+#banModal .modal-hero,
+#banModal .ban-modal-hero,
+.ban-modal-hero{
+  margin-bottom:clamp(18px, 2.1vw, 28px)!important;
+}
+
+#banModal .modal-grid,
+#banModal .ban-detail-grid,
+.ban-modal-detail-grid,
+.ban-detail-grid{
+  width:min(100%, 1080px)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  gap:clamp(14px, 1.4vw, 22px)!important;
+}
+
+#banModal .appeal-discord-wrap,
+#banModal .ban-appeal-wrap,
+#banModal .discord-appeal-wrap,
+.ban-modal-appeal-wrap,
+.discord-appeal-wrap,
+.appeal-discord-wrap{
+  width:min(100%, 1080px)!important;
+  margin:clamp(14px, 1.4vw, 20px) auto 0!important;
+  display:grid!important;
+  grid-template-columns:1fr 1fr!important;
+  gap:clamp(14px, 1.4vw, 22px)!important;
+  align-items:start!important;
+}
+
+#banModal .appeal-discord-card,
+#banModal .ban-appeal-discord,
+#banModal .discord-appeal-button,
+.ban-appeal-discord,
+.discord-appeal-button,
+.appeal-discord-card{
+  width:100%!important;
+  max-width:none!important;
+  min-height:132px!important;
+  margin:0!important;
+  align-self:start!important;
+}
+
+#banModal .appeal-discord-wrap::after,
+#banModal .ban-appeal-wrap::after,
+#banModal .discord-appeal-wrap::after,
+.ban-modal-appeal-wrap::after,
+.discord-appeal-wrap::after,
+.appeal-discord-wrap::after{
+  content:""!important;
+  display:block!important;
+  min-height:1px!important;
+}
+
+#banModal .ban-modal-note,
+#banModal .modal-note,
+#banModal .appeal-note,
+.ban-modal-note,
+.modal-note,
+.appeal-note{
+  width:min(100%, 1080px)!important;
+  margin:clamp(18px, 1.8vw, 26px) auto 0!important;
+  padding:0!important;
+  color:rgba(238,229,255,.72)!important;
+  font-size:clamp(15px, 1.15vw, 18px)!important;
+  line-height:1.45!important;
+}
+
+#banModal .modal-close,
+#banModal .ban-modal-close,
+.ban-modal-close{
+  width:54px!important;
+  height:54px!important;
+  border-radius:14px!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.035)),
+    rgba(18,15,34,.72)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -2px 0 rgba(0,0,0,.28),
+    0 10px 22px rgba(0,0,0,.20),
+    0 0 18px rgba(203,88,255,.10)!important;
+  color:#fff!important;
+  transition:filter .12s ease, border-color .12s ease, box-shadow .12s ease, transform .08s ease!important;
+}
+
+#banModal .modal-close:hover,
+#banModal .ban-modal-close:hover,
+.ban-modal-close:hover{
+  filter:brightness(1.10)!important;
+  border-color:rgba(255,210,255,.28)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    inset 0 -2px 0 rgba(0,0,0,.28),
+    0 12px 24px rgba(0,0,0,.22),
+    0 0 22px rgba(203,88,255,.16)!important;
+  transform:translateY(-1px)!important;
+}
+
+#banModal .modal-close:active,
+#banModal .ban-modal-close:active,
+.ban-modal-close:active{
+  filter:brightness(.94)!important;
+  transform:translateY(1px)!important;
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.10),
+    inset 0 -1px 0 rgba(0,0,0,.28),
+    0 5px 12px rgba(0,0,0,.18)!important;
+}
+
+@media(max-width: 760px){
+  #banModal .appeal-discord-wrap,
+  #banModal .ban-appeal-wrap,
+  #banModal .discord-appeal-wrap,
+  .ban-modal-appeal-wrap,
+  .discord-appeal-wrap,
+  .appeal-discord-wrap{
+    grid-template-columns:1fr!important;
+    width:100%!important;
+  }
+
+  #banModal .appeal-discord-wrap::after,
+  #banModal .ban-appeal-wrap::after,
+  #banModal .discord-appeal-wrap::after,
+  .ban-modal-appeal-wrap::after,
+  .discord-appeal-wrap::after,
+  .appeal-discord-wrap::after{
+    display:none!important;
+  }
+
+  #banModal .appeal-discord-card,
+  #banModal .ban-appeal-discord,
+  #banModal .discord-appeal-button,
+  .ban-appeal-discord,
+  .discord-appeal-button,
+  .appeal-discord-card{
+    min-height:118px!important;
+  }
+}
