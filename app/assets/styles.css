@@ -15295,3 +15295,169 @@ main,
     padding:10px 14px!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.60: modal appeal width matches info pills, not player-head rail
+   The detail pills live in the inner 2-column details grid; the appeal CTA and note now use that exact rail.
+   This intentionally does NOT stretch to the wider modal header/player-head alignment. */
+
+#banModal .modal-details,
+#banModal .modal-grid,
+#banModal .ban-detail-grid,
+#banModal .ban-modal-detail-grid,
+.modal-details,
+.modal-grid,
+.ban-detail-grid,
+.ban-modal-detail-grid{
+  --mineacle-modal-detail-rail:min(100%, 960px);
+  width:var(--mineacle-modal-detail-rail)!important;
+  max-width:var(--mineacle-modal-detail-rail)!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+
+/* Appeal block rail = same width as the existing info pill grid only. */
+#banModal .modal-appeal-wrap,
+#banModal .appeal-discord-wrap,
+#banModal .ban-appeal-wrap,
+#banModal .discord-appeal-wrap,
+.modal-appeal-wrap,
+.appeal-discord-wrap,
+.ban-appeal-wrap,
+.discord-appeal-wrap{
+  width:min(100%, 960px)!important;
+  max-width:960px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  display:block!important;
+  grid-template-columns:none!important;
+  padding:0!important;
+}
+
+/* Button fills that pill rail, not the full modal/player-head rail. */
+#banModal .modal-appeal-button,
+#banModal .appeal-discord-card,
+#banModal .ban-appeal-discord,
+#banModal .discord-appeal-button,
+.modal-appeal-button,
+.appeal-discord-card,
+.ban-appeal-discord,
+.discord-appeal-button{
+  width:100%!important;
+  max-width:960px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+}
+
+/* Bottom copy uses the exact same pill rail. */
+#banModal .modal-note,
+#banModal .ban-modal-note,
+#banModal .appeal-note,
+.modal-note,
+.ban-modal-note,
+.appeal-note{
+  width:min(100%, 960px)!important;
+  max-width:960px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  box-sizing:border-box!important;
+}
+
+/* Keep the top header/player head wider if earlier rules set it, so only the CTA/note shrink. */
+#banModal .modal-hero,
+#banModal .ban-modal-hero,
+.ban-modal-hero{
+  max-width:none!important;
+}
+
+/* Slightly more compact while keeping the button readable. */
+#banModal .modal-appeal-button,
+#banModal .appeal-discord-card,
+#banModal .ban-appeal-discord,
+#banModal .discord-appeal-button,
+.modal-appeal-button,
+.appeal-discord-card,
+.ban-appeal-discord,
+.discord-appeal-button{
+  min-height:88px!important;
+  height:88px!important;
+  grid-template-columns:78px minmax(0, 1fr) auto!important;
+  padding:10px 18px 10px 12px!important;
+  column-gap:16px!important;
+}
+
+#banModal .modal-appeal-button img,
+#banModal .appeal-discord-card img,
+#banModal .ban-appeal-discord img,
+#banModal .discord-appeal-button img,
+.modal-appeal-button img,
+.appeal-discord-card img,
+.ban-appeal-discord img,
+.discord-appeal-button img{
+  width:58px!important;
+  height:58px!important;
+}
+
+#banModal .modal-appeal-button strong,
+#banModal .appeal-discord-card strong,
+#banModal .ban-appeal-discord strong,
+#banModal .discord-appeal-button strong,
+.modal-appeal-button strong,
+.appeal-discord-card strong,
+.ban-appeal-discord strong,
+.discord-appeal-button strong{
+  font-size:clamp(20px, 1.65vw, 27px)!important;
+}
+
+#banModal .modal-note,
+#banModal .ban-modal-note,
+#banModal .appeal-note,
+.modal-note,
+.ban-modal-note,
+.appeal-note{
+  margin-top:12px!important;
+  font-size:clamp(14px, .98vw, 17px)!important;
+}
+
+@media(max-width: 760px){
+  #banModal .modal-details,
+  #banModal .modal-grid,
+  #banModal .ban-detail-grid,
+  #banModal .ban-modal-detail-grid,
+  .modal-details,
+  .modal-grid,
+  .ban-detail-grid,
+  .ban-modal-detail-grid,
+  #banModal .modal-appeal-wrap,
+  #banModal .appeal-discord-wrap,
+  #banModal .ban-appeal-wrap,
+  #banModal .discord-appeal-wrap,
+  .modal-appeal-wrap,
+  .appeal-discord-wrap,
+  .ban-appeal-wrap,
+  .discord-appeal-wrap,
+  #banModal .modal-note,
+  #banModal .ban-modal-note,
+  #banModal .appeal-note,
+  .modal-note,
+  .ban-modal-note,
+  .appeal-note{
+    width:100%!important;
+    max-width:100%!important;
+  }
+
+  #banModal .modal-appeal-button,
+  #banModal .appeal-discord-card,
+  #banModal .ban-appeal-discord,
+  #banModal .discord-appeal-button,
+  .modal-appeal-button,
+  .appeal-discord-card,
+  .ban-appeal-discord,
+  .discord-appeal-button{
+    width:100%!important;
+    max-width:100%!important;
+    height:auto!important;
+    min-height:104px!important;
+  }
+}
