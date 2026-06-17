@@ -130,8 +130,12 @@
   }
 
   function actionButton(ban, index) {
-    if (ban.ipban) return `<button class="btn soft disabled" type="button" disabled>IP Ban</button>`;
-    if (ban.temporary || ban.action_type === "wait") return `<button class="btn soft disabled wait-btn" type="button" disabled>Wait It Out</button>`;
+    if (ban.ipban) {
+      return `<button class="ban-type-pill ban-type-ip js-info-button" type="button" data-info-index="${index}" aria-label="View IP ban details">IP Ban</button>`;
+    }
+    if (ban.temporary || ban.action_type === "wait") {
+      return `<button class="ban-type-pill ban-type-temp js-info-button" type="button" data-info-index="${index}" aria-label="View temporary ban details">Wait It Out</button>`;
+    }
     if (ban.can_pay && ban.action_type !== "view") {
       return `<a class="btn red" href="${escapeHtml(ban.unban_url)}">${escapeHtml(ban.price)} Unban</a>`;
     }
@@ -161,7 +165,7 @@
         </div>
         <div class="ban-reason">${escapeHtml(ban.reason)}</div>
         <div class="ban-status">
-          <span class="badge ${escapeHtml(ban.status_type)}">${escapeHtml(statusLabel(ban))}</span>
+          <button class="badge ban-type-pill ${escapeHtml(ban.status_type)} js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(statusLabel(ban))} details">${escapeHtml(statusLabel(ban))}</button>
           <span class="ban-meta">${escapeHtml(ban.duration)}</span>
         </div>
         <div class="ban-action">${actionButton(ban, index)}</div>

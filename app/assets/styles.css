@@ -14012,3 +14012,271 @@ main,
     height:97svh!important;
   }
 }
+
+/* Mineacle Bans v3.8.54: footer/header parity + row/info/pill polish
+   - Footer now uses the same translucent purple surface language as the header
+   - Footer logo is muted by default and becomes full-color on hover
+   - Ban rows no longer create odd inner rounded-corner artifacts
+   - Info and ban-type controls use the site button language and open the same details modal */
+
+:root{
+  --mineacle-v54-surface:rgba(18,15,34,.50);
+  --mineacle-v54-surface-soft:rgba(18,15,34,.38);
+  --mineacle-v54-line:rgba(203,88,255,.24);
+  --mineacle-v54-line-soft:rgba(203,88,255,.14);
+  --mineacle-v54-glow:rgba(203,88,255,.075);
+}
+
+.site-footer.redesigned-footer{
+  width:min(var(--mcx-nav-w, 1380px), calc(100vw - 48px))!important;
+  max-width:var(--mcx-nav-w, 1380px)!important;
+  margin:64px auto 26px!important;
+  padding:28px 34px!important;
+  border:1px solid var(--mineacle-v54-line)!important;
+  border-radius:24px!important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.040) 0%, rgba(255,255,255,.012) 100%),
+    var(--mineacle-v54-surface)!important;
+  box-shadow:
+    inset 0 0 10px var(--mineacle-v54-glow),
+    inset 0 1px 0 rgba(255,255,255,.050),
+    0 18px 42px rgba(0,0,0,.20)!important;
+  backdrop-filter:blur(8px) saturate(112%)!important;
+  -webkit-backdrop-filter:blur(8px) saturate(112%)!important;
+  overflow:hidden!important;
+  background-clip:padding-box!important;
+}
+
+.footer-inner{
+  width:100%!important;
+  max-width:none!important;
+  gap:30px!important;
+}
+
+.footer-copy{
+  color:rgba(255,255,255,.92)!important;
+  font-size:14px!important;
+  font-weight:800!important;
+  letter-spacing:-.006em!important;
+}
+
+.footer-disclaimer{
+  color:rgba(236,228,246,.68)!important;
+  font-size:13px!important;
+  font-weight:600!important;
+}
+
+.footer-brand-logo{
+  width:92px!important;
+  max-width:18vw!important;
+  opacity:.34!important;
+  filter:grayscale(1) saturate(0) brightness(1.10) opacity(.74)!important;
+  transform:translateY(0)!important;
+  transition:opacity .16s ease, filter .16s ease, transform .16s ease!important;
+}
+
+.footer-brand-logo:hover,
+.footer-brand-logo:focus-visible{
+  opacity:.96!important;
+  filter:drop-shadow(0 0 20px rgba(203,88,255,.32)) drop-shadow(0 8px 18px rgba(0,0,0,.28))!important;
+  transform:translateY(-1px)!important;
+}
+
+.footer-social-link img,
+.footer-social-link svg{
+  opacity:.72!important;
+}
+
+.footer-social-link:hover img,
+.footer-social-link:hover svg{
+  opacity:1!important;
+}
+
+.ban-table-shell,
+.ban-table,
+.bans-v3-results .ban-table,
+.bans-v3-results .js-ban-table{
+  overflow:hidden!important;
+  border-radius:0 0 22px 22px!important;
+  background:transparent!important;
+}
+
+.ban-row,
+.bans-v3-row,
+.ban-row:last-child,
+.bans-v3-row:last-child{
+  border-radius:0!important;
+  clip-path:none!important;
+  background:rgba(6,4,12,.22)!important;
+  box-shadow:none!important;
+}
+
+.ban-row:first-child,
+.bans-v3-row:first-child{
+  border-radius:0!important;
+}
+
+.ban-row:last-child,
+.bans-v3-row:last-child{
+  border-bottom:0!important;
+}
+
+.ban-row::before,
+.ban-row::after,
+.bans-v3-row::before,
+.bans-v3-row::after{
+  display:none!important;
+  content:none!important;
+}
+
+.info-btn,
+.js-info-button.info-btn,
+.ban-player-line .info-btn{
+  width:30px!important;
+  height:30px!important;
+  min-width:30px!important;
+  min-height:30px!important;
+  padding:0!important;
+  border-radius:8px!important;
+  border:1px solid rgba(203,88,255,.24)!important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.060) 0%, rgba(255,255,255,.014) 100%),
+    rgba(18,15,34,.48)!important;
+  color:rgba(245,238,255,.92)!important;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif!important;
+  font-size:14px!important;
+  font-weight:850!important;
+  line-height:1!important;
+  text-transform:none!important;
+  text-shadow:0 1px 0 rgba(0,0,0,.48)!important;
+  box-shadow:
+    inset 0 0 7px rgba(203,88,255,.060),
+    inset 0 1px 0 rgba(255,255,255,.060),
+    0 5px 10px rgba(0,0,0,.18)!important;
+  cursor:pointer!important;
+  transition:filter .12s ease, border-color .12s ease, box-shadow .12s ease, transform .08s ease, color .12s ease!important;
+}
+
+.info-btn:hover,
+.js-info-button.info-btn:hover,
+.ban-player-line .info-btn:hover{
+  color:#fff!important;
+  border-color:rgba(255,136,255,.36)!important;
+  filter:brightness(1.08)!important;
+  box-shadow:
+    inset 0 0 8px rgba(203,88,255,.090),
+    inset 0 1px 0 rgba(255,255,255,.075),
+    0 6px 12px rgba(0,0,0,.20)!important;
+}
+
+.info-btn:active,
+.js-info-button.info-btn:active,
+.ban-player-line .info-btn:active{
+  transform:translateY(1px)!important;
+  filter:brightness(.94)!important;
+}
+
+.ban-type-pill,
+.badge.ban-type-pill,
+.ban-action .ban-type-pill{
+  height:42px!important;
+  min-height:42px!important;
+  min-width:88px!important;
+  padding:0 16px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:7px!important;
+  border:1px solid rgba(255,136,255,.28)!important;
+  background:
+    linear-gradient(180deg, rgba(255,136,255,.13), rgba(118,41,177,.11)),
+    rgba(18,15,34,.46)!important;
+  color:#ffd8ff!important;
+  font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif!important;
+  font-size:12px!important;
+  font-weight:900!important;
+  letter-spacing:.055em!important;
+  line-height:1!important;
+  text-transform:uppercase!important;
+  text-shadow:0 1px 0 rgba(0,0,0,.55)!important;
+  box-shadow:
+    inset 0 0 8px rgba(203,88,255,.070),
+    inset 0 1px 0 rgba(255,255,255,.052)!important;
+  cursor:pointer!important;
+  appearance:none!important;
+  -webkit-appearance:none!important;
+}
+
+.ban-type-pill:hover,
+.badge.ban-type-pill:hover,
+.ban-action .ban-type-pill:hover,
+.ban-type-pill:focus,
+.badge.ban-type-pill:focus{
+  filter:none!important;
+  transform:none!important;
+  box-shadow:
+    inset 0 0 8px rgba(203,88,255,.070),
+    inset 0 1px 0 rgba(255,255,255,.052)!important;
+}
+
+.ban-type-pill:active,
+.badge.ban-type-pill:active,
+.ban-action .ban-type-pill:active{
+  transform:none!important;
+}
+
+.ban-type-pill.ip,
+.ban-type-pill.ban-type-ip,
+.badge.ban-type-pill.ip{
+  border-color:rgba(255,104,147,.32)!important;
+  background:
+    linear-gradient(180deg, rgba(255,104,147,.16), rgba(138,35,78,.12)),
+    rgba(18,15,34,.46)!important;
+  color:#ffbdd1!important;
+}
+
+.ban-type-pill.temporary,
+.ban-type-pill.ban-type-temp,
+.badge.ban-type-pill.temporary{
+  border-color:rgba(255,195,96,.34)!important;
+  background:
+    linear-gradient(180deg, rgba(255,195,96,.16), rgba(137,83,26,.12)),
+    rgba(18,15,34,.46)!important;
+  color:#ffe2aa!important;
+}
+
+.ban-type-pill.active,
+.badge.ban-type-pill.active{
+  border-color:rgba(255,104,147,.32)!important;
+  background:
+    linear-gradient(180deg, rgba(255,104,147,.15), rgba(117,26,72,.12)),
+    rgba(18,15,34,.46)!important;
+  color:#ffd0de!important;
+}
+
+.ban-action .btn.disabled{
+  cursor:not-allowed!important;
+}
+
+@media(max-width:760px){
+  .site-footer.redesigned-footer{
+    width:min(calc(100vw - 28px), var(--mcx-nav-w, 1380px))!important;
+    margin-top:44px!important;
+    padding:24px 20px!important;
+    border-radius:20px!important;
+  }
+
+  .footer-inner{
+    flex-direction:column-reverse!important;
+    align-items:flex-start!important;
+  }
+
+  .footer-brand{
+    justify-content:flex-start!important;
+  }
+
+  .footer-brand-logo{
+    width:84px!important;
+    max-width:30vw!important;
+  }
+}
