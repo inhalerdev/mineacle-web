@@ -10271,3 +10271,137 @@ body,
     min-height:60px!important;
   }
 }
+
+/* Mineacle Bans v3.8.35: new scenic background + overlap bans section
+   - Uses the supplied Minecraft scenic artwork as the new background image
+   - Fades the scene down to black and softens it so stretched scaling looks cleaner
+   - Pulls the bans section upward so it sits on top of the background fold
+   - Leaves the mobile menu code in place but disables the mobile popup/toggle for now */
+
+.bans-v34-background-fold,
+.bans-v32-logo-only-fold,
+.bans-v3-hero{
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  background:none!important;
+}
+
+.bans-v34-background-fold::before,
+.bans-v32-logo-only-fold::before,
+.bans-v3-hero::before{
+  content:""!important;
+  position:absolute!important;
+  inset:-26px!important;
+  background:url("bans-hero-background-v35.png?v=bansfull3.8.35") center top / cover no-repeat!important;
+  filter:blur(10px) saturate(.88) brightness(.68)!important;
+  transform:scale(1.08)!important;
+  pointer-events:none!important;
+  z-index:0!important;
+}
+
+.bans-v34-background-fold::after,
+.bans-v32-logo-only-fold::after,
+.bans-v3-hero::after{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  background:
+    linear-gradient(180deg, rgba(6,3,12,.08) 0%, rgba(10,6,18,.26) 38%, rgba(7,4,14,.64) 72%, rgba(3,2,8,.92) 92%, #020106 100%),
+    radial-gradient(circle at 50% 24%, rgba(169,88,255,.14), transparent 34rem),
+    linear-gradient(90deg, rgba(6,3,12,.28), rgba(6,3,12,.06) 28%, rgba(6,3,12,.06) 72%, rgba(6,3,12,.28))!important;
+  pointer-events:none!important;
+  z-index:1!important;
+}
+
+.bans-v34-background-fold > *,
+.bans-v32-logo-only-fold > *,
+.bans-v3-hero > *{
+  position:relative!important;
+  z-index:2!important;
+}
+
+.bans-v34-background-fold{
+  min-height:700px!important;
+  height:78vh!important;
+  padding-top:calc(var(--v34-header-height) + 48px)!important;
+}
+
+.bans-v32-logo-only-fold{
+  min-height:700px!important;
+  height:78vh!important;
+}
+
+.bans-section{
+  position:relative!important;
+  z-index:5!important;
+  margin-top:-170px!important;
+}
+
+.ban-list-wrap{
+  background:linear-gradient(180deg, rgba(11,7,20,.88) 0%, rgba(7,4,14,.96) 100%)!important;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,.04),
+    0 24px 60px rgba(0,0,0,.34),
+    0 0 28px rgba(149,72,255,.10)!important;
+  backdrop-filter:blur(10px)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+}
+
+@media(max-width:980px){
+  .mobile-nav-toggle,
+  #siteHeader .mobile-nav-toggle,
+  #mainNav.main-nav.mcx-mobile-menu,
+  #siteHeader #mainNav.main-nav.mcx-mobile-menu{
+    display:none!important;
+    pointer-events:none!important;
+    opacity:0!important;
+    visibility:hidden!important;
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero{
+    min-height:520px!important;
+    height:58vh!important;
+    padding-top:calc(var(--mcx-mobile-nav-h, 76px) + 34px)!important;
+  }
+
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before{
+    inset:-36px!important;
+    background-position:center center!important;
+    filter:blur(16px) saturate(.82) brightness(.60)!important;
+    transform:scale(1.11)!important;
+  }
+
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after{
+    background:
+      linear-gradient(180deg, rgba(5,3,10,.16) 0%, rgba(8,5,16,.36) 34%, rgba(5,3,10,.74) 74%, rgba(2,1,6,.96) 100%),
+      radial-gradient(circle at 50% 18%, rgba(169,88,255,.12), transparent 22rem)!important;
+  }
+
+  .bans-section{
+    margin-top:-96px!important;
+  }
+
+  .section-heading{
+    margin-bottom:14px!important;
+  }
+}
+
+@media(max-width:640px){
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero{
+    min-height:470px!important;
+    height:54vh!important;
+  }
+
+  .bans-section{
+    margin-top:-74px!important;
+  }
+}
