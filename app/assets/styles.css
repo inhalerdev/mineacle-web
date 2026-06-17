@@ -12056,7 +12056,7 @@ textarea,
 .ban-hero-copy,
 .bans-v3-results,
 .guard-info-tile{
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   letter-spacing:normal!important;
 }
 
@@ -12092,14 +12092,14 @@ textarea,
 /* Hero type: serious, clean, and close to the nav/button language. */
 .ban-hero-kicker,
 .bans-v3-kicker{
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   font-weight:800!important;
   letter-spacing:.11em!important;
   color:#ff9dff!important;
 }
 
 .ban-hero-copy h1{
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   font-size:clamp(42px, 4.65vw, 66px)!important;
   line-height:1.05!important;
   font-weight:780!important;
@@ -12109,7 +12109,7 @@ textarea,
 }
 
 .ban-hero-copy p{
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   max-width:790px!important;
   font-size:clamp(16px, 1.15vw, 18px)!important;
   line-height:1.72!important;
@@ -12147,7 +12147,7 @@ textarea,
 }
 
 .guard-info-tile h2{
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   margin:22px 0 13px!important;
   font-size:17px!important;
   line-height:1.25!important;
@@ -12157,7 +12157,7 @@ textarea,
 }
 
 .guard-info-tile p{
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   font-size:13.5px!important;
   line-height:1.68!important;
   font-weight:470!important;
@@ -12181,7 +12181,7 @@ textarea,
 }
 
 .bans-v3-results-head h2{
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   font-size:clamp(32px, 3.0vw, 44px)!important;
   line-height:1.08!important;
   font-weight:780!important;
@@ -12189,7 +12189,7 @@ textarea,
 }
 
 .bans-list-meta{
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   font-weight:760!important;
   letter-spacing:.02em!important;
 }
@@ -12209,7 +12209,7 @@ textarea,
   border-radius:7px!important;
   border:1px solid rgba(203,88,255,.18)!important;
   background:rgba(6,4,12,.54)!important;
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   font-size:14px!important;
   font-weight:650!important;
   letter-spacing:-.002em!important;
@@ -12231,7 +12231,7 @@ textarea,
   min-width:0!important;
   border-radius:6px!important;
   border:2px solid rgba(255,202,255,.30)!important;
-  font-family:var(--mineacle-font)!important;
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, "Helvetica Neue", Arial, sans-serif!important;
   font-size:13px!important;
   font-weight:850!important;
   letter-spacing:.035em!important;
