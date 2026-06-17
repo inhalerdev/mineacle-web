@@ -231,11 +231,11 @@
     if (existing) return existing;
 
     const modal = document.createElement("div");
-    modal.className = "modal mineacle-js-modal";
+    modal.className = "modal mineacle-js-modal mineacle-grid-modal-v67";
     modal.id = "banModal";
     modal.setAttribute("aria-hidden", "true");
     modal.innerHTML = `
-      <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalName">
+      <div class="modal-card modal-grid-card-v67" role="dialog" aria-modal="true" aria-labelledby="modalName">
         <div class="modal-grid-rail">
           <div class="modal-head">
             <img id="modalAvatar" src="" alt="">
