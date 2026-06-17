@@ -11344,3 +11344,472 @@ body{
     flex-basis:86vw!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.40: cleaner sans typography, sharper scenic hero, aligned records panel
+   - Replaces the overly soft/playful display type with a cleaner system sans stack
+   - Uses upscaled hero art with less CSS blur to reduce pixelated/stretch artifacts
+   - Adds more vertical breathing room between hero copy, guard tiles, and the active-ban panel
+   - Straightens the records/search area so the search field and buttons align cleanly */
+
+html,
+body,
+button,
+input,
+select,
+textarea{
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif!important;
+  text-rendering:geometricPrecision!important;
+  -webkit-font-smoothing:antialiased!important;
+  -moz-osx-font-smoothing:grayscale!important;
+}
+
+.mcx-link,
+.mcx-button,
+.mcx-play,
+.mcx-discord,
+.ban-hero-kicker,
+.ban-hero-copy h1,
+.ban-hero-copy p,
+.guard-info-number,
+.guard-info-tile h2,
+.guard-info-tile p,
+.bans-v3-kicker,
+.bans-v3-results-head h2,
+.bans-list-meta,
+.bans-v3-search input,
+.bans-v3-search .btn,
+.ban-name,
+.ban-reason,
+.page-indicator,
+.btn{
+  font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif!important;
+}
+
+/* Keep screen-reader labels out of the visual search grid. */
+.sr-only{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+
+.bans-v34-background-fold,
+.bans-v32-logo-only-fold,
+.bans-v3-hero,
+.bans-records-hero{
+  min-height:1220px!important;
+  height:138vh!important;
+  overflow:hidden!important;
+}
+
+.bans-v34-background-fold::before,
+.bans-v32-logo-only-fold::before,
+.bans-v3-hero::before,
+.bans-records-hero::before{
+  inset:-8px!important;
+  background:url("bans-hero-background-v35.png?v=bansfull3.8.40") center 5% / cover no-repeat!important;
+  filter:blur(2.35px) saturate(1.02) brightness(.80)!important;
+  transform:scale(1.012)!important;
+  image-rendering:auto!important;
+  backface-visibility:hidden!important;
+}
+
+.bans-v34-background-fold::after,
+.bans-v32-logo-only-fold::after,
+.bans-v3-hero::after,
+.bans-records-hero::after{
+  background:
+    linear-gradient(180deg,
+      rgba(5,3,12,.03) 0%,
+      rgba(9,6,18,.05) 16%,
+      rgba(15,9,28,.10) 34%,
+      rgba(18,10,32,.20) 52%,
+      rgba(15,9,29,.38) 70%,
+      rgba(10,6,20,.66) 87%,
+      rgba(5,3,11,.91) 97%,
+      #030107 100%),
+    radial-gradient(circle at 50% 18%, rgba(173,84,255,.10), transparent 40rem),
+    linear-gradient(90deg, rgba(5,3,12,.22), rgba(5,3,12,.02) 24%, rgba(5,3,12,.02) 76%, rgba(5,3,12,.22))!important;
+}
+
+.ban-hero-content{
+  padding-top:clamp(265px, 28vh, 360px)!important;
+}
+
+.ban-hero-copy{
+  max-width:780px!important;
+}
+
+.ban-hero-kicker{
+  min-height:34px!important;
+  padding:0 15px!important;
+  border-radius:999px!important;
+  font-size:11px!important;
+  font-weight:850!important;
+  letter-spacing:.12em!important;
+  text-transform:uppercase!important;
+}
+
+.ban-hero-copy h1{
+  max-width:780px!important;
+  margin:24px 0 22px!important;
+  font-size:clamp(46px, 5.6vw, 78px)!important;
+  line-height:1!important;
+  letter-spacing:-.034em!important;
+  font-weight:850!important;
+  text-transform:none!important;
+  text-shadow:
+    0 3px 0 rgba(0,0,0,.44),
+    0 0 28px rgba(176,84,255,.16)!important;
+}
+
+.ban-hero-copy p{
+  max-width:760px!important;
+  color:rgba(240,234,250,.86)!important;
+  font-size:clamp(16px, 1.25vw, 19px)!important;
+  line-height:1.75!important;
+  font-weight:620!important;
+  letter-spacing:-.006em!important;
+}
+
+.guard-info-tiles{
+  gap:24px!important;
+  margin-top:70px!important;
+}
+
+.guard-info-tile{
+  min-height:236px!important;
+  padding:27px 23px 25px!important;
+  border-radius:22px!important;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10) 0%, rgba(255,255,255,.04) 100%),
+    linear-gradient(135deg, rgba(43,20,70,.50), rgba(10,6,20,.78))!important;
+}
+
+.guard-info-number{
+  width:39px!important;
+  height:28px!important;
+  font-size:11px!important;
+  font-weight:850!important;
+}
+
+.guard-info-tile h2{
+  margin:20px 0 12px!important;
+  font-size:18px!important;
+  line-height:1.24!important;
+  letter-spacing:-.018em!important;
+  font-weight:850!important;
+}
+
+.guard-info-tile p{
+  font-size:13.75px!important;
+  line-height:1.68!important;
+  font-weight:560!important;
+  color:rgba(234,227,245,.80)!important;
+}
+
+/* Records panel: less overlap, straighter surfaces, clean search controls. */
+.bans-v3-results,
+.bans-section{
+  width:min(var(--v3-max-width, 1180px), calc(100% - 48px))!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+  margin-top:-145px!important;
+  padding-top:0!important;
+  position:relative!important;
+  z-index:7!important;
+}
+
+.bans-v3-results-head{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:24px!important;
+  padding:38px 40px 34px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  border-bottom:0!important;
+  border-radius:24px 24px 0 0!important;
+  background:linear-gradient(180deg, rgba(18,9,31,.88), rgba(9,5,18,.96))!important;
+  box-shadow:0 22px 54px rgba(0,0,0,.28), inset 0 1px 0 rgba(255,255,255,.09)!important;
+}
+
+.bans-v3-kicker{
+  font-size:12px!important;
+  font-weight:850!important;
+  letter-spacing:.155em!important;
+}
+
+.bans-v3-results-head h2{
+  margin:12px 0 0!important;
+  font-size:clamp(34px, 3.4vw, 50px)!important;
+  line-height:1.04!important;
+  letter-spacing:-.028em!important;
+  font-weight:850!important;
+  text-transform:none!important;
+}
+
+.bans-list-meta{
+  flex:0 0 auto!important;
+  align-self:center!important;
+  padding:8px 12px!important;
+  border-radius:999px!important;
+  color:rgba(238,231,249,.74)!important;
+  background:rgba(255,255,255,.045)!important;
+  border:1px solid rgba(255,255,255,.08)!important;
+  font-size:12px!important;
+  font-weight:800!important;
+}
+
+.bans-v3-search,
+.bans-v31-results-search{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:minmax(280px, 1fr) auto auto!important;
+  gap:12px!important;
+  align-items:center!important;
+  margin:0!important;
+  padding:24px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  border-bottom:0!important;
+  border-radius:0!important;
+  background:linear-gradient(180deg, rgba(255,255,255,.050), rgba(255,255,255,.032))!important;
+  box-shadow:none!important;
+}
+
+.bans-v3-search input,
+.bans-v31-results-search input{
+  width:100%!important;
+  min-width:0!important;
+  height:52px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  border-radius:10px!important;
+  outline:0!important;
+  padding:0 16px!important;
+  color:#fff!important;
+  background:rgba(0,0,0,.34)!important;
+  font-size:15px!important;
+  font-weight:700!important;
+  letter-spacing:-.005em!important;
+  box-sizing:border-box!important;
+}
+
+.bans-v3-search input::placeholder{
+  color:rgba(255,255,255,.42)!important;
+}
+
+.bans-v3-search input:focus{
+  border-color:rgba(255,136,255,.42)!important;
+  box-shadow:0 0 0 3px rgba(255,85,255,.10)!important;
+}
+
+.bans-v3-search .btn{
+  height:52px!important;
+  min-height:52px!important;
+  min-width:98px!important;
+  padding:0 20px!important;
+  border-radius:10px!important;
+  font-size:14px!important;
+  font-weight:850!important;
+  letter-spacing:.01em!important;
+  white-space:nowrap!important;
+}
+
+.bans-v3-search .btn.red{
+  background:linear-gradient(180deg, #ee66ff 0%, #b935ef 100%)!important;
+  box-shadow:
+    inset 0 2px 0 rgba(255,255,255,.20),
+    inset 0 -3px 0 rgba(77,0,115,.34),
+    0 10px 20px rgba(174,58,255,.18)!important;
+}
+
+.bans-v3-search .btn.soft{
+  background:rgba(255,255,255,.065)!important;
+  border:1px solid rgba(255,255,255,.10)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08)!important;
+}
+
+.ban-table-shell{
+  border-radius:0 0 24px 24px!important;
+  border:1px solid rgba(255,255,255,.11)!important;
+  background:rgba(8,5,16,.88)!important;
+  box-shadow:0 26px 72px rgba(0,0,0,.30)!important;
+  overflow:hidden!important;
+}
+
+.ban-row{
+  grid-template-columns:72px minmax(220px, 1.25fr) minmax(220px, 1fr) minmax(130px, .65fr)!important;
+  gap:22px!important;
+  padding:24px 28px!important;
+  align-items:center!important;
+}
+
+.ban-name{
+  font-size:21px!important;
+  line-height:1.1!important;
+  font-weight:850!important;
+  letter-spacing:-.018em!important;
+}
+
+.ban-date,
+.ban-meta{
+  font-size:13px!important;
+  font-weight:700!important;
+}
+
+.ban-reason{
+  font-size:17px!important;
+  font-weight:800!important;
+  letter-spacing:-.012em!important;
+  text-align:left!important;
+}
+
+.pagination-row{
+  margin-top:28px!important;
+  gap:14px!important;
+}
+
+.pagination-row .btn,
+.page-indicator{
+  font-size:14px!important;
+  font-weight:800!important;
+}
+
+@media(max-width:1180px){
+  .bans-v3-results,
+  .bans-section{
+    margin-top:-115px!important;
+  }
+
+  .guard-info-tiles{
+    gap:18px!important;
+  }
+}
+
+@media(max-width:980px){
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:1040px!important;
+    height:118vh!important;
+  }
+
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before{
+    inset:-8px!important;
+    background:url("bans-hero-background-mobile-v36.png?v=bansfull3.8.40") center top / cover no-repeat!important;
+    filter:blur(2.35px) saturate(1.02) brightness(.80)!important;
+    transform:scale(1.012)!important;
+    image-rendering:auto!important;
+  }
+
+  .ban-hero-content{
+    width:calc(100% - 30px)!important;
+    padding-top:165px!important;
+  }
+
+  .ban-hero-copy h1{
+    margin:18px 0 16px!important;
+    font-size:clamp(36px, 10vw, 50px)!important;
+    line-height:1.02!important;
+    letter-spacing:-.032em!important;
+  }
+
+  .ban-hero-copy p{
+    max-width:620px!important;
+    font-size:15px!important;
+    line-height:1.66!important;
+    font-weight:570!important;
+  }
+
+  .guard-info-tiles{
+    margin-top:44px!important;
+    gap:14px!important;
+    padding-bottom:20px!important;
+  }
+
+  .guard-info-tile{
+    flex:0 0 min(82vw, 340px)!important;
+    min-height:204px!important;
+    padding:21px 18px 19px!important;
+  }
+
+  .bans-v3-results,
+  .bans-section{
+    width:calc(100% - 28px)!important;
+    margin-top:-82px!important;
+  }
+
+  .bans-v3-results-head{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+    padding:28px 20px 24px!important;
+    gap:14px!important;
+  }
+
+  .bans-v3-results-head h2{
+    font-size:36px!important;
+  }
+
+  .bans-list-meta{
+    align-self:flex-start!important;
+  }
+
+  .bans-v3-search,
+  .bans-v31-results-search{
+    grid-template-columns:1fr!important;
+    padding:18px!important;
+    gap:10px!important;
+  }
+
+  .bans-v3-search input,
+  .bans-v31-results-search input{
+    height:50px!important;
+  }
+
+  .bans-v3-search .btn{
+    width:100%!important;
+    min-width:0!important;
+    height:50px!important;
+    min-height:50px!important;
+  }
+
+  .ban-row{
+    grid-template-columns:58px minmax(0, 1fr)!important;
+    gap:16px!important;
+    padding:20px 18px!important;
+  }
+
+  .ban-reason,
+  .ban-status,
+  .ban-action{
+    grid-column:2!important;
+  }
+}
+
+@media(max-width:640px){
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:990px!important;
+    height:112vh!important;
+  }
+
+  .ban-hero-content{
+    padding-top:148px!important;
+  }
+
+  .bans-v3-results,
+  .bans-section{
+    margin-top:-64px!important;
+  }
+}
