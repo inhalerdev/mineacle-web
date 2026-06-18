@@ -15825,3 +15825,29 @@ html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members
     margin-top:clamp(-220px, -20vh, -150px)!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.93: remove copied-IP achievement toast; Play button becomes COPIED */
+.mineacle-toast,
+.mineacle-toast-shield{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+.mcx-play.copied{
+  width:var(--mcx-button-w)!important;
+  min-width:var(--mcx-button-w)!important;
+  max-width:var(--mcx-button-w)!important;
+  background:linear-gradient(180deg, #5dbb43 0%, #429c2f 50%, #327a24 100%)!important;
+  border-color:rgba(221,255,202,.68)!important;
+  color:#fff!important;
+  filter:brightness(1.08)!important;
+  box-shadow:
+    inset 0 3px 0 rgba(255,255,255,.28),
+    inset 0 -4px 0 rgba(18,68,14,.48),
+    0 5px 0 rgba(16,51,12,.78),
+    0 0 26px rgba(83,190,61,.36),
+    0 18px 30px rgba(58,139,42,.28)!important;
+}

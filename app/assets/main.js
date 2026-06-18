@@ -529,40 +529,11 @@
         });
     }
 
-    function showCopyToast(ip) {
-        const toast = document.getElementById("toast");
-        const toastValue = document.getElementById("toastValue");
-        const toastShield = document.getElementById("toastShield");
-        if (!toast) return;
-
-        if (toastValue) toastValue.textContent = ip;
-
-        toast.classList.remove("show", "center-popup", "achievement-replay");
-        if (toastShield) {
-            toastShield.classList.remove("is-active");
-            toastShield.setAttribute("aria-hidden", "true");
-        }
-
-        void toast.offsetWidth;
-
-        toast.classList.add("show", "achievement-replay");
-        if (toastShield) {
-            toastShield.classList.add("is-active");
-            toastShield.setAttribute("aria-hidden", "false");
-        }
-
-        window.clearTimeout(window.mineacleToastTimer);
-        window.mineacleToastTimer = window.setTimeout(() => {
-            toast.classList.remove("show", "achievement-replay", "center-popup");
-            if (toastShield) {
-                toastShield.classList.remove("is-active");
-                toastShield.setAttribute("aria-hidden", "true");
-            }
-        }, 3200);
-    }
-
     function bindCopyIpButtons() {
         $$('[data-copy-ip]').forEach((button) => {
+            const originalLabel = (button.textContent || "PLAY").trim() || "PLAY";
+            button.dataset.originalCopyLabel = button.dataset.originalCopyLabel || originalLabel;
+
             button.addEventListener("click", async () => {
                 const ip = button.dataset.copyIp || button.getAttribute("data-copy-ip") || "mineacle.net";
 
@@ -573,8 +544,13 @@
                 }
 
                 button.classList.add("copied");
-                showCopyToast(ip);
-                window.setTimeout(() => button.classList.remove("copied"), 1400);
+                button.textContent = "COPIED";
+
+                window.clearTimeout(button.mineacleCopiedTimer);
+                button.mineacleCopiedTimer = window.setTimeout(() => {
+                    button.classList.remove("copied");
+                    button.textContent = button.dataset.originalCopyLabel || "PLAY";
+                }, 1500);
             });
         });
     }
