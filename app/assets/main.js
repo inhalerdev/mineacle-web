@@ -535,10 +535,15 @@
         if (!toast) return;
 
         if (toastValue) toastValue.textContent = ip;
-        toast.classList.add("show", "center-popup");
+
+        toast.classList.remove("show", "center-popup", "achievement-replay");
+        void toast.offsetWidth;
+        toast.classList.add("show", "achievement-replay");
 
         window.clearTimeout(window.mineacleToastTimer);
-        window.mineacleToastTimer = window.setTimeout(() => toast.classList.remove("show", "center-popup"), 2300);
+        window.mineacleToastTimer = window.setTimeout(() => {
+            toast.classList.remove("show", "achievement-replay", "center-popup");
+        }, 3200);
     }
 
     function bindCopyIpButtons() {
