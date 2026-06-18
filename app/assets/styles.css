@@ -14785,3 +14785,243 @@ html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members
         var(--mineacle-page-dark-v46) 100%)!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.84: mobile logo-only splash + clean shared header/footer edge
+   Mobile is intentionally reduced to a disabled/splash state: blurred scenic background with the bans logo centered.
+   Desktop footer is full-width and the header/footer edge treatment uses one shared thin glow instead of stacked borders. */
+:root{
+  --mineacle-edge-line-v84:rgba(203,88,255,.22);
+  --mineacle-edge-line-soft-v84:rgba(203,88,255,.14);
+  --mineacle-edge-surface-v84:rgba(18,15,34,.52);
+  --mineacle-edge-glow-v84:rgba(203,88,255,.065);
+}
+
+@media (min-width:981px){
+  html body #siteHeader.mcx-header,
+  html body .mcx-header.site-header.mineacle-floating-header{
+    border:1px solid var(--mineacle-edge-line-v84)!important;
+    outline:0!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.040) 0%, rgba(255,255,255,.012) 100%),
+      var(--mineacle-edge-surface-v84)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.050),
+      inset 0 0 10px var(--mineacle-edge-glow-v84),
+      0 18px 42px rgba(0,0,0,.22)!important;
+    background-clip:padding-box!important;
+  }
+
+  html body #siteHeader.mcx-header.is-scrolled,
+  html body .mcx-header.site-header.mineacle-floating-header.is-scrolled{
+    border-top:0!important;
+    border-left:0!important;
+    border-right:0!important;
+    border-bottom:1px solid var(--mineacle-edge-line-v84)!important;
+    outline:0!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.038) 0%, rgba(255,255,255,.010) 100%),
+      rgba(18,15,34,.58)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.045),
+      inset 0 0 10px var(--mineacle-edge-glow-v84),
+      0 12px 32px rgba(0,0,0,.20)!important;
+  }
+
+  html body #siteHeader.mcx-header::before,
+  html body #siteHeader.mcx-header::after,
+  html body #siteHeader.mcx-header .mcx-nav-shell::before,
+  html body #siteHeader.mcx-header .mcx-nav-shell::after,
+  html body .site-footer.redesigned-footer::before,
+  html body .site-footer.redesigned-footer::after{
+    content:none!important;
+    display:none!important;
+    opacity:0!important;
+    border:0!important;
+    outline:0!important;
+    background:none!important;
+    box-shadow:none!important;
+  }
+
+  html body .site-footer.redesigned-footer{
+    width:100vw!important;
+    max-width:100vw!important;
+    min-width:100vw!important;
+    margin:64px 0 0 50%!important;
+    transform:translateX(-50%)!important;
+    padding:30px 0!important;
+    border-top:1px solid var(--mineacle-edge-line-v84)!important;
+    border-right:0!important;
+    border-bottom:0!important;
+    border-left:0!important;
+    border-radius:0!important;
+    outline:0!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.040) 0%, rgba(255,255,255,.012) 100%),
+      var(--mineacle-edge-surface-v84)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.050),
+      inset 0 0 10px var(--mineacle-edge-glow-v84),
+      0 -18px 42px rgba(0,0,0,.18)!important;
+    background-clip:padding-box!important;
+    overflow:hidden!important;
+  }
+
+  html body .site-footer.redesigned-footer .footer-inner{
+    width:min(var(--mcx-nav-w, 1380px), calc(100vw - 48px))!important;
+    max-width:var(--mcx-nav-w, 1380px)!important;
+    margin:0 auto!important;
+    padding:0 34px!important;
+  }
+}
+
+@media (max-width:980px){
+  html,
+  body{
+    width:100%!important;
+    min-width:0!important;
+    min-height:100svh!important;
+    overflow:hidden!important;
+    background:#05020b!important;
+  }
+
+  body::before{
+    content:""!important;
+    position:fixed!important;
+    inset:-18px!important;
+    z-index:-2!important;
+    display:block!important;
+    pointer-events:none!important;
+    background:url("bans-mobile-disabled-background-v84.webp") center center / cover no-repeat!important;
+    filter:blur(3px) brightness(.66) saturate(1.08)!important;
+    transform:scale(1.025)!important;
+    transform-origin:center!important;
+  }
+
+  body::after{
+    content:""!important;
+    position:fixed!important;
+    inset:0!important;
+    z-index:-1!important;
+    display:block!important;
+    pointer-events:none!important;
+    background:
+      radial-gradient(circle at 50% 44%, rgba(203,88,255,.12), transparent 23rem),
+      linear-gradient(180deg, rgba(4,2,9,.34), rgba(4,2,9,.66))!important;
+    opacity:1!important;
+  }
+
+  .page-shell{
+    width:100%!important;
+    min-height:100svh!important;
+    padding:0!important;
+    margin:0!important;
+    background:transparent!important;
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero,
+  .bans-v3-results,
+  .bans-section,
+  .ban-list-wrap,
+  .site-footer.redesigned-footer,
+  .logo-only-footer,
+  .mineacle-toast{
+    display:none!important;
+    visibility:hidden!important;
+  }
+
+  #siteHeader.mcx-header,
+  .mcx-header.site-header.mineacle-floating-header,
+  .mcx-header.site-header.mineacle-floating-header.is-scrolled{
+    position:fixed!important;
+    inset:0!important;
+    width:100vw!important;
+    max-width:100vw!important;
+    min-width:100vw!important;
+    height:100svh!important;
+    min-height:100svh!important;
+    margin:0!important;
+    padding:0!important;
+    transform:none!important;
+    display:block!important;
+    border:0!important;
+    border-radius:0!important;
+    outline:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    overflow:visible!important;
+    pointer-events:none!important;
+    z-index:20!important;
+  }
+
+  #siteHeader.mcx-header::before,
+  #siteHeader.mcx-header::after,
+  #siteHeader.mcx-header .mcx-nav-shell::before,
+  #siteHeader.mcx-header .mcx-nav-shell::after{
+    content:none!important;
+    display:none!important;
+  }
+
+  #siteHeader.mcx-header .mcx-nav-shell,
+  .mcx-nav-shell{
+    position:static!important;
+    width:100%!important;
+    height:100%!important;
+    min-height:100%!important;
+    margin:0!important;
+    padding:0!important;
+    display:block!important;
+    border:0!important;
+    background:transparent!important;
+    box-shadow:none!important;
+    overflow:visible!important;
+    pointer-events:none!important;
+  }
+
+  #siteHeader.mcx-header .mcx-link,
+  #siteHeader.mcx-header .mcx-button,
+  #siteHeader.mcx-header .mcx-discord,
+  #siteHeader.mcx-header .mcx-play,
+  #siteHeader.mcx-header .mobile-nav-toggle,
+  #siteHeader.mcx-header #mainNav,
+  #siteHeader.mcx-header .main-nav,
+  #siteHeader.mcx-header .mcx-mobile-menu{
+    display:none!important;
+    visibility:hidden!important;
+    pointer-events:none!important;
+  }
+
+  #siteHeader.mcx-header .mcx-logo{
+    position:fixed!important;
+    top:50%!important;
+    left:50%!important;
+    right:auto!important;
+    bottom:auto!important;
+    width:min(76vw, 360px)!important;
+    height:auto!important;
+    min-width:0!important;
+    max-width:360px!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    display:block!important;
+    transform:translate3d(-50%, -50%, 0)!important;
+    filter:drop-shadow(0 0 26px rgba(122,35,255,.36)) drop-shadow(0 10px 28px rgba(0,0,0,.46))!important;
+    pointer-events:auto!important;
+    z-index:24!important;
+  }
+
+  #siteHeader.mcx-header .mcx-logo img{
+    width:100%!important;
+    height:auto!important;
+    max-width:100%!important;
+    max-height:none!important;
+    display:block!important;
+    object-fit:contain!important;
+  }
+}
