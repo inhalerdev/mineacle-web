@@ -16436,3 +16436,75 @@ html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members
     padding-bottom:56px!important;
   }
 }
+
+/* Mineacle Bans v3.9.01: lower, slimmer nav-width hero banner */
+@media (min-width:981px){
+  :root{
+    --mineacle-hero-panel-top:clamp(154px, 18vh, 190px);
+    --mineacle-hero-panel-h:clamp(360px, 52vh, 500px);
+    --mineacle-hero-panel-bottom:auto;
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + 56px)!important;
+    padding-top:0!important;
+    background:#000!important;
+  }
+
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before,
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after,
+  .bans-records-hero::after{
+    top:var(--mineacle-hero-panel-top)!important;
+    bottom:auto!important;
+    inset:var(--mineacle-hero-panel-top) auto auto 50%!important;
+    width:var(--mineacle-hero-panel-w)!important;
+    height:var(--mineacle-hero-panel-h)!important;
+    min-height:0!important;
+    transform:translate3d(-50%, 0, 0)!important;
+    border-radius:var(--mineacle-hero-radius)!important;
+  }
+
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before{
+    background:url('bans-hero-replacement-v3.8.89.webp') center center / cover no-repeat!important;
+  }
+
+  .bans-v3-hero .ban-hero-content,
+  .bans-records-hero .ban-hero-content,
+  .bans-v34-background-fold .ban-hero-content,
+  .bans-v32-logo-only-fold .ban-hero-content{
+    padding-top:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + 34px)!important;
+    padding-bottom:0!important;
+  }
+}
+
+@media (min-width:981px) and (max-height:860px){
+  :root{
+    --mineacle-hero-panel-top:clamp(140px, 17vh, 164px);
+    --mineacle-hero-panel-h:clamp(320px, 46vh, 410px);
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + 48px)!important;
+  }
+
+  .bans-v3-hero .ban-hero-content,
+  .bans-records-hero .ban-hero-content,
+  .bans-v34-background-fold .ban-hero-content,
+  .bans-v32-logo-only-fold .ban-hero-content{
+    padding-top:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + 28px)!important;
+  }
+}
