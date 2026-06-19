@@ -17293,3 +17293,45 @@ html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members
     max-width:calc(100vw - 36px)!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.08: make desktop hero banner taller vertically */
+@media (min-width:981px){
+  :root{
+    --mineacle-hero-panel-h:clamp(500px, calc(100vh - var(--mineacle-hero-panel-top) - 28px), 700px);
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + 34px)!important;
+  }
+
+  .bans-v3-hero .ban-hero-content,
+  .bans-records-hero .ban-hero-content,
+  .bans-v34-background-fold .ban-hero-content,
+  .bans-v32-logo-only-fold .ban-hero-content{
+    padding-top:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + var(--mineacle-section-gap))!important;
+  }
+}
+
+@media (min-width:981px) and (max-height:860px){
+  :root{
+    --mineacle-hero-panel-h:clamp(450px, calc(100vh - var(--mineacle-hero-panel-top) - 24px), 580px);
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    min-height:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + 28px)!important;
+  }
+
+  .bans-v3-hero .ban-hero-content,
+  .bans-records-hero .ban-hero-content,
+  .bans-v34-background-fold .ban-hero-content,
+  .bans-v32-logo-only-fold .ban-hero-content{
+    padding-top:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + 26px)!important;
+  }
+}
