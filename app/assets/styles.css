@@ -16679,3 +16679,189 @@ html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members
     padding-top:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + 26px)!important;
   }
 }
+
+/* Mineacle Bans v3.9.04: hero copy inside banner, CTA scroll button, tighter records stack, subtle banner separation */
+@media (min-width:981px){
+  :root{
+    --mineacle-hero-copy-left:clamp(42px, 5.2vw, 88px);
+    --mineacle-hero-copy-top:calc(var(--mineacle-hero-panel-top) + clamp(62px, 8vh, 104px));
+    --mineacle-section-gap:26px;
+  }
+
+  .bans-v34-background-fold,
+  .bans-v32-logo-only-fold,
+  .bans-v3-hero,
+  .bans-records-hero{
+    overflow:hidden!important;
+  }
+
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before{
+    background:
+      linear-gradient(180deg, rgba(0,0,0,.74), rgba(0,0,0,.86)),
+      url('bans-hero-replacement-v3.8.89.webp') center center / cover no-repeat!important;
+    filter:blur(20px) saturate(105%)!important;
+    opacity:.64!important;
+  }
+
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after,
+  .bans-records-hero::after{
+    background:
+      radial-gradient(circle at 18% 18%, rgba(255,136,255,.12), transparent 26%),
+      linear-gradient(180deg, rgba(3,1,8,.48) 0%, rgba(5,2,11,.58) 50%, rgba(3,1,8,.70) 100%),
+      url('bans-hero-replacement-v3.8.89.webp') center center / cover no-repeat!important;
+    border:1px solid rgba(255,136,255,.30)!important;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.035),
+      0 20px 54px rgba(0,0,0,.56),
+      0 0 34px rgba(157,68,255,.14),
+      inset 0 1px 0 rgba(255,255,255,.10),
+      inset 0 -1px 0 rgba(0,0,0,.50),
+      inset 0 0 0 1px rgba(255,255,255,.035),
+      inset 0 0 38px rgba(255,136,255,.065)!important;
+  }
+
+  .bans-v3-hero .ban-hero-content,
+  .bans-records-hero .ban-hero-content,
+  .bans-v34-background-fold .ban-hero-content,
+  .bans-v32-logo-only-fold .ban-hero-content{
+    position:relative!important;
+    width:var(--mineacle-hero-panel-w)!important;
+    max-width:var(--mineacle-hero-panel-w)!important;
+    padding-top:calc(var(--mineacle-hero-panel-top) + var(--mineacle-hero-panel-h) + var(--mineacle-section-gap))!important;
+    padding-bottom:0!important;
+  }
+
+  .ban-hero-copy{
+    position:absolute!important;
+    top:var(--mineacle-hero-copy-top)!important;
+    left:var(--mineacle-hero-copy-left)!important;
+    width:min(640px, 48vw)!important;
+    max-width:min(640px, 48vw)!important;
+    z-index:5!important;
+    color:#fff!important;
+    text-shadow:0 4px 22px rgba(0,0,0,.72)!important;
+  }
+
+  .ban-hero-kicker{
+    min-height:32px!important;
+    padding:0 13px!important;
+    border-radius:10px!important;
+    background:rgba(17,9,29,.68)!important;
+    border:1px solid rgba(255,136,255,.34)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 0 18px rgba(255,136,255,.12)!important;
+  }
+
+  .ban-hero-copy h1{
+    margin:16px 0 12px!important;
+    font-size:clamp(42px, 4.7vw, 70px)!important;
+    line-height:.92!important;
+    letter-spacing:-.06em!important;
+    text-shadow:0 5px 0 rgba(0,0,0,.48), 0 0 28px rgba(255,255,255,.10)!important;
+  }
+
+  .ban-hero-copy p{
+    max-width:620px!important;
+    color:rgba(248,244,255,.88)!important;
+    font-size:clamp(15px, 1.25vw, 18px)!important;
+    line-height:1.48!important;
+    font-weight:750!important;
+  }
+
+  .ban-hero-actions{
+    display:flex!important;
+    align-items:center!important;
+    gap:12px!important;
+    margin-top:22px!important;
+  }
+
+  .ban-hero-scroll-btn{
+    min-height:48px!important;
+    padding:0 22px!important;
+    border-radius:10px!important;
+    border:1px solid rgba(255,136,255,.52)!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.18), rgba(255,255,255,0) 34%),
+      linear-gradient(180deg, #bd45ff 0%, #8f23e8 54%, #6618b3 100%)!important;
+    color:#fff!important;
+    cursor:pointer!important;
+    font:950 15px/1 Sora, Inter, ui-sans-serif, system-ui, sans-serif!important;
+    letter-spacing:.04em!important;
+    text-transform:uppercase!important;
+    text-shadow:0 2px 0 rgba(51,10,74,.60)!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.26),
+      inset 0 -4px 0 rgba(57,11,97,.42),
+      0 4px 0 rgba(29,8,50,.72),
+      0 0 24px rgba(199,66,255,.24)!important;
+    transition:transform .12s ease, filter .12s ease, box-shadow .12s ease!important;
+  }
+
+  .ban-hero-scroll-btn:hover{
+    filter:brightness(1.09) saturate(1.06)!important;
+    transform:translateY(-1px)!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.30),
+      inset 0 -4px 0 rgba(57,11,97,.42),
+      0 5px 0 rgba(29,8,50,.72),
+      0 0 30px rgba(199,66,255,.34)!important;
+  }
+
+  .ban-hero-scroll-btn:active{
+    transform:translateY(3px)!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.18),
+      inset 0 -2px 0 rgba(57,11,97,.35),
+      0 1px 0 rgba(29,8,50,.72),
+      0 0 18px rgba(199,66,255,.22)!important;
+  }
+
+  .guard-info-tiles{
+    margin-top:0!important;
+  }
+
+  .bans-v3-results,
+  .bans-section{
+    margin-top:var(--mineacle-section-gap)!important;
+    scroll-margin-top:118px!important;
+  }
+}
+
+@media (min-width:981px) and (max-height:860px){
+  :root{
+    --mineacle-hero-copy-left:clamp(34px, 4.8vw, 70px);
+    --mineacle-hero-copy-top:calc(var(--mineacle-hero-panel-top) + 48px);
+    --mineacle-section-gap:22px;
+  }
+
+  .ban-hero-copy{
+    width:min(600px, 50vw)!important;
+    max-width:min(600px, 50vw)!important;
+  }
+
+  .ban-hero-copy h1{
+    font-size:clamp(36px, 4.3vw, 58px)!important;
+    margin-top:12px!important;
+    margin-bottom:9px!important;
+  }
+
+  .ban-hero-copy p{
+    font-size:15px!important;
+    line-height:1.42!important;
+  }
+
+  .ban-hero-actions{
+    margin-top:16px!important;
+  }
+
+  .ban-hero-scroll-btn{
+    min-height:44px!important;
+    padding-left:18px!important;
+    padding-right:18px!important;
+    font-size:14px!important;
+  }
+}
