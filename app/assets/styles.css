@@ -16198,3 +16198,74 @@ html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members
     width:min(var(--mcx-nav-w, 1380px), calc(100vw - 36px))!important;
   }
 }
+
+
+/* Mineacle Bans v3.8.98: fix contained hero image visibility
+   Previous rule used inset:auto auto 0 50%, which collapsed the image pseudo-layer height. */
+@media (min-width:981px){
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before{
+    position:absolute!important;
+    top:0!important;
+    bottom:0!important;
+    left:50%!important;
+    right:auto!important;
+    inset:0 auto 0 50%!important;
+    width:min(var(--mcx-nav-w, 1380px), calc(100vw - 48px))!important;
+    height:auto!important;
+    min-height:100%!important;
+    transform:translate3d(-50%, 0, 0)!important;
+    display:block!important;
+    content:""!important;
+    background:url('bans-hero-replacement-v3.8.89.webp') center center / cover no-repeat!important;
+    opacity:1!important;
+    visibility:visible!important;
+    pointer-events:none!important;
+    z-index:0!important;
+  }
+
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after,
+  .bans-records-hero::after{
+    position:absolute!important;
+    top:0!important;
+    bottom:0!important;
+    left:50%!important;
+    right:auto!important;
+    inset:0 auto 0 50%!important;
+    width:min(var(--mcx-nav-w, 1380px), calc(100vw - 48px))!important;
+    height:auto!important;
+    min-height:100%!important;
+    transform:translate3d(-50%, 0, 0)!important;
+    display:block!important;
+    content:""!important;
+    opacity:1!important;
+    visibility:visible!important;
+    pointer-events:none!important;
+    z-index:1!important;
+  }
+
+  .bans-v3-hero > *,
+  .bans-records-hero > *,
+  .bans-v34-background-fold > *,
+  .bans-v32-logo-only-fold > *{
+    position:relative!important;
+    z-index:2!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1280px){
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before,
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after,
+  .bans-records-hero::after{
+    width:min(var(--mcx-nav-w, 1380px), calc(100vw - 36px))!important;
+  }
+}
