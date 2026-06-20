@@ -18059,3 +18059,144 @@ html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members
     --mcx-gap:20px;
   }
 }
+
+/* Mineacle Bans v3.9.17: fix Stats nav alignment and remove active text-link button box */
+@media (min-width:981px){
+  :root{
+    --mcx-nav-y:calc(50% + 9px);
+    --mcx-logo-y:calc(var(--mcx-nav-h, 104px) + 9px);
+    --mcx-left-x:clamp(76px, 6.1vw, 98px);
+    --mcx-gap:clamp(28px, 2.75vw, 42px);
+  }
+
+  html body #siteHeader.mcx-header .mcx-nav-shell,
+  html body #siteHeader.mcx-header.is-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header.nav-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header.mcx-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header[data-scrolled="true"] .mcx-nav-shell,
+  html.mineacle-nav-scrolled body #siteHeader.mcx-header .mcx-nav-shell,
+  body.mineacle-nav-scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.nav-scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.has-scrolled #siteHeader.mcx-header .mcx-nav-shell{
+    width:var(--mineacle-hero-panel-w, calc(100vw - 48px))!important;
+    max-width:var(--mineacle-hero-panel-w, calc(100vw - 48px))!important;
+  }
+
+  .mcx-vote,
+  .mcx-bans,
+  .mcx-stats,
+  .mcx-store,
+  .mcx-discord,
+  .mcx-play{
+    top:var(--mcx-nav-y)!important;
+    transform:translateY(-50%)!important;
+  }
+
+  .mcx-logo{
+    top:var(--mcx-logo-y)!important;
+    transform:translate(-50%, -50%)!important;
+  }
+
+  .mcx-vote{
+    left:var(--mcx-left-x)!important;
+  }
+
+  .mcx-bans{
+    left:calc(var(--mcx-left-x) + var(--mcx-text-w) + var(--mcx-gap))!important;
+  }
+
+  .mcx-stats{
+    left:calc(var(--mcx-left-x) + (var(--mcx-text-w) * 2) + (var(--mcx-gap) * 2))!important;
+    width:var(--mcx-text-w)!important;
+    min-width:var(--mcx-text-w)!important;
+    max-width:var(--mcx-text-w)!important;
+    height:var(--mcx-item-h)!important;
+    min-height:var(--mcx-item-h)!important;
+    max-height:var(--mcx-item-h)!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+
+  .mcx-store{
+    left:calc(var(--mcx-left-x) + (var(--mcx-text-w) * 3) + (var(--mcx-gap) * 3))!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-link,
+  html body #siteHeader.mcx-header .mcx-link.is-active,
+  html body #siteHeader.mcx-header .mcx-link.active{
+    background:transparent!important;
+    border:0!important;
+    box-shadow:none!important;
+    color:rgba(244,238,250,.76)!important;
+    text-shadow:0 2px 0 rgba(0,0,0,.38)!important;
+    filter:none!important;
+    line-height:1!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-link::before,
+  html body #siteHeader.mcx-header .mcx-link::after,
+  html body #siteHeader.mcx-header .mcx-link.is-active::before,
+  html body #siteHeader.mcx-header .mcx-link.is-active::after,
+  html body #siteHeader.mcx-header .mcx-link.active::before,
+  html body #siteHeader.mcx-header .mcx-link.active::after{
+    content:none!important;
+    display:none!important;
+    opacity:0!important;
+    background:transparent!important;
+    border:0!important;
+    box-shadow:none!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-link:hover,
+  html body #siteHeader.mcx-header .mcx-link:focus-visible{
+    color:#fff!important;
+    filter:brightness(1.10)!important;
+    outline:none!important;
+    text-shadow:
+      0 2px 0 rgba(0,0,0,.42),
+      0 0 9px rgba(255,255,255,.36),
+      0 0 18px rgba(255,136,255,.18)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-link:active{
+    color:#ffffff!important;
+    filter:brightness(.94)!important;
+    text-shadow:
+      0 2px 0 rgba(0,0,0,.48),
+      0 0 8px rgba(255,255,255,.22),
+      0 0 14px rgba(255,136,255,.18)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-link.is-active,
+  html body #siteHeader.mcx-header .mcx-link.active{
+    color:#ffffff!important;
+    text-shadow:
+      0 2px 0 rgba(0,0,0,.44),
+      0 0 7px rgba(255,255,255,.32),
+      0 0 15px rgba(255,255,255,.15),
+      0 0 18px rgba(255,136,255,.16)!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1280px){
+  :root{
+    --mcx-left-x:clamp(42px, 4vw, 56px);
+    --mcx-gap:clamp(20px, 2vw, 28px);
+  }
+
+  html body #siteHeader.mcx-header .mcx-nav-shell,
+  html body #siteHeader.mcx-header.is-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header.nav-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header.mcx-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header[data-scrolled="true"] .mcx-nav-shell,
+  html.mineacle-nav-scrolled body #siteHeader.mcx-header .mcx-nav-shell,
+  body.mineacle-nav-scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.nav-scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.has-scrolled #siteHeader.mcx-header .mcx-nav-shell{
+    width:calc(100vw - 36px)!important;
+    max-width:calc(100vw - 36px)!important;
+  }
+}
