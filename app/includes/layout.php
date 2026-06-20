@@ -18,7 +18,7 @@ function mineacle_page_head(string $title): void {
     echo '<title>' . h($title) . ' | ' . $name . '</title>';
     echo '<meta name="description" content="Mineacle public bans portal">';
     echo '<link rel="icon" type="image/png" href="assets/mineacle-square-logo.png?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199.188.177.166.144.8.7.6.5.4.3.2">';
-    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle3.9.15">';
+    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle3.9.16">';
     echo '</head>';
 }
 
@@ -26,6 +26,7 @@ function mineacle_header(string $active = 'bans'): void {
     $config = mineacle_config();
     $vote = h((string) ($config['site']['vote'] ?? 'https://vote.mineacle.net'));
     $bans = h((string) ($config['site']['bans'] ?? 'https://bans.mineacle.net'));
+    $stats = h((string) ($config['site']['stats'] ?? 'https://stats.mineacle.net'));
     $store = h((string) ($config['site']['store'] ?? 'https://store.mineacle.net'));
     $discord = h((string) ($config['site']['discord'] ?? 'https://discord.gg/VwbwWftefM'));
     $ip = h((string) ($config['site']['ip'] ?? 'mineacle.net'));
@@ -34,6 +35,7 @@ function mineacle_header(string $active = 'bans'): void {
     echo '<div class="mcx-nav-shell">';
     echo '<a class="mcx-link mcx-vote ' . ($active === 'vote' ? 'is-active' : '') . '" href="' . $vote . '">Vote</a>';
     echo '<a class="mcx-link mcx-bans ' . ($active === 'bans' ? 'is-active' : '') . '" href="' . $bans . '">Bans</a>';
+    echo '<a class="mcx-link mcx-stats ' . ($active === 'stats' ? 'is-active' : '') . '" href="' . $stats . '">Stats</a>';
     echo '<a class="mcx-button mcx-store ' . ($active === 'store' ? 'is-active' : '') . '" href="' . $store . '">Store</a>';
     echo '<a class="mcx-logo" href="' . $bans . '" aria-label="Refresh Mineacle Bans">';
     echo '<img src="assets/mineacle-bans-hero-logo.png?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199" alt="Mineacle Bans">';
@@ -47,6 +49,7 @@ function mineacle_header(string $active = 'bans'): void {
     echo '<nav class="main-nav mcx-mobile-menu" id="mainNav" aria-label="Mobile navigation">';
     echo '<a class="mcx-mobile-link ' . ($active === 'vote' ? 'active' : '') . '" href="' . $vote . '">Vote</a>';
     echo '<a class="mcx-mobile-link ' . ($active === 'bans' ? 'active' : '') . '" href="' . $bans . '">Bans</a>';
+    echo '<a class="mcx-mobile-link ' . ($active === 'stats' ? 'active' : '') . '" href="' . $stats . '">Stats</a>';
     echo '<a class="mcx-mobile-store ' . ($active === 'store' ? 'active' : '') . '" href="' . $store . '">Store</a>';
     echo '<a class="mcx-mobile-discord" href="' . $discord . '" target="_blank" rel="noopener"><img src="assets/discord.svg?v=bansfull3.8.27.277.266.255.244.233.222" alt=""><span>Discord</span></a>';
     echo '</nav>';
