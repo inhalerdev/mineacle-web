@@ -18200,3 +18200,98 @@ html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members
     max-width:calc(100vw - 36px)!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.18: constrain page rail to nav link span */
+@media (min-width:981px){
+  :root{
+    /* This rail matches the visual span from the first text link to the Play button. */
+    --mineacle-nav-link-rail:min(1180px, calc(100vw - 260px));
+    --mineacle-hero-panel-w:var(--mineacle-nav-link-rail)!important;
+  }
+
+  /* Keep nav button positions from v3.9.17, but size the website content to the same horizontal rail. */
+  .bans-v34-background-fold::after,
+  .bans-v32-logo-only-fold::after,
+  .bans-v3-hero::after,
+  .bans-records-hero::after,
+  .bans-v34-background-fold::before,
+  .bans-v32-logo-only-fold::before,
+  .bans-v3-hero::before,
+  .bans-records-hero::before{
+    width:var(--mineacle-nav-link-rail)!important;
+    max-width:var(--mineacle-nav-link-rail)!important;
+  }
+
+  .bans-v3-hero .ban-hero-content,
+  .bans-records-hero .ban-hero-content,
+  .bans-v34-background-fold .ban-hero-content,
+  .bans-v32-logo-only-fold .ban-hero-content,
+  .client-guard-detail-section,
+  .client-guard-title-wrap,
+  .client-guard-panel,
+  .guard-info-tiles,
+  .bans-v3-results,
+  .bans-section,
+  .ban-list-wrap,
+  .site-footer.redesigned-footer .footer-inner,
+  .footer-inner{
+    width:var(--mineacle-nav-link-rail)!important;
+    max-width:var(--mineacle-nav-link-rail)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  /* The Client Guard section itself can remain full bleed; its actual content is constrained above. */
+  .client-guard-detail-section{
+    box-sizing:border-box!important;
+  }
+
+  /* Move hero copy into the new narrower rail without over-insetting it. */
+  :root{
+    --mineacle-hero-copy-left:clamp(46px, 4.2vw, 72px);
+  }
+
+  .ban-hero-copy{
+    left:var(--mineacle-hero-copy-left)!important;
+    width:min(650px, calc(var(--mineacle-nav-link-rail) - (var(--mineacle-hero-copy-left) * 2)))!important;
+    max-width:min(650px, calc(var(--mineacle-nav-link-rail) - (var(--mineacle-hero-copy-left) * 2)))!important;
+  }
+
+  /* Keep the sticky nav shell geometry stable; only the actual page modules shrink to the nav-link rail. */
+  html body #siteHeader.mcx-header .mcx-nav-shell,
+  html body #siteHeader.mcx-header.is-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header.nav-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header.mcx-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header[data-scrolled="true"] .mcx-nav-shell,
+  html.mineacle-nav-scrolled body #siteHeader.mcx-header .mcx-nav-shell,
+  body.mineacle-nav-scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.nav-scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.has-scrolled #siteHeader.mcx-header .mcx-nav-shell{
+    width:calc(100vw - 96px)!important;
+    max-width:calc(100vw - 96px)!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1280px){
+  :root{
+    --mineacle-nav-link-rail:calc(100vw - 104px);
+    --mineacle-hero-panel-w:var(--mineacle-nav-link-rail)!important;
+    --mineacle-hero-copy-left:clamp(34px, 4vw, 52px);
+  }
+
+  html body #siteHeader.mcx-header .mcx-nav-shell,
+  html body #siteHeader.mcx-header.is-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header.nav-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header.mcx-scrolled .mcx-nav-shell,
+  html body #siteHeader.mcx-header[data-scrolled="true"] .mcx-nav-shell,
+  html.mineacle-nav-scrolled body #siteHeader.mcx-header .mcx-nav-shell,
+  body.mineacle-nav-scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.nav-scrolled #siteHeader.mcx-header .mcx-nav-shell,
+  html body.has-scrolled #siteHeader.mcx-header .mcx-nav-shell{
+    width:calc(100vw - 48px)!important;
+    max-width:calc(100vw - 48px)!important;
+  }
+}
