@@ -19719,3 +19719,128 @@ body *{
     --mcx-discord-label-w:164px;
   }
 }
+
+
+/* Mineacle Bans v3.9.38: trim Discord hover, soften nav glow, center/enlarge logo */
+@media (min-width:981px){
+  :root{
+    --mcx-discord-expanded-w:224px;
+    --mcx-discord-label-w:148px;
+    --mcx-discord-label-right:52px;
+  }
+
+  /* Center the Mineacle Bans logo in the row and make it slightly larger. */
+  html body #siteHeader.mcx-header .mcx-logo{
+    align-self:center!important;
+    width:238px!important;
+    max-width:238px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-logo img{
+    width:238px!important;
+    max-width:238px!important;
+    max-height:78px!important;
+    transform:translateX(-34px) translateY(0)!important;
+  }
+
+  /* Tone down Store / Play static glow so the nav row feels cleaner. */
+  html body #siteHeader.mcx-header .mcx-button,
+  html body #siteHeader.mcx-header .mcx-store,
+  html body #siteHeader.mcx-header .mcx-play{
+    box-shadow:
+      inset 0 3px 0 rgba(255,255,255,.18),
+      inset 0 -3px 0 rgba(35,0,75,.34),
+      0 3px 0 rgba(28,0,56,.55),
+      0 8px 16px rgba(124,0,255,.13)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-button:hover,
+  html body #siteHeader.mcx-header .mcx-store:hover,
+  html body #siteHeader.mcx-header .mcx-play:hover,
+  html body #siteHeader.mcx-header .mcx-button:focus-visible,
+  html body #siteHeader.mcx-header .mcx-store:focus-visible,
+  html body #siteHeader.mcx-header .mcx-play:focus-visible{
+    box-shadow:
+      inset 0 3px 0 rgba(255,255,255,.22),
+      inset 0 -3px 0 rgba(35,0,75,.34),
+      0 4px 0 rgba(28,0,56,.55),
+      0 0 18px rgba(199,66,255,.18)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-play{
+    box-shadow:
+      inset 0 3px 0 rgba(255,255,255,.18),
+      inset 0 -3px 0 rgba(18,80,15,.38),
+      0 3px 0 rgba(15,55,12,.58),
+      0 8px 16px rgba(55,185,42,.12)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-play:hover,
+  html body #siteHeader.mcx-header .mcx-play:focus-visible{
+    box-shadow:
+      inset 0 3px 0 rgba(255,255,255,.22),
+      inset 0 -3px 0 rgba(18,80,15,.38),
+      0 4px 0 rgba(15,55,12,.58),
+      0 0 18px rgba(74,220,58,.18)!important;
+  }
+
+  /* Discord: shorter expanded hover state and softer glow to match the nav buttons. */
+  html body #siteHeader.mcx-header .mcx-discord::before{
+    box-shadow:
+      inset 0 3px 0 rgba(255,255,255,.18),
+      inset 0 -3px 0 rgba(28,27,91,.38),
+      0 3px 0 rgba(21,20,68,.56),
+      0 8px 16px rgba(74,67,255,.12)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover::before,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible::before{
+    width:var(--mcx-discord-expanded-w)!important;
+    filter:brightness(1.04) saturate(1.03)!important;
+    box-shadow:
+      inset 0 3px 0 rgba(255,255,255,.21),
+      inset 0 -3px 0 rgba(28,27,91,.38),
+      0 4px 0 rgba(21,20,68,.56),
+      0 0 18px rgba(92,86,255,.18)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:active::before{
+    width:var(--mcx-discord-expanded-w)!important;
+    filter:brightness(.98) saturate(1.01)!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.14),
+      inset 0 -2px 0 rgba(28,27,91,.32),
+      0 1px 0 rgba(21,20,68,.56),
+      0 0 12px rgba(92,86,255,.14)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    right:var(--mcx-discord-label-right)!important;
+    width:var(--mcx-discord-label-w)!important;
+    min-width:var(--mcx-discord-label-w)!important;
+    max-width:var(--mcx-discord-label-w)!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  :root{
+    --mcx-discord-expanded-w:208px;
+    --mcx-discord-label-w:138px;
+    --mcx-discord-label-right:48px;
+  }
+
+  html body #siteHeader.mcx-header .mcx-logo{
+    width:212px!important;
+    max-width:212px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-logo img{
+    width:212px!important;
+    max-width:212px!important;
+    max-height:70px!important;
+    transform:translateX(-28px) translateY(0)!important;
+  }
+}
