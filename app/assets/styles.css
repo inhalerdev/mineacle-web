@@ -18889,3 +18889,146 @@ body *{
   html body #siteHeader.mcx-header .mcx-link{padding:0 12px!important; font-size:13px!important;}
   html body #siteHeader.mcx-header .mcx-store{margin-left:18px!important;}
 }
+
+
+/* Mineacle Bans v3.9.29: true inline left-logo nav, preserve Discord button styling */
+@media (min-width:981px){
+  html body #siteHeader.mcx-header .mcx-nav-shell{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:0!important;
+  }
+
+  /* Clear old absolute-position nav system so everything sits inline on one row. */
+  html body #siteHeader.mcx-header .mcx-logo,
+  html body #siteHeader.mcx-header .mcx-link,
+  html body #siteHeader.mcx-header .mcx-button,
+  html body #siteHeader.mcx-header .mcx-store,
+  html body #siteHeader.mcx-header .mcx-discord,
+  html body #siteHeader.mcx-header .mcx-play{
+    position:relative!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    bottom:auto!important;
+    transform:none!important;
+    margin-top:0!important;
+    margin-bottom:0!important;
+    flex:0 0 auto!important;
+  }
+
+  /* Logo belongs at the top-left/left edge of the nav row, inline with the links/buttons. */
+  html body #siteHeader.mcx-header .mcx-logo{
+    order:1!important;
+    align-self:center!important;
+    margin-left:0!important;
+    margin-right:48px!important;
+    width:220px!important;
+    max-width:220px!important;
+    height:auto!important;
+    z-index:5000!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-logo img{
+    width:220px!important;
+    max-width:220px!important;
+    height:auto!important;
+    max-height:70px!important;
+    display:block!important;
+    object-fit:contain!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-logo:hover{
+    transform:none!important;
+    filter:brightness(1.05) drop-shadow(0 0 18px rgba(255,136,255,.18))!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-vote{order:2!important;}
+  html body #siteHeader.mcx-header .mcx-bans{order:3!important;}
+  html body #siteHeader.mcx-header .mcx-stats{order:4!important;}
+
+  html body #siteHeader.mcx-header .mcx-store{
+    order:5!important;
+    margin-left:28px!important;
+    margin-right:auto!important;
+  }
+
+  /* Preserve the original Mineacle Discord square button behavior/effect. */
+  html body #siteHeader.mcx-header .mcx-discord{
+    order:6!important;
+    width:42px!important;
+    min-width:42px!important;
+    max-width:42px!important;
+    height:42px!important;
+    min-height:42px!important;
+    max-height:42px!important;
+    margin-right:26px!important;
+    border-radius:4px!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.20), rgba(255,255,255,0) 34%),
+      linear-gradient(180deg, #8178ff 0%, #5a51e9 52%, #3934a9 100%)!important;
+    border:2px solid rgba(222,220,255,.44)!important;
+    box-shadow:
+      inset 0 3px 0 rgba(255,255,255,.22),
+      inset 0 -4px 0 rgba(28,27,91,.46),
+      0 5px 0 rgba(21,20,68,.70),
+      0 12px 24px rgba(74,67,255,.22)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover{
+    transform:translateY(-1px)!important;
+    filter:brightness(1.08) saturate(1.06)!important;
+    box-shadow:
+      inset 0 3px 0 rgba(255,255,255,.25),
+      inset 0 -4px 0 rgba(28,27,91,.46),
+      0 6px 0 rgba(21,20,68,.70),
+      0 0 28px rgba(92,86,255,.34)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:active{
+    transform:translateY(3px)!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.16),
+      inset 0 -2px 0 rgba(28,27,91,.38),
+      0 1px 0 rgba(21,20,68,.70),
+      0 0 16px rgba(92,86,255,.22)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord img{
+    width:22px!important;
+    height:22px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    display:none!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-play{
+    order:7!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  html body #siteHeader.mcx-header .mcx-logo{
+    width:196px!important;
+    max-width:196px!important;
+    margin-right:30px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-logo img{
+    width:196px!important;
+    max-width:196px!important;
+    max-height:64px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-store{
+    margin-left:18px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord{
+    margin-right:20px!important;
+  }
+}
