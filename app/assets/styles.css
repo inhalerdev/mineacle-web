@@ -18753,3 +18753,139 @@ body,
 body *{
   font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
 }
+
+
+/* Mineacle Bans v3.9.28: desktop nav layout aligned to reference
+   Keep Mineacle styles/effects, but use a slimmer left-logo + inline links layout. */
+@media (min-width:981px){
+  html body #siteHeader.mcx-header,
+  html body #siteHeader.mcx-header.site-header,
+  html body #siteHeader.mcx-header.mineacle-floating-header,
+  html body #siteHeader.mcx-header.blocaria-style-header,
+  html body .mcx-header.site-header.mineacle-floating-header{
+    background:rgba(18,18,22,.84)!important;
+    border:none!important;
+    border-bottom:1px solid rgba(255,255,255,.05)!important;
+    box-shadow:none!important;
+    border-radius:0!important;
+    backdrop-filter:blur(10px)!important;
+    -webkit-backdrop-filter:blur(10px)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-nav-shell{
+    width:min(1680px, calc(100vw - 80px))!important;
+    max-width:min(1680px, calc(100vw - 80px))!important;
+    min-height:96px!important;
+    height:96px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    gap:0!important;
+    margin:0 auto!important;
+    padding:0 10px!important;
+  }
+
+  /* Order items into a left-logo inline navigation layout */
+  html body #siteHeader.mcx-header .mcx-logo{order:1!important; margin:0 60px 0 0!important;}
+  html body #siteHeader.mcx-header .mcx-vote{order:2!important;}
+  html body #siteHeader.mcx-header .mcx-bans{order:3!important;}
+  html body #siteHeader.mcx-header .mcx-stats{order:4!important;}
+  html body #siteHeader.mcx-header .mcx-store{order:5!important; margin-left:28px!important; margin-right:auto!important;}
+  html body #siteHeader.mcx-header .mcx-discord{order:6!important; margin-right:26px!important;}
+  html body #siteHeader.mcx-header .mcx-play{order:7!important;}
+
+  /* Mineacle logo smaller and left-aligned like the reference */
+  html body #siteHeader.mcx-header .mcx-logo,
+  html body #siteHeader.mcx-header .mcx-logo img{
+    width:228px!important;
+    max-width:228px!important;
+    height:auto!important;
+    max-height:76px!important;
+    display:block!important;
+  }
+
+  /* Non-button links: smaller, tighter, off-white default */
+  html body #siteHeader.mcx-header .mcx-link{
+    min-height:36px!important;
+    padding:0 18px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    font-size:14px!important;
+    font-weight:700!important;
+    line-height:1!important;
+    letter-spacing:.02em!important;
+    color:rgba(255,255,255,.68)!important;
+    background:transparent!important;
+    border:none!important;
+    box-shadow:none!important;
+    border-radius:10px!important;
+    transition:color .16s ease, background-color .16s ease, box-shadow .16s ease!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-link:hover,
+  html body #siteHeader.mcx-header .mcx-link:focus-visible{
+    color:rgba(255,255,255,.95)!important;
+    background:rgba(255,255,255,.04)!important;
+    box-shadow:0 0 18px rgba(255,255,255,.05)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-link.is-active{
+    color:#ffffff!important;
+    background:rgba(255,255,255,.045)!important;
+    box-shadow:
+      0 0 0 1px rgba(255,255,255,.05) inset,
+      0 0 16px rgba(255,255,255,.08)!important;
+  }
+
+  /* Keep branded button treatments but size them like the reference */
+  html body #siteHeader.mcx-header .mcx-button,
+  html body #siteHeader.mcx-header .mcx-store,
+  html body #siteHeader.mcx-header .mcx-play{
+    min-height:48px!important;
+    height:48px!important;
+    padding:0 18px!important;
+    font-size:15px!important;
+    font-weight:700!important;
+    line-height:1!important;
+    border-radius:6px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord{
+    width:48px!important;
+    min-width:48px!important;
+    height:48px!important;
+    min-height:48px!important;
+    border-radius:6px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord img{
+    width:24px!important;
+    height:24px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    display:none!important;
+  }
+}
+
+/* Slightly tighter fallback for narrower desktops */
+@media (min-width:981px) and (max-width:1320px){
+  html body #siteHeader.mcx-header .mcx-nav-shell{
+    width:calc(100vw - 40px)!important;
+    max-width:calc(100vw - 40px)!important;
+    min-height:88px!important;
+    height:88px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-logo,
+  html body #siteHeader.mcx-header .mcx-logo img{
+    width:205px!important;
+    max-width:205px!important;
+    max-height:68px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-logo{margin-right:34px!important;}
+  html body #siteHeader.mcx-header .mcx-link{padding:0 12px!important; font-size:13px!important;}
+  html body #siteHeader.mcx-header .mcx-store{margin-left:18px!important;}
+}
