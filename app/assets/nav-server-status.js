@@ -2,8 +2,9 @@
   'use strict';
 
   const statusEl = document.getElementById('navPlayersOnline');
+  const valueEl = document.getElementById('navPlayersOnlineValue');
 
-  if (!statusEl) {
+  if (!statusEl || !valueEl) {
     return;
   }
 
@@ -13,12 +14,12 @@
     statusEl.classList.remove('is-live', 'is-offline', 'is-unknown');
 
     if (Number.isFinite(count) && count >= 0) {
-      statusEl.textContent = `${count.toLocaleString()} Players Online`;
+      valueEl.textContent = count.toLocaleString();
       statusEl.classList.add(count > 0 ? 'is-live' : 'is-offline');
       return;
     }
 
-    statusEl.textContent = 'Players Online';
+    valueEl.textContent = '0';
     statusEl.classList.add(state || 'is-unknown');
   };
 

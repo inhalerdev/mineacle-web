@@ -19920,3 +19920,75 @@ body *{
     margin-right:20px!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.41: players-online icon/value styling */
+@media (min-width:981px){
+  html body #siteHeader.mcx-header .mcx-players-online{
+    gap:7px!important;
+    min-width:190px!important;
+    color:rgba(255,255,255,.72)!important;
+    text-shadow:none!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-icon{
+    width:18px!important;
+    height:18px!important;
+    flex:0 0 18px!important;
+    display:block!important;
+    object-fit:contain!important;
+    opacity:.92!important;
+    filter:drop-shadow(0 0 5px rgba(255,255,255,.18))!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-value{
+    color:#e7b7ff!important;
+    font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
+    font-size:var(--mcx-nav-text-size, 14px)!important;
+    font-weight:var(--mcx-nav-text-weight, 700)!important;
+    letter-spacing:var(--mcx-nav-text-spacing, .02em)!important;
+    line-height:1!important;
+    text-transform:uppercase!important;
+    text-shadow:
+      0 0 7px rgba(231,183,255,.34),
+      0 0 14px rgba(196,77,255,.18)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-label{
+    color:rgba(255,255,255,.72)!important;
+    font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
+    font-size:var(--mcx-nav-text-size, 14px)!important;
+    font-weight:var(--mcx-nav-text-weight, 700)!important;
+    letter-spacing:var(--mcx-nav-text-spacing, .02em)!important;
+    line-height:1!important;
+    text-transform:uppercase!important;
+    text-shadow:none!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-online.is-live .mcx-players-label,
+  html body #siteHeader.mcx-header .mcx-players-online.is-offline .mcx-players-label,
+  html body #siteHeader.mcx-header .mcx-players-online.is-unknown .mcx-players-label{
+    color:rgba(255,255,255,.72)!important;
+    text-shadow:none!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-online.is-live,
+  html body #siteHeader.mcx-header .mcx-players-online.is-offline,
+  html body #siteHeader.mcx-header .mcx-players-online.is-unknown{
+    color:rgba(255,255,255,.72)!important;
+    text-shadow:none!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  html body #siteHeader.mcx-header .mcx-players-online{
+    min-width:174px!important;
+    gap:6px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-icon{
+    width:17px!important;
+    height:17px!important;
+    flex-basis:17px!important;
+  }
+}
