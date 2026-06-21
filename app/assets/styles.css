@@ -19992,3 +19992,106 @@ body *{
     flex-basis:17px!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.44: lock Players Online position during Discord hover */
+@media (min-width:981px){
+  :root{
+    --mcx-discord-expanded-w:206px;
+    --mcx-discord-label-w:128px;
+    --mcx-discord-label-right:52px;
+    --mcx-players-online-w:206px;
+  }
+
+  /* Store | centered Players Online | static Discord | Play all stay on one fixed row. */
+  html body #siteHeader.mcx-header .mcx-store{
+    order:5!important;
+    margin-left:14px!important;
+    margin-right:0!important;
+    align-self:center!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-online{
+    order:6!important;
+    position:relative!important;
+    z-index:20!important;
+    flex:0 0 var(--mcx-players-online-w)!important;
+    width:var(--mcx-players-online-w)!important;
+    min-width:var(--mcx-players-online-w)!important;
+    max-width:var(--mcx-players-online-w)!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+    transform:none!important;
+    top:auto!important;
+    left:auto!important;
+    right:auto!important;
+    align-self:center!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord,
+  html body #siteHeader.mcx-header .mcx-discord:hover,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible,
+  html body #siteHeader.mcx-header .mcx-discord:active{
+    order:7!important;
+    position:relative!important;
+    z-index:10!important;
+    flex:0 0 var(--mcx-discord-static-w, 44px)!important;
+    width:var(--mcx-discord-static-w, 44px)!important;
+    min-width:var(--mcx-discord-static-w, 44px)!important;
+    max-width:var(--mcx-discord-static-w, 44px)!important;
+    height:var(--mcx-row-control-h, 44px)!important;
+    min-height:var(--mcx-row-control-h, 44px)!important;
+    max-height:var(--mcx-row-control-h, 44px)!important;
+    margin-left:0!important;
+    margin-right:26px!important;
+    align-self:center!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-play{
+    order:8!important;
+    align-self:center!important;
+  }
+
+  /* Discord visual hover expands left, but only as paint; it does not own layout width. */
+  html body #siteHeader.mcx-header .mcx-discord::before{
+    z-index:0!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover::before,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible::before,
+  html body #siteHeader.mcx-header .mcx-discord:active::before{
+    width:var(--mcx-discord-expanded-w)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    right:var(--mcx-discord-label-right)!important;
+    width:var(--mcx-discord-label-w)!important;
+    min-width:var(--mcx-discord-label-w)!important;
+    max-width:var(--mcx-discord-label-w)!important;
+    z-index:2!important;
+  }
+
+  /* Keep Players Online visually above the Discord hover paint so it never jumps or disappears. */
+  html body #siteHeader.mcx-header .mcx-players-icon,
+  html body #siteHeader.mcx-header .mcx-players-value,
+  html body #siteHeader.mcx-header .mcx-players-label{
+    position:relative!important;
+    z-index:21!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  :root{
+    --mcx-discord-expanded-w:194px;
+    --mcx-discord-label-w:118px;
+    --mcx-discord-label-right:48px;
+    --mcx-players-online-w:188px;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord,
+  html body #siteHeader.mcx-header .mcx-discord:hover,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible,
+  html body #siteHeader.mcx-header .mcx-discord:active{
+    margin-right:20px!important;
+  }
+}
