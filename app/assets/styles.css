@@ -19297,3 +19297,59 @@ body *{
     font-size:13px!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.33: fix Discord hover label clipping/glitch */
+@media (min-width:981px){
+  html body #siteHeader.mcx-header .mcx-discord{
+    background:transparent!important;
+    box-shadow:none!important;
+    border-color:transparent!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord::before{
+    width:calc(var(--mcx-row-discord-w, 44px) + 4px)!important;
+    max-width:none!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover::before,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible::before,
+  html body #siteHeader.mcx-header .mcx-discord:active::before{
+    width:224px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    right:42px!important;
+    width:170px!important;
+    max-width:170px!important;
+    padding-right:4px!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    font-size:13px!important;
+    font-weight:700!important;
+    letter-spacing:.01em!important;
+    line-height:1!important;
+    text-align:center!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord img{
+    right:10px!important;
+    width:22px!important;
+    height:22px!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  html body #siteHeader.mcx-header .mcx-discord:hover::before,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible::before,
+  html body #siteHeader.mcx-header .mcx-discord:active::before{
+    width:206px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    width:154px!important;
+    max-width:154px!important;
+    font-size:12px!important;
+    letter-spacing:0!important;
+  }
+}
