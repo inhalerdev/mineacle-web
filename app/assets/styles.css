@@ -20662,3 +20662,186 @@ body *{
     --mcx-players-icon-size:15px;
   }
 }
+
+
+/* Mineacle Bans v3.9.51: reduce nav buttons by 25% */
+@media (min-width:981px){
+  :root{
+    --mcx-row-control-h:33px;
+    --mcx-row-button-w:78px;
+    --mcx-row-discord-w:33px;
+    --mcx-discord-static-w:33px;
+    --mcx-discord-icon-size:17px;
+    --mcx-discord-expanded-w:164px;
+    --mcx-discord-label-w:102px;
+    --mcx-discord-label-right:42px;
+    --mcx-players-online-w:160px;
+    --mcx-players-online-compact-w:58px;
+    --mcx-players-icon-size:13px;
+  }
+
+  html body #siteHeader.mcx-header .mcx-button,
+  html body #siteHeader.mcx-header .mcx-store,
+  html body #siteHeader.mcx-header .mcx-play{
+    width:var(--mcx-row-button-w)!important;
+    min-width:var(--mcx-row-button-w)!important;
+    max-width:var(--mcx-row-button-w)!important;
+    height:var(--mcx-row-control-h)!important;
+    min-height:var(--mcx-row-control-h)!important;
+    max-height:var(--mcx-row-control-h)!important;
+    padding:0!important;
+    border-width:1px!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.17),
+      inset 0 -2px 0 rgba(35,0,75,.30),
+      0 2px 0 rgba(28,0,56,.50),
+      0 6px 12px rgba(124,0,255,.10)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-play{
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.17),
+      inset 0 -2px 0 rgba(18,80,15,.34),
+      0 2px 0 rgba(15,55,12,.52),
+      0 6px 12px rgba(55,185,42,.10)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-button:hover,
+  html body #siteHeader.mcx-header .mcx-store:hover,
+  html body #siteHeader.mcx-header .mcx-play:hover,
+  html body #siteHeader.mcx-header .mcx-button:focus-visible,
+  html body #siteHeader.mcx-header .mcx-store:focus-visible,
+  html body #siteHeader.mcx-header .mcx-play:focus-visible{
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.21),
+      inset 0 -2px 0 rgba(35,0,75,.30),
+      0 3px 0 rgba(28,0,56,.50),
+      0 0 14px rgba(199,66,255,.15)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-play:hover,
+  html body #siteHeader.mcx-header .mcx-play:focus-visible{
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.21),
+      inset 0 -2px 0 rgba(18,80,15,.34),
+      0 3px 0 rgba(15,55,12,.52),
+      0 0 14px rgba(74,220,58,.15)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-link{
+    height:var(--mcx-row-control-h)!important;
+    min-height:var(--mcx-row-control-h)!important;
+    max-height:var(--mcx-row-control-h)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord,
+  html body #siteHeader.mcx-header .mcx-discord:hover,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible,
+  html body #siteHeader.mcx-header .mcx-discord:active{
+    width:var(--mcx-discord-static-w)!important;
+    min-width:var(--mcx-discord-static-w)!important;
+    max-width:var(--mcx-discord-static-w)!important;
+    height:var(--mcx-row-control-h)!important;
+    min-height:var(--mcx-row-control-h)!important;
+    max-height:var(--mcx-row-control-h)!important;
+    flex-basis:var(--mcx-discord-static-w)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord::before{
+    width:var(--mcx-discord-static-w)!important;
+    height:var(--mcx-row-control-h)!important;
+    min-height:var(--mcx-row-control-h)!important;
+    max-height:var(--mcx-row-control-h)!important;
+    border-width:1px!important;
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.17),
+      inset 0 -2px 0 rgba(28,27,91,.34),
+      0 2px 0 rgba(21,20,68,.52),
+      0 6px 12px rgba(74,67,255,.10)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover::before,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible::before,
+  html body #siteHeader.mcx-header .mcx-discord:active::before{
+    width:var(--mcx-discord-expanded-w)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover::before,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible::before{
+    box-shadow:
+      inset 0 2px 0 rgba(255,255,255,.21),
+      inset 0 -2px 0 rgba(28,27,91,.34),
+      0 3px 0 rgba(21,20,68,.52),
+      0 0 14px rgba(92,86,255,.15)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord img{
+    width:var(--mcx-discord-icon-size)!important;
+    height:var(--mcx-discord-icon-size)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover img,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible img,
+  html body #siteHeader.mcx-header .mcx-discord:active img{
+    right:8px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    right:var(--mcx-discord-label-right)!important;
+    width:var(--mcx-discord-label-w)!important;
+    min-width:var(--mcx-discord-label-w)!important;
+    max-width:var(--mcx-discord-label-w)!important;
+    font-size:12px!important;
+    letter-spacing:.01em!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-online{
+    height:var(--mcx-row-control-h)!important;
+    min-height:var(--mcx-row-control-h)!important;
+    max-height:var(--mcx-row-control-h)!important;
+    flex-basis:var(--mcx-players-online-w)!important;
+    width:var(--mcx-players-online-w)!important;
+    min-width:var(--mcx-players-online-w)!important;
+    max-width:var(--mcx-players-online-w)!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    gap:6px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-icon{
+    width:var(--mcx-players-icon-size)!important;
+    height:var(--mcx-players-icon-size)!important;
+    flex-basis:var(--mcx-players-icon-size)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-nav-shell.discord-would-collide:has(.mcx-discord:hover) .mcx-players-online,
+  html body #siteHeader.mcx-header .mcx-nav-shell.discord-would-collide:has(.mcx-discord:focus-visible) .mcx-players-online,
+  html body #siteHeader.mcx-header .mcx-nav-shell.discord-would-collide:has(.mcx-discord:active) .mcx-players-online{
+    flex-basis:var(--mcx-players-online-compact-w)!important;
+    width:var(--mcx-players-online-compact-w)!important;
+    min-width:var(--mcx-players-online-compact-w)!important;
+    max-width:var(--mcx-players-online-compact-w)!important;
+    padding-left:8px!important;
+    padding-right:8px!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  :root{
+    --mcx-row-control-h:32px;
+    --mcx-row-button-w:72px;
+    --mcx-row-discord-w:32px;
+    --mcx-discord-static-w:32px;
+    --mcx-discord-icon-size:16px;
+    --mcx-discord-expanded-w:154px;
+    --mcx-discord-label-w:96px;
+    --mcx-discord-label-right:38px;
+    --mcx-players-online-w:148px;
+    --mcx-players-online-compact-w:54px;
+    --mcx-players-icon-size:12px;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    font-size:11px!important;
+  }
+}
