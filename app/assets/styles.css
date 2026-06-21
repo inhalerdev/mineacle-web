@@ -20512,3 +20512,153 @@ body *{
     border-radius:0!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.50: players online status capsule + polished nav alignment */
+@media (min-width:981px){
+  :root{
+    --mcx-players-online-w:214px;
+    --mcx-players-online-compact-w:78px;
+    --mcx-players-icon-size:16px;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-online{
+    position:relative!important;
+    height:var(--mcx-row-control-h, 44px)!important;
+    min-height:var(--mcx-row-control-h, 44px)!important;
+    max-height:var(--mcx-row-control-h, 44px)!important;
+    flex:0 0 var(--mcx-players-online-w)!important;
+    width:var(--mcx-players-online-w)!important;
+    min-width:var(--mcx-players-online-w)!important;
+    max-width:var(--mcx-players-online-w)!important;
+    padding:0 14px!important;
+    box-sizing:border-box!important;
+    border-radius:4px!important;
+    border:1px solid rgba(255,255,255,.085)!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.050), rgba(255,255,255,0) 45%),
+      rgba(255,255,255,.030)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.060),
+      inset 0 -2px 0 rgba(0,0,0,.18),
+      0 7px 16px rgba(0,0,0,.14),
+      0 0 14px rgba(255,136,255,.040)!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:7px!important;
+    overflow:hidden!important;
+    pointer-events:none!important;
+    transform:translateX(0)!important;
+    transition:
+      transform .16s cubic-bezier(.19,1,.22,1),
+      width .14s cubic-bezier(.19,1,.22,1),
+      min-width .14s cubic-bezier(.19,1,.22,1),
+      max-width .14s cubic-bezier(.19,1,.22,1),
+      flex-basis .14s cubic-bezier(.19,1,.22,1),
+      border-color .14s ease,
+      box-shadow .14s ease!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-online::before{
+    content:""!important;
+    position:absolute!important;
+    inset:1px!important;
+    border-radius:3px!important;
+    border:1px solid rgba(255,255,255,.028)!important;
+    pointer-events:none!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-online.is-live{
+    border-color:rgba(255,136,255,.13)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.065),
+      inset 0 -2px 0 rgba(0,0,0,.18),
+      0 7px 16px rgba(0,0,0,.14),
+      0 0 16px rgba(231,183,255,.075)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-icon{
+    width:var(--mcx-players-icon-size)!important;
+    height:var(--mcx-players-icon-size)!important;
+    flex:0 0 var(--mcx-players-icon-size)!important;
+    display:block!important;
+    object-fit:contain!important;
+    opacity:.94!important;
+    filter:drop-shadow(0 0 5px rgba(255,255,255,.18))!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-value,
+  html body #siteHeader.mcx-header .mcx-players-label{
+    font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
+    font-size:var(--mcx-nav-text-size, 14px)!important;
+    font-weight:var(--mcx-nav-text-weight, 700)!important;
+    letter-spacing:var(--mcx-nav-text-spacing, .02em)!important;
+    line-height:1!important;
+    text-transform:uppercase!important;
+    white-space:nowrap!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-value{
+    color:#e7b7ff!important;
+    text-shadow:
+      0 0 7px rgba(231,183,255,.36),
+      0 0 14px rgba(196,77,255,.20)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-players-label{
+    color:rgba(255,255,255,.72)!important;
+    text-shadow:none!important;
+    opacity:1!important;
+    max-width:140px!important;
+    overflow:hidden!important;
+    transition:opacity .10s ease, max-width .14s cubic-bezier(.19,1,.22,1)!important;
+  }
+
+  /* Normal wide desktop: full status capsule stays visible during Discord hover. */
+  html body #siteHeader.mcx-header .mcx-nav-shell:not(.discord-would-collide):has(.mcx-discord:hover) .mcx-players-online,
+  html body #siteHeader.mcx-header .mcx-nav-shell:not(.discord-would-collide):has(.mcx-discord:focus-visible) .mcx-players-online,
+  html body #siteHeader.mcx-header .mcx-nav-shell:not(.discord-would-collide):has(.mcx-discord:active) .mcx-players-online{
+    flex-basis:var(--mcx-players-online-w)!important;
+    width:var(--mcx-players-online-w)!important;
+    min-width:var(--mcx-players-online-w)!important;
+    max-width:var(--mcx-players-online-w)!important;
+    transform:translateX(0)!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-nav-shell:not(.discord-would-collide):has(.mcx-discord:hover) .mcx-players-label,
+  html body #siteHeader.mcx-header .mcx-nav-shell:not(.discord-would-collide):has(.mcx-discord:focus-visible) .mcx-players-label,
+  html body #siteHeader.mcx-header .mcx-nav-shell:not(.discord-would-collide):has(.mcx-discord:active) .mcx-players-label{
+    opacity:1!important;
+    max-width:140px!important;
+  }
+
+  /* Collision-only mode: make it a compact icon + count capsule and move it away. */
+  html body #siteHeader.mcx-header .mcx-nav-shell.discord-would-collide:has(.mcx-discord:hover) .mcx-players-online,
+  html body #siteHeader.mcx-header .mcx-nav-shell.discord-would-collide:has(.mcx-discord:focus-visible) .mcx-players-online,
+  html body #siteHeader.mcx-header .mcx-nav-shell.discord-would-collide:has(.mcx-discord:active) .mcx-players-online{
+    flex-basis:var(--mcx-players-online-compact-w)!important;
+    width:var(--mcx-players-online-compact-w)!important;
+    min-width:var(--mcx-players-online-compact-w)!important;
+    max-width:var(--mcx-players-online-compact-w)!important;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    transform:translateX(var(--mcx-players-hover-shift, -108px))!important;
+    gap:6px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-nav-shell.discord-would-collide:has(.mcx-discord:hover) .mcx-players-label,
+  html body #siteHeader.mcx-header .mcx-nav-shell.discord-would-collide:has(.mcx-discord:focus-visible) .mcx-players-label,
+  html body #siteHeader.mcx-header .mcx-nav-shell.discord-would-collide:has(.mcx-discord:active) .mcx-players-label{
+    opacity:0!important;
+    max-width:0!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  :root{
+    --mcx-players-online-w:196px;
+    --mcx-players-online-compact-w:74px;
+    --mcx-players-icon-size:15px;
+  }
+}

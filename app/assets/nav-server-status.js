@@ -74,7 +74,13 @@
   };
 
   refresh();
-  window.setInterval(refresh, 60000);
+  window.setInterval(refresh, 15000);
+
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {
+      refresh();
+    }
+  });
 
   const setupDiscordCollisionGuard = () => {
     const navShell = document.querySelector('#siteHeader.mcx-header .mcx-nav-shell');
