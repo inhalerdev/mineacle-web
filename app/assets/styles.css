@@ -19353,3 +19353,61 @@ body *{
     letter-spacing:0!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.34: unify all desktop nav text sizing */
+@media (min-width:981px){
+  :root{
+    --mcx-nav-text-size:14px;
+    --mcx-nav-text-weight:700;
+    --mcx-nav-text-spacing:.02em;
+  }
+
+  html body #siteHeader.mcx-header .mcx-link,
+  html body #siteHeader.mcx-header .mcx-button,
+  html body #siteHeader.mcx-header .mcx-store,
+  html body #siteHeader.mcx-header .mcx-play,
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
+    font-size:var(--mcx-nav-text-size)!important;
+    font-weight:var(--mcx-nav-text-weight)!important;
+    letter-spacing:var(--mcx-nav-text-spacing)!important;
+    line-height:1!important;
+    text-transform:uppercase!important;
+  }
+
+  /* Give the Discord hover label enough room at the shared nav text size. */
+  html body #siteHeader.mcx-header .mcx-discord:hover::before,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible::before,
+  html body #siteHeader.mcx-header .mcx-discord:active::before{
+    width:242px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    right:42px!important;
+    width:188px!important;
+    max-width:188px!important;
+    padding-right:4px!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  :root{
+    --mcx-nav-text-size:13px;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover::before,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible::before,
+  html body #siteHeader.mcx-header .mcx-discord:active::before{
+    width:220px!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord-members{
+    width:166px!important;
+    max-width:166px!important;
+  }
+}
