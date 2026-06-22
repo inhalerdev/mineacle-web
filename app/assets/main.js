@@ -161,7 +161,7 @@
         }
 
         if (ban.can_pay && ban.action_type !== "view") {
-            return `<a class="btn red ban-unban-cta" href="${escapeHtml(safeUrl(ban.unban_url, "https://store.mineacle.net"))}" aria-label="Pay to unban" title="Pay to unban">Unban</a>`;
+            return `<a class="btn gold ban-unban-cta" href="${escapeHtml(safeUrl(ban.unban_url, "https://store.mineacle.net"))}" aria-label="Pay to unban" title="Pay to unban">Unban</a>`;
         }
 
         return `<button class="btn soft info-btn js-info-button" type="button" data-info-index="${index}">View</button>`;
@@ -662,174 +662,39 @@
 
 
 
-/* Mineacle Bans v3.9.62: safe one-shot/live DOM polish without load-locking MutationObserver */
+
+
+/* Mineacle Bans v3.9.71: safe Search/Clear sync only */
 (function () {
   'use strict';
 
-  const labelMap = new Map([
-    ['PERM BAN', 'PERMANENT BAN'],
-    ['PERMANENT', 'PERMANENT BAN'],
-    ['TEMP BAN', 'TEMPORARY BAN'],
-    ['TEMPORARY', 'TEMPORARY BAN'],
-    ['IP BAN', 'IP BAN'],
-    ['WARN', 'WARNING'],
-    ['WARNING', 'WARNING'],
-    ['MUTE', 'MUTE'],
-    ['KICK', 'KICK']
-  ]);
-
-  const normalizeLabel = (value) => {
-    const key = String(value || '').trim().toUpperCase();
-    return labelMap.get(key) || value;
-  };
-
-  const replaceExactText = (root, from, to) => {
-    root.querySelectorAll('span, h1, h2, h3, b, strong, button, a, div').forEach((node) => {
-      if (node.children.length > 0) {
-        return;
-      }
-      if (node.textContent.trim() === from && node.textContent !== to) {
-        node.textContent = to;
-      }
-    });
-  };
-
-  const applyBansPolish = () => {
-    const root = document.body;
-
+  const sync = () => {
     document.querySelectorAll('.js-ban-search-form').forEach((form) => {
-      if (!form.classList.contains('mineacle-integrated-search')) {
-        form.classList.add('mineacle-integrated-search');
-      }
-      const field = form.querySelector('.searchbar, .ban-search-field');
-      const button = form.querySelector('button[type="submit"], .btn:not(.search-clear):not(.ban-search-clear)');
       const input = form.querySelector('.js-ban-search, input');
-      if (field && !field.classList.contains('mineacle-search-field-live')) {
-        field.classList.add('mineacle-search-field-live');
-      }
-      if (button && !button.classList.contains('mineacle-search-button-live')) {
-        button.classList.add('mineacle-search-button-live');
-      }
-      if (button && button.textContent.trim() !== 'Search') {
-        button.textContent = 'Search';
-      }
-      if (input && input.getAttribute('placeholder') !== 'Search Minecraft username') {
-        input.setAttribute('placeholder', 'Search Minecraft username');
-      }
-    });
+      const button = form.querySelector('button[type="submit"], .btn:not(.search-clear):not(.ban-search-clear)');
+      if (!input || !button) return;
 
-    replaceExactText(root, 'SEARCH RECORDS', 'BAN LOOKUP');
-    replaceExactText(root, 'Search Records', 'Ban Lookup');
-    replaceExactText(root, 'Active bans', 'Public Ban Records');
-    replaceExactText(root, 'Active Bans', 'Public Ban Records');
-    replaceExactText(root, 'Active Ban Records', 'Public Ban Records');
-
-    root.querySelectorAll('.ban-type-pill, .ban-status, .status-pill, .ban-pill, .mineacle-ban-status-single, .mineacle-ban-type-single').forEach((node) => {
-      const next = normalizeLabel(node.textContent);
-      if (next && next !== node.textContent) {
-        node.textContent = next;
-      }
-    });
-  };
-
-  let scheduled = false;
-  let observer = null;
-
-  const schedule = () => {
-    if (scheduled) return;
-    scheduled = true;
-    window.requestAnimationFrame(() => {
-      scheduled = false;
-      if (observer) observer.disconnect();
-      applyBansPolish();
-      if (observer && document.body) {
-        observer.observe(document.body, { childList: true, subtree: true });
-      }
-    });
-  };
-
-  const start = () => {
-    applyBansPolish();
-    if (document.body && window.MutationObserver) {
-      observer = new MutationObserver(schedule);
-      observer.observe(document.body, { childList: true, subtree: true });
-    }
-    document.addEventListener('click', () => window.setTimeout(schedule, 0));
-  };
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start, { once: true });
-  } else {
-    start();
-  }
-})();
-
-
-/* Mineacle Bans v3.9.66: Client Guard copy + store-matched search/unban button labels */
-(function () {
-  'use strict';
-const normalizeLabels = () => {
-    const heading = document.querySelector('.client-guard-copy h2');
-    const paragraph = document.querySelector('.client-guard-copy p');
-
-    if (heading && heading.textContent.trim() !== 'Fair play, clear proof') {
-      heading.textContent = 'Fair play, clear proof';
-    }
-
-    if (paragraph) {
-      const copy = 'Client Guard reviews repeated movement, combat, and building patterns\nbefore staff act, helping keep punishments fair and clear';
-      if (paragraph.textContent !== copy) {
-        paragraph.textContent = copy;
-      }
-    }
-
-    document.querySelectorAll('.js-ban-search-form button[type="submit"], .mineacle-search-button-live').forEach((button) => {
-      const form = button.closest('.js-ban-search-form');
-      const input = form ? form.querySelector('.js-ban-search, input') : null;
-      const hasValue = input && input.value.trim().length > 0;
-      const label = hasValue ? 'Clear' : 'Search';
-
-      if (button.textContent.trim() !== label) {
-        button.textContent = label;
-      }
-
-      button.classList.toggle('is-clear', Boolean(hasValue));
+      const hasValue = input.value.trim().length > 0;
+      button.textContent = hasValue ? 'Clear' : 'Search';
+      button.classList.toggle('is-clear', hasValue);
       button.classList.toggle('is-search', !hasValue);
-    });
-
-    document.querySelectorAll('.ban-row .btn.red, .ban-action .btn.red, .ban-action a.btn, .ban-row a[href*="store"], .ban-row a[href*="tebex"], .ban-action a[href*="store"], .ban-action a[href*="tebex"]').forEach((button) => {
-      const text = button.textContent.trim().toUpperCase();
-      if (text.includes('$') || text.includes('UNBAN') || text.includes('PAY')) {
-        button.textContent = 'Unban';
-        button.classList.add('ban-unban-cta');
-        button.setAttribute('aria-label', 'Pay to unban');
-        button.setAttribute('title', 'Pay to unban');
-      }
-    });
-
-    document.querySelectorAll('.ban-type-pill, .ban-status, .status-pill, .ban-pill, .mineacle-ban-status-single, .mineacle-ban-type-single').forEach((node) => {
-      const value = node.textContent.trim().toUpperCase();
-      if (value === 'PERM BAN' || value === 'PERMANENT') node.textContent = 'Permanent Ban';
-      if (value === 'TEMP BAN' || value === 'TEMPORARY') node.textContent = 'Temporary Ban';
+      button.setAttribute('aria-label', hasValue ? 'Clear search' : 'Search bans');
     });
   };
 
-  let scheduled = false;
-  const schedule = () => {
-    if (scheduled) return;
-    scheduled = true;
-    window.requestAnimationFrame(() => {
-      scheduled = false;
-      normalizeLabels();
+  const wire = () => {
+    sync();
+    document.querySelectorAll('.js-ban-search-form .js-ban-search, .js-ban-search-form input').forEach((input) => {
+      input.addEventListener('input', sync);
+      input.addEventListener('keyup', sync);
+      input.addEventListener('change', sync);
     });
+    document.addEventListener('click', () => window.setTimeout(sync, 0));
   };
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', schedule, { once: true });
+    document.addEventListener('DOMContentLoaded', wire, { once: true });
   } else {
-    schedule();
+    wire();
   }
-
-  document.addEventListener('click', () => window.setTimeout(schedule, 0));
-  window.setTimeout(schedule, 250);
 })();
