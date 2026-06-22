@@ -102,6 +102,20 @@
         return "Permanent Ban";
     }
 
+    function statusClassList(ban) {
+        const raw = String((ban && ban.status_type) || "").toLowerCase();
+
+        if ((ban && ban.ipban) || raw.includes("ip")) {
+            return "ip ban-type-ip";
+        }
+
+        if ((ban && ban.temporary) || raw.includes("temp")) {
+            return "temp temporary ban-type-temp";
+        }
+
+        return "perm permanent active";
+    }
+
     function durationMetaLabel(ban) {
         if (!ban || !ban.temporary) return "";
         return ban.duration || "";
@@ -211,7 +225,7 @@
 
                 <div class="ban-cell ban-type-cell">
                     <div class="ban-type-copy">
-                        <span class="badge ban-type-pill mineacle-row-ban-type-pill mineacle-ban-status-single ${escapeHtml(ban.status_type)}" aria-label="${escapeHtml(statusLabel(ban))}">${escapeHtml(statusLabel(ban))}</span>
+                        <span class="badge ban-type-pill mineacle-row-ban-type-pill mineacle-ban-status-single ${escapeHtml(statusClassList(ban))}" aria-label="${escapeHtml(statusLabel(ban))}">${escapeHtml(statusLabel(ban))}</span>
                         ${durationMetaLabel(ban) ? `<span class="ban-meta">${escapeHtml(durationMetaLabel(ban))}</span>` : ""}
                     </div>
                     <div class="ban-action">${actionButton(ban)}</div>
@@ -435,7 +449,7 @@
         setText("singleModalDiscordCount", discordOnlineMembersText);
 
         const status = document.getElementById("singleModalStatus");
-        if (status) status.className = `mineacle-ban-status-single ${escapeHtml(ban.status_type)}`;
+        if (status) status.className = `mineacle-ban-status-single ${escapeHtml(statusClassList(ban))}`;
 
         const discordButton = document.getElementById("singleModalDiscord");
         if (discordButton) discordButton.href = safeUrl(ban.discord, DISCORD_FALLBACK);
