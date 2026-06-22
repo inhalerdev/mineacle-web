@@ -737,3 +737,72 @@
     start();
   }
 })();
+
+
+/* Mineacle Bans v3.9.66: Client Guard copy + store-matched search/unban button labels */
+(function () {
+  'use strict';
+
+  const setLeafText = (selector, text) => {
+    const node = document.querySelector(selector);
+    if (node && node.textContent.trim() !== text) {
+      node.textContent = text;
+    }
+  };
+
+  const normalizeLabels = () => {
+    const heading = document.querySelector('.client-guard-copy h2');
+    const paragraph = document.querySelector('.client-guard-copy p');
+
+    if (heading && heading.textContent.trim() !== 'Fair play, clear proof') {
+      heading.textContent = 'Fair play, clear proof';
+    }
+
+    if (paragraph) {
+      const copy = 'Client Guard reviews repeated movement, combat, and building patterns\nbefore staff act, helping keep punishments fair and clear';
+      if (paragraph.textContent !== copy) {
+        paragraph.textContent = copy;
+      }
+    }
+
+    document.querySelectorAll('.js-ban-search-form button[type="submit"], .mineacle-search-button-live').forEach((button) => {
+      if (button.textContent.trim() !== 'Search') {
+        button.textContent = 'Search';
+      }
+    });
+
+    document.querySelectorAll('.ban-row .btn.red, .ban-action .btn.red, .ban-action a.btn, .ban-row a[href*="store"], .ban-row a[href*="tebex"], .ban-action a[href*="store"], .ban-action a[href*="tebex"]').forEach((button) => {
+      const text = button.textContent.trim().toUpperCase();
+      if (text.includes('$') || text.includes('UNBAN') || text.includes('PAY')) {
+        button.textContent = 'Unban';
+        button.setAttribute('aria-label', 'Pay to unban');
+        button.setAttribute('title', 'Pay to unban');
+      }
+    });
+
+    document.querySelectorAll('.ban-type-pill, .ban-status, .status-pill, .ban-pill, .mineacle-ban-status-single, .mineacle-ban-type-single').forEach((node) => {
+      const value = node.textContent.trim().toUpperCase();
+      if (value === 'PERM BAN' || value === 'PERMANENT') node.textContent = 'Permanent Ban';
+      if (value === 'TEMP BAN' || value === 'TEMPORARY') node.textContent = 'Temporary Ban';
+    });
+  };
+
+  let scheduled = false;
+  const schedule = () => {
+    if (scheduled) return;
+    scheduled = true;
+    window.requestAnimationFrame(() => {
+      scheduled = false;
+      normalizeLabels();
+    });
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', schedule, { once: true });
+  } else {
+    schedule();
+  }
+
+  document.addEventListener('click', () => window.setTimeout(schedule, 0));
+  window.setTimeout(schedule, 250);
+})();
