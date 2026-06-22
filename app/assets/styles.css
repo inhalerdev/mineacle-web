@@ -24119,3 +24119,43 @@ body *{
     margin-top:0!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.64: move Client Guard section DOWN from navbar */
+@media (min-width:981px){
+  :root{
+    --mineacle-section-rhythm:72px;
+    --mineacle-clientguard-top-drop:118px;
+  }
+
+  html body .client-guard-detail-section,
+  html body .client-guard-section{
+    margin-top:var(--mineacle-clientguard-top-drop)!important;
+    padding-top:0!important;
+  }
+
+  html body .bans-v3-results,
+  html body .bans-section{
+    margin-top:var(--mineacle-section-rhythm)!important;
+    margin-bottom:var(--mineacle-section-rhythm)!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  :root{
+    --mineacle-clientguard-top-drop:96px;
+    --mineacle-section-rhythm:64px;
+  }
+}
+
+@media (max-width:980px){
+  :root{
+    --mineacle-clientguard-top-drop:48px;
+    --mineacle-section-rhythm:34px;
+  }
+
+  html body .client-guard-detail-section,
+  html body .client-guard-section{
+    margin-top:var(--mineacle-clientguard-top-drop)!important;
+  }
+}
