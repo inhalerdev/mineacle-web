@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 require_once __DIR__ . '/includes/layout.php';
 
-mineacle_page_head('Bans | Mineacle Network');
+mineacle_page_head('Bans');
 mineacle_header('bans');
 
 ?>
