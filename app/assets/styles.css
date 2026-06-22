@@ -26451,3 +26451,89 @@ body *{
     margin-bottom:var(--mineacle-section-gap-match)!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.80: match Bans container corner radius to Client Guard container */
+@media (min-width:981px){
+  :root{
+    --mineacle-section-radius:18px;
+  }
+
+  /* Outer Bans section/card radius matches Client Guard panel. */
+  html body .bans-v3-results,
+  html body .bans-section,
+  html body .ban-table-shell,
+  html body .bans-card,
+  html body .ban-board,
+  html body .ban-panel,
+  html body .bans-v3-card,
+  html body .bans-v31-results-card,
+  html body .bans-v3-results-card,
+  html body .bans-v3-results .card,
+  html body .bans-section .card{
+    border-radius:var(--mineacle-section-radius)!important;
+    overflow:hidden!important;
+  }
+
+  /* Keep the inside pieces flowing as one panel, so only the outside container rounds. */
+  html body .bans-v3-results-head,
+  html body .section-heading,
+  html body .bans-section .section-heading,
+  html body .js-ban-search-form,
+  html body form.js-ban-search-form,
+  html body .bans-v3-search,
+  html body .bans-v31-results-search,
+  html body .ban-toolbar,
+  html body .ban-search-row,
+  html body .ban-table-header-row,
+  html body .js-ban-table,
+  html body .ban-table{
+    border-radius:0!important;
+  }
+
+  /* Banned player row remains square internally; no row rounding. */
+  html body article.ban-row,
+  html body .ban-row,
+  html body .ban-row:first-child,
+  html body .ban-row:last-child,
+  html body .ban-row:not(:first-child),
+  html body .js-ban-table article.ban-row,
+  html body .js-ban-table .ban-row,
+  html body .js-ban-table .ban-row:first-child,
+  html body .js-ban-table .ban-row:last-child,
+  html body .js-ban-table .ban-row:not(:first-child),
+  html body .mineacle-ban-row-square,
+  html body .ban-table-data-row{
+    border-radius:0!important;
+    -webkit-border-radius:0!important;
+  }
+
+  html body .ban-row::before,
+  html body .ban-row::after,
+  html body .mineacle-ban-row-square::before,
+  html body .mineacle-ban-row-square::after,
+  html body .ban-table-data-row::before,
+  html body .ban-table-data-row::after{
+    border-radius:0!important;
+    -webkit-border-radius:0!important;
+  }
+}
+
+@media (max-width:980px){
+  html body .bans-v3-results,
+  html body .bans-section,
+  html body .ban-table-shell,
+  html body .bans-card,
+  html body .ban-board,
+  html body .ban-panel,
+  html body .bans-v3-card{
+    border-radius:18px!important;
+    overflow:hidden!important;
+  }
+
+  html body .ban-row,
+  html body .mineacle-ban-row-square,
+  html body .ban-table-data-row{
+    border-radius:0!important;
+  }
+}
