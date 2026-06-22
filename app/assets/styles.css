@@ -27063,3 +27063,114 @@ body *{
     cursor:pointer!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.85: hard-disable exact banned-player row hover selectors */
+@media (min-width:981px){
+  /*
+    Earlier table-row CSS used a more specific selector:
+    article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover
+    This block repeats that exact specificity after all previous rules so the row
+    no longer brightens on hover. Info and Unban still keep their own effects.
+  */
+
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row,
+  html body .js-ban-table article.ban-row.mineacle-ban-row-square.ban-table-data-row,
+  html body .js-ban-table .ban-row.mineacle-ban-row-square.ban-table-data-row,
+  html body .bans-section article.ban-row.mineacle-ban-row-square.ban-table-data-row,
+  html body .bans-section .ban-row.mineacle-ban-row-square.ban-table-data-row,
+  html body .bans-v3-results article.ban-row.mineacle-ban-row-square.ban-table-data-row,
+  html body .bans-v3-results .ban-row.mineacle-ban-row-square.ban-table-data-row{
+    cursor:default!important;
+    transform:none!important;
+    filter:none!important;
+    border-radius:0!important;
+    border-color:rgba(255,255,255,.055)!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.007)),
+      rgba(255,255,255,.014)!important;
+    box-shadow:none!important;
+  }
+
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row:hover,
+  html body .js-ban-table article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover,
+  html body .js-ban-table .ban-row.mineacle-ban-row-square.ban-table-data-row:hover,
+  html body .bans-section article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover,
+  html body .bans-section .ban-row.mineacle-ban-row-square.ban-table-data-row:hover,
+  html body .bans-v3-results article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover,
+  html body .bans-v3-results .ban-row.mineacle-ban-row-square.ban-table-data-row:hover{
+    cursor:default!important;
+    transform:none!important;
+    filter:none!important;
+    border-radius:0!important;
+    border-color:rgba(255,255,255,.055)!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.007)),
+      rgba(255,255,255,.014)!important;
+    box-shadow:none!important;
+  }
+
+  /* Prevent row-hover rules from changing child cells/text/avatar. */
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover > .ban-cell,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row:hover > .ban-cell,
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-avatar,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-avatar,
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-name,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-name,
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-date,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-date,
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-reason-cell,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-reason-cell{
+    transform:none!important;
+    filter:none!important;
+    opacity:inherit!important;
+    background:transparent!important;
+    box-shadow:none!important;
+  }
+
+  /*
+    Display-only ban type label should also not react.
+    It remains readable but has no clickable/hover affordance.
+  */
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-type-pill,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row:hover .ban-type-pill,
+  html body .ban-type-pill,
+  html body .ban-type-pill:hover,
+  html body .ban-type-pill:focus,
+  html body .ban-type-pill:active{
+    cursor:default!important;
+    pointer-events:none!important;
+    transform:none!important;
+    filter:none!important;
+    background:rgba(255,255,255,.045)!important;
+    border-color:rgba(255,136,255,.26)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.050),
+      0 5px 10px rgba(0,0,0,.14)!important;
+  }
+
+  /* Restore interactive controls only. */
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row .info-btn,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row .info-btn,
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row .ban-unban-cta,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row .ban-unban-cta,
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row .ban-action a,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row .ban-action a{
+    pointer-events:auto!important;
+    cursor:pointer!important;
+  }
+}
+
+@media (max-width:980px){
+  html body article.ban-row.mineacle-ban-row-square.ban-table-data-row:hover,
+  html body .ban-row.mineacle-ban-row-square.ban-table-data-row:hover{
+    transform:none!important;
+    filter:none!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.007)),
+      rgba(255,255,255,.014)!important;
+    box-shadow:none!important;
+  }
+}
