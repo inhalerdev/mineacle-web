@@ -26935,3 +26935,131 @@ body *{
     pointer-events:none!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.84: remove ban row hover/click feel; label is not clickable */
+@media (min-width:981px){
+  /*
+    Banned player slot itself should not react on hover.
+    Only the info button and Unban button keep hover/click feedback.
+  */
+  html body article.ban-row,
+  html body .ban-row,
+  html body .ban-row.mineacle-ban-row-square,
+  html body .ban-row.ban-table-data-row,
+  html body .js-ban-table article.ban-row,
+  html body .js-ban-table .ban-row,
+  html body .js-ban-table .ban-row.mineacle-ban-row-square,
+  html body .js-ban-table .ban-row.ban-table-data-row{
+    cursor:default!important;
+    transform:none!important;
+    filter:none!important;
+    border-radius:0!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.007)),
+      rgba(255,255,255,.014)!important;
+    box-shadow:none!important;
+  }
+
+  html body article.ban-row:hover,
+  html body .ban-row:hover,
+  html body .ban-row.mineacle-ban-row-square:hover,
+  html body .ban-row.ban-table-data-row:hover,
+  html body .js-ban-table article.ban-row:hover,
+  html body .js-ban-table .ban-row:hover,
+  html body .js-ban-table .ban-row.mineacle-ban-row-square:hover,
+  html body .js-ban-table .ban-row.ban-table-data-row:hover{
+    cursor:default!important;
+    transform:none!important;
+    filter:none!important;
+    border-color:rgba(255,255,255,.055)!important;
+    border-radius:0!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.007)),
+      rgba(255,255,255,.014)!important;
+    box-shadow:none!important;
+  }
+
+  html body .ban-row::before,
+  html body .ban-row::after,
+  html body .ban-row:hover::before,
+  html body .ban-row:hover::after{
+    display:none!important;
+    content:none!important;
+    opacity:0!important;
+    box-shadow:none!important;
+    background:none!important;
+  }
+
+  /*
+    Ban type label is display-only now:
+    no js-info-button, no pointer cursor, no hover glow, no click affordance.
+  */
+  html body .ban-type-pill,
+  html body .ban-type-pill:hover,
+  html body .ban-type-pill:focus,
+  html body .ban-type-pill:active{
+    cursor:default!important;
+    pointer-events:none!important;
+    transform:none!important;
+    filter:none!important;
+    background:rgba(255,255,255,.045)!important;
+    border-color:rgba(255,136,255,.26)!important;
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.050),
+      0 5px 10px rgba(0,0,0,.14)!important;
+  }
+
+  /* Keep the actual interactive targets alive. */
+  html body .info-btn,
+  html body .js-info-button.info-btn,
+  html body .ban-info-btn,
+  html body .js-ban-info,
+  html body .ban-row .icon-btn,
+  html body .ban-unban-cta,
+  html body .ban-action a,
+  html body .ban-action .btn{
+    pointer-events:auto!important;
+  }
+
+  html body .info-btn,
+  html body .js-info-button.info-btn,
+  html body .ban-info-btn,
+  html body .js-ban-info,
+  html body .ban-row .icon-btn{
+    cursor:pointer!important;
+  }
+
+  html body .ban-unban-cta,
+  html body .ban-action a,
+  html body .ban-action .btn{
+    cursor:pointer!important;
+  }
+}
+
+@media (max-width:980px){
+  html body .ban-row,
+  html body .ban-row:hover{
+    cursor:default!important;
+    transform:none!important;
+    filter:none!important;
+    box-shadow:none!important;
+  }
+
+  html body .ban-type-pill,
+  html body .ban-type-pill:hover{
+    cursor:default!important;
+    pointer-events:none!important;
+    transform:none!important;
+    filter:none!important;
+  }
+
+  html body .info-btn,
+  html body .js-info-button.info-btn,
+  html body .ban-unban-cta,
+  html body .ban-action a,
+  html body .ban-action .btn{
+    pointer-events:auto!important;
+    cursor:pointer!important;
+  }
+}

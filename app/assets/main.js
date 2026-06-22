@@ -211,7 +211,7 @@
 
                 <div class="ban-cell ban-type-cell">
                     <div class="ban-type-copy">
-                        <button class="badge ban-type-pill ${escapeHtml(ban.status_type)} js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(statusLabel(ban))} details">${escapeHtml(statusLabel(ban))}</button>
+                        <span class="badge ban-type-pill ${escapeHtml(ban.status_type)}" aria-label="${escapeHtml(statusLabel(ban))}">${escapeHtml(statusLabel(ban))}</span>
                         ${durationMetaLabel(ban) ? `<span class="ban-meta">${escapeHtml(durationMetaLabel(ban))}</span>` : ""}
                     </div>
                     <div class="ban-action">${actionButton(ban)}</div>
