@@ -248,12 +248,25 @@
     }
 
     function updateClearButton() {
-        if (!clearSearch || !banSearch) return;
+        if (!banSearch) return;
 
         const hasValue = banSearch.value.trim().length > 0;
-        clearSearch.classList.toggle("show", hasValue);
-        clearSearch.hidden = !hasValue;
+        const searchAction = banSearchForm ? banSearchForm.querySelector('button[type="submit"], .btn:not(.search-clear):not(.ban-search-clear)') : null;
+
+        if (clearSearch) {
+            clearSearch.classList.remove("show");
+            clearSearch.hidden = true;
+            clearSearch.setAttribute("aria-hidden", "true");
+        }
+
         banSearch.classList.toggle("has-value", hasValue);
+
+        if (searchAction) {
+            searchAction.textContent = hasValue ? "Clear" : "Search";
+            searchAction.classList.toggle("is-clear", hasValue);
+            searchAction.classList.toggle("is-search", !hasValue);
+            searchAction.setAttribute("aria-label", hasValue ? "Clear search" : "Search bans");
+        }
     }
 
     function createBanModal() {
@@ -423,7 +436,7 @@
                 note.textContent = `Temporary bans cannot be paid for. This punishment expires on ${ban.expires || "the listed expiration date"}`;
             } else if (ban.can_pay) {
                 if (actions) {
-                    actions.innerHTML = `<a class="mineacle-ban-pay-single" href="${escapeHtml(safeUrl(ban.unban_url, "https://store.mineacle.net"))}">${escapeHtml(ban.price)} Pay to be unbanned</a>`;
+                    actions.innerHTML = `<a class="mineacle-ban-pay-single ban-unban-cta" href="${escapeHtml(safeUrl(ban.unban_url, "https://store.mineacle.net"))}" aria-label="Pay to unban" title="Pay to unban">Unban</a>`;
                 }
                 note.textContent = "Eligible permanent bans may use the payment option, or Discord if the punishment should be reviewed";
             } else {
@@ -452,6 +465,19 @@
         if (banSearchForm) {
             banSearchForm.addEventListener("submit", (event) => {
                 event.preventDefault();
+
+                const searchAction = banSearchForm.querySelector('button[type="submit"], .btn:not(.search-clear):not(.ban-search-clear)');
+                const hasValue = banSearch && banSearch.value.trim().length > 0;
+
+                if (searchAction && searchAction.classList.contains("is-clear") && hasValue) {
+                    banSearch.value = "";
+                    banSearch.focus();
+                    currentPage = 1;
+                    updateClearButton();
+                    loadBans(1);
+                    return;
+                }
+
                 currentPage = 1;
                 updateClearButton();
                 loadBans(1);
@@ -758,9 +784,17 @@ const normalizeLabels = () => {
     }
 
     document.querySelectorAll('.js-ban-search-form button[type="submit"], .mineacle-search-button-live').forEach((button) => {
-      if (button.textContent.trim() !== 'Search') {
-        button.textContent = 'Search';
+      const form = button.closest('.js-ban-search-form');
+      const input = form ? form.querySelector('.js-ban-search, input') : null;
+      const hasValue = input && input.value.trim().length > 0;
+      const label = hasValue ? 'Clear' : 'Search';
+
+      if (button.textContent.trim() !== label) {
+        button.textContent = label;
       }
+
+      button.classList.toggle('is-clear', Boolean(hasValue));
+      button.classList.toggle('is-search', !hasValue);
     });
 
     document.querySelectorAll('.ban-row .btn.red, .ban-action .btn.red, .ban-action a.btn, .ban-row a[href*="store"], .ban-row a[href*="tebex"], .ban-action a[href*="store"], .ban-action a[href*="tebex"]').forEach((button) => {
