@@ -152,19 +152,11 @@
     }
 
     function actionButton(ban, index) {
-        if (ban.ipban) {
-            return `<button class="ban-type-pill ban-type-ip js-info-button" type="button" data-info-index="${index}" aria-label="View IP ban details">IP Ban</button>`;
-        }
-
-        if (ban.temporary || ban.action_type === "wait") {
-            return `<button class="ban-type-pill ban-type-temp js-info-button" type="button" data-info-index="${index}" aria-label="View temporary ban details">Wait It Out</button>`;
-        }
-
-        if (ban.can_pay && ban.action_type !== "view") {
+        if (ban.can_pay && ban.action_type !== "view" && !ban.ipban && !ban.temporary) {
             return `<a class="btn gold ban-unban-cta" href="${escapeHtml(safeUrl(ban.unban_url, "https://store.mineacle.net"))}" aria-label="Pay to unban" title="Pay to unban">Unban</a>`;
         }
 
-        return `<button class="btn soft info-btn js-info-button" type="button" data-info-index="${index}">View</button>`;
+        return "";
     }
 
     function renderBans(rows) {
@@ -178,26 +170,34 @@
             return;
         }
 
-        banList.innerHTML = currentRows.map((ban, index) => `
-            <article class="ban-row mineacle-ban-row-square" data-ban-index="${index}">
-                <img class="ban-avatar" src="${escapeHtml(ban.skin)}" alt="${escapeHtml(ban.username)}" loading="lazy">
-
-                <div class="ban-player">
-                    <div class="ban-player-line">
-                        <strong class="ban-name">${escapeHtml(ban.username)}</strong>
-                        <button class="info-btn js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(ban.username)} ban details">i</button>
+        banList.innerHTML = `
+            <div class="ban-table-header-row" role="row" aria-label="Ban table headings">
+                <div class="ban-table-heading ban-table-heading-player">Player Name</div>
+                <div class="ban-table-heading ban-table-heading-reason">Ban Reason</div>
+                <div class="ban-table-heading ban-table-heading-type">Ban Type</div>
+            </div>
+        ` + currentRows.map((ban, index) => `
+            <article class="ban-row mineacle-ban-row-square ban-table-data-row" data-ban-index="${index}">
+                <div class="ban-player ban-player-cell">
+                    <img class="ban-avatar" src="${escapeHtml(ban.skin)}" alt="${escapeHtml(ban.username)}" loading="lazy">
+                    <div class="ban-player-copy">
+                        <div class="ban-player-line">
+                            <strong class="ban-name">${escapeHtml(ban.username)}</strong>
+                            <button class="info-btn js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(ban.username)} ban details">i</button>
+                        </div>
+                        <span class="ban-date">${escapeHtml(ban.date)}</span>
                     </div>
-                    <span class="ban-date">${escapeHtml(ban.date)}</span>
                 </div>
 
-                <div class="ban-reason">${escapeHtml(ban.reason)}</div>
+                <div class="ban-reason ban-reason-cell">${escapeHtml(ban.reason)}</div>
 
-                <div class="ban-status">
-                    <button class="badge ban-type-pill ${escapeHtml(ban.status_type)} js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(statusLabel(ban))} details">${escapeHtml(statusLabel(ban))}</button>
-                    <span class="ban-meta">${escapeHtml(ban.duration)}</span>
+                <div class="ban-status ban-type-cell">
+                    <div class="ban-type-copy">
+                        <button class="badge ban-type-pill ${escapeHtml(ban.status_type)} js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(statusLabel(ban))} details">${escapeHtml(statusLabel(ban))}</button>
+                        <span class="ban-meta">${escapeHtml(ban.duration)}</span>
+                    </div>
+                    <div class="ban-action">${actionButton(ban, index)}</div>
                 </div>
-
-                <div class="ban-action">${actionButton(ban, index)}</div>
             </article>
         `).join("");
 

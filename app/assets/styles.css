@@ -25657,3 +25657,232 @@ body *{
     translate:none!important;
   }
 }
+
+
+/* Mineacle Bans v3.9.74: table header between search and bans + 3-column ban row layout */
+@media (min-width:981px){
+  html body .js-ban-table,
+  html body .ban-table{
+    display:block!important;
+    border-radius:0!important;
+    overflow:visible!important;
+  }
+
+  html body .ban-table-header-row{
+    display:grid!important;
+    grid-template-columns:minmax(250px, 1.05fr) minmax(340px, 1.55fr) minmax(220px, .8fr)!important;
+    align-items:center!important;
+    min-height:42px!important;
+    padding:0 20px!important;
+    border-top:0!important;
+    border-right:0!important;
+    border-left:0!important;
+    border-bottom:1px solid rgba(255,255,255,.065)!important;
+    border-radius:0!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.026), rgba(255,255,255,.008)),
+      rgba(17,17,23,.72)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.035)!important;
+  }
+
+  html body .ban-table-heading{
+    color:rgba(255,255,255,.58)!important;
+    font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
+    font-size:11px!important;
+    font-weight:700!important;
+    letter-spacing:.12em!important;
+    line-height:1!important;
+    text-transform:uppercase!important;
+    text-shadow:none!important;
+  }
+
+  html body .ban-table-heading-type{
+    text-align:left!important;
+  }
+
+  html body article.ban-row.mineacle-ban-row-square,
+  html body .ban-row.mineacle-ban-row-square,
+  html body .js-ban-table article.ban-row.mineacle-ban-row-square,
+  html body .js-ban-table .ban-row.mineacle-ban-row-square,
+  html body article.ban-row.ban-table-data-row,
+  html body .ban-row.ban-table-data-row{
+    display:grid!important;
+    grid-template-columns:minmax(250px, 1.05fr) minmax(340px, 1.55fr) minmax(220px, .8fr)!important;
+    align-items:center!important;
+    column-gap:0!important;
+    min-height:68px!important;
+    padding:9px 20px!important;
+    margin:0!important;
+    border-width:0 0 1px 0!important;
+    border-style:solid!important;
+    border-color:rgba(255,255,255,.055)!important;
+    border-radius:0!important;
+    -webkit-border-radius:0!important;
+    overflow:visible!important;
+    clip-path:none!important;
+    mask-image:none!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.018), rgba(255,255,255,.007)),
+      rgba(255,255,255,.014)!important;
+    box-shadow:none!important;
+    transform:none!important;
+  }
+
+  html body article.ban-row.mineacle-ban-row-square:hover,
+  html body .ban-row.mineacle-ban-row-square:hover,
+  html body .js-ban-table article.ban-row.mineacle-ban-row-square:hover,
+  html body .js-ban-table .ban-row.mineacle-ban-row-square:hover{
+    border-color:rgba(255,255,255,.085)!important;
+    border-radius:0!important;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.032), rgba(255,255,255,.012)),
+      rgba(255,255,255,.024)!important;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.040)!important;
+    transform:none!important;
+  }
+
+  html body .ban-row.mineacle-ban-row-square::before,
+  html body .ban-row.mineacle-ban-row-square::after,
+  html body .ban-row.ban-table-data-row::before,
+  html body .ban-row.ban-table-data-row::after{
+    display:none!important;
+    content:none!important;
+    border-radius:0!important;
+    -webkit-border-radius:0!important;
+  }
+
+  html body .ban-player-cell{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-start!important;
+    min-width:0!important;
+    gap:12px!important;
+  }
+
+  html body .ban-player-cell .ban-avatar,
+  html body .ban-avatar{
+    width:42px!important;
+    min-width:42px!important;
+    height:42px!important;
+    min-height:42px!important;
+    border-radius:8px!important;
+    flex:0 0 42px!important;
+  }
+
+  html body .ban-player-copy{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
+    min-width:0!important;
+    gap:4px!important;
+  }
+
+  html body .ban-player-line{
+    display:flex!important;
+    align-items:center!important;
+    gap:8px!important;
+    min-width:0!important;
+  }
+
+  html body .ban-name{
+    font-size:16px!important;
+    line-height:1.1!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+
+  html body .ban-date{
+    font-size:11.5px!important;
+    line-height:1.1!important;
+    color:rgba(255,255,255,.50)!important;
+    white-space:nowrap!important;
+  }
+
+  html body .ban-reason-cell,
+  html body .ban-reason{
+    padding-right:22px!important;
+    color:rgba(255,255,255,.70)!important;
+    font-size:13px!important;
+    line-height:1.35!important;
+    text-align:left!important;
+  }
+
+  html body .ban-type-cell{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:space-between!important;
+    gap:12px!important;
+    min-width:0!important;
+  }
+
+  html body .ban-type-copy{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    justify-content:center!important;
+    gap:5px!important;
+    min-width:0!important;
+  }
+
+  html body .ban-type-pill{
+    min-width:132px!important;
+    height:28px!important;
+    min-height:28px!important;
+    max-height:28px!important;
+    padding:0 12px!important;
+    border-radius:6px!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    font-size:11px!important;
+    line-height:1!important;
+    white-space:nowrap!important;
+  }
+
+  html body .ban-meta{
+    color:rgba(255,255,255,.50)!important;
+    font-size:11.5px!important;
+    line-height:1.1!important;
+    white-space:nowrap!important;
+  }
+
+  html body .ban-action{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    min-width:0!important;
+  }
+
+  html body .ban-action:empty{
+    display:none!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  html body .ban-table-header-row,
+  html body article.ban-row.mineacle-ban-row-square,
+  html body .ban-row.mineacle-ban-row-square,
+  html body .js-ban-table article.ban-row.mineacle-ban-row-square,
+  html body .js-ban-table .ban-row.mineacle-ban-row-square{
+    grid-template-columns:minmax(220px, 1.05fr) minmax(280px, 1.45fr) minmax(200px, .85fr)!important;
+    padding-left:16px!important;
+    padding-right:16px!important;
+  }
+
+  html body .ban-type-pill{
+    min-width:118px!important;
+  }
+}
+
+@media (max-width:980px){
+  html body .ban-table-header-row{
+    display:none!important;
+  }
+
+  html body .ban-row.mineacle-ban-row-square,
+  html body .ban-row.ban-table-data-row{
+    border-radius:0!important;
+  }
+}
