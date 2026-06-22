@@ -26303,3 +26303,50 @@ body *{
 }
 
 /* Mineacle Bans v3.9.77: IntelliJ cleanup for unused actionButton index parameter */
+
+
+/* Mineacle Bans v3.9.78: move page content down, keep nav/header fixed in place */
+@media (min-width:981px){
+  :root{
+    --mineacle-page-drop:156px;
+    --mineacle-section-gap-final:86px;
+  }
+
+  /*
+    Leave the nav/header exactly where it is.
+    Push the entire content stack below it down by roughly 200% of the current section spacing.
+  */
+  html body .client-guard-detail-section,
+  html body .client-guard-section{
+    margin-top:var(--mineacle-page-drop)!important;
+    padding-top:0!important;
+  }
+
+  html body .bans-v3-results,
+  html body .bans-section{
+    margin-top:var(--mineacle-section-gap-final)!important;
+  }
+
+  html body .site-footer.redesigned-footer{
+    margin-top:0!important;
+  }
+}
+
+@media (min-width:981px) and (max-width:1320px){
+  :root{
+    --mineacle-page-drop:128px;
+    --mineacle-section-gap-final:72px;
+  }
+}
+
+@media (max-width:980px){
+  :root{
+    --mineacle-page-drop:68px;
+    --mineacle-section-gap-final:36px;
+  }
+
+  html body .client-guard-detail-section,
+  html body .client-guard-section{
+    margin-top:var(--mineacle-page-drop)!important;
+  }
+}
