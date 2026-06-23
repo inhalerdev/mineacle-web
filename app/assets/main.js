@@ -347,8 +347,10 @@
                         <span class="mineacle-ban-appeal-count-single" id="singleModalDiscordCount">Online members</span>
                     </a>
 
-                    <div class="mineacle-ban-actions-single" id="singleModalActions"></div>
-                    <p class="mineacle-ban-note-single" id="singleModalNote">Use Discord if you need staff to review the punishment</p>
+                    <div class="mineacle-ban-action-row-single no-action" id="singleModalActionRow">
+                        <p class="mineacle-ban-note-single" id="singleModalNote">Use Discord if you need staff to review the punishment</p>
+                        <div class="mineacle-ban-actions-single" id="singleModalActions"></div>
+                    </div>
                 </div>
             </section>
         `;
@@ -466,8 +468,14 @@
 
         const actions = document.getElementById("singleModalActions");
         const note = document.getElementById("singleModalNote");
+        const actionRow = document.getElementById("singleModalActionRow");
 
         if (actions) actions.innerHTML = "";
+        if (actionRow) {
+            actionRow.classList.remove("has-action", "no-action");
+            actionRow.classList.add("no-action");
+        }
+
         if (note) {
             if (ban.ipban) {
                 note.textContent = "This is an IP ban. Use Discord if you need staff to review the punishment";
@@ -477,7 +485,11 @@
                 if (actions) {
                     actions.innerHTML = `<a class="mineacle-ban-pay-single ban-unban-cta" href="${escapeHtml(safeUrl(ban.unban_url, "https://store.mineacle.net"))}" aria-label="Pay to unban" title="Pay to unban">Unban</a>`;
                 }
-                note.textContent = "Eligible permanent bans may use the payment option, or Discord if the punishment should be reviewed";
+                if (actionRow) {
+                    actionRow.classList.remove("no-action");
+                    actionRow.classList.add("has-action");
+                }
+                note.textContent = "Eligible permanent bans may buy an unban, or use Discord if the punishment should be reviewed";
             } else {
                 note.textContent = "This punishment is not currently eligible for paid unban. Use Discord if you need more information";
             }
