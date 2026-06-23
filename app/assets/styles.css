@@ -30535,3 +30535,431 @@ html body .ban-table-data-row:hover .info-btn:not(:hover):not(:focus-visible){
   border-color:var(--mcl-btn-border-static)!important;
   color:rgba(255,255,255,.86)!important;
 }
+
+
+/* Mineacle Bans v4.0.04: button parity, modal header alignment, Wumpus Discord button */
+
+/* Strong shared flat button system */
+:root{
+  --mcl-v404-border:rgba(255,255,255,.135);
+  --mcl-v404-border-hover:rgba(255,255,255,.205);
+  --mcl-v404-border-active:rgba(255,255,255,.105);
+
+  --mcl-v404-purple:#9b22f0;
+  --mcl-v404-purple-hover:#a832ff;
+  --mcl-v404-purple-active:#7b18c4;
+
+  --mcl-v404-blue:#5865f2;
+  --mcl-v404-blue-hover:#6672ff;
+  --mcl-v404-blue-active:#4650c7;
+
+  --mcl-v404-green:#239f51;
+  --mcl-v404-green-hover:#2ab85f;
+  --mcl-v404-green-active:#18783b;
+
+  --mcl-v404-gold:#d69a21;
+  --mcl-v404-gold-hover:#e1aa32;
+  --mcl-v404-gold-active:#a97818;
+
+  --mcl-v404-red:#c82d43;
+  --mcl-v404-red-hover:#da3a51;
+  --mcl-v404-red-active:#9f2234;
+
+  --mcl-v404-neutral:#1a1a23;
+  --mcl-v404-neutral-hover:#20202a;
+  --mcl-v404-neutral-active:#14141b;
+}
+
+/* Buttons never change size or lift */
+html body .mcx-store,
+html body .mcx-play,
+html body .mcx-discord,
+html body .nav-store-button,
+html body .nav-mc-button,
+html body .nav-mc-icon-button,
+html body .discord-square,
+html body .play-copy-button,
+html body .copy-ip-button,
+html body [data-copy-ip],
+html body .js-ban-search-form button[type="submit"],
+html body .js-ban-search-form .mineacle-search-button-live,
+html body .mineacle-search-button-live,
+html body .js-ban-clear,
+html body .ban-unban-cta,
+html body .mineacle-ban-pay-single,
+html body .mineacle-punish-actions .ban-unban-cta,
+html body .ban-action .btn,
+html body .mineacle-punish-discord,
+html body .mineacle-ban-discord-single,
+html body .mineacle-ban-close-single,
+html body .mineacle-ban-control,
+html body button.mineacle-row-info-button,
+html body .btn{
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  background-image:none!important;
+  transition:background-color .12s ease, border-color .12s ease, color .12s ease!important;
+}
+
+html body .mcx-store:hover,
+html body .mcx-store:focus-visible,
+html body .mcx-play:hover,
+html body .mcx-play:focus-visible,
+html body .mcx-discord:hover,
+html body .mcx-discord:focus-visible,
+html body .nav-store-button:hover,
+html body .nav-store-button:focus-visible,
+html body .nav-mc-button:hover,
+html body .nav-mc-button:focus-visible,
+html body .nav-mc-icon-button:hover,
+html body .nav-mc-icon-button:focus-visible,
+html body .discord-square:hover,
+html body .discord-square:focus-visible,
+html body .play-copy-button:hover,
+html body .play-copy-button:focus-visible,
+html body .copy-ip-button:hover,
+html body .copy-ip-button:focus-visible,
+html body [data-copy-ip]:hover,
+html body [data-copy-ip]:focus-visible,
+html body .js-ban-search-form button[type="submit"]:hover,
+html body .js-ban-search-form button[type="submit"]:focus-visible,
+html body .js-ban-search-form .mineacle-search-button-live:hover,
+html body .js-ban-search-form .mineacle-search-button-live:focus-visible,
+html body .mineacle-search-button-live:hover,
+html body .mineacle-search-button-live:focus-visible,
+html body .js-ban-clear:hover,
+html body .js-ban-clear:focus-visible,
+html body .ban-unban-cta:hover,
+html body .ban-unban-cta:focus-visible,
+html body .mineacle-ban-pay-single:hover,
+html body .mineacle-ban-pay-single:focus-visible,
+html body .mineacle-punish-actions .ban-unban-cta:hover,
+html body .mineacle-punish-actions .ban-unban-cta:focus-visible,
+html body .ban-action .btn:hover,
+html body .ban-action .btn:focus-visible,
+html body .mineacle-punish-discord:hover,
+html body .mineacle-punish-discord:focus-visible,
+html body .mineacle-ban-discord-single:hover,
+html body .mineacle-ban-discord-single:focus-visible,
+html body .mineacle-ban-close-single:hover,
+html body .mineacle-ban-close-single:focus-visible,
+html body .mineacle-ban-control:hover,
+html body .mineacle-ban-control:focus-visible,
+html body button.mineacle-row-info-button:hover,
+html body button.mineacle-row-info-button:focus-visible,
+html body .btn:hover,
+html body .btn:focus-visible,
+html body .mcx-store:active,
+html body .mcx-play:active,
+html body .mcx-discord:active,
+html body .nav-store-button:active,
+html body .nav-mc-button:active,
+html body .nav-mc-icon-button:active,
+html body .discord-square:active,
+html body .play-copy-button:active,
+html body .copy-ip-button:active,
+html body [data-copy-ip]:active,
+html body .js-ban-search-form button[type="submit"]:active,
+html body .js-ban-search-form .mineacle-search-button-live:active,
+html body .mineacle-search-button-live:active,
+html body .js-ban-clear:active,
+html body .ban-unban-cta:active,
+html body .mineacle-ban-pay-single:active,
+html body .mineacle-punish-actions .ban-unban-cta:active,
+html body .ban-action .btn:active,
+html body .mineacle-punish-discord:active,
+html body .mineacle-ban-discord-single:active,
+html body .mineacle-ban-close-single:active,
+html body .mineacle-ban-control:active,
+html body button.mineacle-row-info-button:active,
+html body .btn:active{
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  background-image:none!important;
+}
+
+/* Purple: store/search */
+html body .mcx-store,
+html body .nav-store-button,
+html body .nav-mc-button,
+html body .js-ban-search-form button[type="submit"],
+html body .js-ban-search-form button[type="submit"]:not(.is-clear),
+html body .js-ban-search-form .mineacle-search-button-live,
+html body .js-ban-search-form .mineacle-search-button-live:not(.is-clear),
+html body .mineacle-search-button-live,
+html body .mineacle-search-button-live:not(.is-clear){
+  background:var(--mcl-v404-purple)!important;
+  border-color:var(--mcl-v404-border)!important;
+  color:#fff!important;
+}
+
+html body .mcx-store:hover,
+html body .mcx-store:focus-visible,
+html body .nav-store-button:hover,
+html body .nav-store-button:focus-visible,
+html body .nav-mc-button:hover,
+html body .nav-mc-button:focus-visible,
+html body .js-ban-search-form button[type="submit"]:hover,
+html body .js-ban-search-form button[type="submit"]:focus-visible,
+html body .js-ban-search-form .mineacle-search-button-live:hover,
+html body .js-ban-search-form .mineacle-search-button-live:focus-visible,
+html body .mineacle-search-button-live:hover,
+html body .mineacle-search-button-live:focus-visible{
+  background:var(--mcl-v404-purple-hover)!important;
+  border-color:var(--mcl-v404-border-hover)!important;
+  color:#fff!important;
+}
+
+html body .mcx-store:active,
+html body .nav-store-button:active,
+html body .nav-mc-button:active,
+html body .js-ban-search-form button[type="submit"]:active,
+html body .js-ban-search-form .mineacle-search-button-live:active,
+html body .mineacle-search-button-live:active{
+  background:var(--mcl-v404-purple-active)!important;
+  border-color:var(--mcl-v404-border-active)!important;
+}
+
+/* Clear red */
+html body .js-ban-search-form button[type="submit"].is-clear,
+html body .js-ban-search-form .mineacle-search-button-live.is-clear,
+html body .mineacle-search-button-live.is-clear,
+html body .js-ban-clear.is-clear{
+  background:var(--mcl-v404-red)!important;
+  border-color:var(--mcl-v404-border)!important;
+  color:#fff!important;
+}
+
+html body .js-ban-search-form button[type="submit"].is-clear:hover,
+html body .js-ban-search-form button[type="submit"].is-clear:focus-visible,
+html body .js-ban-search-form .mineacle-search-button-live.is-clear:hover,
+html body .js-ban-search-form .mineacle-search-button-live.is-clear:focus-visible,
+html body .mineacle-search-button-live.is-clear:hover,
+html body .mineacle-search-button-live.is-clear:focus-visible,
+html body .js-ban-clear.is-clear:hover,
+html body .js-ban-clear.is-clear:focus-visible{
+  background:var(--mcl-v404-red-hover)!important;
+  border-color:var(--mcl-v404-border-hover)!important;
+}
+
+html body .js-ban-search-form button[type="submit"].is-clear:active,
+html body .js-ban-search-form .mineacle-search-button-live.is-clear:active,
+html body .mineacle-search-button-live.is-clear:active,
+html body .js-ban-clear.is-clear:active{
+  background:var(--mcl-v404-red-active)!important;
+  border-color:var(--mcl-v404-border-active)!important;
+}
+
+/* Blue: nav Discord and popup Discord */
+html body .mcx-discord,
+html body .nav-mc-icon-button,
+html body .discord-square,
+html body .mineacle-punish-discord,
+html body .mineacle-ban-discord-single{
+  background:var(--mcl-v404-blue)!important;
+  border-color:var(--mcl-v404-border)!important;
+  color:#fff!important;
+}
+
+html body .mcx-discord:hover,
+html body .mcx-discord:focus-visible,
+html body .nav-mc-icon-button:hover,
+html body .nav-mc-icon-button:focus-visible,
+html body .discord-square:hover,
+html body .discord-square:focus-visible,
+html body .mineacle-punish-discord:hover,
+html body .mineacle-punish-discord:focus-visible,
+html body .mineacle-ban-discord-single:hover,
+html body .mineacle-ban-discord-single:focus-visible{
+  background:var(--mcl-v404-blue-hover)!important;
+  border-color:var(--mcl-v404-border-hover)!important;
+}
+
+html body .mcx-discord:active,
+html body .nav-mc-icon-button:active,
+html body .discord-square:active,
+html body .mineacle-punish-discord:active,
+html body .mineacle-ban-discord-single:active{
+  background:var(--mcl-v404-blue-active)!important;
+  border-color:var(--mcl-v404-border-active)!important;
+}
+
+/* Green: Play */
+html body .mcx-play,
+html body .play-copy-button,
+html body .copy-ip-button,
+html body [data-copy-ip]{
+  background:var(--mcl-v404-green)!important;
+  border-color:var(--mcl-v404-border)!important;
+  color:#fff!important;
+}
+
+html body .mcx-play:hover,
+html body .mcx-play:focus-visible,
+html body .play-copy-button:hover,
+html body .play-copy-button:focus-visible,
+html body .copy-ip-button:hover,
+html body .copy-ip-button:focus-visible,
+html body [data-copy-ip]:hover,
+html body [data-copy-ip]:focus-visible{
+  background:var(--mcl-v404-green-hover)!important;
+  border-color:var(--mcl-v404-border-hover)!important;
+}
+
+html body .mcx-play:active,
+html body .play-copy-button:active,
+html body .copy-ip-button:active,
+html body [data-copy-ip]:active{
+  background:var(--mcl-v404-green-active)!important;
+  border-color:var(--mcl-v404-border-active)!important;
+}
+
+/* Gold: inline and modal unban exact match */
+html body .ban-unban-cta,
+html body .mineacle-ban-pay-single,
+html body .mineacle-punish-actions .ban-unban-cta,
+html body .ban-action .btn,
+html body .btn.gold{
+  background:var(--mcl-v404-gold)!important;
+  border-color:var(--mcl-v404-border)!important;
+  color:#fff!important;
+}
+
+html body .ban-unban-cta:hover,
+html body .ban-unban-cta:focus-visible,
+html body .mineacle-ban-pay-single:hover,
+html body .mineacle-ban-pay-single:focus-visible,
+html body .mineacle-punish-actions .ban-unban-cta:hover,
+html body .mineacle-punish-actions .ban-unban-cta:focus-visible,
+html body .ban-action .btn:hover,
+html body .ban-action .btn:focus-visible,
+html body .btn.gold:hover,
+html body .btn.gold:focus-visible{
+  background:var(--mcl-v404-gold-hover)!important;
+  border-color:var(--mcl-v404-border-hover)!important;
+}
+
+html body .ban-unban-cta:active,
+html body .mineacle-ban-pay-single:active,
+html body .mineacle-punish-actions .ban-unban-cta:active,
+html body .ban-action .btn:active,
+html body .btn.gold:active{
+  background:var(--mcl-v404-gold-active)!important;
+  border-color:var(--mcl-v404-border-active)!important;
+}
+
+/* Neutral: close and info */
+html body .mineacle-ban-close-single,
+html body .mineacle-ban-control,
+html body button.mineacle-row-info-button,
+html body .info-btn,
+html body .js-info-button.info-btn,
+html body .icon-btn{
+  background:var(--mcl-v404-neutral)!important;
+  border-color:var(--mcl-v404-border)!important;
+  color:rgba(255,255,255,.86)!important;
+}
+
+html body .mineacle-ban-close-single:hover,
+html body .mineacle-ban-close-single:focus-visible,
+html body .mineacle-ban-control:hover,
+html body .mineacle-ban-control:focus-visible,
+html body button.mineacle-row-info-button:hover,
+html body button.mineacle-row-info-button:focus-visible,
+html body .info-btn:hover,
+html body .info-btn:focus-visible,
+html body .js-info-button.info-btn:hover,
+html body .js-info-button.info-btn:focus-visible,
+html body .icon-btn:hover,
+html body .icon-btn:focus-visible{
+  background:var(--mcl-v404-neutral-hover)!important;
+  border-color:var(--mcl-v404-border-hover)!important;
+  color:#fff!important;
+}
+
+html body .mineacle-ban-close-single:active,
+html body .mineacle-ban-control:active,
+html body button.mineacle-row-info-button:active,
+html body .info-btn:active,
+html body .js-info-button.info-btn:active,
+html body .icon-btn:active{
+  background:var(--mcl-v404-neutral-active)!important;
+  border-color:var(--mcl-v404-border-active)!important;
+  color:rgba(255,255,255,.90)!important;
+}
+
+/* Row hover cannot light up the info button */
+html body .ban-row:hover .mineacle-ban-control.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .js-ban-table .ban-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-row:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover .info-btn:not(:hover):not(:focus-visible){
+  background:var(--mcl-v404-neutral)!important;
+  border-color:var(--mcl-v404-border)!important;
+  color:rgba(255,255,255,.86)!important;
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+}
+
+/* Modal header alignment cleanup */
+html body .mineacle-punish-kicker{
+  display:none!important;
+}
+
+html body .mineacle-punish-player{
+  align-items:center!important;
+}
+
+html body .mineacle-punish-title{
+  display:flex!important;
+  align-items:center!important;
+  min-height:54px!important;
+}
+
+html body .mineacle-punish-name{
+  margin:0!important;
+  line-height:1!important;
+}
+
+/* Smaller ban labels in row and modal */
+html body .mineacle-ban-status-single,
+html body .mineacle-row-ban-type-pill,
+html body .ban-type-pill,
+html body .badge.ban-type-pill{
+  height:34px!important;
+  min-height:34px!important;
+  min-width:82px!important;
+  padding:0 13px!important;
+  border-radius:7px!important;
+  font-size:11px!important;
+  line-height:1!important;
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+}
+
+/* Wumpus character in Discord appeal button */
+html body .mineacle-punish-discord{
+  grid-template-columns:42px minmax(0, 1fr)!important;
+}
+
+html body .mineacle-punish-discord-wumpus,
+html body .mineacle-punish-discord-character{
+  width:42px!important;
+  height:42px!important;
+  display:block!important;
+  object-fit:contain!important;
+  border-radius:10px!important;
+  background:#5865f2!important;
+  box-shadow:none!important;
+}
+
+html body .mineacle-punish-discord-mark{
+  display:none!important;
+}

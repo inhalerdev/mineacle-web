@@ -222,7 +222,7 @@
                     <div class="ban-player-copy">
                         <div class="ban-player-line">
                             <strong class="ban-name">${escapeHtml(ban.username)}</strong>
-                            <button class="mineacle-ban-close-single js-info-button mineacle-row-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(ban.username)} ban details">i</button>
+                            <button class="mineacle-ban-control mineacle-row-info-button js-info-button" type="button" data-info-index="${index}" aria-label="View ${escapeHtml(ban.username)} ban details">i</button>
                         </div>
                         <span class="ban-date">${escapeHtml(ban.date)}</span>
                     </div>
@@ -326,7 +326,7 @@
                     <div class="mineacle-punish-player">
                         <img class="mineacle-ban-avatar-single mineacle-punish-avatar" id="singleModalAvatar" src="${escapeHtml(assetUrl(LOGO_FALLBACK))}" alt="">
                         <div class="mineacle-punish-title">
-                            <span class="mineacle-punish-kicker">Punishment Details</span>
+                            
                             <h2 class="mineacle-ban-name-single mineacle-punish-name" id="singleModalName">Player</h2>
                         </div>
                     </div>
@@ -348,7 +348,7 @@
 
                 <footer class="mineacle-punish-footer">
                     <a class="mineacle-punish-discord" id="singleModalDiscord" href="${escapeHtml(DISCORD_FALLBACK)}" target="_blank" rel="noopener">
-                        <span class="mineacle-punish-discord-mark">◎</span>
+                        <img class="mineacle-punish-discord-wumpus" src="${escapeHtml(assetUrl('appeal-wumpus.webp'))}" alt="" loading="lazy">
                         <span>
                             <b>Discord Appeal</b>
                             <small id="singleModalDiscordCount">Discord</small>
