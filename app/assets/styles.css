@@ -32018,3 +32018,184 @@ html body .mineacle-punish-note{
     justify-self:center!important;
   }
 }
+
+
+/* Mineacle Bans v4.0.10: Buy Unban typography/style matches Play/Store buttons */
+
+/*
+  BUY UNBAN now uses the same button typography and geometry standard as Play/Store:
+  - same height
+  - same font size
+  - same font weight
+  - same letter spacing
+  - same radius
+  - same padding behavior
+  - same static/hover/click timing
+  The color remains red per the latest requested direction.
+*/
+:root{
+  --mcl-nav-button-height:34px;
+  --mcl-nav-button-radius:7px;
+  --mcl-nav-button-font-size:13px;
+  --mcl-nav-button-font-weight:700;
+  --mcl-nav-button-letter-spacing:.035em;
+  --mcl-nav-button-padding-x:16px;
+
+  --mcl-buy-unban-static:#c82d43;
+  --mcl-buy-unban-hover:#db3b52;
+  --mcl-buy-unban-active:#9f2234;
+  --mcl-buy-unban-border:rgba(255,255,255,.14);
+  --mcl-buy-unban-border-hover:rgba(255,255,255,.22);
+  --mcl-buy-unban-border-active:rgba(255,255,255,.10);
+}
+
+/* Direct component override: this must beat .btn, .gold, .ban-unban-cta and older hard-fix widths. */
+html body a.mineacle-buy-unban-button,
+html body .ban-action a.mineacle-buy-unban-button,
+html body .mineacle-punish-actions a.mineacle-buy-unban-button,
+html body .ban-unban-cta.mineacle-buy-unban-button,
+html body .mineacle-ban-pay-single.mineacle-buy-unban-button,
+html body .btn.gold.mineacle-buy-unban-button,
+html body a.ban-unban-cta,
+html body a.mineacle-ban-pay-single{
+  box-sizing:border-box!important;
+  width:auto!important;
+  min-width:max-content!important;
+  max-width:none!important;
+  height:var(--mcl-nav-button-height)!important;
+  min-height:var(--mcl-nav-button-height)!important;
+  max-height:var(--mcl-nav-button-height)!important;
+  padding:0 var(--mcl-nav-button-padding-x)!important;
+  margin:0!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 auto!important;
+  border-radius:var(--mcl-nav-button-radius)!important;
+  border:1px solid var(--mcl-buy-unban-border)!important;
+  background:var(--mcl-buy-unban-static)!important;
+  background-image:none!important;
+  color:#fff!important;
+  font-family:inherit!important;
+  font-size:var(--mcl-nav-button-font-size)!important;
+  font-weight:var(--mcl-nav-button-font-weight)!important;
+  line-height:1!important;
+  letter-spacing:var(--mcl-nav-button-letter-spacing)!important;
+  text-align:center!important;
+  text-decoration:none!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+  overflow:visible!important;
+  text-overflow:clip!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+  transition:background-color .12s ease,border-color .12s ease,color .12s ease!important;
+}
+
+html body a.mineacle-buy-unban-button:hover,
+html body a.mineacle-buy-unban-button:focus-visible,
+html body .ban-action a.mineacle-buy-unban-button:hover,
+html body .ban-action a.mineacle-buy-unban-button:focus-visible,
+html body .mineacle-punish-actions a.mineacle-buy-unban-button:hover,
+html body .mineacle-punish-actions a.mineacle-buy-unban-button:focus-visible,
+html body .ban-unban-cta.mineacle-buy-unban-button:hover,
+html body .ban-unban-cta.mineacle-buy-unban-button:focus-visible,
+html body .mineacle-ban-pay-single.mineacle-buy-unban-button:hover,
+html body .mineacle-ban-pay-single.mineacle-buy-unban-button:focus-visible,
+html body .btn.gold.mineacle-buy-unban-button:hover,
+html body .btn.gold.mineacle-buy-unban-button:focus-visible,
+html body a.ban-unban-cta:hover,
+html body a.ban-unban-cta:focus-visible,
+html body a.mineacle-ban-pay-single:hover,
+html body a.mineacle-ban-pay-single:focus-visible{
+  width:auto!important;
+  min-width:max-content!important;
+  max-width:none!important;
+  height:var(--mcl-nav-button-height)!important;
+  min-height:var(--mcl-nav-button-height)!important;
+  max-height:var(--mcl-nav-button-height)!important;
+  padding:0 var(--mcl-nav-button-padding-x)!important;
+  background:var(--mcl-buy-unban-hover)!important;
+  background-image:none!important;
+  border-color:var(--mcl-buy-unban-border-hover)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+html body a.mineacle-buy-unban-button:active,
+html body .ban-action a.mineacle-buy-unban-button:active,
+html body .mineacle-punish-actions a.mineacle-buy-unban-button:active,
+html body .ban-unban-cta.mineacle-buy-unban-button:active,
+html body .mineacle-ban-pay-single.mineacle-buy-unban-button:active,
+html body .btn.gold.mineacle-buy-unban-button:active,
+html body a.ban-unban-cta:active,
+html body a.mineacle-ban-pay-single:active{
+  width:auto!important;
+  min-width:max-content!important;
+  max-width:none!important;
+  height:var(--mcl-nav-button-height)!important;
+  min-height:var(--mcl-nav-button-height)!important;
+  max-height:var(--mcl-nav-button-height)!important;
+  padding:0 var(--mcl-nav-button-padding-x)!important;
+  background:var(--mcl-buy-unban-active)!important;
+  background-image:none!important;
+  border-color:var(--mcl-buy-unban-border-active)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+/* Reserve enough action-column space for the same Play/Store-style typography. */
+html body .ban-table-data-row > .ban-type-cell,
+html body article.ban-row .ban-type-cell,
+html body .js-ban-table .ban-type-cell{
+  display:grid!important;
+  grid-template-columns:minmax(0, 1fr) max-content!important;
+  align-items:center!important;
+  column-gap:18px!important;
+  overflow:visible!important;
+  min-width:0!important;
+}
+
+html body .ban-type-cell .ban-action,
+html body .ban-action{
+  width:auto!important;
+  min-width:max-content!important;
+  max-width:none!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  justify-self:end!important;
+  overflow:visible!important;
+  flex:0 0 auto!important;
+}
+
+/* Modal footer uses the same natural-width action column. */
+html body .mineacle-punish-action-row.has-action,
+html body .mineacle-ban-action-row-single.has-action{
+  display:grid!important;
+  grid-template-columns:minmax(0, 1fr) max-content!important;
+  align-items:center!important;
+  column-gap:18px!important;
+  overflow:visible!important;
+}
+
+html body .mineacle-punish-actions,
+html body .mineacle-ban-actions-single{
+  width:auto!important;
+  min-width:max-content!important;
+  max-width:none!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  justify-self:end!important;
+  overflow:visible!important;
+  flex:0 0 auto!important;
+}
