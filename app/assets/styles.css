@@ -30963,3 +30963,64 @@ html body .mineacle-punish-discord-character{
 html body .mineacle-punish-discord-mark{
   display:none!important;
 }
+
+
+/* Mineacle Bans v4.0.05: popup ban label same size as row ban label */
+:root{
+  --mcl-ban-label-height:34px;
+  --mcl-ban-label-min-width:82px;
+  --mcl-ban-label-padding-x:13px;
+  --mcl-ban-label-font-size:11px;
+}
+
+/*
+  Force the More Info popup status label and the inline row status label
+  to use the exact same dimensions.
+*/
+html body .mineacle-punish-status,
+html body .mineacle-ban-status-single,
+html body .mineacle-row-ban-type-pill,
+html body .ban-type-pill,
+html body .badge.ban-type-pill{
+  height:var(--mcl-ban-label-height)!important;
+  min-height:var(--mcl-ban-label-height)!important;
+  max-height:var(--mcl-ban-label-height)!important;
+  min-width:var(--mcl-ban-label-min-width)!important;
+  padding:0 var(--mcl-ban-label-padding-x)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:7px!important;
+  font-size:var(--mcl-ban-label-font-size)!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+}
+
+/* Prevent the popup header grid from stretching the label taller than the row pill. */
+html body .mineacle-punish-top .mineacle-punish-status,
+html body .mineacle-punish-top .mineacle-ban-status-single{
+  align-self:center!important;
+  justify-self:end!important;
+  height:var(--mcl-ban-label-height)!important;
+  min-height:var(--mcl-ban-label-height)!important;
+  max-height:var(--mcl-ban-label-height)!important;
+}
+
+/* Mobile keeps the exact same label size too. */
+@media (max-width:760px){
+  html body .mineacle-punish-status,
+  html body .mineacle-ban-status-single,
+  html body .mineacle-row-ban-type-pill,
+  html body .ban-type-pill,
+  html body .badge.ban-type-pill{
+    height:var(--mcl-ban-label-height)!important;
+    min-height:var(--mcl-ban-label-height)!important;
+    max-height:var(--mcl-ban-label-height)!important;
+    min-width:var(--mcl-ban-label-min-width)!important;
+    padding:0 var(--mcl-ban-label-padding-x)!important;
+    font-size:var(--mcl-ban-label-font-size)!important;
+  }
+}
