@@ -31172,3 +31172,237 @@ html body .btn.gold:active{
   html body .mineacle-punish-top{grid-template-columns:1fr!important;padding:0 48px 16px 0!important;}
   html body .mineacle-punish-title{min-height:48px!important;gap:7px!important;}
 }
+
+
+/* Mineacle Bans v4.0.07: fix label placement and Buy Unban overflow */
+
+/* Force modal header into a left player block: head + name + label */
+html body .mineacle-punish-top{
+  display:block!important;
+  grid-template-columns:none!important;
+  padding:0 58px 18px 0!important;
+}
+
+html body .mineacle-punish-player{
+  width:100%!important;
+  display:grid!important;
+  grid-template-columns:54px minmax(0,1fr)!important;
+  align-items:center!important;
+  justify-content:start!important;
+  gap:16px!important;
+  min-width:0!important;
+}
+
+html body .mineacle-punish-title{
+  width:max-content!important;
+  max-width:100%!important;
+  min-height:54px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:flex-start!important;
+  justify-content:center!important;
+  gap:7px!important;
+  text-align:left!important;
+}
+
+html body .mineacle-punish-name{
+  margin:0!important;
+  display:block!important;
+  line-height:1!important;
+  text-align:left!important;
+}
+
+html body .mineacle-punish-kicker{
+  display:none!important;
+}
+
+/* Label must live under the name, not centered or right-aligned */
+html body .mineacle-punish-title .mineacle-punish-status,
+html body .mineacle-punish-title .mineacle-ban-status-single{
+  position:static!important;
+  align-self:flex-start!important;
+  justify-self:start!important;
+  margin:0!important;
+}
+
+/* Exact compact status pill for both row and popup */
+:root{
+  --mcl-status-h-407:26px;
+  --mcl-status-pad-407:10px;
+  --mcl-status-font-407:10px;
+}
+
+html body .mineacle-punish-status,
+html body .mineacle-ban-status-single,
+html body .mineacle-row-ban-type-pill,
+html body .ban-type-pill,
+html body .badge.ban-type-pill{
+  width:max-content!important;
+  min-width:0!important;
+  max-width:max-content!important;
+  height:var(--mcl-status-h-407)!important;
+  min-height:var(--mcl-status-h-407)!important;
+  max-height:var(--mcl-status-h-407)!important;
+  padding:0 var(--mcl-status-pad-407)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:6px!important;
+  font-size:var(--mcl-status-font-407)!important;
+  font-weight:700!important;
+  line-height:1!important;
+  letter-spacing:.06em!important;
+  white-space:nowrap!important;
+  text-transform:uppercase!important;
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+}
+
+html body .mineacle-ban-status-single.perm,
+html body .mineacle-ban-status-single.permanent,
+html body .mineacle-ban-status-single.active,
+html body .mineacle-ban-status-single.ban-type-perm,
+html body .mineacle-row-ban-type-pill.perm,
+html body .mineacle-row-ban-type-pill.permanent,
+html body .mineacle-row-ban-type-pill.active,
+html body .mineacle-row-ban-type-pill.ban-type-perm,
+html body .ban-type-pill.perm,
+html body .ban-type-pill.permanent,
+html body .ban-type-pill.active,
+html body .badge.ban-type-pill.perm,
+html body .badge.ban-type-pill.permanent,
+html body .badge.ban-type-pill.active{
+  background:#24131b!important;
+  background-image:none!important;
+  border:1px solid rgba(255,104,147,.38)!important;
+  color:#ffd0de!important;
+}
+
+html body .mineacle-ban-status-single.temp,
+html body .mineacle-ban-status-single.temporary,
+html body .mineacle-ban-status-single.ban-type-temp,
+html body .mineacle-row-ban-type-pill.temp,
+html body .mineacle-row-ban-type-pill.temporary,
+html body .mineacle-row-ban-type-pill.ban-type-temp,
+html body .ban-type-pill.temp,
+html body .ban-type-pill.temporary,
+html body .ban-type-pill.ban-type-temp,
+html body .badge.ban-type-pill.temp,
+html body .badge.ban-type-pill.temporary,
+html body .badge.ban-type-pill.ban-type-temp{
+  background:#251d12!important;
+  background-image:none!important;
+  border:1px solid rgba(255,195,96,.40)!important;
+  color:#ffe2aa!important;
+}
+
+/* Buy Unban: green like Play and wide enough so text never overflows */
+html body .ban-unban-cta,
+html body .mineacle-ban-pay-single,
+html body .mineacle-punish-actions .ban-unban-cta,
+html body .ban-action .btn,
+html body .btn.gold{
+  width:auto!important;
+  min-width:104px!important;
+  height:34px!important;
+  min-height:34px!important;
+  max-height:34px!important;
+  padding:0 14px!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:7px!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:1!important;
+  letter-spacing:.035em!important;
+  white-space:nowrap!important;
+  text-align:center!important;
+  overflow:visible!important;
+  background:#239f51!important;
+  background-image:none!important;
+  border:1px solid rgba(255,255,255,.135)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+html body .ban-unban-cta:hover,
+html body .ban-unban-cta:focus-visible,
+html body .mineacle-ban-pay-single:hover,
+html body .mineacle-ban-pay-single:focus-visible,
+html body .mineacle-punish-actions .ban-unban-cta:hover,
+html body .mineacle-punish-actions .ban-unban-cta:focus-visible,
+html body .ban-action .btn:hover,
+html body .ban-action .btn:focus-visible,
+html body .btn.gold:hover,
+html body .btn.gold:focus-visible{
+  background:#2ab85f!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.205)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+html body .ban-unban-cta:active,
+html body .mineacle-ban-pay-single:active,
+html body .mineacle-punish-actions .ban-unban-cta:active,
+html body .ban-action .btn:active,
+html body .btn.gold:active{
+  background:#18783b!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.105)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+/* Make room for the wider Buy Unban button in rows and modal footer */
+html body .ban-type-cell{
+  gap:16px!important;
+}
+
+html body .ban-action{
+  min-width:112px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  overflow:visible!important;
+}
+
+html body .mineacle-punish-actions{
+  min-width:112px!important;
+  overflow:visible!important;
+}
+
+@media(max-width:760px){
+  html body .mineacle-punish-top{
+    display:block!important;
+    padding:0 48px 16px 0!important;
+  }
+
+  html body .mineacle-punish-player{
+    grid-template-columns:48px minmax(0,1fr)!important;
+  }
+
+  html body .mineacle-punish-title{
+    min-height:48px!important;
+    gap:6px!important;
+  }
+
+  html body .ban-unban-cta,
+  html body .mineacle-ban-pay-single,
+  html body .mineacle-punish-actions .ban-unban-cta,
+  html body .ban-action .btn,
+  html body .btn.gold{
+    min-width:104px!important;
+    height:34px!important;
+    min-height:34px!important;
+    max-height:34px!important;
+  }
+}

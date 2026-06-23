@@ -466,7 +466,13 @@
         setText("singleModalDiscordCount", discordOnlineMembersText);
 
         const status = document.getElementById("singleModalStatus");
-        if (status) status.className = `mineacle-ban-status-single ${escapeHtml(statusClassList(ban))}`;
+        if (status) {
+            status.className = `mineacle-ban-status-single mineacle-punish-status ${escapeHtml(statusClassList(ban))}`;
+            const title = modal.querySelector(".mineacle-punish-title");
+            if (title && status.parentElement !== title) {
+                title.appendChild(status);
+            }
+        }
 
         const discordButton = document.getElementById("singleModalDiscord");
         if (discordButton) discordButton.href = safeUrl(ban.discord, DISCORD_FALLBACK);
