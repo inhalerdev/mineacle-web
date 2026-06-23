@@ -30128,3 +30128,410 @@ html body .status-pill::after{
   background:none!important;
   box-shadow:none!important;
 }
+
+
+/* Mineacle Bans v4.0.03: unified flat button states across nav, bans, and modal */
+:root{
+  --mcl-btn-border-static:rgba(255,255,255,.135);
+  --mcl-btn-border-hover:rgba(255,255,255,.205);
+  --mcl-btn-border-active:rgba(255,255,255,.105);
+
+  --mcl-btn-purple-static:#9b22f0;
+  --mcl-btn-purple-hover:#a832ff;
+  --mcl-btn-purple-active:#7b18c4;
+
+  --mcl-btn-green-static:#239f51;
+  --mcl-btn-green-hover:#2ab85f;
+  --mcl-btn-green-active:#18783b;
+
+  --mcl-btn-blue-static:#5865f2;
+  --mcl-btn-blue-hover:#6672ff;
+  --mcl-btn-blue-active:#4650c7;
+
+  --mcl-btn-gold-static:#d69a21;
+  --mcl-btn-gold-hover:#e1aa32;
+  --mcl-btn-gold-active:#a97818;
+
+  --mcl-btn-red-static:#c82d43;
+  --mcl-btn-red-hover:#da3a51;
+  --mcl-btn-red-active:#9f2234;
+
+  --mcl-btn-neutral-static:#1a1a23;
+  --mcl-btn-neutral-hover:#20202a;
+  --mcl-btn-neutral-active:#14141b;
+}
+
+/* Shared state contract: every button stays same size; hover = lighter flat color; click = darker flat color */
+html body .mcx-store,
+html body .mcx-play,
+html body .mcx-discord,
+html body .nav-store-button,
+html body .nav-mc-button,
+html body .nav-mc-icon-button,
+html body .discord-square,
+html body .play-copy-button,
+html body .copy-ip-button,
+html body [data-copy-ip],
+html body .js-ban-search-form button[type="submit"],
+html body .js-ban-search-form .mineacle-search-button-live,
+html body .mineacle-search-button-live,
+html body .ban-unban-cta,
+html body .mineacle-ban-pay-single,
+html body .mineacle-punish-actions .ban-unban-cta,
+html body .ban-action .btn,
+html body .mineacle-punish-discord,
+html body .mineacle-ban-discord-single,
+html body .mineacle-ban-close-single,
+html body button.mineacle-row-info-button,
+html body .info-btn,
+html body .js-info-button.info-btn,
+html body .icon-btn,
+html body .btn{
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  background-image:none!important;
+  transition:
+    background-color .12s ease,
+    border-color .12s ease,
+    color .12s ease!important;
+}
+
+html body .mcx-store:hover,
+html body .mcx-store:focus-visible,
+html body .mcx-play:hover,
+html body .mcx-play:focus-visible,
+html body .mcx-discord:hover,
+html body .mcx-discord:focus-visible,
+html body .nav-store-button:hover,
+html body .nav-store-button:focus-visible,
+html body .nav-mc-button:hover,
+html body .nav-mc-button:focus-visible,
+html body .nav-mc-icon-button:hover,
+html body .nav-mc-icon-button:focus-visible,
+html body .discord-square:hover,
+html body .discord-square:focus-visible,
+html body .play-copy-button:hover,
+html body .play-copy-button:focus-visible,
+html body .copy-ip-button:hover,
+html body .copy-ip-button:focus-visible,
+html body [data-copy-ip]:hover,
+html body [data-copy-ip]:focus-visible,
+html body .js-ban-search-form button[type="submit"]:hover,
+html body .js-ban-search-form button[type="submit"]:focus-visible,
+html body .js-ban-search-form .mineacle-search-button-live:hover,
+html body .js-ban-search-form .mineacle-search-button-live:focus-visible,
+html body .mineacle-search-button-live:hover,
+html body .mineacle-search-button-live:focus-visible,
+html body .ban-unban-cta:hover,
+html body .ban-unban-cta:focus-visible,
+html body .mineacle-ban-pay-single:hover,
+html body .mineacle-ban-pay-single:focus-visible,
+html body .mineacle-punish-actions .ban-unban-cta:hover,
+html body .mineacle-punish-actions .ban-unban-cta:focus-visible,
+html body .ban-action .btn:hover,
+html body .ban-action .btn:focus-visible,
+html body .mineacle-punish-discord:hover,
+html body .mineacle-punish-discord:focus-visible,
+html body .mineacle-ban-discord-single:hover,
+html body .mineacle-ban-discord-single:focus-visible,
+html body .mineacle-ban-close-single:hover,
+html body .mineacle-ban-close-single:focus-visible,
+html body button.mineacle-row-info-button:hover,
+html body button.mineacle-row-info-button:focus-visible,
+html body .info-btn:hover,
+html body .info-btn:focus-visible,
+html body .js-info-button.info-btn:hover,
+html body .js-info-button.info-btn:focus-visible,
+html body .icon-btn:hover,
+html body .icon-btn:focus-visible,
+html body .btn:hover,
+html body .btn:focus-visible{
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  background-image:none!important;
+}
+
+html body .mcx-store:active,
+html body .mcx-play:active,
+html body .mcx-discord:active,
+html body .nav-store-button:active,
+html body .nav-mc-button:active,
+html body .nav-mc-icon-button:active,
+html body .discord-square:active,
+html body .play-copy-button:active,
+html body .copy-ip-button:active,
+html body [data-copy-ip]:active,
+html body .js-ban-search-form button[type="submit"]:active,
+html body .js-ban-search-form .mineacle-search-button-live:active,
+html body .mineacle-search-button-live:active,
+html body .ban-unban-cta:active,
+html body .mineacle-ban-pay-single:active,
+html body .mineacle-punish-actions .ban-unban-cta:active,
+html body .ban-action .btn:active,
+html body .mineacle-punish-discord:active,
+html body .mineacle-ban-discord-single:active,
+html body .mineacle-ban-close-single:active,
+html body button.mineacle-row-info-button:active,
+html body .info-btn:active,
+html body .js-info-button.info-btn:active,
+html body .icon-btn:active,
+html body .btn:active{
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  background-image:none!important;
+}
+
+/* Nav Discord button: flat blue, same state system as every other button */
+html body .mcx-discord,
+html body .nav-mc-icon-button,
+html body .discord-square,
+html body .mineacle-punish-discord,
+html body .mineacle-ban-discord-single{
+  background:var(--mcl-btn-blue-static)!important;
+  border-color:var(--mcl-btn-border-static)!important;
+  color:#fff!important;
+}
+
+html body .mcx-discord:hover,
+html body .mcx-discord:focus-visible,
+html body .nav-mc-icon-button:hover,
+html body .nav-mc-icon-button:focus-visible,
+html body .discord-square:hover,
+html body .discord-square:focus-visible,
+html body .mineacle-punish-discord:hover,
+html body .mineacle-punish-discord:focus-visible,
+html body .mineacle-ban-discord-single:hover,
+html body .mineacle-ban-discord-single:focus-visible{
+  background:var(--mcl-btn-blue-hover)!important;
+  border-color:var(--mcl-btn-border-hover)!important;
+  color:#fff!important;
+}
+
+html body .mcx-discord:active,
+html body .nav-mc-icon-button:active,
+html body .discord-square:active,
+html body .mineacle-punish-discord:active,
+html body .mineacle-ban-discord-single:active{
+  background:var(--mcl-btn-blue-active)!important;
+  border-color:var(--mcl-btn-border-active)!important;
+  color:#fff!important;
+}
+
+/* Search button: flat purple */
+html body .js-ban-search-form button[type="submit"],
+html body .js-ban-search-form button[type="submit"]:not(.is-clear),
+html body .js-ban-search-form .mineacle-search-button-live,
+html body .js-ban-search-form .mineacle-search-button-live:not(.is-clear),
+html body .mineacle-search-button-live,
+html body .mineacle-search-button-live:not(.is-clear){
+  background:var(--mcl-btn-purple-static)!important;
+  border-color:var(--mcl-btn-border-static)!important;
+  color:#fff!important;
+}
+
+html body .js-ban-search-form button[type="submit"]:hover,
+html body .js-ban-search-form button[type="submit"]:focus-visible,
+html body .js-ban-search-form .mineacle-search-button-live:hover,
+html body .js-ban-search-form .mineacle-search-button-live:focus-visible,
+html body .mineacle-search-button-live:hover,
+html body .mineacle-search-button-live:focus-visible{
+  background:var(--mcl-btn-purple-hover)!important;
+  border-color:var(--mcl-btn-border-hover)!important;
+  color:#fff!important;
+}
+
+html body .js-ban-search-form button[type="submit"]:active,
+html body .js-ban-search-form .mineacle-search-button-live:active,
+html body .mineacle-search-button-live:active{
+  background:var(--mcl-btn-purple-active)!important;
+  border-color:var(--mcl-btn-border-active)!important;
+  color:#fff!important;
+}
+
+/* Clear button/state: flat red */
+html body .js-ban-search-form button[type="submit"].is-clear,
+html body .js-ban-search-form .mineacle-search-button-live.is-clear,
+html body .mineacle-search-button-live.is-clear,
+html body .js-ban-clear.is-clear,
+html body .js-ban-clear.mineacle-search-button-live.is-clear{
+  background:var(--mcl-btn-red-static)!important;
+  border-color:var(--mcl-btn-border-static)!important;
+  color:#fff!important;
+}
+
+html body .js-ban-search-form button[type="submit"].is-clear:hover,
+html body .js-ban-search-form button[type="submit"].is-clear:focus-visible,
+html body .js-ban-search-form .mineacle-search-button-live.is-clear:hover,
+html body .js-ban-search-form .mineacle-search-button-live.is-clear:focus-visible,
+html body .mineacle-search-button-live.is-clear:hover,
+html body .mineacle-search-button-live.is-clear:focus-visible,
+html body .js-ban-clear.is-clear:hover,
+html body .js-ban-clear.is-clear:focus-visible{
+  background:var(--mcl-btn-red-hover)!important;
+  border-color:var(--mcl-btn-border-hover)!important;
+  color:#fff!important;
+}
+
+html body .js-ban-search-form button[type="submit"].is-clear:active,
+html body .js-ban-search-form .mineacle-search-button-live.is-clear:active,
+html body .mineacle-search-button-live.is-clear:active,
+html body .js-ban-clear.is-clear:active{
+  background:var(--mcl-btn-red-active)!important;
+  border-color:var(--mcl-btn-border-active)!important;
+  color:#fff!important;
+}
+
+/* Inline Unban and popup More Info Unban: exact shared flat gold style */
+html body .ban-unban-cta,
+html body .mineacle-ban-pay-single,
+html body .mineacle-punish-actions .ban-unban-cta,
+html body .ban-action .btn,
+html body .btn.gold{
+  background:var(--mcl-btn-gold-static)!important;
+  border-color:var(--mcl-btn-border-static)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+
+html body .ban-unban-cta:hover,
+html body .ban-unban-cta:focus-visible,
+html body .mineacle-ban-pay-single:hover,
+html body .mineacle-ban-pay-single:focus-visible,
+html body .mineacle-punish-actions .ban-unban-cta:hover,
+html body .mineacle-punish-actions .ban-unban-cta:focus-visible,
+html body .ban-action .btn:hover,
+html body .ban-action .btn:focus-visible,
+html body .btn.gold:hover,
+html body .btn.gold:focus-visible{
+  background:var(--mcl-btn-gold-hover)!important;
+  border-color:var(--mcl-btn-border-hover)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+
+html body .ban-unban-cta:active,
+html body .mineacle-ban-pay-single:active,
+html body .mineacle-punish-actions .ban-unban-cta:active,
+html body .ban-action .btn:active,
+html body .btn.gold:active{
+  background:var(--mcl-btn-gold-active)!important;
+  border-color:var(--mcl-btn-border-active)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+}
+
+/* Store purple and Play green remain flat */
+html body .mcx-store,
+html body .nav-store-button,
+html body .nav-mc-button,
+html body .btn.store,
+html body .btn.purple{
+  background:var(--mcl-btn-purple-static)!important;
+  border-color:var(--mcl-btn-border-static)!important;
+  color:#fff!important;
+}
+
+html body .mcx-store:hover,
+html body .mcx-store:focus-visible,
+html body .nav-store-button:hover,
+html body .nav-store-button:focus-visible,
+html body .nav-mc-button:hover,
+html body .nav-mc-button:focus-visible,
+html body .btn.store:hover,
+html body .btn.store:focus-visible,
+html body .btn.purple:hover,
+html body .btn.purple:focus-visible{
+  background:var(--mcl-btn-purple-hover)!important;
+  border-color:var(--mcl-btn-border-hover)!important;
+}
+
+html body .mcx-store:active,
+html body .nav-store-button:active,
+html body .nav-mc-button:active,
+html body .btn.store:active,
+html body .btn.purple:active{
+  background:var(--mcl-btn-purple-active)!important;
+  border-color:var(--mcl-btn-border-active)!important;
+}
+
+html body .mcx-play,
+html body .play-copy-button,
+html body .copy-ip-button,
+html body [data-copy-ip]{
+  background:var(--mcl-btn-green-static)!important;
+  border-color:var(--mcl-btn-border-static)!important;
+  color:#fff!important;
+}
+
+html body .mcx-play:hover,
+html body .mcx-play:focus-visible,
+html body .play-copy-button:hover,
+html body .play-copy-button:focus-visible,
+html body .copy-ip-button:hover,
+html body .copy-ip-button:focus-visible,
+html body [data-copy-ip]:hover,
+html body [data-copy-ip]:focus-visible{
+  background:var(--mcl-btn-green-hover)!important;
+  border-color:var(--mcl-btn-border-hover)!important;
+}
+
+html body .mcx-play:active,
+html body .play-copy-button:active,
+html body .copy-ip-button:active,
+html body [data-copy-ip]:active{
+  background:var(--mcl-btn-green-active)!important;
+  border-color:var(--mcl-btn-border-active)!important;
+}
+
+/* Neutral close/info controls keep same flat state contract */
+html body .mineacle-ban-close-single,
+html body button.mineacle-row-info-button,
+html body .info-btn,
+html body .js-info-button.info-btn,
+html body .icon-btn{
+  background:var(--mcl-btn-neutral-static)!important;
+  border-color:var(--mcl-btn-border-static)!important;
+  color:rgba(255,255,255,.86)!important;
+}
+
+html body .mineacle-ban-close-single:hover,
+html body .mineacle-ban-close-single:focus-visible,
+html body button.mineacle-row-info-button:hover,
+html body button.mineacle-row-info-button:focus-visible,
+html body .info-btn:hover,
+html body .info-btn:focus-visible,
+html body .js-info-button.info-btn:hover,
+html body .js-info-button.info-btn:focus-visible,
+html body .icon-btn:hover,
+html body .icon-btn:focus-visible{
+  background:var(--mcl-btn-neutral-hover)!important;
+  border-color:var(--mcl-btn-border-hover)!important;
+  color:#fff!important;
+}
+
+html body .mineacle-ban-close-single:active,
+html body button.mineacle-row-info-button:active,
+html body .info-btn:active,
+html body .js-info-button.info-btn:active,
+html body .icon-btn:active{
+  background:var(--mcl-btn-neutral-active)!important;
+  border-color:var(--mcl-btn-border-active)!important;
+  color:rgba(255,255,255,.90)!important;
+}
+
+/* Parent row hover never triggers the info button hover state */
+html body .ban-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .js-ban-table .ban-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-row:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover .info-btn:not(:hover):not(:focus-visible){
+  background:var(--mcl-btn-neutral-static)!important;
+  border-color:var(--mcl-btn-border-static)!important;
+  color:rgba(255,255,255,.86)!important;
+}
