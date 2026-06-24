@@ -33974,3 +33974,221 @@ html body button.mcx-play{
     display:none!important;
   }
 }
+
+
+/* Mineacle Bans v4.0.19: stable Discord hover opens right */
+
+/*
+  Fix:
+  - No bouncing/flickering on Discord hover
+  - Discord default square stays physically still
+  - Discord expands to the RIGHT only
+  - Discord logo stays in the same left-side position during hover
+  - Hover text reads JOIN # MEMBERS and is right-aligned inside the expanded section
+  - Play stays fixed and is not pushed
+  - Entire player-count/status section stays removed
+*/
+@media (min-width:981px){
+  :root{
+    --mcl-v419-action-h:44px;
+    --mcl-v419-radius:9px;
+    --mcl-v419-right-x:76px;
+    --mcl-v419-play-w:104px;
+    --mcl-v419-gap:28px;
+
+    --mcl-v419-discord-closed-w:44px;
+    --mcl-v419-discord-open-w:188px;
+    --mcl-v419-discord-icon:22px;
+    --mcl-v419-discord-icon-left:11px;
+    --mcl-v419-discord-text-left:46px;
+    --mcl-v419-discord-text-right:13px;
+
+    --mcl-v419-discord:#5865f2;
+    --mcl-v419-discord-hover:#6571ff;
+    --mcl-v419-discord-active:#4751ca;
+    --mcl-v419-play:#239f51;
+    --mcl-v419-play-hover:#2ab85f;
+    --mcl-v419-play-active:#18783b;
+  }
+
+  html body .mcx-players-online,
+  html body #navPlayersOnline,
+  html body .mcx-player-status,
+  html body .nav-player-status,
+  html body .mcx-status{
+    display:none!important;
+    visibility:hidden!important;
+    width:0!important;
+    min-width:0!important;
+    max-width:0!important;
+    height:0!important;
+    min-height:0!important;
+    max-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    opacity:0!important;
+    overflow:hidden!important;
+    pointer-events:none!important;
+  }
+
+  /*
+    Play stays fixed.
+    Discord is placed far enough left that its RIGHT-expansion stops before Play.
+  */
+  html body #siteHeader.mcx-header .mcx-play,
+  html body #siteHeader.mcx-header button.mcx-play,
+  html body #siteHeader .mcx-play,
+  html body #siteHeader button.mcx-play,
+  html body .mcx-play,
+  html body button.mcx-play{
+    position:absolute!important;
+    right:var(--mcl-v419-right-x)!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    width:var(--mcl-v419-play-w)!important;
+    min-width:var(--mcl-v419-play-w)!important;
+    max-width:var(--mcl-v419-play-w)!important;
+    height:var(--mcl-v419-action-h)!important;
+    min-height:var(--mcl-v419-action-h)!important;
+    max-height:var(--mcl-v419-action-h)!important;
+    flex:none!important;
+    z-index:5100!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord,
+  html body #siteHeader .mcx-discord,
+  html body .mcx-discord{
+    position:absolute!important;
+    left:calc(100% - var(--mcl-v419-right-x) - var(--mcl-v419-play-w) - var(--mcl-v419-gap) - var(--mcl-v419-discord-open-w))!important;
+    right:auto!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    box-sizing:border-box!important;
+    width:var(--mcl-v419-discord-closed-w)!important;
+    min-width:var(--mcl-v419-discord-closed-w)!important;
+    max-width:var(--mcl-v419-discord-closed-w)!important;
+    height:var(--mcl-v419-action-h)!important;
+    min-height:var(--mcl-v419-action-h)!important;
+    max-height:var(--mcl-v419-action-h)!important;
+    padding:0!important;
+    display:block!important;
+    flex:none!important;
+    border:0!important;
+    outline:0!important;
+    border-radius:var(--mcl-v419-radius)!important;
+    background:var(--mcl-v419-discord)!important;
+    background-color:var(--mcl-v419-discord)!important;
+    color:#fff!important;
+    overflow:hidden!important;
+    box-shadow:none!important;
+    text-shadow:none!important;
+    filter:none!important;
+    z-index:5100!important;
+    cursor:pointer!important;
+    transition:width .16s ease, min-width .16s ease, max-width .16s ease, background-color .12s ease!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible,
+  html body #siteHeader .mcx-discord:hover,
+  html body #siteHeader .mcx-discord:focus-visible,
+  html body .mcx-discord:hover,
+  html body .mcx-discord:focus-visible{
+    left:calc(100% - var(--mcl-v419-right-x) - var(--mcl-v419-play-w) - var(--mcl-v419-gap) - var(--mcl-v419-discord-open-w))!important;
+    right:auto!important;
+    width:var(--mcl-v419-discord-open-w)!important;
+    min-width:var(--mcl-v419-discord-open-w)!important;
+    max-width:var(--mcl-v419-discord-open-w)!important;
+    transform:translateY(-50%)!important;
+    background:var(--mcl-v419-discord-hover)!important;
+    background-color:var(--mcl-v419-discord-hover)!important;
+    color:#fff!important;
+    border:0!important;
+    outline:0!important;
+    box-shadow:none!important;
+    text-shadow:none!important;
+    filter:none!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:active,
+  html body #siteHeader .mcx-discord:active,
+  html body .mcx-discord:active{
+    background:var(--mcl-v419-discord-active)!important;
+    background-color:var(--mcl-v419-discord-active)!important;
+  }
+
+  /*
+    Logo is anchored from the LEFT, so it does not slide when width changes.
+  */
+  html body #siteHeader.mcx-header .mcx-discord img,
+  html body #siteHeader .mcx-discord img,
+  html body .mcx-discord img{
+    position:absolute!important;
+    left:var(--mcl-v419-discord-icon-left)!important;
+    right:auto!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    width:var(--mcl-v419-discord-icon)!important;
+    height:var(--mcl-v419-discord-icon)!important;
+    min-width:var(--mcl-v419-discord-icon)!important;
+    min-height:var(--mcl-v419-discord-icon)!important;
+    max-width:var(--mcl-v419-discord-icon)!important;
+    max-height:var(--mcl-v419-discord-icon)!important;
+    display:block!important;
+    object-fit:contain!important;
+    margin:0!important;
+    padding:0!important;
+    opacity:1!important;
+    filter:brightness(0) invert(1)!important;
+    box-shadow:none!important;
+  }
+
+  /*
+    Text sits to the RIGHT of the logo and is right-aligned.
+  */
+  html body #siteHeader.mcx-header .mcx-discord-members,
+  html body #siteHeader .mcx-discord-members,
+  html body .mcx-discord-members{
+    position:absolute!important;
+    left:var(--mcl-v419-discord-text-left)!important;
+    right:var(--mcl-v419-discord-text-right)!important;
+    top:50%!important;
+    transform:translateY(-50%)!important;
+    width:auto!important;
+    max-width:0!important;
+    height:auto!important;
+    display:block!important;
+    opacity:0!important;
+    overflow:hidden!important;
+    white-space:nowrap!important;
+    pointer-events:none!important;
+    text-align:right!important;
+    color:#fff!important;
+    font-size:12px!important;
+    font-weight:700!important;
+    line-height:1!important;
+    letter-spacing:.035em!important;
+    text-transform:uppercase!important;
+    transition:max-width .16s ease, opacity .12s ease!important;
+  }
+
+  html body #siteHeader.mcx-header .mcx-discord:hover .mcx-discord-members,
+  html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members,
+  html body #siteHeader .mcx-discord:hover .mcx-discord-members,
+  html body #siteHeader .mcx-discord:focus-visible .mcx-discord-members,
+  html body .mcx-discord:hover .mcx-discord-members,
+  html body .mcx-discord:focus-visible .mcx-discord-members{
+    max-width:calc(var(--mcl-v419-discord-open-w) - var(--mcl-v419-discord-text-left) - var(--mcl-v419-discord-text-right))!important;
+    opacity:1!important;
+  }
+}
+
+@media (max-width:980px){
+  html body .mcx-players-online,
+  html body #navPlayersOnline,
+  html body .mcx-player-status,
+  html body .nav-player-status,
+  html body .mcx-status{
+    display:none!important;
+  }
+}

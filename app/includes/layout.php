@@ -15,7 +15,7 @@ function mineacle_page_head(string $title): void {
     echo '<title>Mineacle | ' . h($title) . '</title>';
     echo '<meta name="description" content="Mineacle public bans portal">';
     echo '<link rel="icon" type="image/png" href="assets/mineacle-square-logo.png?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199.188.177.166.144.8.7.6.5.4.3.2">';
-    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle4.0.18">';
+    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle4.0.19">';
     echo '</head>';
 }
 
@@ -38,7 +38,7 @@ function mineacle_header(string $active = 'bans'): void {
     echo '<img src="assets/mineacle-bans-hero-logo.png?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199" alt="Mineacle Bans">';
     echo '</a>';
     echo '<a class="mcx-discord" href="' . $discord . '" target="_blank" rel="noopener" aria-label="Join Discord">';
-    echo '<span class="mcx-discord-members" id="navDiscordOnline" aria-hidden="true">Members Online</span>';
+    echo '<span class="mcx-discord-members" id="navDiscordOnline" aria-hidden="true">Join Members</span>';
     echo '<img src="assets/discord.svg?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199" alt="">';
     echo '</a>';
     echo '<button class="mcx-play" type="button" data-copy-ip="' . $ip . '">Play</button>';
@@ -72,9 +72,44 @@ function mineacle_footer(): void {
     echo '</div>';
     echo '</div>';
     echo '</footer>';
-    echo '<script src="assets/main.js?v=banssingle4.0.18"></script>';
-    echo '<script src="assets/hero-scroll.js?v=banssingle4.0.18"></script>';
-    echo '<script src="assets/nav-server-status.js?v=banssingle4.0.18"></script>';
+    echo '<script src="assets/main.js?v=banssingle4.0.19"></script>';
+    echo '<script src="assets/hero-scroll.js?v=banssingle4.0.19"></script>';
+    echo '<script src="assets/nav-server-status.js?v=banssingle4.0.19"></script>';
+
+    echo <<<'HTML'
+<script>
+(function(){
+  function normalizeDiscordMembers(){
+    var el = document.getElementById('navDiscordOnline');
+    if (!el) return;
+
+    function apply(){
+      var raw = (el.textContent || '').trim();
+      var match = raw.match(/\d+/);
+      el.textContent = match ? ('JOIN ' + match[0] + ' MEMBERS') : 'JOIN MEMBERS';
+    }
+
+    apply();
+
+    if (!el.dataset.mineacleJoinMembersObserver) {
+      el.dataset.mineacleJoinMembersObserver = '1';
+      new MutationObserver(apply).observe(el, {
+        childList: true,
+        characterData: true,
+        subtree: true
+      });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', normalizeDiscordMembers);
+  } else {
+    normalizeDiscordMembers();
+  }
+})();
+</script>
+HTML;
+
 
     echo <<<'HTML'
 <script>
@@ -122,7 +157,7 @@ HTML;
 
     var img = section.querySelector('.client-guard-title-img, .client-guard-section-title img');
     if (img) {
-      img.src = 'assets/mineacle-clientguard-logo-v2.png?v=banssingle4.0.18';
+      img.src = 'assets/mineacle-clientguard-logo-v2.png?v=banssingle4.0.19';
       img.alt = 'Mineacle Client Guard';
       img.classList.add('client-guard-title-img');
     }
