@@ -32605,9 +32605,7 @@ html body .mcx-store{
   min-width:max-content!important;
   max-width:none!important;
   padding:0 var(--mcl-nav-action-pad-x-v412)!important;
-  background:var(--mcl-store-v412)!important;
-  background-color:var(--mcl-store-v412)!important;
-  color:#fff!important;
+  background:var(--mcl-store-v412)!important;color:#fff!important;
   font-size:var(--mcl-nav-action-font-v412)!important;
   font-weight:var(--mcl-nav-action-weight-v412)!important;
   line-height:1!important;
@@ -32629,9 +32627,7 @@ html body .mcx-button.mcx-store:hover,
 html body .mcx-button.mcx-store:focus-visible,
 html body .mcx-store:hover,
 html body .mcx-store:focus-visible{
-  background:var(--mcl-store-hover-v412)!important;
-  background-color:var(--mcl-store-hover-v412)!important;
-  color:#fff!important;
+  background:var(--mcl-store-hover-v412)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -32645,9 +32641,7 @@ html body #siteHeader .mcx-button.mcx-store:active,
 html body #siteHeader .mcx-store:active,
 html body .mcx-button.mcx-store:active,
 html body .mcx-store:active{
-  background:var(--mcl-store-active-v412)!important;
-  background-color:var(--mcl-store-active-v412)!important;
-  color:#fff!important;
+  background:var(--mcl-store-active-v412)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -32663,9 +32657,7 @@ html body .mcx-discord{
   min-width:var(--mcl-nav-action-h-v412)!important;
   max-width:var(--mcl-nav-action-h-v412)!important;
   padding:0!important;
-  background:var(--mcl-discord-v412)!important;
-  background-color:var(--mcl-discord-v412)!important;
-  color:#fff!important;
+  background:var(--mcl-discord-v412)!important;color:#fff!important;
 }
 
 html body #siteHeader.mcx-header .mcx-discord:hover,
@@ -32674,9 +32666,7 @@ html body #siteHeader .mcx-discord:hover,
 html body #siteHeader .mcx-discord:focus-visible,
 html body .mcx-discord:hover,
 html body .mcx-discord:focus-visible{
-  background:var(--mcl-discord-hover-v412)!important;
-  background-color:var(--mcl-discord-hover-v412)!important;
-  color:#fff!important;
+  background:var(--mcl-discord-hover-v412)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -32687,9 +32677,7 @@ html body .mcx-discord:focus-visible{
 html body #siteHeader.mcx-header .mcx-discord:active,
 html body #siteHeader .mcx-discord:active,
 html body .mcx-discord:active{
-  background:var(--mcl-discord-active-v412)!important;
-  background-color:var(--mcl-discord-active-v412)!important;
-  color:#fff!important;
+  background:var(--mcl-discord-active-v412)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -32719,9 +32707,7 @@ html body button.mcx-play{
   min-width:max-content!important;
   max-width:none!important;
   padding:0 var(--mcl-nav-action-pad-x-v412)!important;
-  background:var(--mcl-play-v412)!important;
-  background-color:var(--mcl-play-v412)!important;
-  color:#fff!important;
+  background:var(--mcl-play-v412)!important;color:#fff!important;
   font-size:var(--mcl-nav-action-font-v412)!important;
   font-weight:var(--mcl-nav-action-weight-v412)!important;
   line-height:1!important;
@@ -32742,9 +32728,7 @@ html body .mcx-play:hover,
 html body .mcx-play:focus-visible,
 html body button.mcx-play:hover,
 html body button.mcx-play:focus-visible{
-  background:var(--mcl-play-hover-v412)!important;
-  background-color:var(--mcl-play-hover-v412)!important;
-  color:#fff!important;
+  background:var(--mcl-play-hover-v412)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -32758,9 +32742,7 @@ html body #siteHeader .mcx-play:active,
 html body #siteHeader button.mcx-play:active,
 html body .mcx-play:active,
 html body button.mcx-play:active{
-  background:var(--mcl-play-active-v412)!important;
-  background-color:var(--mcl-play-active-v412)!important;
-  color:#fff!important;
+  background:var(--mcl-play-active-v412)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -32791,14 +32773,10 @@ html body .mcx-mobile-discord::after{
 }
 
 html body .mcx-mobile-store{
-  background:var(--mcl-store-v412)!important;
-  background-color:var(--mcl-store-v412)!important;
-}
+  background:var(--mcl-store-v412)!important;}
 
 html body .mcx-mobile-discord{
-  background:var(--mcl-discord-v412)!important;
-  background-color:var(--mcl-discord-v412)!important;
-}
+  background:var(--mcl-discord-v412)!important;}
 
 
 /* Mineacle Bans v4.0.14: fixed nav action sizing + Discord icon + Play copy label */
@@ -32947,9 +32925,7 @@ html body #siteHeader .mcx-store,
 html body .mcx-button.mcx-store,
 html body a.mcx-button.mcx-store,
 html body .mcx-store{
-  background:var(--mcl-nav-store)!important;
-  background-color:var(--mcl-nav-store)!important;
-}
+  background:var(--mcl-nav-store)!important;}
 
 html body #siteHeader.mcx-header .mcx-button.mcx-store:hover,
 html body #siteHeader.mcx-header .mcx-button.mcx-store:focus-visible,
@@ -32963,9 +32939,7 @@ html body .mcx-button.mcx-store:hover,
 html body .mcx-button.mcx-store:focus-visible,
 html body .mcx-store:hover,
 html body .mcx-store:focus-visible{
-  background:var(--mcl-nav-store-hover)!important;
-  background-color:var(--mcl-nav-store-hover)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-store-hover)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -32979,9 +32953,7 @@ html body #siteHeader .mcx-button.mcx-store:active,
 html body #siteHeader .mcx-store:active,
 html body .mcx-button.mcx-store:active,
 html body .mcx-store:active{
-  background:var(--mcl-nav-store-active)!important;
-  background-color:var(--mcl-nav-store-active)!important;
-}
+  background:var(--mcl-nav-store-active)!important;}
 
 /* Play colors. */
 html body #siteHeader.mcx-header .mcx-play,
@@ -32990,9 +32962,7 @@ html body #siteHeader .mcx-play,
 html body #siteHeader button.mcx-play,
 html body .mcx-play,
 html body button.mcx-play{
-  background:var(--mcl-nav-play)!important;
-  background-color:var(--mcl-nav-play)!important;
-}
+  background:var(--mcl-nav-play)!important;}
 
 html body #siteHeader.mcx-header .mcx-play:hover,
 html body #siteHeader.mcx-header .mcx-play:focus-visible,
@@ -33006,9 +32976,7 @@ html body .mcx-play:hover,
 html body .mcx-play:focus-visible,
 html body button.mcx-play:hover,
 html body button.mcx-play:focus-visible{
-  background:var(--mcl-nav-play-hover)!important;
-  background-color:var(--mcl-nav-play-hover)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-play-hover)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -33025,9 +32993,7 @@ html body button.mcx-play:active,
 html body #siteHeader.mcx-header .mcx-play.copied,
 html body #siteHeader .mcx-play.copied,
 html body .mcx-play.copied{
-  background:var(--mcl-nav-play-active)!important;
-  background-color:var(--mcl-nav-play-active)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-play-active)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -33043,9 +33009,7 @@ html body .mcx-discord{
   min-width:var(--mcl-nav-final-h)!important;
   max-width:var(--mcl-nav-final-h)!important;
   padding:0!important;
-  background:var(--mcl-nav-discord)!important;
-  background-color:var(--mcl-nav-discord)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-discord)!important;color:#fff!important;
   display:grid!important;
   place-items:center!important;
   line-height:0!important;
@@ -33057,9 +33021,7 @@ html body #siteHeader .mcx-discord:hover,
 html body #siteHeader .mcx-discord:focus-visible,
 html body .mcx-discord:hover,
 html body .mcx-discord:focus-visible{
-  background:var(--mcl-nav-discord-hover)!important;
-  background-color:var(--mcl-nav-discord-hover)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-discord-hover)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -33070,9 +33032,7 @@ html body .mcx-discord:focus-visible{
 html body #siteHeader.mcx-header .mcx-discord:active,
 html body #siteHeader .mcx-discord:active,
 html body .mcx-discord:active{
-  background:var(--mcl-nav-discord-active)!important;
-  background-color:var(--mcl-nav-discord-active)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-discord-active)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -33225,9 +33185,7 @@ html body #siteHeader .mcx-play.copied,
 html body #siteHeader button.mcx-play.copied,
 html body .mcx-play.copied,
 html body button.mcx-play.copied{
-  background:var(--mcl-nav-play-active, #18783b)!important;
-  background-color:var(--mcl-nav-play-active, #18783b)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-play-active, #18783b)!important;color:#fff!important;
 }
 
 html body #siteHeader.mcx-header .mcx-play.copied:hover,
@@ -33332,9 +33290,7 @@ html body .mcx-discord{
   border:0!important;
   outline:0!important;
   border-radius:var(--mcl-nav-action-radius-v416)!important;
-  background:var(--mcl-nav-discord-bg-v416)!important;
-  background-color:var(--mcl-nav-discord-bg-v416)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-discord-bg-v416)!important;color:#fff!important;
   overflow:hidden!important;
   box-shadow:none!important;
   text-shadow:none!important;
@@ -33362,9 +33318,7 @@ html body .mcx-discord:focus-visible{
   justify-content:flex-start!important;
   gap:10px!important;
   padding:0 13px!important;
-  background:var(--mcl-nav-discord-hover-v416)!important;
-  background-color:var(--mcl-nav-discord-hover-v416)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-discord-hover-v416)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -33376,9 +33330,7 @@ html body .mcx-discord:focus-visible{
 html body #siteHeader.mcx-header .mcx-discord:active,
 html body #siteHeader .mcx-discord:active,
 html body .mcx-discord:active{
-  background:var(--mcl-nav-discord-active-v416)!important;
-  background-color:var(--mcl-nav-discord-active-v416)!important;
-  color:#fff!important;
+  background:var(--mcl-nav-discord-active-v416)!important;color:#fff!important;
   border:0!important;
   outline:0!important;
   box-shadow:none!important;
@@ -34076,9 +34028,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v419-radius)!important;
-    background:var(--mcl-v419-discord)!important;
-    background-color:var(--mcl-v419-discord)!important;
-    color:#fff!important;
+    background:var(--mcl-v419-discord)!important;color:#fff!important;
     overflow:hidden!important;
     box-shadow:none!important;
     text-shadow:none!important;
@@ -34100,9 +34050,7 @@ html body button.mcx-play{
     min-width:var(--mcl-v419-discord-open-w)!important;
     max-width:var(--mcl-v419-discord-open-w)!important;
     transform:translateY(-50%)!important;
-    background:var(--mcl-v419-discord-hover)!important;
-    background-color:var(--mcl-v419-discord-hover)!important;
-    color:#fff!important;
+    background:var(--mcl-v419-discord-hover)!important;color:#fff!important;
     border:0!important;
     outline:0!important;
     box-shadow:none!important;
@@ -34113,9 +34061,7 @@ html body button.mcx-play{
   html body #siteHeader.mcx-header .mcx-discord:active,
   html body #siteHeader .mcx-discord:active,
   html body .mcx-discord:active{
-    background:var(--mcl-v419-discord-active)!important;
-    background-color:var(--mcl-v419-discord-active)!important;
-  }
+    background:var(--mcl-v419-discord-active)!important;}
 
   /*
     Logo is anchored from the LEFT, so it does not slide when width changes.
@@ -34279,9 +34225,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v420-radius)!important;
-    background:var(--mcl-v420-discord)!important;
-    background-color:var(--mcl-v420-discord)!important;
-    color:#fff!important;
+    background:var(--mcl-v420-discord)!important;color:#fff!important;
     overflow:hidden!important;
     box-shadow:none!important;
     text-shadow:none!important;
@@ -34300,9 +34244,7 @@ html body button.mcx-play{
     min-width:var(--mcl-v420-discord-open-w)!important;
     max-width:var(--mcl-v420-discord-open-w)!important;
     transform:none!important;
-    background:var(--mcl-v420-discord-hover)!important;
-    background-color:var(--mcl-v420-discord-hover)!important;
-    color:#fff!important;
+    background:var(--mcl-v420-discord-hover)!important;color:#fff!important;
     border:0!important;
     outline:0!important;
     box-shadow:none!important;
@@ -34313,9 +34255,7 @@ html body button.mcx-play{
   html body #siteHeader.mcx-header .mcx-discord:active,
   html body #siteHeader .mcx-discord:active,
   html body .mcx-discord:active{
-    background:var(--mcl-v420-discord-active)!important;
-    background-color:var(--mcl-v420-discord-active)!important;
-  }
+    background:var(--mcl-v420-discord-active)!important;}
 
   html body #siteHeader.mcx-header .mcx-discord img,
   html body #siteHeader .mcx-discord img,
@@ -34397,9 +34337,7 @@ html body button.mcx-play{
     min-height:var(--mcl-v420-action-h)!important;
     max-height:var(--mcl-v420-action-h)!important;
     flex:none!important;
-    background:var(--mcl-v420-play)!important;
-    background-color:var(--mcl-v420-play)!important;
-  }
+    background:var(--mcl-v420-play)!important;}
 
   html body #siteHeader.mcx-header .mcx-play:hover,
   html body #siteHeader.mcx-header .mcx-play:focus-visible,
@@ -34414,9 +34352,7 @@ html body button.mcx-play{
   html body button.mcx-play:hover,
   html body button.mcx-play:focus-visible{
     transform:none!important;
-    background:var(--mcl-v420-play-hover)!important;
-    background-color:var(--mcl-v420-play-hover)!important;
-  }
+    background:var(--mcl-v420-play-hover)!important;}
 
   html body #siteHeader.mcx-header .mcx-play:active,
   html body #siteHeader.mcx-header button.mcx-play:active,
@@ -34431,9 +34367,7 @@ html body button.mcx-play{
   html body .mcx-play.copied,
   html body button.mcx-play.copied{
     transform:none!important;
-    background:var(--mcl-v420-play-active)!important;
-    background-color:var(--mcl-v420-play-active)!important;
-  }
+    background:var(--mcl-v420-play-active)!important;}
 }
 
 
@@ -34571,9 +34505,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v421-radius)!important;
-    background:var(--mcl-v421-store)!important;
-    background-color:var(--mcl-v421-store)!important;
-    color:#fff!important;
+    background:var(--mcl-v421-store)!important;color:#fff!important;
     font-size:14px!important;
     font-weight:700!important;
     line-height:1!important;
@@ -34597,9 +34529,7 @@ html body button.mcx-play{
   html body .mcx-store:focus-visible,
   html body .mcx-button.mcx-store:hover,
   html body .mcx-button.mcx-store:focus-visible{
-    background:var(--mcl-v421-store-hover)!important;
-    background-color:var(--mcl-v421-store-hover)!important;
-    box-shadow:none!important;
+    background:var(--mcl-v421-store-hover)!important;box-shadow:none!important;
     text-shadow:none!important;
     filter:none!important;
     transform:none!important;
@@ -34611,9 +34541,7 @@ html body button.mcx-play{
   html body #siteHeader .mcx-button.mcx-store:active,
   html body .mcx-store:active,
   html body .mcx-button.mcx-store:active{
-    background:var(--mcl-v421-store-active)!important;
-    background-color:var(--mcl-v421-store-active)!important;
-  }
+    background:var(--mcl-v421-store-active)!important;}
 
   /*
     Discord visible button:
@@ -34643,9 +34571,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v421-radius)!important;
-    background:var(--mcl-v421-discord)!important;
-    background-color:var(--mcl-v421-discord)!important;
-    color:#fff!important;
+    background:var(--mcl-v421-discord)!important;color:#fff!important;
     overflow:hidden!important;
     box-shadow:none!important;
     text-shadow:none!important;
@@ -34663,9 +34589,7 @@ html body button.mcx-play{
     width:var(--mcl-v421-discord-open-w)!important;
     min-width:var(--mcl-v421-discord-open-w)!important;
     max-width:var(--mcl-v421-discord-open-w)!important;
-    background:var(--mcl-v421-discord-hover)!important;
-    background-color:var(--mcl-v421-discord-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v421-discord-hover)!important;transform:none!important;
     box-shadow:none!important;
     text-shadow:none!important;
     filter:none!important;
@@ -34674,9 +34598,7 @@ html body button.mcx-play{
   html body #siteHeader.mcx-header .mcx-discord:active,
   html body #siteHeader .mcx-discord:active,
   html body .mcx-discord:active{
-    background:var(--mcl-v421-discord-active)!important;
-    background-color:var(--mcl-v421-discord-active)!important;
-  }
+    background:var(--mcl-v421-discord-active)!important;}
 
   /* Logo remains locked to the same right side spot on hover. */
   html body #siteHeader.mcx-header .mcx-discord img,
@@ -34764,9 +34686,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v421-radius)!important;
-    background:var(--mcl-v421-play)!important;
-    background-color:var(--mcl-v421-play)!important;
-    color:#fff!important;
+    background:var(--mcl-v421-play)!important;color:#fff!important;
     font-size:14px!important;
     font-weight:700!important;
     line-height:1!important;
@@ -34790,9 +34710,7 @@ html body button.mcx-play{
   html body .mcx-play:focus-visible,
   html body button.mcx-play:hover,
   html body button.mcx-play:focus-visible{
-    background:var(--mcl-v421-play-hover)!important;
-    background-color:var(--mcl-v421-play-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v421-play-hover)!important;transform:none!important;
     box-shadow:none!important;
     text-shadow:none!important;
     filter:none!important;
@@ -34810,9 +34728,7 @@ html body button.mcx-play{
   html body #siteHeader button.mcx-play.copied,
   html body .mcx-play.copied,
   html body button.mcx-play.copied{
-    background:var(--mcl-v421-play-active)!important;
-    background-color:var(--mcl-v421-play-active)!important;
-    transform:none!important;
+    background:var(--mcl-v421-play-active)!important;transform:none!important;
     width:var(--mcl-v421-play-w)!important;
     min-width:var(--mcl-v421-play-w)!important;
     max-width:var(--mcl-v421-play-w)!important;
@@ -34992,26 +34908,20 @@ html body button.mcx-play{
 
   html body #siteHeader .mcx-store,
   html body #siteHeader .mcx-button.mcx-store{
-    background:var(--mcl-v422-store)!important;
-    background-color:var(--mcl-v422-store)!important;
-  }
+    background:var(--mcl-v422-store)!important;}
 
   html body #siteHeader .mcx-store:hover,
   html body #siteHeader .mcx-store:focus-visible,
   html body #siteHeader .mcx-button.mcx-store:hover,
   html body #siteHeader .mcx-button.mcx-store:focus-visible{
-    background:var(--mcl-v422-store-hover)!important;
-    background-color:var(--mcl-v422-store-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v422-store-hover)!important;transform:none!important;
     box-shadow:none!important;
     filter:none!important;
   }
 
   html body #siteHeader .mcx-store:active,
   html body #siteHeader .mcx-button.mcx-store:active{
-    background:var(--mcl-v422-store-active)!important;
-    background-color:var(--mcl-v422-store-active)!important;
-  }
+    background:var(--mcl-v422-store-active)!important;}
 
   /*
     Discord + Play live at the far right.
@@ -35038,9 +34948,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v422-radius)!important;
-    background:var(--mcl-v422-discord)!important;
-    background-color:var(--mcl-v422-discord)!important;
-    color:#fff!important;
+    background:var(--mcl-v422-discord)!important;color:#fff!important;
     overflow:hidden!important;
     box-shadow:none!important;
     text-shadow:none!important;
@@ -35054,17 +34962,13 @@ html body button.mcx-play{
     width:var(--mcl-v422-discord-open)!important;
     min-width:var(--mcl-v422-discord-open)!important;
     max-width:var(--mcl-v422-discord-open)!important;
-    background:var(--mcl-v422-discord-hover)!important;
-    background-color:var(--mcl-v422-discord-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v422-discord-hover)!important;transform:none!important;
     box-shadow:none!important;
     filter:none!important;
   }
 
   html body #siteHeader .mcx-discord:active{
-    background:var(--mcl-v422-discord-active)!important;
-    background-color:var(--mcl-v422-discord-active)!important;
-  }
+    background:var(--mcl-v422-discord-active)!important;}
 
   /* Icon is fixed to the right side; text reveals to the left. */
   html body #siteHeader .mcx-discord img{
@@ -35120,17 +35024,13 @@ html body button.mcx-play{
 
   html body #siteHeader .mcx-play,
   html body #siteHeader button.mcx-play{
-    background:var(--mcl-v422-play)!important;
-    background-color:var(--mcl-v422-play)!important;
-  }
+    background:var(--mcl-v422-play)!important;}
 
   html body #siteHeader .mcx-play:hover,
   html body #siteHeader .mcx-play:focus-visible,
   html body #siteHeader button.mcx-play:hover,
   html body #siteHeader button.mcx-play:focus-visible{
-    background:var(--mcl-v422-play-hover)!important;
-    background-color:var(--mcl-v422-play-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v422-play-hover)!important;transform:none!important;
     box-shadow:none!important;
     filter:none!important;
   }
@@ -35139,9 +35039,7 @@ html body button.mcx-play{
   html body #siteHeader button.mcx-play:active,
   html body #siteHeader .mcx-play.copied,
   html body #siteHeader button.mcx-play.copied{
-    background:var(--mcl-v422-play-active)!important;
-    background-color:var(--mcl-v422-play-active)!important;
-    width:var(--mcl-v422-button-w)!important;
+    background:var(--mcl-v422-play-active)!important;width:var(--mcl-v422-button-w)!important;
     min-width:var(--mcl-v422-button-w)!important;
     max-width:var(--mcl-v422-button-w)!important;
     height:var(--mcl-v422-action-h)!important;
@@ -35362,21 +35260,15 @@ html body button.mcx-play{
   }
 
   html body #siteHeader .mcx-desktop-links .mcx-store{
-    background:var(--mcl-v423-store)!important;
-    background-color:var(--mcl-v423-store)!important;
-  }
+    background:var(--mcl-v423-store)!important;}
 
   html body #siteHeader .mcx-desktop-links .mcx-store:hover,
   html body #siteHeader .mcx-desktop-links .mcx-store:focus-visible{
-    background:var(--mcl-v423-store-hover)!important;
-    background-color:var(--mcl-v423-store-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v423-store-hover)!important;transform:none!important;
   }
 
   html body #siteHeader .mcx-desktop-links .mcx-store:active{
-    background:var(--mcl-v423-store-active)!important;
-    background-color:var(--mcl-v423-store-active)!important;
-  }
+    background:var(--mcl-v423-store-active)!important;}
 
   /*
     Discord has a reserved open-width slot.
@@ -35399,9 +35291,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v423-radius)!important;
-    background:var(--mcl-v423-discord)!important;
-    background-color:var(--mcl-v423-discord)!important;
-    color:#fff!important;
+    background:var(--mcl-v423-discord)!important;color:#fff!important;
     overflow:hidden!important;
     cursor:pointer!important;
     transition:width .18s ease, min-width .18s ease, max-width .18s ease, background-color .12s ease!important;
@@ -35412,15 +35302,11 @@ html body button.mcx-play{
     width:var(--mcl-v423-discord-open-w)!important;
     min-width:var(--mcl-v423-discord-open-w)!important;
     max-width:var(--mcl-v423-discord-open-w)!important;
-    background:var(--mcl-v423-discord-hover)!important;
-    background-color:var(--mcl-v423-discord-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v423-discord-hover)!important;transform:none!important;
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord:active{
-    background:var(--mcl-v423-discord-active)!important;
-    background-color:var(--mcl-v423-discord-active)!important;
-  }
+    background:var(--mcl-v423-discord-active)!important;}
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord img{
     position:absolute!important;
@@ -35477,22 +35363,16 @@ html body button.mcx-play{
     grid-column:2!important;
     justify-self:end!important;
     align-self:center!important;
-    background:var(--mcl-v423-play)!important;
-    background-color:var(--mcl-v423-play)!important;
-  }
+    background:var(--mcl-v423-play)!important;}
 
   html body #siteHeader .mcx-desktop-actions .mcx-play:hover,
   html body #siteHeader .mcx-desktop-actions .mcx-play:focus-visible{
-    background:var(--mcl-v423-play-hover)!important;
-    background-color:var(--mcl-v423-play-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v423-play-hover)!important;transform:none!important;
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-play:active,
   html body #siteHeader .mcx-desktop-actions .mcx-play.copied{
-    background:var(--mcl-v423-play-active)!important;
-    background-color:var(--mcl-v423-play-active)!important;
-    width:var(--mcl-v423-button-w)!important;
+    background:var(--mcl-v423-play-active)!important;width:var(--mcl-v423-button-w)!important;
     min-width:var(--mcl-v423-button-w)!important;
     max-width:var(--mcl-v423-button-w)!important;
     height:var(--mcl-v423-button-h)!important;
@@ -35770,21 +35650,15 @@ html body button.mcx-play{
   }
 
   html body #siteHeader .mcx-desktop-links .mcx-store{
-    background:var(--mcl-v424-store)!important;
-    background-color:var(--mcl-v424-store)!important;
-  }
+    background:var(--mcl-v424-store)!important;}
 
   html body #siteHeader .mcx-desktop-links .mcx-store:hover,
   html body #siteHeader .mcx-desktop-links .mcx-store:focus-visible{
-    background:var(--mcl-v424-store-hover)!important;
-    background-color:var(--mcl-v424-store-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v424-store-hover)!important;transform:none!important;
   }
 
   html body #siteHeader .mcx-desktop-links .mcx-store:active{
-    background:var(--mcl-v424-store-active)!important;
-    background-color:var(--mcl-v424-store-active)!important;
-  }
+    background:var(--mcl-v424-store-active)!important;}
 
   /*
     Discord: closed square by default. On hover it expands LEFT because it sits
@@ -35803,9 +35677,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v424-radius)!important;
-    background:var(--mcl-v424-discord)!important;
-    background-color:var(--mcl-v424-discord)!important;
-    color:#fff!important;
+    background:var(--mcl-v424-discord)!important;color:#fff!important;
     overflow:hidden!important;
     cursor:pointer!important;
     flex:0 0 auto!important;
@@ -35817,15 +35689,11 @@ html body button.mcx-play{
     width:var(--mcl-v424-discord-open-w)!important;
     min-width:var(--mcl-v424-discord-open-w)!important;
     max-width:var(--mcl-v424-discord-open-w)!important;
-    background:var(--mcl-v424-discord-hover)!important;
-    background-color:var(--mcl-v424-discord-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v424-discord-hover)!important;transform:none!important;
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord:active{
-    background:var(--mcl-v424-discord-active)!important;
-    background-color:var(--mcl-v424-discord-active)!important;
-  }
+    background:var(--mcl-v424-discord-active)!important;}
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord img{
     position:absolute!important;
@@ -35878,22 +35746,16 @@ html body button.mcx-play{
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-play{
-    background:var(--mcl-v424-play)!important;
-    background-color:var(--mcl-v424-play)!important;
-  }
+    background:var(--mcl-v424-play)!important;}
 
   html body #siteHeader .mcx-desktop-actions .mcx-play:hover,
   html body #siteHeader .mcx-desktop-actions .mcx-play:focus-visible{
-    background:var(--mcl-v424-play-hover)!important;
-    background-color:var(--mcl-v424-play-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v424-play-hover)!important;transform:none!important;
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-play:active,
   html body #siteHeader .mcx-desktop-actions .mcx-play.copied{
-    background:var(--mcl-v424-play-active)!important;
-    background-color:var(--mcl-v424-play-active)!important;
-    width:var(--mcl-v424-btn-w)!important;
+    background:var(--mcl-v424-play-active)!important;width:var(--mcl-v424-btn-w)!important;
     min-width:var(--mcl-v424-btn-w)!important;
     max-width:var(--mcl-v424-btn-w)!important;
     height:var(--mcl-v424-btn-h)!important;
@@ -36159,19 +36021,13 @@ html body button.mcx-play{
   }
 
   html body #siteHeader .mcx-desktop-links .mcx-store{
-    background:var(--mcl-v425-store)!important;
-    background-color:var(--mcl-v425-store)!important;
-  }
+    background:var(--mcl-v425-store)!important;}
   html body #siteHeader .mcx-desktop-links .mcx-store:hover,
   html body #siteHeader .mcx-desktop-links .mcx-store:focus-visible{
-    background:var(--mcl-v425-store-hover)!important;
-    background-color:var(--mcl-v425-store-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v425-store-hover)!important;transform:none!important;
   }
   html body #siteHeader .mcx-desktop-links .mcx-store:active{
-    background:var(--mcl-v425-store-active)!important;
-    background-color:var(--mcl-v425-store-active)!important;
-  }
+    background:var(--mcl-v425-store-active)!important;}
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord{
     box-sizing:border-box!important;
@@ -36186,9 +36042,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v425-radius)!important;
-    background:var(--mcl-v425-discord)!important;
-    background-color:var(--mcl-v425-discord)!important;
-    color:#fff!important;
+    background:var(--mcl-v425-discord)!important;color:#fff!important;
     overflow:hidden!important;
     cursor:pointer!important;
     flex:0 0 auto!important;
@@ -36200,15 +36054,11 @@ html body button.mcx-play{
     width:var(--mcl-v425-discord-open)!important;
     min-width:var(--mcl-v425-discord-open)!important;
     max-width:var(--mcl-v425-discord-open)!important;
-    background:var(--mcl-v425-discord-hover)!important;
-    background-color:var(--mcl-v425-discord-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v425-discord-hover)!important;transform:none!important;
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord:active{
-    background:var(--mcl-v425-discord-active)!important;
-    background-color:var(--mcl-v425-discord-active)!important;
-  }
+    background:var(--mcl-v425-discord-active)!important;}
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord img{
     position:absolute!important;
@@ -36261,20 +36111,14 @@ html body button.mcx-play{
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-play{
-    background:var(--mcl-v425-play)!important;
-    background-color:var(--mcl-v425-play)!important;
-  }
+    background:var(--mcl-v425-play)!important;}
   html body #siteHeader .mcx-desktop-actions .mcx-play:hover,
   html body #siteHeader .mcx-desktop-actions .mcx-play:focus-visible{
-    background:var(--mcl-v425-play-hover)!important;
-    background-color:var(--mcl-v425-play-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v425-play-hover)!important;transform:none!important;
   }
   html body #siteHeader .mcx-desktop-actions .mcx-play:active,
   html body #siteHeader .mcx-desktop-actions .mcx-play.copied{
-    background:var(--mcl-v425-play-active)!important;
-    background-color:var(--mcl-v425-play-active)!important;
-    width:var(--mcl-v425-btn-w)!important;
+    background:var(--mcl-v425-play-active)!important;width:var(--mcl-v425-btn-w)!important;
     min-width:var(--mcl-v425-btn-w)!important;
     max-width:var(--mcl-v425-btn-w)!important;
     height:var(--mcl-v425-btn-h)!important;
@@ -36386,9 +36230,7 @@ html body button.mcx-play{
   html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play,
   html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play,
   html body #siteHeader button[data-copy-ip]{
-    background:var(--mcl-v426-play)!important;
-    background-color:var(--mcl-v426-play)!important;
-  }
+    background:var(--mcl-v426-play)!important;}
 
   html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play:hover,
   html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play:hover,
@@ -36396,9 +36238,7 @@ html body button.mcx-play{
   html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play:focus-visible,
   html body #siteHeader button[data-copy-ip]:hover,
   html body #siteHeader button[data-copy-ip]:focus-visible{
-    background:var(--mcl-v426-play-hover)!important;
-    background-color:var(--mcl-v426-play-hover)!important;
-  }
+    background:var(--mcl-v426-play-hover)!important;}
 
   html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play:active,
   html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play:active,
@@ -36410,9 +36250,7 @@ html body button.mcx-play{
   html body #siteHeader button[data-copy-ip].copied,
   html body #siteHeader button[data-copy-ip].copied:hover,
   html body #siteHeader button[data-copy-ip].copied:focus-visible{
-    background:var(--mcl-v426-play-active)!important;
-    background-color:var(--mcl-v426-play-active)!important;
-  }
+    background:var(--mcl-v426-play-active)!important;}
 
   /*
     Keep the action row spacing stable too, so even when text changes to COPIED,
@@ -36654,21 +36492,15 @@ html body button.mcx-play{
   }
 
   html body #siteHeader .mcx-desktop-links .mcx-store{
-    background:var(--mcl-v427-store)!important;
-    background-color:var(--mcl-v427-store)!important;
-  }
+    background:var(--mcl-v427-store)!important;}
 
   html body #siteHeader .mcx-desktop-links .mcx-store:hover,
   html body #siteHeader .mcx-desktop-links .mcx-store:focus-visible{
-    background:var(--mcl-v427-store-hover)!important;
-    background-color:var(--mcl-v427-store-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v427-store-hover)!important;transform:none!important;
   }
 
   html body #siteHeader .mcx-desktop-links .mcx-store:active{
-    background:var(--mcl-v427-store-active)!important;
-    background-color:var(--mcl-v427-store-active)!important;
-  }
+    background:var(--mcl-v427-store-active)!important;}
 
   /*
     v3.9.95 Discord hover mechanics:
@@ -36691,9 +36523,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v427-radius)!important;
-    background:var(--mcl-v427-discord)!important;
-    background-color:var(--mcl-v427-discord)!important;
-    color:#fff!important;
+    background:var(--mcl-v427-discord)!important;color:#fff!important;
     overflow:hidden!important;
     cursor:pointer!important;
     display:flex!important;
@@ -36720,17 +36550,13 @@ html body button.mcx-play{
     justify-content:center!important;
     gap:7px!important;
     padding:0 11px!important;
-    background:var(--mcl-v427-discord-hover)!important;
-    background-color:var(--mcl-v427-discord-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v427-discord-hover)!important;transform:none!important;
     box-shadow:none!important;
     filter:none!important;
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord:active{
-    background:var(--mcl-v427-discord-active)!important;
-    background-color:var(--mcl-v427-discord-active)!important;
-    transform:none!important;
+    background:var(--mcl-v427-discord-active)!important;transform:none!important;
     filter:none!important;
   }
 
@@ -36800,24 +36626,18 @@ html body button.mcx-play{
     grid-column:2!important;
     justify-self:end!important;
     align-self:center!important;
-    background:var(--mcl-v427-play)!important;
-    background-color:var(--mcl-v427-play)!important;
-  }
+    background:var(--mcl-v427-play)!important;}
 
   html body #siteHeader .mcx-desktop-actions .mcx-play:hover,
   html body #siteHeader .mcx-desktop-actions .mcx-play:focus-visible{
-    background:var(--mcl-v427-play-hover)!important;
-    background-color:var(--mcl-v427-play-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v427-play-hover)!important;transform:none!important;
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-play:active,
   html body #siteHeader .mcx-desktop-actions .mcx-play.copied,
   html body #siteHeader .mcx-desktop-actions .mcx-play.copied:hover,
   html body #siteHeader .mcx-desktop-actions .mcx-play.copied:focus-visible{
-    background:var(--mcl-v427-play-active)!important;
-    background-color:var(--mcl-v427-play-active)!important;
-    width:var(--mcl-v427-btn-w)!important;
+    background:var(--mcl-v427-play-active)!important;width:var(--mcl-v427-btn-w)!important;
     min-width:var(--mcl-v427-btn-w)!important;
     max-width:var(--mcl-v427-btn-w)!important;
     height:var(--mcl-v427-btn-h)!important;
@@ -36912,23 +36732,17 @@ html body button.mcx-play{
     width:var(--mcl-v428-discord-closed)!important;
     min-width:var(--mcl-v428-discord-closed)!important;
     max-width:var(--mcl-v428-discord-closed)!important;
-    background:var(--mcl-v428-discord)!important;
-    background-color:var(--mcl-v428-discord)!important;
-  }
+    background:var(--mcl-v428-discord)!important;}
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord:hover,
   html body #siteHeader .mcx-desktop-actions .mcx-discord:focus-visible{
     width:var(--mcl-v428-discord-open)!important;
     min-width:var(--mcl-v428-discord-open)!important;
     max-width:var(--mcl-v428-discord-open)!important;
-    background:var(--mcl-v428-discord-hover)!important;
-    background-color:var(--mcl-v428-discord-hover)!important;
-  }
+    background:var(--mcl-v428-discord-hover)!important;}
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord:active{
-    background:var(--mcl-v428-discord-active)!important;
-    background-color:var(--mcl-v428-discord-active)!important;
-  }
+    background:var(--mcl-v428-discord-active)!important;}
 
   /*
     Pin the icon inside the original 44px square.
@@ -37047,9 +36861,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:var(--mcl-v429-radius)!important;
-    background:var(--mcl-v429-discord)!important;
-    background-color:var(--mcl-v429-discord)!important;
-    color:#fff!important;
+    background:var(--mcl-v429-discord)!important;color:#fff!important;
     overflow:hidden!important;
     cursor:pointer!important;
     transform:none!important;
@@ -37068,17 +36880,13 @@ html body button.mcx-play{
     width:var(--mcl-v429-discord-open)!important;
     min-width:var(--mcl-v429-discord-open)!important;
     max-width:var(--mcl-v429-discord-open)!important;
-    background:var(--mcl-v429-discord-hover)!important;
-    background-color:var(--mcl-v429-discord-hover)!important;
-    transform:none!important;
+    background:var(--mcl-v429-discord-hover)!important;transform:none!important;
     box-shadow:none!important;
     filter:none!important;
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord:active{
-    background:var(--mcl-v429-discord-active)!important;
-    background-color:var(--mcl-v429-discord-active)!important;
-  }
+    background:var(--mcl-v429-discord-active)!important;}
 
   /* Icon remains pinned inside the original 44px square on the right. */
   html body #siteHeader .mcx-desktop-actions .mcx-discord img,
@@ -37204,9 +37012,7 @@ html body button.mcx-play{
     border:0!important;
     outline:0!important;
     border-radius:0!important;
-    background:transparent!important;
-    background-color:transparent!important;
-    color:#fff!important;
+    background:transparent!important;color:#fff!important;
     overflow:visible!important;
     cursor:pointer!important;
     transform:none!important;
