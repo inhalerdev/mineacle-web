@@ -32477,3 +32477,328 @@ html body a.mineacle-ban-pay-single:active{
   transform:none!important;
   filter:none!important;
 }
+
+
+/* Mineacle Bans v4.0.12: nav action buttons truly flat, no stroke/glow/gradient */
+
+/*
+  Screenshot note:
+  Store, Discord, and Play must all share the exact same flat style language:
+  - no gradient
+  - no outer glow
+  - no border/stroke
+  - no inset stroke
+  - no shadow
+  - no lift/scale
+  - same radius/timing/typography
+  Only the fill color changes per button.
+*/
+:root{
+  --mcl-nav-action-h-v412:38px;
+  --mcl-nav-action-radius-v412:8px;
+  --mcl-nav-action-pad-x-v412:20px;
+  --mcl-nav-action-font-v412:14px;
+  --mcl-nav-action-weight-v412:700;
+  --mcl-nav-action-letter-v412:.035em;
+
+  --mcl-store-v412:#a424f2;
+  --mcl-store-hover-v412:#b034ff;
+  --mcl-store-active-v412:#8420c8;
+
+  --mcl-discord-v412:#5865f2;
+  --mcl-discord-hover-v412:#6571ff;
+  --mcl-discord-active-v412:#4751ca;
+
+  --mcl-play-v412:#239f51;
+  --mcl-play-hover-v412:#2ab85f;
+  --mcl-play-active-v412:#18783b;
+}
+
+/* Hard reset all old button effects from legacy nav CSS. */
+html body #siteHeader.mcx-header .mcx-button.mcx-store,
+html body #siteHeader.mcx-header a.mcx-button.mcx-store,
+html body #siteHeader.mcx-header .mcx-store,
+html body #siteHeader .mcx-button.mcx-store,
+html body #siteHeader a.mcx-button.mcx-store,
+html body #siteHeader .mcx-store,
+html body .mcx-button.mcx-store,
+html body a.mcx-button.mcx-store,
+html body .mcx-store,
+html body #siteHeader.mcx-header .mcx-discord,
+html body #siteHeader .mcx-discord,
+html body .mcx-discord,
+html body #siteHeader.mcx-header .mcx-play,
+html body #siteHeader.mcx-header button.mcx-play,
+html body #siteHeader .mcx-play,
+html body #siteHeader button.mcx-play,
+html body .mcx-play,
+html body button.mcx-play{
+  appearance:none!important;
+  -webkit-appearance:none!important;
+  isolation:auto!important;
+  box-sizing:border-box!important;
+  position:relative!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  height:var(--mcl-nav-action-h-v412)!important;
+  min-height:var(--mcl-nav-action-h-v412)!important;
+  max-height:var(--mcl-nav-action-h-v412)!important;
+  border:0!important;
+  outline:0!important;
+  border-radius:var(--mcl-nav-action-radius-v412)!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+  overflow:hidden!important;
+  cursor:pointer!important;
+  transition:background-color .12s ease,color .12s ease!important;
+}
+
+/* Kill any generated layers that may create fake strokes/glows. */
+html body #siteHeader.mcx-header .mcx-button.mcx-store::before,
+html body #siteHeader.mcx-header .mcx-button.mcx-store::after,
+html body #siteHeader.mcx-header .mcx-store::before,
+html body #siteHeader.mcx-header .mcx-store::after,
+html body #siteHeader .mcx-button.mcx-store::before,
+html body #siteHeader .mcx-button.mcx-store::after,
+html body #siteHeader .mcx-store::before,
+html body #siteHeader .mcx-store::after,
+html body .mcx-button.mcx-store::before,
+html body .mcx-button.mcx-store::after,
+html body .mcx-store::before,
+html body .mcx-store::after,
+html body #siteHeader.mcx-header .mcx-discord::before,
+html body #siteHeader.mcx-header .mcx-discord::after,
+html body #siteHeader .mcx-discord::before,
+html body #siteHeader .mcx-discord::after,
+html body .mcx-discord::before,
+html body .mcx-discord::after,
+html body #siteHeader.mcx-header .mcx-play::before,
+html body #siteHeader.mcx-header .mcx-play::after,
+html body #siteHeader .mcx-play::before,
+html body #siteHeader .mcx-play::after,
+html body .mcx-play::before,
+html body .mcx-play::after{
+  content:none!important;
+  display:none!important;
+  opacity:0!important;
+  background:none!important;
+  background-image:none!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+/* Store: flat purple */
+html body #siteHeader.mcx-header .mcx-button.mcx-store,
+html body #siteHeader.mcx-header a.mcx-button.mcx-store,
+html body #siteHeader.mcx-header .mcx-store,
+html body #siteHeader .mcx-button.mcx-store,
+html body #siteHeader a.mcx-button.mcx-store,
+html body #siteHeader .mcx-store,
+html body .mcx-button.mcx-store,
+html body a.mcx-button.mcx-store,
+html body .mcx-store{
+  width:auto!important;
+  min-width:max-content!important;
+  max-width:none!important;
+  padding:0 var(--mcl-nav-action-pad-x-v412)!important;
+  background:var(--mcl-store-v412)!important;
+  background-color:var(--mcl-store-v412)!important;
+  color:#fff!important;
+  font-size:var(--mcl-nav-action-font-v412)!important;
+  font-weight:var(--mcl-nav-action-weight-v412)!important;
+  line-height:1!important;
+  letter-spacing:var(--mcl-nav-action-letter-v412)!important;
+  text-transform:uppercase!important;
+  text-decoration:none!important;
+  white-space:nowrap!important;
+}
+
+html body #siteHeader.mcx-header .mcx-button.mcx-store:hover,
+html body #siteHeader.mcx-header .mcx-button.mcx-store:focus-visible,
+html body #siteHeader.mcx-header .mcx-store:hover,
+html body #siteHeader.mcx-header .mcx-store:focus-visible,
+html body #siteHeader .mcx-button.mcx-store:hover,
+html body #siteHeader .mcx-button.mcx-store:focus-visible,
+html body #siteHeader .mcx-store:hover,
+html body #siteHeader .mcx-store:focus-visible,
+html body .mcx-button.mcx-store:hover,
+html body .mcx-button.mcx-store:focus-visible,
+html body .mcx-store:hover,
+html body .mcx-store:focus-visible{
+  background:var(--mcl-store-hover-v412)!important;
+  background-color:var(--mcl-store-hover-v412)!important;
+  color:#fff!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+}
+
+html body #siteHeader.mcx-header .mcx-button.mcx-store:active,
+html body #siteHeader.mcx-header .mcx-store:active,
+html body #siteHeader .mcx-button.mcx-store:active,
+html body #siteHeader .mcx-store:active,
+html body .mcx-button.mcx-store:active,
+html body .mcx-store:active{
+  background:var(--mcl-store-active-v412)!important;
+  background-color:var(--mcl-store-active-v412)!important;
+  color:#fff!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+}
+
+/* Discord: same flat style as Store/Play, square because it is an icon button. */
+html body #siteHeader.mcx-header .mcx-discord,
+html body #siteHeader .mcx-discord,
+html body .mcx-discord{
+  width:var(--mcl-nav-action-h-v412)!important;
+  min-width:var(--mcl-nav-action-h-v412)!important;
+  max-width:var(--mcl-nav-action-h-v412)!important;
+  padding:0!important;
+  background:var(--mcl-discord-v412)!important;
+  background-color:var(--mcl-discord-v412)!important;
+  color:#fff!important;
+}
+
+html body #siteHeader.mcx-header .mcx-discord:hover,
+html body #siteHeader.mcx-header .mcx-discord:focus-visible,
+html body #siteHeader .mcx-discord:hover,
+html body #siteHeader .mcx-discord:focus-visible,
+html body .mcx-discord:hover,
+html body .mcx-discord:focus-visible{
+  background:var(--mcl-discord-hover-v412)!important;
+  background-color:var(--mcl-discord-hover-v412)!important;
+  color:#fff!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+}
+
+html body #siteHeader.mcx-header .mcx-discord:active,
+html body #siteHeader .mcx-discord:active,
+html body .mcx-discord:active{
+  background:var(--mcl-discord-active-v412)!important;
+  background-color:var(--mcl-discord-active-v412)!important;
+  color:#fff!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+}
+
+html body #siteHeader.mcx-header .mcx-discord img,
+html body #siteHeader .mcx-discord img,
+html body .mcx-discord img{
+  width:21px!important;
+  height:21px!important;
+  display:block!important;
+  filter:brightness(0) invert(1)!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+/* Play: flat green */
+html body #siteHeader.mcx-header .mcx-play,
+html body #siteHeader.mcx-header button.mcx-play,
+html body #siteHeader .mcx-play,
+html body #siteHeader button.mcx-play,
+html body .mcx-play,
+html body button.mcx-play{
+  width:auto!important;
+  min-width:max-content!important;
+  max-width:none!important;
+  padding:0 var(--mcl-nav-action-pad-x-v412)!important;
+  background:var(--mcl-play-v412)!important;
+  background-color:var(--mcl-play-v412)!important;
+  color:#fff!important;
+  font-size:var(--mcl-nav-action-font-v412)!important;
+  font-weight:var(--mcl-nav-action-weight-v412)!important;
+  line-height:1!important;
+  letter-spacing:var(--mcl-nav-action-letter-v412)!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+}
+
+html body #siteHeader.mcx-header .mcx-play:hover,
+html body #siteHeader.mcx-header .mcx-play:focus-visible,
+html body #siteHeader.mcx-header button.mcx-play:hover,
+html body #siteHeader.mcx-header button.mcx-play:focus-visible,
+html body #siteHeader .mcx-play:hover,
+html body #siteHeader .mcx-play:focus-visible,
+html body #siteHeader button.mcx-play:hover,
+html body #siteHeader button.mcx-play:focus-visible,
+html body .mcx-play:hover,
+html body .mcx-play:focus-visible,
+html body button.mcx-play:hover,
+html body button.mcx-play:focus-visible{
+  background:var(--mcl-play-hover-v412)!important;
+  background-color:var(--mcl-play-hover-v412)!important;
+  color:#fff!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+}
+
+html body #siteHeader.mcx-header .mcx-play:active,
+html body #siteHeader.mcx-header button.mcx-play:active,
+html body #siteHeader .mcx-play:active,
+html body #siteHeader button.mcx-play:active,
+html body .mcx-play:active,
+html body button.mcx-play:active{
+  background:var(--mcl-play-active-v412)!important;
+  background-color:var(--mcl-play-active-v412)!important;
+  color:#fff!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+}
+
+/* Mobile nav action buttons also use the same flat no-stroke style. */
+html body .mcx-mobile-store,
+html body .mcx-mobile-discord{
+  border:0!important;
+  outline:0!important;
+  background-image:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+html body .mcx-mobile-store::before,
+html body .mcx-mobile-store::after,
+html body .mcx-mobile-discord::before,
+html body .mcx-mobile-discord::after{
+  content:none!important;
+  display:none!important;
+  box-shadow:none!important;
+  background:none!important;
+  border:0!important;
+}
+
+html body .mcx-mobile-store{
+  background:var(--mcl-store-v412)!important;
+  background-color:var(--mcl-store-v412)!important;
+}
+
+html body .mcx-mobile-discord{
+  background:var(--mcl-discord-v412)!important;
+  background-color:var(--mcl-discord-v412)!important;
+}
