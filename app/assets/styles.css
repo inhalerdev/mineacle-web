@@ -33246,3 +33246,209 @@ html body button.mcx-play.copied:hover{
   filter:none!important;
   box-shadow:none!important;
 }
+
+
+/* Mineacle Bans v4.0.16: remove players icon + Discord hover expands left + action spacing parity */
+
+/*
+  Screenshot request:
+  - Remove Players Online icon
+  - Discord button is square when idle, expands LEFT on hover/focus to show member count
+  - Discord + Play spacing matches the main nav link spacing
+  - Play does not move when Discord expands
+*/
+:root{
+  --mcl-nav-link-gap-v416:28px;
+  --mcl-nav-discord-closed-v416:38px;
+  --mcl-nav-discord-open-v416:174px;
+  --mcl-nav-action-height-v416:38px;
+  --mcl-nav-action-radius-v416:8px;
+  --mcl-nav-discord-bg-v416:#5865f2;
+  --mcl-nav-discord-hover-v416:#6571ff;
+  --mcl-nav-discord-active-v416:#4751ca;
+}
+
+/* Remove Players Online icon even if old markup/css survives browser cache. */
+html body .mcx-status img,
+html body .mcx-status-icon,
+html body img[src*="players-online-icon"]{
+  display:none!important;
+  width:0!important;
+  height:0!important;
+  min-width:0!important;
+  min-height:0!important;
+  margin:0!important;
+  padding:0!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+html body .mcx-status,
+html body .mcx-player-status,
+html body .nav-player-status{
+  gap:7px!important;
+}
+
+/* Main nav links and right action buttons use the same spacing value. */
+html body #siteHeader.mcx-header .mcx-nav,
+html body #siteHeader .mcx-nav,
+html body .mcx-nav{
+  gap:var(--mcl-nav-link-gap-v416)!important;
+}
+
+html body #siteHeader.mcx-header .mcx-actions,
+html body #siteHeader .mcx-actions,
+html body .mcx-actions{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:var(--mcl-nav-link-gap-v416)!important;
+  overflow:visible!important;
+}
+
+/*
+  Discord hover behavior:
+  It is before Play in the right-side action group.
+  The action group is right-aligned, so increasing Discord width grows left,
+  while Play stays fixed on the right.
+*/
+html body #siteHeader.mcx-header .mcx-discord,
+html body #siteHeader .mcx-discord,
+html body .mcx-discord{
+  box-sizing:border-box!important;
+  width:var(--mcl-nav-discord-closed-v416)!important;
+  min-width:var(--mcl-nav-discord-closed-v416)!important;
+  max-width:var(--mcl-nav-discord-closed-v416)!important;
+  height:var(--mcl-nav-action-height-v416)!important;
+  min-height:var(--mcl-nav-action-height-v416)!important;
+  max-height:var(--mcl-nav-action-height-v416)!important;
+  flex:0 0 var(--mcl-nav-discord-closed-v416)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:0!important;
+  padding:0!important;
+  margin:0!important;
+  border:0!important;
+  outline:0!important;
+  border-radius:var(--mcl-nav-action-radius-v416)!important;
+  background:var(--mcl-nav-discord-bg-v416)!important;
+  background-color:var(--mcl-nav-discord-bg-v416)!important;
+  color:#fff!important;
+  overflow:hidden!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+  transition:
+    width .16s ease,
+    min-width .16s ease,
+    max-width .16s ease,
+    flex-basis .16s ease,
+    background-color .12s ease,
+    color .12s ease!important;
+}
+
+html body #siteHeader.mcx-header .mcx-discord:hover,
+html body #siteHeader.mcx-header .mcx-discord:focus-visible,
+html body #siteHeader .mcx-discord:hover,
+html body #siteHeader .mcx-discord:focus-visible,
+html body .mcx-discord:hover,
+html body .mcx-discord:focus-visible{
+  width:var(--mcl-nav-discord-open-v416)!important;
+  min-width:var(--mcl-nav-discord-open-v416)!important;
+  max-width:var(--mcl-nav-discord-open-v416)!important;
+  flex-basis:var(--mcl-nav-discord-open-v416)!important;
+  justify-content:flex-start!important;
+  gap:10px!important;
+  padding:0 13px!important;
+  background:var(--mcl-nav-discord-hover-v416)!important;
+  background-color:var(--mcl-nav-discord-hover-v416)!important;
+  color:#fff!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+html body #siteHeader.mcx-header .mcx-discord:active,
+html body #siteHeader .mcx-discord:active,
+html body .mcx-discord:active{
+  background:var(--mcl-nav-discord-active-v416)!important;
+  background-color:var(--mcl-nav-discord-active-v416)!important;
+  color:#fff!important;
+  border:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+html body #siteHeader.mcx-header .mcx-discord img,
+html body #siteHeader .mcx-discord img,
+html body .mcx-discord img{
+  position:static!important;
+  inset:auto!important;
+  margin:0!important;
+  padding:0!important;
+  width:21px!important;
+  height:21px!important;
+  min-width:21px!important;
+  min-height:21px!important;
+  max-width:21px!important;
+  max-height:21px!important;
+  flex:0 0 21px!important;
+  display:block!important;
+  object-fit:contain!important;
+  filter:brightness(0) invert(1)!important;
+  opacity:1!important;
+  transform:none!important;
+  box-shadow:none!important;
+}
+
+/* Restore the Discord member text only on hover/focus. */
+html body #siteHeader.mcx-header .mcx-discord-members,
+html body #siteHeader .mcx-discord-members,
+html body .mcx-discord-members{
+  display:block!important;
+  width:auto!important;
+  max-width:0!important;
+  height:auto!important;
+  opacity:0!important;
+  overflow:hidden!important;
+  white-space:nowrap!important;
+  pointer-events:none!important;
+  color:#fff!important;
+  font-size:12px!important;
+  font-weight:700!important;
+  line-height:1!important;
+  letter-spacing:.035em!important;
+  text-transform:uppercase!important;
+  transition:max-width .16s ease, opacity .12s ease!important;
+}
+
+html body #siteHeader.mcx-header .mcx-discord:hover .mcx-discord-members,
+html body #siteHeader.mcx-header .mcx-discord:focus-visible .mcx-discord-members,
+html body #siteHeader .mcx-discord:hover .mcx-discord-members,
+html body #siteHeader .mcx-discord:focus-visible .mcx-discord-members,
+html body .mcx-discord:hover .mcx-discord-members,
+html body .mcx-discord:focus-visible .mcx-discord-members{
+  max-width:124px!important;
+  opacity:1!important;
+}
+
+/* Play stays fixed while Discord expands. */
+html body #siteHeader.mcx-header .mcx-play,
+html body #siteHeader.mcx-header button.mcx-play,
+html body #siteHeader .mcx-play,
+html body #siteHeader button.mcx-play,
+html body .mcx-play,
+html body button.mcx-play{
+  flex:0 0 var(--mcl-nav-play-copy-width-v415, 92px)!important;
+  width:var(--mcl-nav-play-copy-width-v415, 92px)!important;
+  min-width:var(--mcl-nav-play-copy-width-v415, 92px)!important;
+  max-width:var(--mcl-nav-play-copy-width-v415, 92px)!important;
+}
