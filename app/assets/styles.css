@@ -37237,7 +37237,6 @@ html body button.mcx-play{
     max-height:var(--mcl-v430-btn-h)!important;
     border-radius:var(--mcl-v430-radius)!important;
     background:var(--mcl-v430-discord)!important;
-    background-color:var(--mcl-v430-discord)!important;
     opacity:1!important;
     z-index:0!important;
     pointer-events:none!important;
@@ -37254,12 +37253,10 @@ html body button.mcx-play{
     min-width:var(--mcl-v430-discord-open)!important;
     max-width:var(--mcl-v430-discord-open)!important;
     background:var(--mcl-v430-discord-hover)!important;
-    background-color:var(--mcl-v430-discord-hover)!important;
   }
 
   html body #siteHeader .mcx-desktop-actions .mcx-discord:active::before{
     background:var(--mcl-v430-discord-active)!important;
-    background-color:var(--mcl-v430-discord-active)!important;
   }
 
   /* Keep icon pinned inside the original right-side 44px square. */
