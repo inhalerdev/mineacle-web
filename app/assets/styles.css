@@ -36298,3 +36298,132 @@ html body button.mcx-play{
     filter:none!important;
   }
 }
+
+
+/* Mineacle Bans v4.0.26: lock Play button size during COPIED state */
+
+/*
+  Fix:
+  The Play button must still say COPIED on click, but the physical button can never
+  resize, shrink, grow, shift, or alter spacing. This overrides every previous
+  .copied / :active / hover rule.
+*/
+@media (min-width:981px){
+  :root{
+    --mcl-v426-play-w:104px;
+    --mcl-v426-play-h:44px;
+    --mcl-v426-play-radius:9px;
+    --mcl-v426-play:#239f51;
+    --mcl-v426-play-hover:#2ab85f;
+    --mcl-v426-play-active:#18783b;
+  }
+
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play:hover,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play:hover,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play:focus-visible,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play:focus-visible,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play:active,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play:active,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play.copied,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play.copied,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play.copied:hover,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play.copied:hover,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play.copied:focus-visible,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play.copied:focus-visible,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play.copied:active,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play.copied:active,
+  html body #siteHeader button[data-copy-ip],
+  html body #siteHeader button[data-copy-ip].copied,
+  html body #siteHeader button[data-copy-ip]:hover,
+  html body #siteHeader button[data-copy-ip]:active,
+  html body #siteHeader button[data-copy-ip].copied:hover,
+  html body #siteHeader button[data-copy-ip].copied:active{
+    box-sizing:border-box!important;
+    inline-size:var(--mcl-v426-play-w)!important;
+    min-inline-size:var(--mcl-v426-play-w)!important;
+    max-inline-size:var(--mcl-v426-play-w)!important;
+    width:var(--mcl-v426-play-w)!important;
+    min-width:var(--mcl-v426-play-w)!important;
+    max-width:var(--mcl-v426-play-w)!important;
+    block-size:var(--mcl-v426-play-h)!important;
+    min-block-size:var(--mcl-v426-play-h)!important;
+    max-block-size:var(--mcl-v426-play-h)!important;
+    height:var(--mcl-v426-play-h)!important;
+    min-height:var(--mcl-v426-play-h)!important;
+    max-height:var(--mcl-v426-play-h)!important;
+    flex:0 0 var(--mcl-v426-play-w)!important;
+    flex-basis:var(--mcl-v426-play-w)!important;
+    flex-grow:0!important;
+    flex-shrink:0!important;
+    padding:0!important;
+    margin:0!important;
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    border:0!important;
+    outline:0!important;
+    border-radius:var(--mcl-v426-play-radius)!important;
+    color:#fff!important;
+    font-size:14px!important;
+    font-weight:700!important;
+    line-height:1!important;
+    letter-spacing:.035em!important;
+    text-transform:uppercase!important;
+    text-align:center!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:clip!important;
+    transform:none!important;
+    translate:none!important;
+    scale:none!important;
+    box-shadow:none!important;
+    text-shadow:none!important;
+    filter:none!important;
+  }
+
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play,
+  html body #siteHeader button[data-copy-ip]{
+    background:var(--mcl-v426-play)!important;
+    background-color:var(--mcl-v426-play)!important;
+  }
+
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play:hover,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play:hover,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play:focus-visible,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play:focus-visible,
+  html body #siteHeader button[data-copy-ip]:hover,
+  html body #siteHeader button[data-copy-ip]:focus-visible{
+    background:var(--mcl-v426-play-hover)!important;
+    background-color:var(--mcl-v426-play-hover)!important;
+  }
+
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play:active,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play:active,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play.copied,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play.copied,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions .mcx-play.copied:hover,
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions button.mcx-play.copied:hover,
+  html body #siteHeader button[data-copy-ip]:active,
+  html body #siteHeader button[data-copy-ip].copied,
+  html body #siteHeader button[data-copy-ip].copied:hover,
+  html body #siteHeader button[data-copy-ip].copied:focus-visible{
+    background:var(--mcl-v426-play-active)!important;
+    background-color:var(--mcl-v426-play-active)!important;
+  }
+
+  /*
+    Keep the action row spacing stable too, so even when text changes to COPIED,
+    Discord and Play keep the same positions.
+  */
+  html body #siteHeader .mcx-nav-shell .mcx-desktop-actions{
+    align-items:center!important;
+    gap:28px!important;
+    height:44px!important;
+    min-height:44px!important;
+    max-height:44px!important;
+    overflow:visible!important;
+  }
+}
