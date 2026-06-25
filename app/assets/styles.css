@@ -38006,3 +38006,38 @@ html body button.mcx-play{
     display:none!important;
   }
 }
+
+
+/* Mineacle Bans v4.0.38: opened Discord extension is clickable */
+
+/*
+  Closed state:
+  - Only the 44x44 Discord square is a real link
+  - Inactive left extension does not show browser URL/status
+
+  Open state:
+  - The full visible extension behaves like the Discord button through JS click routing
+  - Cursor becomes pointer across the full opened button
+*/
+@media (min-width:981px){
+  html body #siteHeader .mcx-desktop-actions .mcx-discord-wrap,
+  html body #siteHeader .mcx-desktop-actions .mcx-discord-wrap:hover{
+    cursor:default!important;
+  }
+
+  html body #siteHeader .mcx-desktop-actions .mcx-discord-wrap.is-open,
+  html body #siteHeader .mcx-desktop-actions .mcx-discord-wrap:focus-within{
+    cursor:pointer!important;
+  }
+
+  html body #siteHeader .mcx-desktop-actions .mcx-discord-wrap.is-open > .mcx-discord-members,
+  html body #siteHeader .mcx-desktop-actions .mcx-discord-wrap:focus-within > .mcx-discord-members{
+    pointer-events:none!important;
+  }
+
+  html body #siteHeader .mcx-desktop-actions .mcx-discord-wrap > .mcx-discord,
+  html body #siteHeader .mcx-desktop-actions .mcx-discord-wrap > .mcx-discord:hover,
+  html body #siteHeader .mcx-desktop-actions .mcx-discord-wrap > .mcx-discord:focus-visible{
+    cursor:pointer!important;
+  }
+}

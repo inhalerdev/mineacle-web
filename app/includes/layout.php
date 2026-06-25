@@ -15,7 +15,7 @@ function mineacle_page_head(string $title): void {
     echo '<title>Mineacle | ' . h($title) . '</title>';
     echo '<meta name="description" content="Mineacle public bans portal">';
     echo '<link rel="icon" type="image/png" href="assets/mineacle-square-logo.png?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199.188.177.166.144.8.7.6.5.4.3.2">';
-    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle4.0.37">';
+    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle4.0.38">';
     echo '</head>';
 }
 
@@ -78,17 +78,18 @@ function mineacle_footer(): void {
     echo '</div>';
     echo '</div>';
     echo '</footer>';
-    echo '<script src="assets/main.js?v=banssingle4.0.37"></script>';
-    echo '<script src="assets/hero-scroll.js?v=banssingle4.0.37"></script>';
-    echo '<script src="assets/nav-server-status.js?v=banssingle4.0.37"></script>';
+    echo '<script src="assets/main.js?v=banssingle4.0.38"></script>';
+    echo '<script src="assets/hero-scroll.js?v=banssingle4.0.38"></script>';
+    echo '<script src="assets/nav-server-status.js?v=banssingle4.0.38"></script>';
     echo <<<'HTML'
 <script>
 (function(){
   function installDiscordHoverGate(){
     var wrap = document.getElementById('navDiscordWrap') || document.querySelector('#siteHeader .mcx-discord-wrap');
-    if (!wrap || wrap.dataset.mineacleDiscordHoverGate === '3') return;
+    if (!wrap || wrap.dataset.mineacleDiscordHoverGate === '4') return;
 
-    wrap.dataset.mineacleDiscordHoverGate = '3';
+    var link = wrap.querySelector('.mcx-discord');
+    wrap.dataset.mineacleDiscordHoverGate = '4';
 
     function squareHit(event){
       var rect = wrap.getBoundingClientRect();
@@ -104,6 +105,15 @@ function mineacle_footer(): void {
       }
     }
 
+    function openDiscord(){
+      if (!link || !link.href) return;
+      if ((link.getAttribute('target') || '').toLowerCase() === '_blank') {
+        window.open(link.href, '_blank', 'noopener,noreferrer');
+        return;
+      }
+      window.location.href = link.href;
+    }
+
     wrap.addEventListener('pointerenter', openFromSquare);
     wrap.addEventListener('pointermove', openFromSquare);
     wrap.addEventListener('pointerleave', function(){
@@ -114,6 +124,19 @@ function mineacle_footer(): void {
     });
     wrap.addEventListener('focusout', function(){
       wrap.classList.remove('is-open');
+    });
+
+    /*
+      The left extension is not an <a> while closed, so the browser does not show
+      a Discord URL there. Once the square opens the button, this makes the full
+      visible extension act like the same Discord action.
+    */
+    wrap.addEventListener('click', function(event){
+      if (event.target.closest && event.target.closest('a')) return;
+      if (!wrap.classList.contains('is-open')) return;
+      event.preventDefault();
+      event.stopPropagation();
+      openDiscord();
     });
   }
 
@@ -228,7 +251,7 @@ HTML;
 
     var img = section.querySelector('.client-guard-title-img, .client-guard-section-title img');
     if (img) {
-      img.src = 'assets/mineacle-clientguard-logo-v2.png?v=banssingle4.0.37';
+      img.src = 'assets/mineacle-clientguard-logo-v2.png?v=banssingle4.0.38';
       img.alt = 'Mineacle Client Guard';
       img.classList.add('client-guard-title-img');
     }
