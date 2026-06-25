@@ -38215,3 +38215,283 @@ html body button.mcx-play{
     padding:0!important;
   }
 }
+
+
+/* Mineacle Bans v4.0.41: ban controls/pills/modal info polish */
+
+/*
+  Global control standard for this pass:
+  - Store, Play, Copied, Buy Unban, ban type labels, and modal ban labels share
+    the same vertical height and text size
+  - Info icon and modal X use the same flat neutral square treatment
+  - Row hover no longer lights the info icon unless the icon itself is hovered
+  - Support email in More Info is clickable/copyable
+*/
+:root{
+  --mcl-v441-control-h:44px;
+  --mcl-v441-control-radius:9px;
+  --mcl-v441-control-font:14px;
+  --mcl-v441-control-weight:700;
+  --mcl-v441-control-spacing:.035em;
+
+  --mcl-v441-button-w:104px;
+  --mcl-v441-label-min-w:146px;
+  --mcl-v441-control-pad-x:18px;
+
+  --mcl-v441-neutral:#24232d;
+  --mcl-v441-neutral-hover:#30303c;
+  --mcl-v441-neutral-active:#1e1d26;
+  --mcl-v441-neutral-border:rgba(255,255,255,.12);
+  --mcl-v441-neutral-border-hover:rgba(255,255,255,.20);
+
+  --mcl-v441-ban-static:#24131b;
+  --mcl-v441-ban-hover:#2f1a24;
+  --mcl-v441-ban-border:rgba(255,104,147,.38);
+  --mcl-v441-ban-border-hover:rgba(255,104,147,.52);
+  --mcl-v441-ban-text:#ffd0de;
+
+  --mcl-v441-unban:#c82d43;
+  --mcl-v441-unban-hover:#db3b52;
+  --mcl-v441-unban-active:#9f2234;
+}
+
+/* One height + text standard for main nav buttons and payment buttons. */
+html body #siteHeader .mcx-store,
+html body #siteHeader .mcx-play,
+html body #siteHeader .mcx-play.copied,
+html body a.ban-unban-cta,
+html body a.mineacle-ban-pay-single,
+html body .ban-action a.ban-unban-cta,
+html body .mineacle-punish-actions a.ban-unban-cta,
+html body .mineacle-ban-actions-single a.mineacle-ban-pay-single{
+  box-sizing:border-box!important;
+  min-width:var(--mcl-v441-button-w)!important;
+  height:var(--mcl-v441-control-h)!important;
+  min-height:var(--mcl-v441-control-h)!important;
+  max-height:var(--mcl-v441-control-h)!important;
+  padding:0 var(--mcl-v441-control-pad-x)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:var(--mcl-v441-control-radius)!important;
+  color:#fff!important;
+  font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
+  font-size:var(--mcl-v441-control-font)!important;
+  font-weight:var(--mcl-v441-control-weight)!important;
+  line-height:1!important;
+  letter-spacing:var(--mcl-v441-control-spacing)!important;
+  text-transform:uppercase!important;
+  text-decoration:none!important;
+  white-space:nowrap!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+  transition:background .12s ease,border-color .12s ease,color .12s ease!important;
+}
+
+/* Buy Unban stays red, but gets the same height/text standard as Store and Play. */
+html body a.ban-unban-cta,
+html body a.mineacle-ban-pay-single,
+html body .ban-action a.ban-unban-cta,
+html body .mineacle-punish-actions a.ban-unban-cta,
+html body .mineacle-ban-actions-single a.mineacle-ban-pay-single{
+  background:var(--mcl-v441-unban)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+}
+
+html body a.ban-unban-cta:hover,
+html body a.ban-unban-cta:focus-visible,
+html body a.mineacle-ban-pay-single:hover,
+html body a.mineacle-ban-pay-single:focus-visible{
+  background:var(--mcl-v441-unban-hover)!important;
+  border-color:rgba(255,255,255,.22)!important;
+}
+
+html body a.ban-unban-cta:active,
+html body a.mineacle-ban-pay-single:active{
+  background:var(--mcl-v441-unban-active)!important;
+  border-color:rgba(255,255,255,.10)!important;
+}
+
+/*
+  Ban type labels/pills:
+  Same vertical height and text size as the real buttons.
+  Width can grow so Permanent Ban never clips.
+*/
+html body .mineacle-modal-status-pill,
+html body .mineacle-ban-status-single,
+html body .mineacle-punish-status,
+html body .mineacle-row-ban-type-pill,
+html body .ban-type-pill,
+html body .badge.ban-type-pill,
+html body .mineacle-ban-type-single,
+html body .mineacle-ban-pill-single{
+  box-sizing:border-box!important;
+  width:auto!important;
+  min-width:var(--mcl-v441-label-min-w)!important;
+  max-width:none!important;
+  height:var(--mcl-v441-control-h)!important;
+  min-height:var(--mcl-v441-control-h)!important;
+  max-height:var(--mcl-v441-control-h)!important;
+  padding:0 var(--mcl-v441-control-pad-x)!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:var(--mcl-v441-control-radius)!important;
+  background:var(--mcl-v441-ban-static)!important;
+  border:1px solid var(--mcl-v441-ban-border)!important;
+  color:var(--mcl-v441-ban-text)!important;
+  font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
+  font-size:var(--mcl-v441-control-font)!important;
+  font-weight:var(--mcl-v441-control-weight)!important;
+  line-height:1!important;
+  letter-spacing:var(--mcl-v441-control-spacing)!important;
+  text-transform:uppercase!important;
+  white-space:nowrap!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+  transition:background .12s ease,border-color .12s ease,color .12s ease!important;
+}
+
+/* Keep the modal header status looking like the list's real ban-type slot. */
+html body .mineacle-ban-title-single .mineacle-ban-status-single,
+html body .mineacle-punish-title .mineacle-ban-status-single,
+html body .mineacle-punish-title .mineacle-punish-status{
+  margin:0!important;
+  align-self:flex-start!important;
+}
+
+/* Row layout: fit the taller/wider ban type pill beside Buy Unban. */
+html body .ban-type-cell,
+html body .ban-table-data-row > .ban-type-cell,
+html body article.ban-row .ban-type-cell{
+  column-gap:20px!important;
+  overflow:visible!important;
+}
+
+html body .ban-type-copy{
+  min-width:var(--mcl-v441-label-min-w)!important;
+  display:flex!important;
+  align-items:center!important;
+}
+
+/*
+  Info and close buttons:
+  Same flat neutral style, with only a slight lighten on direct hover/focus.
+*/
+html body .info-btn,
+html body .js-info-button,
+html body button.mineacle-row-info-button,
+html body .mineacle-ban-close-single,
+html body .mineacle-punish-close,
+html body .icon-btn{
+  box-sizing:border-box!important;
+  width:34px!important;
+  min-width:34px!important;
+  max-width:34px!important;
+  height:34px!important;
+  min-height:34px!important;
+  max-height:34px!important;
+  padding:0!important;
+  margin:0!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  border-radius:8px!important;
+  background:var(--mcl-v441-neutral)!important;
+  border:1px solid var(--mcl-v441-neutral-border)!important;
+  color:rgba(255,255,255,.88)!important;
+  font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
+  font-size:14px!important;
+  font-weight:700!important;
+  line-height:1!important;
+  text-decoration:none!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+  cursor:pointer!important;
+  transition:background .12s ease,border-color .12s ease,color .12s ease!important;
+}
+
+/* Kill the row-hover side effect: info icon only changes when the icon itself is hovered/focused. */
+html body .ban-row:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-row:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible){
+  background:var(--mcl-v441-neutral)!important;
+  border-color:var(--mcl-v441-neutral-border)!important;
+  color:rgba(255,255,255,.88)!important;
+  box-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+html body .info-btn:hover,
+html body .info-btn:focus-visible,
+html body .js-info-button:hover,
+html body .js-info-button:focus-visible,
+html body button.mineacle-row-info-button:hover,
+html body button.mineacle-row-info-button:focus-visible,
+html body .mineacle-ban-close-single:hover,
+html body .mineacle-ban-close-single:focus-visible,
+html body .mineacle-punish-close:hover,
+html body .mineacle-punish-close:focus-visible,
+html body .icon-btn:hover,
+html body .icon-btn:focus-visible{
+  background:var(--mcl-v441-neutral-hover)!important;
+  border-color:var(--mcl-v441-neutral-border-hover)!important;
+  color:#fff!important;
+  box-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+html body .info-btn:active,
+html body .js-info-button:active,
+html body button.mineacle-row-info-button:active,
+html body .mineacle-ban-close-single:active,
+html body .mineacle-punish-close:active,
+html body .icon-btn:active{
+  background:var(--mcl-v441-neutral-active)!important;
+  border-color:var(--mcl-v441-neutral-border)!important;
+  color:rgba(255,255,255,.82)!important;
+}
+
+/* Support email click-to-copy in More Info. */
+html body .mineacle-email-copy-field{
+  cursor:pointer!important;
+  user-select:none!important;
+  position:relative!important;
+  transition:background .12s ease,border-color .12s ease,color .12s ease!important;
+}
+
+html body .mineacle-email-copy-field:hover,
+html body .mineacle-email-copy-field:focus-visible{
+  background:#1d1c26!important;
+  border-color:rgba(255,136,255,.26)!important;
+}
+
+html body .mineacle-email-copy-field.is-copied{
+  border-color:rgba(67,255,156,.34)!important;
+  background:#16231d!important;
+}
+
+html body .mineacle-email-copy-field.is-copied::after{
+  content:"COPIED"!important;
+  position:absolute!important;
+  right:14px!important;
+  top:50%!important;
+  transform:translateY(-50%)!important;
+  color:#43ff9c!important;
+  font-size:10px!important;
+  font-weight:700!important;
+  letter-spacing:.06em!important;
+  text-transform:uppercase!important;
+  pointer-events:none!important;
+}

@@ -15,7 +15,7 @@ function mineacle_page_head(string $title): void {
     echo '<title>Mineacle | ' . h($title) . '</title>';
     echo '<meta name="description" content="Mineacle public bans portal">';
     echo '<link rel="icon" type="image/png" href="assets/mineacle-square-logo.png?v=bansfull3.8.27.277.266.255.244.233.222.211.200.199.188.177.166.144.8.7.6.5.4.3.2">';
-    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle4.0.40">';
+    echo '<link rel="stylesheet" href="assets/styles.css?v=banssingle4.0.41">';
     echo '</head>';
 }
 
@@ -78,11 +78,108 @@ function mineacle_footer(): void {
     echo '</div>';
     echo '</div>';
     echo '</footer>';
-    echo '<script src="assets/main.js?v=banssingle4.0.40"></script>';
-    echo '<script src="assets/hero-scroll.js?v=banssingle4.0.40"></script>';
-    echo '<script src="assets/nav-server-status.js?v=banssingle4.0.40"></script>';
+    echo '<script src="assets/main.js?v=banssingle4.0.41"></script>';
+    echo '<script src="assets/hero-scroll.js?v=banssingle4.0.41"></script>';
+    echo '<script src="assets/nav-server-status.js?v=banssingle4.0.41"></script>';
+    
     
     echo <<<'HTML'
+<script>
+(function(){
+  function copyText(value){
+    var text = String(value || '').trim();
+    if (!text) return Promise.resolve(false);
+
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text).then(function(){ return true; }).catch(function(){ return false; });
+    }
+
+    var input = document.createElement('textarea');
+    input.value = text;
+    input.setAttribute('readonly', '');
+    input.style.position = 'fixed';
+    input.style.left = '-9999px';
+    input.style.top = '0';
+    document.body.appendChild(input);
+    input.select();
+
+    var ok = false;
+    try {
+      ok = document.execCommand('copy');
+    } catch (error) {
+      ok = false;
+    }
+
+    input.remove();
+    return Promise.resolve(ok);
+  }
+
+  function prepareMoreInfoModal(){
+    var email = document.getElementById('singleModalEmail');
+    if (email) {
+      var field = email.closest('.mineacle-ban-info-pill-single, .mineacle-punish-detail, article');
+      if (field) {
+        field.classList.add('mineacle-email-copy-field');
+        field.setAttribute('role', 'button');
+        field.setAttribute('tabindex', '0');
+        field.setAttribute('aria-label', 'Copy support email');
+        field.setAttribute('title', 'Click to copy support email');
+      }
+      email.classList.add('mineacle-email-copy-value');
+    }
+
+    var status = document.getElementById('singleModalStatus');
+    if (status) {
+      status.classList.add('mineacle-modal-status-pill');
+    }
+  }
+
+  function handleEmailCopy(event){
+    var target = event.target && event.target.closest ? event.target.closest('.mineacle-email-copy-field') : null;
+    if (!target) return;
+
+    var value = target.querySelector('#singleModalEmail, .mineacle-email-copy-value, strong');
+    var text = value ? value.textContent : target.textContent;
+
+    copyText(text).then(function(ok){
+      target.classList.toggle('is-copied', Boolean(ok));
+      if (ok) {
+        target.setAttribute('title', 'Copied support email');
+        window.setTimeout(function(){
+          target.classList.remove('is-copied');
+          target.setAttribute('title', 'Click to copy support email');
+        }, 1100);
+      }
+    });
+  }
+
+  function handleEmailKey(event){
+    if (event.key !== 'Enter' && event.key !== ' ') return;
+    var target = event.target && event.target.closest ? event.target.closest('.mineacle-email-copy-field') : null;
+    if (!target) return;
+
+    event.preventDefault();
+    handleEmailCopy({ target: target });
+  }
+
+  document.addEventListener('click', handleEmailCopy);
+  document.addEventListener('keydown', handleEmailKey);
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', prepareMoreInfoModal);
+  } else {
+    prepareMoreInfoModal();
+  }
+
+  new MutationObserver(prepareMoreInfoModal).observe(document.documentElement, {
+    childList: true,
+    subtree: true
+  });
+})();
+</script>
+HTML;
+
+echo <<<'HTML'
 <script>
 (function(){
   function disableMobileLogoClick(){
@@ -295,7 +392,7 @@ HTML;
 
     var img = section.querySelector('.client-guard-title-img, .client-guard-section-title img');
     if (img) {
-      img.src = 'assets/mineacle-clientguard-logo-v2.png?v=banssingle4.0.40';
+      img.src = 'assets/mineacle-clientguard-logo-v2.png?v=banssingle4.0.41';
       img.alt = 'Mineacle Client Guard';
       img.classList.add('client-guard-title-img');
     }
