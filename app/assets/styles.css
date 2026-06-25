@@ -38495,3 +38495,222 @@ html body .mineacle-email-copy-field.is-copied::after{
   text-transform:uppercase!important;
   pointer-events:none!important;
 }
+
+
+/* Mineacle Bans v4.0.42: popup Buy Unban size lock + small info hitbox */
+
+/*
+  Fixes:
+  - Popup Buy Unban cannot shrink on hover/focus/active
+  - Popup Buy Unban uses the exact same locked geometry as the row Buy Unban
+  - Modal/row Buy Unban text is normalized to BUY UNBAN by layout script
+  - Info icon hover is limited to its actual small square only
+*/
+:root{
+  --mcl-v442-action-w:112px;
+  --mcl-v442-action-h:44px;
+  --mcl-v442-action-radius:9px;
+  --mcl-v442-action-font:14px;
+  --mcl-v442-action-weight:700;
+  --mcl-v442-action-spacing:.035em;
+
+  --mcl-v442-red:#c82d43;
+  --mcl-v442-red-hover:#db3b52;
+  --mcl-v442-red-active:#9f2234;
+
+  --mcl-v442-neutral:#24232d;
+  --mcl-v442-neutral-hover:#30303c;
+  --mcl-v442-neutral-active:#1e1d26;
+  --mcl-v442-neutral-border:rgba(255,255,255,.12);
+  --mcl-v442-neutral-border-hover:rgba(255,255,255,.20);
+}
+
+/* Row + popup Buy Unban: same exact fixed dimensions in every state. */
+html body a.ban-unban-cta,
+html body a.ban-unban-cta:hover,
+html body a.ban-unban-cta:focus-visible,
+html body a.ban-unban-cta:active,
+html body a.mineacle-ban-pay-single,
+html body a.mineacle-ban-pay-single:hover,
+html body a.mineacle-ban-pay-single:focus-visible,
+html body a.mineacle-ban-pay-single:active,
+html body .ban-action a.ban-unban-cta,
+html body .ban-action a.ban-unban-cta:hover,
+html body .ban-action a.ban-unban-cta:focus-visible,
+html body .ban-action a.ban-unban-cta:active,
+html body .mineacle-ban-actions-single a.mineacle-ban-pay-single,
+html body .mineacle-ban-actions-single a.mineacle-ban-pay-single:hover,
+html body .mineacle-ban-actions-single a.mineacle-ban-pay-single:focus-visible,
+html body .mineacle-ban-actions-single a.mineacle-ban-pay-single:active,
+html body .mineacle-punish-actions a.ban-unban-cta,
+html body .mineacle-punish-actions a.ban-unban-cta:hover,
+html body .mineacle-punish-actions a.ban-unban-cta:focus-visible,
+html body .mineacle-punish-actions a.ban-unban-cta:active,
+html body .mineacle-buy-unban-size-lock,
+html body .mineacle-buy-unban-size-lock:hover,
+html body .mineacle-buy-unban-size-lock:focus-visible,
+html body .mineacle-buy-unban-size-lock:active{
+  box-sizing:border-box!important;
+  width:var(--mcl-v442-action-w)!important;
+  min-width:var(--mcl-v442-action-w)!important;
+  max-width:var(--mcl-v442-action-w)!important;
+  height:var(--mcl-v442-action-h)!important;
+  min-height:var(--mcl-v442-action-h)!important;
+  max-height:var(--mcl-v442-action-h)!important;
+  padding:0!important;
+  margin:0!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  flex:0 0 var(--mcl-v442-action-w)!important;
+  align-self:center!important;
+  border-radius:var(--mcl-v442-action-radius)!important;
+  border:1px solid rgba(255,255,255,.14)!important;
+  color:#fff!important;
+  font-family:"Open Sans", Arial, Helvetica, sans-serif!important;
+  font-size:var(--mcl-v442-action-font)!important;
+  font-weight:var(--mcl-v442-action-weight)!important;
+  line-height:1!important;
+  letter-spacing:var(--mcl-v442-action-spacing)!important;
+  text-transform:uppercase!important;
+  text-align:center!important;
+  text-decoration:none!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+  transition:background .12s ease,border-color .12s ease,color .12s ease!important;
+}
+
+html body a.ban-unban-cta,
+html body a.mineacle-ban-pay-single,
+html body .mineacle-buy-unban-size-lock{
+  background:var(--mcl-v442-red)!important;
+}
+
+html body a.ban-unban-cta:hover,
+html body a.ban-unban-cta:focus-visible,
+html body a.mineacle-ban-pay-single:hover,
+html body a.mineacle-ban-pay-single:focus-visible,
+html body .mineacle-buy-unban-size-lock:hover,
+html body .mineacle-buy-unban-size-lock:focus-visible{
+  background:var(--mcl-v442-red-hover)!important;
+  border-color:rgba(255,255,255,.22)!important;
+}
+
+html body a.ban-unban-cta:active,
+html body a.mineacle-ban-pay-single:active,
+html body .mineacle-buy-unban-size-lock:active{
+  background:var(--mcl-v442-red-active)!important;
+  border-color:rgba(255,255,255,.10)!important;
+}
+
+/* Keep popup action column locked so the button cannot compress. */
+html body .mineacle-ban-actions-single,
+html body .mineacle-punish-actions{
+  width:var(--mcl-v442-action-w)!important;
+  min-width:var(--mcl-v442-action-w)!important;
+  max-width:var(--mcl-v442-action-w)!important;
+  flex:0 0 var(--mcl-v442-action-w)!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  overflow:visible!important;
+}
+
+/*
+  Info button hitbox:
+  The actual button is locked to 34x34. Parent/row hover cannot style it.
+*/
+html body .ban-player-line{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:8px!important;
+  width:auto!important;
+  max-width:max-content!important;
+}
+
+html body .ban-player-line .info-btn,
+html body .ban-player-line .js-info-button,
+html body .ban-player-line button.mineacle-row-info-button,
+html body .mineacle-info-hitbox-small,
+html body .mineacle-info-hitbox-small:hover,
+html body .mineacle-info-hitbox-small:focus-visible,
+html body .mineacle-info-hitbox-small:active{
+  box-sizing:border-box!important;
+  width:34px!important;
+  min-width:34px!important;
+  max-width:34px!important;
+  height:34px!important;
+  min-height:34px!important;
+  max-height:34px!important;
+  flex:0 0 34px!important;
+  padding:0!important;
+  margin:0!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  position:relative!important;
+  inset:auto!important;
+  border-radius:8px!important;
+  overflow:hidden!important;
+  pointer-events:auto!important;
+  cursor:pointer!important;
+}
+
+/* Remove any invisible oversized clickable/hover pseudo layer from info buttons. */
+html body .info-btn::before,
+html body .info-btn::after,
+html body .js-info-button::before,
+html body .js-info-button::after,
+html body button.mineacle-row-info-button::before,
+html body button.mineacle-row-info-button::after,
+html body .mineacle-info-hitbox-small::before,
+html body .mineacle-info-hitbox-small::after{
+  content:none!important;
+  display:none!important;
+  width:0!important;
+  height:0!important;
+  pointer-events:none!important;
+}
+
+/* Row, player cell, and player line hover do not change the info button. */
+html body .ban-row:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-player-cell:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-player-copy:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-player-line:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-row:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-cell:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-copy:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-line:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-cell:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-copy:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-line:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible){
+  background:var(--mcl-v442-neutral)!important;
+  border-color:var(--mcl-v442-neutral-border)!important;
+  color:rgba(255,255,255,.88)!important;
+  box-shadow:none!important;
+  text-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+/* Direct icon hover only. */
+html body .info-btn:hover,
+html body .info-btn:focus-visible,
+html body .js-info-button:hover,
+html body .js-info-button:focus-visible,
+html body button.mineacle-row-info-button:hover,
+html body button.mineacle-row-info-button:focus-visible,
+html body .mineacle-info-hitbox-small:hover,
+html body .mineacle-info-hitbox-small:focus-visible{
+  background:var(--mcl-v442-neutral-hover)!important;
+  border-color:var(--mcl-v442-neutral-border-hover)!important;
+  color:#fff!important;
+}
