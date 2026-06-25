@@ -38726,3 +38726,191 @@ html body .mineacle-info-hitbox-small:focus-visible{
 html body .mineacle-buy-unban-size-lock{
   will-change:auto!important;
 }
+
+
+/* Mineacle Bans v4.0.44: no row movement + centered modal Discord appeal */
+
+/*
+  Fixes:
+  - Ban table rows are static. Hovering the row area cannot lift, shift, glow, or move it.
+  - Only the info icon and Buy Unban button have hover behavior.
+  - More Info popup removes the Buy Unban button.
+  - More Info popup centers the Discord Appeal button at the bottom.
+*/
+:root{
+  --mcl-v444-control-h:44px;
+  --mcl-v444-action-w:112px;
+  --mcl-v444-radius:9px;
+}
+
+/* Disable all row/container hover movement or visual drift. */
+html body article.ban-row,
+html body article.ban-row:hover,
+html body article.ban-row:focus,
+html body article.ban-row:focus-within,
+html body .ban-row,
+html body .ban-row:hover,
+html body .ban-row:focus,
+html body .ban-row:focus-within,
+html body .ban-table-data-row,
+html body .ban-table-data-row:hover,
+html body .ban-table-data-row:focus,
+html body .ban-table-data-row:focus-within,
+html body .mineacle-ban-row-square,
+html body .mineacle-ban-row-square:hover,
+html body .mineacle-ban-row-square:focus,
+html body .mineacle-ban-row-square:focus-within{
+  transform:none!important;
+  translate:none!important;
+  scale:none!important;
+  top:auto!important;
+  left:auto!important;
+  right:auto!important;
+  bottom:auto!important;
+  filter:none!important;
+  box-shadow:none!important;
+  animation:none!important;
+  transition:none!important;
+}
+
+/* Freeze row pseudo layers too, in case older patches used ::before/::after hover surfaces. */
+html body article.ban-row::before,
+html body article.ban-row::after,
+html body article.ban-row:hover::before,
+html body article.ban-row:hover::after,
+html body .ban-table-data-row::before,
+html body .ban-table-data-row::after,
+html body .ban-table-data-row:hover::before,
+html body .ban-table-data-row:hover::after,
+html body .mineacle-ban-row-square::before,
+html body .mineacle-ban-row-square::after,
+html body .mineacle-ban-row-square:hover::before,
+html body .mineacle-ban-row-square:hover::after{
+  transform:none!important;
+  translate:none!important;
+  scale:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+  animation:none!important;
+  pointer-events:none!important;
+}
+
+/*
+  Info icon hover is limited to the actual small square.
+  The surrounding player row/cell/line cannot cause the icon to light up.
+*/
+html body .ban-player-cell,
+html body .ban-player-copy,
+html body .ban-player-line{
+  transform:none!important;
+  filter:none!important;
+  box-shadow:none!important;
+}
+
+html body .ban-row:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover .info-btn:not(:hover):not(:focus-visible),
+html body .mineacle-ban-row-square:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-player-cell:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-player-copy:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-player-line:hover .info-btn:not(:hover):not(:focus-visible),
+html body .ban-row:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .mineacle-ban-row-square:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-cell:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-copy:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-line:hover .js-info-button:not(:hover):not(:focus-visible),
+html body .ban-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-table-data-row:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .mineacle-ban-row-square:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-cell:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-copy:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible),
+html body .ban-player-line:hover button.mineacle-row-info-button:not(:hover):not(:focus-visible){
+  background:var(--mcl-v442-neutral, #24232d)!important;
+  border-color:var(--mcl-v442-neutral-border, rgba(255,255,255,.12))!important;
+  color:rgba(255,255,255,.88)!important;
+  box-shadow:none!important;
+  transform:none!important;
+  filter:none!important;
+}
+
+/* Keep the Buy Unban button itself interactive, but fixed-size. */
+html body .ban-action a.ban-unban-cta,
+html body .ban-action a.ban-unban-cta:hover,
+html body .ban-action a.ban-unban-cta:focus-visible,
+html body .ban-action a.ban-unban-cta:active{
+  width:var(--mcl-v444-action-w)!important;
+  min-width:var(--mcl-v444-action-w)!important;
+  max-width:var(--mcl-v444-action-w)!important;
+  height:var(--mcl-v444-control-h)!important;
+  min-height:var(--mcl-v444-control-h)!important;
+  max-height:var(--mcl-v444-control-h)!important;
+  transform:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+/*
+  More Info popup bottom action area:
+  remove Buy Unban, keep Discord Appeal centered.
+*/
+html body #banModal.mineacle-ban-modal-single .mineacle-ban-actions-single,
+html body #banModal.mineacle-ban-modal-single .mineacle-punish-actions,
+html body #banModal.mineacle-ban-modal-single .mineacle-ban-action-row-single,
+html body #banModal.mineacle-ban-modal-single .mineacle-punish-action-row,
+html body #banModal.mineacle-ban-modal-single a.mineacle-ban-pay-single,
+html body #banModal.mineacle-ban-modal-single a.ban-unban-cta{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+  pointer-events:none!important;
+}
+
+/* Center Discord Appeal at the bottom of the modal. */
+html body #banModal.mineacle-ban-modal-single .mineacle-ban-appeal-single{
+  display:inline-grid!important;
+  grid-template-columns:auto minmax(0, auto)!important;
+  grid-auto-flow:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  justify-self:center!important;
+  align-self:center!important;
+  margin:18px auto 0!important;
+  width:max-content!important;
+  min-width:220px!important;
+  max-width:min(100%, 280px)!important;
+  height:var(--mcl-v444-control-h)!important;
+  min-height:var(--mcl-v444-control-h)!important;
+  max-height:var(--mcl-v444-control-h)!important;
+  padding:0 18px!important;
+  border-radius:var(--mcl-v444-radius)!important;
+  box-sizing:border-box!important;
+  transform:none!important;
+  box-shadow:none!important;
+  filter:none!important;
+}
+
+/* Hide the old center note text so the centered Discord button is clean. */
+html body #banModal.mineacle-ban-modal-single .mineacle-ban-note-single{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+}
+
+html body #banModal.mineacle-ban-modal-single .mineacle-ban-rail-single{
+  justify-items:stretch!important;
+}
+
+html body #banModal.mineacle-ban-modal-single .mineacle-ban-rail-single > .mineacle-ban-appeal-single{
+  justify-self:center!important;
+}
+
+html body #banModal.mineacle-ban-modal-single .mineacle-ban-appeal-copy-single,
+html body #banModal.mineacle-ban-modal-single .mineacle-ban-appeal-count-single{
+  text-align:left!important;
+  line-height:1.05!important;
+}
+
+html body #banModal.mineacle-ban-modal-single .mineacle-ban-appeal-count-single{
+  font-size:12px!important;
+  font-weight:700!important;
+}
