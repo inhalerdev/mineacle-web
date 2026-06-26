@@ -282,7 +282,7 @@ function mineacle_active_condition(array $columns, string $alias, string $nowPar
         )';
     }
 
-    return $parts === [] ? '1 = 1' : implode(' AND ', $parts);
+    return $parts === [] ? '0 = 1' : implode(' AND ', $parts);
 }
 
 function mineacle_add_ban_search(array &$where, array &$params, array $banColumns, string $historyTable, string $search): void {
@@ -491,28 +491,17 @@ function fetch_litebans_stats(): array {
     $nowSeconds = mineacle_database_now_seconds($pdo);
 
     $bansTable = mineacle_table((string) (($litebans['bans_table'] ?? null) ?: 'litebans_bans'));
-    $mutesTable = mineacle_table((string) (($litebans['mutes_table'] ?? null) ?: 'litebans_mutes'));
-    $warningsTable = mineacle_table((string) (($litebans['warnings_table'] ?? null) ?: 'litebans_warnings'));
-    $kicksTable = mineacle_table((string) (($litebans['kicks_table'] ?? null) ?: 'litebans_kicks'));
 
     $banColumns = mineacle_table_columns($pdo, $bansTable);
-    $muteColumns = mineacle_table_columns($pdo, $mutesTable);
     $activeBansWhere = mineacle_active_condition($banColumns, 't');
-    $activeMutesWhere = mineacle_active_condition($muteColumns, 't');
     $activeBansParams = str_contains($activeBansWhere, ':now_seconds') ? ['now_seconds' => $nowSeconds] : [];
-    $activeMutesParams = str_contains($activeMutesWhere, ':now_seconds') ? ['now_seconds' => $nowSeconds] : [];
 
     return [
         'active_bans' => mineacle_count_table($pdo, $bansTable, 'WHERE ' . $activeBansWhere, $activeBansParams),
-        'total_bans' => mineacle_count_table($pdo, $bansTable),
-        'active_mutes' => mineacle_count_table($pdo, $mutesTable, 'WHERE ' . $activeMutesWhere, $activeMutesParams),
-        'total_mutes' => mineacle_count_table($pdo, $mutesTable),
-        'total_warnings' => mineacle_count_table($pdo, $warningsTable),
-        'total_kicks' => mineacle_count_table($pdo, $kicksTable),
     ];
 }
 
-function fetch_litebans_bans_page(string $search = '', int $page = 1, string $scope = 'all'): array {
+function fetch_litebans_bans_page(string $search = '', int $page = 1, string $scope = 'active'): array {
     $config = mineacle_config();
     $pdo = mineacle_db();
     $litebans = $config['litebans'] ?? [];
@@ -529,12 +518,10 @@ function fetch_litebans_bans_page(string $search = '', int $page = 1, string $sc
     $where = [];
     $params = [];
 
-    if ($scope === 'active') {
-        $activeWhere = mineacle_active_condition($banColumns, 'b');
-        $where[] = $activeWhere;
-        if (str_contains($activeWhere, ':now_seconds')) {
-            $params['now_seconds'] = $nowSeconds;
-        }
+    $activeWhere = mineacle_active_condition($banColumns, 'b');
+    $where[] = $activeWhere;
+    if (str_contains($activeWhere, ':now_seconds')) {
+        $params['now_seconds'] = $nowSeconds;
     }
 
     mineacle_add_ban_search($where, $params, $banColumns, $historyTable, $search);
@@ -603,14 +590,19 @@ function fetch_litebans_ban_detail(int $id): ?array {
     }
 
     $nowSeconds = mineacle_database_now_seconds($pdo);
+    $activeWhere = mineacle_active_condition($banColumns, 'b');
     $sql = 'SELECT
             ' . mineacle_ban_select_sql($pdo, $historyTable, $banColumns) . '
         FROM `' . $bansTable . '` b
         WHERE b.`' . $idColumn . '` = :id
+        AND ' . $activeWhere . '
         LIMIT 1';
 
     $stmt = $pdo->prepare($sql);
     $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+    if (str_contains($activeWhere, ':now_seconds')) {
+        $stmt->bindValue(':now_seconds', $nowSeconds, PDO::PARAM_INT);
+    }
     $stmt->execute();
     $row = $stmt->fetch();
 
@@ -624,17 +616,22 @@ function fetch_litebans_ban_detail(int $id): ?array {
 
     if ($uuidColumn !== null && $ban['uuid'] !== '') {
         $orderColumn = mineacle_column($banColumns, 'time') ?? $idColumn;
+        $otherActiveWhere = mineacle_active_condition($banColumns, 'b', 'other_now_seconds');
         $otherSql = 'SELECT
                 ' . mineacle_ban_select_sql($pdo, $historyTable, $banColumns) . '
             FROM `' . $bansTable . '` b
             WHERE b.`' . $uuidColumn . '` = :uuid
             AND b.`' . $idColumn . '` <> :id
+            AND ' . $otherActiveWhere . '
             ORDER BY b.`' . $orderColumn . '` DESC
             LIMIT 12';
 
         $otherStmt = $pdo->prepare($otherSql);
         $otherStmt->bindValue(':uuid', $ban['uuid'], PDO::PARAM_STR);
         $otherStmt->bindValue(':id', $id, PDO::PARAM_INT);
+        if (str_contains($otherActiveWhere, ':other_now_seconds')) {
+            $otherStmt->bindValue(':other_now_seconds', $nowSeconds, PDO::PARAM_INT);
+        }
         $otherStmt->execute();
 
         foreach ($otherStmt->fetchAll() as $otherRow) {

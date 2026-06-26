@@ -53,7 +53,7 @@ mineacle_page_head('Bans');
                 <label class="sr-only" for="banSearch">Search punishments</label>
                 <div class="mineacle-lb-search-field mineacle-bans-search-field">
                     <img src="assets/search-icon.png" alt="" aria-hidden="true">
-                    <input id="banSearch" class="js-ban-search" type="text" name="q" autocomplete="off" placeholder="Search player, UUID, staff, reason, or server">
+                    <input id="banSearch" class="js-ban-search" type="text" name="q" autocomplete="off" placeholder="Search active banned players, UUID, staff, reason, or server">
                     <button class="ban-search-clear js-ban-clear" id="clearSearch" type="button" aria-label="Clear search" title="Clear search">x</button>
                 </div>
                 <button class="mineacle-lb-primary-action mineacle-bans-search-action" type="submit">Search</button>
@@ -74,7 +74,7 @@ mineacle_page_head('Bans');
                 <div class="mineacle-bans-hero-copy">
                     <span class="mineacle-bans-kicker">Public Records</span>
                     <h1>Mineacle Bans</h1>
-                    <p>Search active and historical LiteBans records, review punishment details, and find the right appeal path without digging through clutter.</p>
+                    <p>Search currently active LiteBans records from the database, review punishment details, and find the right appeal path without digging through clutter.</p>
 
                     <div class="mineacle-bans-server-pill">
                         <strong><?php echo $ip; ?></strong>
@@ -89,7 +89,7 @@ mineacle_page_head('Bans');
 
             <aside class="mineacle-bans-side-panel" aria-label="Appeals and recent status">
                 <div class="mineacle-bans-vote-line">
-                    <span>You have records to review</span>
+                    <span>Active bans only</span>
                     <a href="<?php echo $discord; ?>" target="_blank" rel="noopener">Appeal</a>
                 </div>
 
@@ -102,25 +102,25 @@ mineacle_page_head('Bans');
                 </div>
 
                 <div class="mineacle-bans-mini-list" id="recentBanList">
-                    <div class="mineacle-lb-loading">Loading recent bans</div>
+                    <div class="mineacle-lb-loading">Loading active bans</div>
                 </div>
             </aside>
         </section>
 
         <section class="mineacle-lb-stats mineacle-bans-stat-row" aria-label="LiteBans statistics">
             <div class="mineacle-lb-stat-grid" id="mineacleStatsGrid">
-                <article class="mineacle-lb-stat-card is-red"><strong>--</strong><span>Active Bans</span><small>of --</small></article>
-                <article class="mineacle-lb-stat-card is-gold"><strong>--</strong><span>Active Mutes</span><small>of --</small></article>
-                <article class="mineacle-lb-stat-card is-cyan"><strong>--</strong><span>Total Warnings</span><small>all time</small></article>
-                <article class="mineacle-lb-stat-card is-slate"><strong>--</strong><span>Total Kicks</span><small>all time</small></article>
+                <article class="mineacle-lb-stat-card is-red"><strong>--</strong><span>Active Bans</span><small>database only</small></article>
+                <article class="mineacle-lb-stat-card is-gold"><strong>--</strong><span>Matching Bans</span><small>current filter</small></article>
+                <article class="mineacle-lb-stat-card is-cyan"><strong>--</strong><span>Current Page</span><small>active bans</small></article>
+                <article class="mineacle-lb-stat-card is-slate"><strong>--</strong><span>Loaded Rows</span><small>active bans</small></article>
             </div>
         </section>
 
         <section class="mineacle-lb-table-section mineacle-bans-records bans-v3-results" id="ban-results" aria-label="Punishment results">
             <div class="mineacle-lb-table-head mineacle-bans-section-head">
                 <div>
-                    <span class="bans-v3-kicker mineacle-bans-kicker">Latest Activity</span>
-                    <h2>Ban Records</h2>
+                    <span class="bans-v3-kicker mineacle-bans-kicker">Database Results</span>
+                    <h2>Active Ban Records</h2>
                 </div>
                 <div class="mineacle-bans-record-meta">
                     <span class="mineacle-lb-count-pill" id="recentBanCount">0</span>
@@ -146,7 +146,7 @@ mineacle_page_head('Bans');
                 <span class="mineacle-bans-kicker">Support</span>
                 <h2>Appeal or review a punishment</h2>
             </div>
-            <p>Every record keeps its original reason, staff action, date, server scope, duration, and appeal information when LiteBans provides it.</p>
+            <p>Only active banned players are shown. Removed, expired, and non-banned players are filtered out before the website receives the database results.</p>
             <a href="<?php echo $discord; ?>" target="_blank" rel="noopener">Open Discord</a>
         </section>
     </div>

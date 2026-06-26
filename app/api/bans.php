@@ -34,10 +34,7 @@ try {
     }
 
     $page = max(1, (int) ($_GET['page'] ?? 1));
-    $scope = strtolower(trim((string) ($_GET['scope'] ?? 'all')));
-    if (!in_array($scope, ['all', 'active'], true)) {
-        $scope = 'all';
-    }
+    $scope = 'active';
 
     $payload = fetch_litebans_bans_page($search, $page, $scope);
 

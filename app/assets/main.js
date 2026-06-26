@@ -145,25 +145,25 @@
                 className: "is-red",
                 value: stats.active_bans,
                 label: "Active Bans",
-                meta: `of ${formatNumber(stats.total_bans)}`
+                meta: "database only"
             },
             {
                 className: "is-gold",
-                value: stats.active_mutes,
-                label: "Active Mutes",
-                meta: `of ${formatNumber(stats.total_mutes)}`
+                value: currentPagination.total,
+                label: "Matching Bans",
+                meta: "current filter"
             },
             {
                 className: "is-cyan",
-                value: stats.total_warnings,
-                label: "Total Warnings",
-                meta: "all time"
+                value: currentPagination.page,
+                label: "Current Page",
+                meta: `${formatNumber(currentPagination.per_page)} per page`
             },
             {
                 className: "is-slate",
-                value: stats.total_kicks,
-                label: "Total Kicks",
-                meta: "all time"
+                value: currentRows.length,
+                label: "Loaded Rows",
+                meta: "active bans"
             }
         ];
 
@@ -185,7 +185,7 @@
         if (!recent.length) {
             recentBanList.innerHTML = `
                 <div class="mineacle-lb-loading">
-                    No recent records found
+                    No active bans found
                 </div>
             `;
             return;
@@ -345,7 +345,7 @@
 
         currentPage = Math.max(1, Number(page) || 1);
         const search = banSearch ? banSearch.value.trim() : "";
-        const url = `api/bans.php?search=${encodeURIComponent(search)}&page=${encodeURIComponent(currentPage)}`;
+        const url = `api/bans.php?search=${encodeURIComponent(search)}&page=${encodeURIComponent(currentPage)}&scope=active`;
 
         try {
             const response = await fetch(url, { headers: { "Accept": "application/json" }, cache: "no-store" });
@@ -359,8 +359,8 @@
 
             currentPagination = payload.pagination || currentPagination;
             currentPage = Number(currentPagination.page || currentPage);
-            renderStats(payload.stats || {});
             renderBans(payload.bans || []);
+            renderStats(payload.stats || {});
         } catch (error) {
             console.error("Mineacle bans request failed", error);
             renderLoadError();
