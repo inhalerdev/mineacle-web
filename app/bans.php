@@ -8,68 +8,136 @@ mineacle_page_head('Bans');
 mineacle_header('bans');
 
 ?>
-<main class="bans-v3-page">
-    <section class="bans-v3-hero bans-v32-logo-only-fold bans-v34-background-fold bans-records-hero" aria-label="Public ban records">
-        <div class="ban-hero-content">
-            <div class="ban-hero-copy">
-                <h1>Public Ban Records</h1>
-                <p>Active bans are listed publicly so players can see how Mineacle keeps Survival fair. Staff and MineacleClientGuard review client, movement, combat, and building patterns before action is taken.</p>
+<main class="mineacle-litebans-page" data-mineacle-bans-app>
+    <div class="mineacle-litebans-list-view" id="banListView">
+        <section class="mineacle-lb-hero" aria-label="Mineacle punishments">
+            <div class="mineacle-lb-hero-card">
+                <span class="mineacle-lb-hero-mark">M</span>
+                <div>
+                    <h1>Mineacle Punishments</h1>
+                    <p>Search public LiteBans records, review staff action details, and see repeat punishment history with Mineacle's cleaner record view.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="mineacle-lb-search-panel" aria-label="Player search">
+            <div class="mineacle-lb-section-title">
+                <span>Player Search</span>
+                <h2>Find a record</h2>
             </div>
 
-            <div class="guard-info-tiles" aria-label="What MineacleClientGuard watches for">
-                <article class="guard-info-tile">
-                    <span class="guard-info-number">01</span>
-                    <h2>Allowed clients</h2>
-                    <p>Checks the launcher or loader signal when it is available, then compares it with clients allowed on Mineacle.</p>
+            <form class="mineacle-lb-search" id="banSearchForm" role="search">
+                <label class="sr-only" for="banSearch">Search punishments</label>
+                <div class="mineacle-lb-search-field">
+                    <span aria-hidden="true">Player</span>
+                    <input id="banSearch" class="js-ban-search" type="text" name="q" autocomplete="off" placeholder="Enter player name, UUID, staff, reason, or server">
+                    <button class="ban-search-clear js-ban-clear" id="clearSearch" type="button" aria-label="Clear search" title="Clear search">x</button>
+                </div>
+                <button class="mineacle-lb-primary-action" type="submit">Search</button>
+            </form>
+        </section>
+
+        <section class="mineacle-lb-stats" aria-label="LiteBans statistics">
+            <div class="mineacle-lb-section-title mineacle-lb-section-title-center">
+                <span>Server Statistics</span>
+                <h2>LiteBans overview</h2>
+            </div>
+            <div class="mineacle-lb-stat-grid" id="mineacleStatsGrid">
+                <article class="mineacle-lb-stat-card is-red"><strong>--</strong><span>Active Bans</span><small>of --</small></article>
+                <article class="mineacle-lb-stat-card is-gold"><strong>--</strong><span>Active Mutes</span><small>of --</small></article>
+                <article class="mineacle-lb-stat-card is-cyan"><strong>--</strong><span>Total Warnings</span><small>all time</small></article>
+                <article class="mineacle-lb-stat-card is-slate"><strong>--</strong><span>Total Kicks</span><small>all time</small></article>
+            </div>
+        </section>
+
+        <section class="mineacle-lb-activity" aria-label="Recent activity">
+            <div class="mineacle-lb-section-title">
+                <span>Recent Activity</span>
+                <h2>Latest records</h2>
+            </div>
+            <div class="mineacle-lb-recent-grid">
+                <article class="mineacle-lb-panel">
+                    <header>
+                        <h3>Recent Bans</h3>
+                        <span class="mineacle-lb-count-pill" id="recentBanCount">0</span>
+                    </header>
+                    <div class="mineacle-lb-recent-list" id="recentBanList">
+                        <div class="mineacle-lb-loading">Loading recent bans</div>
+                    </div>
                 </article>
-                <article class="guard-info-tile">
-                    <span class="guard-info-number">02</span>
-                    <h2>Movement review</h2>
-                    <p>Reviews fly-like movement, odd vertical changes, and knockback that does not match normal play.</p>
-                </article>
-                <article class="guard-info-tile">
-                    <span class="guard-info-number">03</span>
-                    <h2>Combat &amp; building</h2>
-                    <p>Looks for repeated attack timing, aura-like hits, fast placement, auto placement, and scaffold-style building.</p>
-                </article>
-                <article class="guard-info-tile">
-                    <span class="guard-info-number">04</span>
-                    <h2>Evidence over time</h2>
-                    <p>One strange moment is not enough. Alerts build history first; repeated clear patterns can lead to stronger action.</p>
+
+                <article class="mineacle-lb-panel">
+                    <header>
+                        <h3>Record Notes</h3>
+                        <span class="mineacle-lb-count-pill is-soft">Live</span>
+                    </header>
+                    <div class="mineacle-lb-note-panel">
+                        <strong>LiteBans connected</strong>
+                        <p>Records keep their original reason, staff, date, server origin, server scope, duration, flags, and related punishment history when the database provides it.</p>
+                    </div>
                 </article>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="bans-v3-results" id="ban-results" aria-label="Active ban results">
-        <div class="bans-v3-results-head">
-            <div>
-                <span class="bans-v3-kicker">Search Records</span>
-                <h2>Active bans</h2>
+        <section class="mineacle-lb-table-section bans-v3-results" id="ban-results" aria-label="Punishment results">
+            <div class="mineacle-lb-table-head">
+                <div>
+                    <span class="bans-v3-kicker">Records</span>
+                    <h2>Bans</h2>
+                </div>
+                <div class="bans-list-meta js-ban-meta" id="banCount">Loading records</div>
             </div>
-            <div class="bans-list-meta js-ban-meta" id="banCount">Loading records</div>
-        </div>
 
-        <form class="bans-v3-search js-ban-search-form bans-v31-results-search" id="banSearchForm" role="search">
-            <label class="sr-only" for="banSearch">Search bans</label>
-            <div class="ban-search-field">
-                <input id="banSearch" class="js-ban-search" type="text" name="q" autocomplete="off" placeholder="Search Minecraft username">
-                <button class="ban-search-clear js-ban-clear" id="clearSearch" type="button" aria-label="Clear search" title="Clear search">×</button>
+            <div class="mineacle-lb-table-shell">
+                <div class="ban-table js-ban-table mineacle-lb-table" id="banList" aria-live="polite">
+                    <div class="mineacle-lb-loading">Loading bans</div>
+                </div>
             </div>
-            <button class="btn red" type="submit">Search</button>
-        </form>
 
-        <div class="ban-table-shell">
-            <div class="ban-table js-ban-table" id="banList" aria-live="polite">
-                <div class="ban-loading">Loading active bans</div>
+            <div class="pagination-row mineacle-lb-pagination" id="banPagination">
+                <button class="btn soft js-ban-prev" id="prevPage" type="button">Previous</button>
+                <span class="page-indicator js-ban-page" id="pageInfo">Page 1</span>
+                <button class="btn soft js-ban-next" id="nextPage" type="button">Next</button>
             </div>
-        </div>
+        </section>
+    </div>
 
-        <div class="pagination-row" id="banPagination">
-            <button class="btn soft js-ban-prev" id="prevPage" type="button">Previous</button>
-            <span class="page-indicator js-ban-page" id="pageInfo">Page 1</span>
-            <button class="btn soft js-ban-next" id="nextPage" type="button">Next</button>
-        </div>
+    <section class="mineacle-lb-detail-view" id="banDetailView" aria-label="Ban detail" hidden>
+        <nav class="mineacle-lb-breadcrumb" aria-label="Breadcrumb">
+            <a href="./" data-ban-list-link>Home</a>
+            <span>/</span>
+            <a href="./" data-ban-list-link>Bans</a>
+            <span>/</span>
+            <strong id="detailBreadcrumbId">#</strong>
+        </nav>
+
+        <article class="mineacle-lb-detail-card">
+            <header class="mineacle-lb-detail-head">
+                <div>
+                    <span class="mineacle-lb-detail-kicker" id="detailType">Ban</span>
+                    <h1 id="detailTitle">Ban record</h1>
+                </div>
+                <span class="mineacle-lb-status-badge" id="detailStatus">Loading</span>
+            </header>
+
+            <div class="mineacle-lb-detail-body">
+                <aside class="mineacle-lb-player-card">
+                    <img id="detailAvatar" src="assets/mineacle-square-logo.png" alt="">
+                    <strong id="detailPlayer">Player</strong>
+                    <span id="detailAppealId">MCL-000000</span>
+                </aside>
+
+                <div class="mineacle-lb-detail-grid" id="detailGrid"></div>
+            </div>
+        </article>
+
+        <article class="mineacle-lb-panel mineacle-lb-other-panel">
+            <header>
+                <h2>Other Punishments</h2>
+                <span class="mineacle-lb-count-pill" id="detailOtherCount">0</span>
+            </header>
+            <div class="mineacle-lb-other-table" id="detailOtherPunishments"></div>
+        </article>
     </section>
 </main>
 <?php mineacle_footer(); ?>
