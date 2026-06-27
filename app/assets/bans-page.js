@@ -3,16 +3,27 @@
 
   const form = document.getElementById("banSearchForm");
   const input = document.getElementById("banSearch");
-  const clear = document.getElementById("clearSearch");
+  const action = document.getElementById("banSearchAction");
 
-  if (!form || !input || !clear) return;
+  if (!form || !input || !action) return;
 
   let controller = null;
   let typingTimer = null;
   let queryTimer = null;
 
   const setHasValue = () => {
-    form.classList.toggle("has-value", input.value.trim().length > 0);
+    const hasValue = input.value.trim().length > 0;
+    form.classList.toggle("has-value", hasValue);
+    action.setAttribute("aria-label", hasValue ? "Clear search" : "Search");
+    action.setAttribute("title", hasValue ? "Clear search" : "Search");
+  };
+
+  const clearSearch = () => {
+    input.value = "";
+    input.focus();
+    form.classList.remove("is-typing");
+    setHasValue();
+    scheduleQuery();
   };
 
   const setTyping = () => {
@@ -67,17 +78,17 @@
 
   input.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") return;
-    input.value = "";
-    setHasValue();
-    scheduleQuery();
+    clearSearch();
   });
 
-  clear.addEventListener("click", () => {
-    input.value = "";
+  action.addEventListener("click", () => {
+    if (input.value.trim().length > 0) {
+      clearSearch();
+      return;
+    }
+
     input.focus();
-    setHasValue();
-    form.classList.remove("is-typing");
-    scheduleQuery();
+    queryDatabase();
   });
 
   form.addEventListener("submit", (event) => {
