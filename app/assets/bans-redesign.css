@@ -264,7 +264,7 @@ html body .mineacle-bans-shell .mineacle-lb-primary-action::before {
   width: 24px;
   height: 24px;
   display: block;
-  background: url("search-icon.png") center / contain no-repeat;
+  background: url("search.svg") center / contain no-repeat;
   filter: brightness(0) invert(1);
   opacity: .94;
 }
