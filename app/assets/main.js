@@ -372,6 +372,7 @@
 
         const hasValue = banSearch.value.trim().length > 0;
         const searchAction = banSearchForm ? banSearchForm.querySelector('button[type="submit"], .btn:not(.search-clear):not(.ban-search-clear)') : null;
+        const searchOnlyPage = Boolean(document.querySelector(".mineacle-bans-shell")) && !banList;
 
         if (clearSearch) {
             clearSearch.classList.remove("show");
@@ -382,10 +383,10 @@
         banSearch.classList.toggle("has-value", hasValue);
 
         if (searchAction) {
-            searchAction.textContent = hasValue ? "Clear" : "Search";
-            searchAction.classList.toggle("is-clear", hasValue);
-            searchAction.classList.toggle("is-search", !hasValue);
-            searchAction.setAttribute("aria-label", hasValue ? "Clear search" : "Search bans");
+            searchAction.textContent = "Search";
+            searchAction.classList.toggle("is-clear", !searchOnlyPage && hasValue);
+            searchAction.classList.toggle("is-search", searchOnlyPage || !hasValue);
+            searchAction.setAttribute("aria-label", searchOnlyPage || !hasValue ? "Search bans" : "Clear search");
         }
     }
 
@@ -614,8 +615,9 @@
 
                 const searchAction = banSearchForm.querySelector('button[type="submit"], .btn:not(.search-clear):not(.ban-search-clear)');
                 const hasValue = banSearch && banSearch.value.trim().length > 0;
+                const searchOnlyPage = Boolean(document.querySelector(".mineacle-bans-shell")) && !banList;
 
-                if (searchAction && searchAction.classList.contains("is-clear") && hasValue) {
+                if (!searchOnlyPage && searchAction && searchAction.classList.contains("is-clear") && hasValue) {
                     banSearch.value = "";
                     banSearch.focus();
                     currentPage = 1;
@@ -821,10 +823,11 @@
       if (!input || !button) return;
 
       const hasValue = input.value.trim().length > 0;
-      button.textContent = hasValue ? 'Clear' : 'Search';
-      button.classList.toggle('is-clear', hasValue);
-      button.classList.toggle('is-search', !hasValue);
-      button.setAttribute('aria-label', hasValue ? 'Clear search' : 'Search bans');
+      const searchOnlyPage = Boolean(document.querySelector('.mineacle-bans-shell')) && !document.getElementById('banList');
+      button.textContent = 'Search';
+      button.classList.toggle('is-clear', !searchOnlyPage && hasValue);
+      button.classList.toggle('is-search', searchOnlyPage || !hasValue);
+      button.setAttribute('aria-label', searchOnlyPage || !hasValue ? 'Search bans' : 'Clear search');
     });
   };
 
@@ -857,10 +860,11 @@
       if (!input || !button) return;
 
       const hasValue = input.value.trim().length > 0;
-      button.textContent = hasValue ? 'Clear' : 'Search';
-      button.classList.toggle('is-clear', hasValue);
-      button.classList.toggle('is-search', !hasValue);
-      button.setAttribute('aria-label', hasValue ? 'Clear search' : 'Search bans');
+      const searchOnlyPage = Boolean(document.querySelector('.mineacle-bans-shell')) && !document.getElementById('banList');
+      button.textContent = 'Search';
+      button.classList.toggle('is-clear', !searchOnlyPage && hasValue);
+      button.classList.toggle('is-search', searchOnlyPage || !hasValue);
+      button.setAttribute('aria-label', searchOnlyPage || !hasValue ? 'Search bans' : 'Clear search');
     });
   };
 

@@ -163,10 +163,10 @@ body.modal-open {
 
 .mineacle-bans-topbar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(320px, 520px);
-  gap: 30px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
   align-items: center;
-  margin-bottom: 24px;
+  margin-bottom: 0;
 }
 
 html body .mineacle-bans-shell .mineacle-bans-search {
@@ -1281,22 +1281,8 @@ html body #banModal.mineacle-ban-modal-single .mineacle-punish-note {
     padding-right: 22px;
   }
 
-  .mineacle-bans-topbar,
-  .mineacle-bans-dashboard {
+  .mineacle-bans-topbar {
     grid-template-columns: 1fr;
-  }
-
-  .mineacle-bans-user-panel {
-    width: min(100%, 520px);
-    justify-self: end;
-  }
-
-  .mineacle-bans-hero-panel {
-    grid-template-columns: minmax(0, 1fr) 280px;
-  }
-
-  html body .mineacle-bans-shell .mineacle-lb-stat-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -1346,29 +1332,6 @@ html body #banModal.mineacle-ban-modal-single .mineacle-punish-note {
 
   html body .mineacle-bans-shell .mineacle-bans-search {
     grid-template-columns: minmax(0, 1fr) 62px;
-  }
-
-  .mineacle-bans-user-panel {
-    width: 100%;
-    justify-self: stretch;
-  }
-
-  .mineacle-bans-hero-panel {
-    min-height: 0;
-    grid-template-columns: 1fr;
-    padding: 34px 24px;
-  }
-
-  .mineacle-bans-hero-copy h1 {
-    font-size: 46px;
-  }
-
-  .mineacle-bans-hero-logo {
-    width: 210px;
-  }
-
-  .mineacle-bans-support-strip {
-    grid-template-columns: 1fr;
   }
 
   .site-footer.redesigned-footer {
@@ -1451,70 +1414,6 @@ html body #banModal.mineacle-ban-modal-single .mineacle-punish-note {
   html body .mineacle-bans-shell .mineacle-bans-search-action::before {
     width: 21px;
     height: 21px;
-  }
-
-  .mineacle-bans-user-panel {
-    grid-template-columns: 48px minmax(0, 1fr) 88px;
-    padding: 10px;
-  }
-
-  .mineacle-bans-user-panel > img {
-    width: 48px;
-    height: 48px;
-  }
-
-  .mineacle-bans-user-panel strong {
-    font-size: 17px;
-  }
-
-  .mineacle-bans-user-panel button {
-    padding: 0 12px;
-  }
-
-  .mineacle-bans-hero-copy h1 {
-    font-size: 40px;
-  }
-
-  .mineacle-bans-hero-copy p {
-    font-size: 16px;
-  }
-
-  .mineacle-bans-server-pill {
-    width: 100%;
-    min-width: 0;
-  }
-
-  .mineacle-bans-vote-line {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  html body .mineacle-bans-shell .mineacle-lb-stat-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
-  }
-
-  html body .mineacle-bans-shell .mineacle-bans-section-head {
-    align-items: flex-start;
-    flex-direction: column;
-  }
-
-  html body .mineacle-bans-shell .ban-table-header-row {
-    display: none !important;
-  }
-
-  html body .mineacle-bans-shell .ban-row {
-    grid-template-columns: 1fr !important;
-    gap: 14px !important;
-  }
-
-  html body .mineacle-bans-shell .ban-reason-cell {
-    white-space: normal;
-  }
-
-  html body .mineacle-bans-shell .ban-type-cell {
-    align-items: flex-start;
-    flex-direction: column;
   }
 
   html body #banModal.mineacle-ban-modal-single .mineacle-punish-grid,

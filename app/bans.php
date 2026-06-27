@@ -12,8 +12,6 @@ $bans = h((string) ($site['bans'] ?? 'https://bans.mineacle.net'));
 $stats = h((string) ($site['stats'] ?? 'https://stats.mineacle.net'));
 $store = h((string) ($site['store'] ?? 'https://store.mineacle.net'));
 $discord = h((string) ($site['discord'] ?? 'https://discord.gg/VwbwWftefM'));
-$ip = h((string) ($site['ip'] ?? 'mineacle.net'));
-$supportEmail = h((string) ($site['support_email'] ?? 'support@mineacle.net'));
 
 mineacle_page_head('Bans');
 
@@ -58,97 +56,7 @@ mineacle_page_head('Bans');
                 </div>
                 <button class="mineacle-lb-primary-action mineacle-bans-search-action" type="submit">Search</button>
             </form>
-
-            <section class="mineacle-bans-user-panel" aria-label="Bans portal status">
-                <img src="assets/mineacle-bans-hero-logo.png" alt="">
-                <div>
-                    <span>Bans Portal</span>
-                    <strong>Mineacle</strong>
-                </div>
-                <button type="button" data-copy-ip="<?php echo $ip; ?>" aria-label="Copy server IP">Play</button>
-            </section>
         </header>
-
-        <section class="mineacle-bans-dashboard" aria-label="Mineacle bans overview">
-            <section class="mineacle-bans-hero-panel" aria-label="Mineacle punishments">
-                <div class="mineacle-bans-hero-copy">
-                    <span class="mineacle-bans-kicker">Public Records</span>
-                    <h1>Mineacle Bans</h1>
-                    <p>Search currently active LiteBans records from the database, review punishment details, and find the right appeal path without digging through clutter.</p>
-
-                    <div class="mineacle-bans-server-pill">
-                        <strong><?php echo $ip; ?></strong>
-                        <span><i aria-hidden="true"></i> Server records online</span>
-                    </div>
-
-                    <a class="mineacle-bans-help-link" href="mailto:<?php echo $supportEmail; ?>">Need help? Contact support</a>
-                </div>
-
-                <img class="mineacle-bans-hero-logo" src="assets/mineacle-bans-hero-logo.png" alt="Mineacle Bans">
-            </section>
-
-            <aside class="mineacle-bans-side-panel" aria-label="Appeals and recent status">
-                <div class="mineacle-bans-vote-line">
-                    <span>Active bans only</span>
-                    <a href="<?php echo $discord; ?>" target="_blank" rel="noopener">Appeal</a>
-                </div>
-
-                <div class="mineacle-bans-appeal-art">
-                    <img src="assets/appeal-wumpus.webp" alt="">
-                    <div>
-                        <strong>Discord Appeals</strong>
-                        <span id="navDiscordOnline">Members</span>
-                    </div>
-                </div>
-
-                <div class="mineacle-bans-mini-list" id="recentBanList">
-                    <div class="mineacle-lb-loading">Loading active bans</div>
-                </div>
-            </aside>
-        </section>
-
-        <section class="mineacle-lb-stats mineacle-bans-stat-row" aria-label="LiteBans statistics">
-            <div class="mineacle-lb-stat-grid" id="mineacleStatsGrid">
-                <article class="mineacle-lb-stat-card is-red"><strong>--</strong><span>Active Bans</span><small>database only</small></article>
-                <article class="mineacle-lb-stat-card is-gold"><strong>--</strong><span>Matching Bans</span><small>current filter</small></article>
-                <article class="mineacle-lb-stat-card is-cyan"><strong>--</strong><span>Current Page</span><small>active bans</small></article>
-                <article class="mineacle-lb-stat-card is-slate"><strong>--</strong><span>Loaded Rows</span><small>active bans</small></article>
-            </div>
-        </section>
-
-        <section class="mineacle-lb-table-section mineacle-bans-records bans-v3-results" id="ban-results" aria-label="Punishment results">
-            <div class="mineacle-lb-table-head mineacle-bans-section-head">
-                <div>
-                    <span class="bans-v3-kicker mineacle-bans-kicker">Database Results</span>
-                    <h2>Active Ban Records</h2>
-                </div>
-                <div class="mineacle-bans-record-meta">
-                    <span class="mineacle-lb-count-pill" id="recentBanCount">0</span>
-                    <span class="bans-list-meta js-ban-meta" id="banCount">Loading records</span>
-                </div>
-            </div>
-
-            <div class="mineacle-lb-table-shell">
-                <div class="ban-table js-ban-table mineacle-lb-table" id="banList" aria-live="polite">
-                    <div class="mineacle-lb-loading">Loading bans</div>
-                </div>
-            </div>
-
-            <div class="pagination-row mineacle-lb-pagination" id="banPagination">
-                <button class="btn soft js-ban-prev" id="prevPage" type="button">Previous</button>
-                <span class="page-indicator js-ban-page" id="pageInfo">Page 1</span>
-                <button class="btn soft js-ban-next" id="nextPage" type="button">Next</button>
-            </div>
-        </section>
-
-        <section class="mineacle-bans-support-strip" aria-label="Support information">
-            <div>
-                <span class="mineacle-bans-kicker">Support</span>
-                <h2>Appeal or review a punishment</h2>
-            </div>
-            <p>Only active banned players are shown. Removed, expired, and non-banned players are filtered out before the website receives the database results.</p>
-            <a href="<?php echo $discord; ?>" target="_blank" rel="noopener">Open Discord</a>
-        </section>
     </div>
 </main>
 <?php mineacle_footer(); ?>
