@@ -296,3 +296,126 @@
     right: 22px !important;
   }
 }
+
+
+/* Search bar cleanup: make the glass edge effect belong to the whole search bar, not the inner field.
+   This removes the glitched center seam/line and fixes the top highlight across the full module. */
+.mineacle-bans-search {
+  position: relative !important;
+  overflow: hidden !important;
+  border: 0 !important;
+  background: linear-gradient(180deg, rgba(18, 5, 39, .96), rgba(9, 3, 19, .98)) !important;
+  box-shadow: 0 28px 76px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.035) !important;
+}
+
+.mineacle-bans-search::before {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 2 !important;
+  left: 22px !important;
+  right: 22px !important;
+  top: 0 !important;
+  height: 1px !important;
+  pointer-events: none !important;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,.06) 8%,
+    rgba(255,255,255,.16) 24%,
+    rgba(255,255,255,.28) 50%,
+    rgba(255,255,255,.16) 76%,
+    rgba(255,255,255,.06) 92%,
+    rgba(255,255,255,0) 100%) !important;
+  opacity: .90 !important;
+}
+
+.mineacle-bans-search::after {
+  content: "" !important;
+  position: absolute !important;
+  z-index: 2 !important;
+  left: 28px !important;
+  right: 28px !important;
+  bottom: 0 !important;
+  height: 1px !important;
+  pointer-events: none !important;
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,.02) 14%,
+    rgba(255,255,255,.055) 50%,
+    rgba(255,255,255,.02) 86%,
+    rgba(255,255,255,0) 100%) !important;
+  opacity: .72 !important;
+}
+
+.mineacle-bans-search-field {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  min-height: 74px !important;
+}
+
+.mineacle-bans-search-field::before,
+.mineacle-bans-search-field::after {
+  content: none !important;
+  display: none !important;
+}
+
+.mineacle-bans-search-field input {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.mineacle-bans-search:hover,
+.mineacle-bans-search:focus-within,
+.mineacle-bans-search.has-value {
+  background: linear-gradient(180deg, rgba(20, 7, 43, .97), rgba(10, 4, 22, .99)) !important;
+  box-shadow: 0 30px 80px rgba(0,0,0,.42), inset 0 1px 0 rgba(255,255,255,.045) !important;
+  filter: none !important;
+}
+
+/* Mobile proportional edge lines for the search module. */
+@media (max-width: 760px) {
+  .mineacle-bans-search::before {
+    left: 14px !important;
+    right: 14px !important;
+  }
+
+  .mineacle-bans-search::after {
+    left: 18px !important;
+    right: 18px !important;
+  }
+}
+
+/* Copied IP module: preserve the same glass treatment but with a green hue, including the edge lines. */
+.mineacle-player-count-module.is-copied,
+.mineacle-player-count-module.is-copied:hover,
+.mineacle-player-count-module.is-copied:focus-visible,
+.mineacle-player-count-module.is-copied:active {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(135, 255, 190, .12), transparent 62%),
+    linear-gradient(180deg, rgba(31, 117, 78, .94), rgba(14, 76, 49, .96)) !important;
+  box-shadow: 0 28px 76px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255,255,255,.07) !important;
+  filter: none !important;
+}
+
+.mineacle-player-count-module.is-copied::before {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(230,255,241,.08) 8%,
+    rgba(214,255,229,.20) 24%,
+    rgba(245,255,248,.34) 50%,
+    rgba(214,255,229,.20) 76%,
+    rgba(230,255,241,.08) 92%,
+    rgba(255,255,255,0) 100%) !important;
+  opacity: .92 !important;
+}
+
+.mineacle-player-count-module.is-copied::after {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(210,255,225,.025) 16%,
+    rgba(210,255,225,.08) 50%,
+    rgba(210,255,225,.025) 84%,
+    rgba(255,255,255,0) 100%) !important;
+  opacity: .78 !important;
+}
