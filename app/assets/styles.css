@@ -125,7 +125,6 @@ button { color: inherit; }
     linear-gradient(180deg, rgba(27, 22, 41, .92), rgba(7, 6, 12, .96));
 }
 
-.rail-logo,
 .rail-link {
   width: 56px;
   height: 56px;
@@ -139,7 +138,6 @@ button { color: inherit; }
   transition: transform .16s ease, background .16s ease, box-shadow .16s ease, filter .16s ease;
 }
 
-.rail-logo:hover,
 .rail-link:hover {
   transform: translateY(-1px);
   background: rgba(45, 35, 66, .96);
@@ -154,37 +152,58 @@ button { color: inherit; }
 }
 .rail-discord { align-self: end; }
 
-/* Rail logo: brand mark only, not a button tile */
+
+
+/* Rail logo: isolated brand mark, not a nav tile */
 .rail-logo {
-  width: 70px;
-  height: 70px;
-  background: transparent !important;
+  width: 76px;
+  height: 76px;
+  display: grid;
+  place-items: center;
+  margin: -4px 0 20px;
+  padding: 0;
+  background: none !important;
   border: 0 !important;
+  border-radius: 0 !important;
   box-shadow: none !important;
-  border-radius: 0;
+  outline: 0;
+  text-decoration: none;
+  overflow: visible;
   transform-origin: center;
-}
-
-.rail-logo:hover {
-  background: transparent !important;
-  box-shadow: none !important;
-  transform: translateY(-1px);
-  filter:
-    drop-shadow(0 0 10px rgba(143, 66, 255, .36))
-    drop-shadow(0 0 22px rgba(143, 66, 255, .20));
-}
-
-.rail-logo:active {
-  transform: translateY(1px) scale(.965);
-  filter:
-    drop-shadow(0 0 7px rgba(143, 66, 255, .30))
-    drop-shadow(0 0 16px rgba(143, 66, 255, .16));
+  transition: transform .16s ease, filter .16s ease, opacity .16s ease;
 }
 
 .rail-logo img {
-  width: 70px;
-  height: 70px;
+  width: 76px;
+  height: 76px;
+  display: block;
   object-fit: contain;
+  filter:
+    drop-shadow(0 10px 18px rgba(0,0,0,.34))
+    drop-shadow(0 0 0 rgba(143,66,255,0));
+}
+
+.rail-logo:hover {
+  background: none !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  transform: translateY(-1px) scale(1.035);
+  filter:
+    drop-shadow(0 0 10px rgba(143, 66, 255, .42))
+    drop-shadow(0 0 24px rgba(143, 66, 255, .24));
+}
+
+.rail-logo:active {
+  transform: translateY(1px) scale(.94);
+  filter:
+    drop-shadow(0 0 7px rgba(143, 66, 255, .32))
+    drop-shadow(0 0 15px rgba(143, 66, 255, .18));
+}
+
+.rail-logo:focus-visible {
+  border-radius: 12px !important;
+  outline: 2px solid rgba(196, 123, 255, .55);
+  outline-offset: 4px;
 }
 
 .content-lane { min-width: 0; display: grid; gap: 26px; align-content: start; }
