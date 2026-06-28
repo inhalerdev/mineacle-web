@@ -366,3 +366,96 @@
     background: url("magnifying-glass-solid-full.svg") center center / contain no-repeat !important;
   }
 }
+
+/* Final square search-button correction: equal inset on every side and true centered icon. */
+:root {
+  --mineacle-search-button-size: 48px;
+  --mineacle-search-button-inset: 6px;
+}
+
+.mineacle-bans-search-action,
+.mineacle-bans-search.has-value .mineacle-bans-search-action {
+  box-sizing: border-box !important;
+  position: absolute !important;
+  top: var(--mineacle-search-button-inset) !important;
+  right: var(--mineacle-search-button-inset) !important;
+  bottom: auto !important;
+  left: auto !important;
+  width: var(--mineacle-search-button-size) !important;
+  min-width: var(--mineacle-search-button-size) !important;
+  max-width: var(--mineacle-search-button-size) !important;
+  height: var(--mineacle-search-button-size) !important;
+  min-height: var(--mineacle-search-button-size) !important;
+  max-height: var(--mineacle-search-button-size) !important;
+  aspect-ratio: 1 / 1 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: block !important;
+  line-height: 0 !important;
+  font-size: 0 !important;
+  color: transparent !important;
+  text-indent: -9999px !important;
+  overflow: hidden !important;
+  border-radius: 10px !important;
+}
+
+.mineacle-bans-search-action::before,
+.mineacle-bans-search.has-value .mineacle-bans-search-action::before {
+  content: "" !important;
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 20px !important;
+  min-width: 20px !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  flex: none !important;
+  justify-self: auto !important;
+  align-self: auto !important;
+  background-image: url("magnifying-glass-solid-full.svg") !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
+  background-size: contain !important;
+  filter: brightness(0) invert(1) !important;
+  transform: translate(-50%, -50%) !important;
+  transform-origin: center center !important;
+  pointer-events: none !important;
+}
+
+@media (min-width: 761px) {
+  .mineacle-bans-search-field {
+    height: 60px !important;
+    min-height: 60px !important;
+  }
+
+  .mineacle-bans-search-field input {
+    height: 58px !important;
+    line-height: 58px !important;
+    padding-right: calc(var(--mineacle-search-button-size) + 28px) !important;
+  }
+}
+
+@media (max-width: 760px) {
+  :root {
+    --mineacle-search-button-size: 40px;
+    --mineacle-search-button-inset: 6px;
+  }
+
+  .mineacle-bans-search-action,
+  .mineacle-bans-search.has-value .mineacle-bans-search-action {
+    border-radius: 8px !important;
+  }
+
+  .mineacle-bans-search-action::before,
+  .mineacle-bans-search.has-value .mineacle-bans-search-action::before {
+    width: 17px !important;
+    min-width: 17px !important;
+    height: 17px !important;
+    min-height: 17px !important;
+  }
+}
