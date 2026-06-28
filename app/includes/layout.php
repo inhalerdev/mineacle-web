@@ -21,6 +21,7 @@ function mineacle_page_head(string $title): void {
     echo '<link rel="stylesheet" href="assets/bans-search-modules.css?v=bansclean1.0.8">';
     echo '<link rel="stylesheet" href="assets/bans-footer-logo-tight.css?v=bansclean1.0.1">';
     echo '<link rel="stylesheet" href="assets/bans-static-glass.css?v=bansclean1.0.1">';
+    echo '<link rel="stylesheet" href="assets/bans-modules-footer-match.css?v=bansclean1.0.1">';
     echo '</head>';
     echo '<body>';
 }
