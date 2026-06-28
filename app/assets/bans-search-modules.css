@@ -534,3 +534,57 @@
       inset 0 1px 0 rgba(255, 255, 255, .06) !important;
   }
 }
+
+/* Mineacle final override: copied IP module must stay green even while hovered, and search icon is slightly larger. */
+.mineacle-bans-search-action::before,
+.mineacle-bans-search.has-value .mineacle-bans-search-action::before {
+  width: 24px !important;
+  min-width: 24px !important;
+  height: 24px !important;
+  min-height: 24px !important;
+  background-image: url("search-magnify-icon.png") !important;
+  background-repeat: no-repeat !important;
+  background-position: 50% 50% !important;
+  background-size: contain !important;
+}
+
+.mineacle-player-count-module.is-copied,
+.mineacle-player-count-module.is-copied:hover,
+.mineacle-player-count-module.is-copied:focus,
+.mineacle-player-count-module.is-copied:focus-visible,
+.mineacle-player-count-module.is-copied:active {
+  border-color: rgba(104, 255, 162, .72) !important;
+  background:
+    linear-gradient(180deg, rgba(21, 124, 63, .99), rgba(8, 68, 35, .99)) !important;
+  box-shadow:
+    0 28px 70px rgba(0, 0, 0, .46),
+    0 0 0 5px rgba(41, 215, 116, .16),
+    0 18px 36px rgba(35, 210, 112, .20),
+    inset 0 1px 0 rgba(255, 255, 255, .14) !important;
+  transform: none !important;
+  outline: 0 !important;
+}
+
+.mineacle-player-count-module.is-copied .mineacle-player-count-ip,
+.mineacle-player-count-module.is-copied:hover .mineacle-player-count-ip,
+.mineacle-player-count-module.is-copied:focus-visible .mineacle-player-count-ip,
+.mineacle-player-count-module.is-copied .mineacle-player-count-online,
+.mineacle-player-count-module.is-copied:hover .mineacle-player-count-online,
+.mineacle-player-count-module.is-copied:focus-visible .mineacle-player-count-online,
+.mineacle-player-count-module.is-copied .mineacle-player-count-online b,
+.mineacle-player-count-module.is-copied:hover .mineacle-player-count-online b,
+.mineacle-player-count-module.is-copied:focus-visible .mineacle-player-count-online b {
+  color: #ffffff !important;
+}
+
+@media (max-width: 760px) {
+  .mineacle-bans-search-action::before,
+  .mineacle-bans-search.has-value .mineacle-bans-search-action::before {
+    width: 20px !important;
+    min-width: 20px !important;
+    height: 20px !important;
+    min-height: 20px !important;
+    background-image: url("search-magnify-icon.png") !important;
+  }
+}
+
