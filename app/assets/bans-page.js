@@ -21,16 +21,8 @@
   const setHasValue = () => {
     const hasValue = input.value.trim().length > 0;
     form.classList.toggle("has-value", hasValue);
-    action.setAttribute("aria-label", hasValue ? "Clear search" : "Search");
-    action.setAttribute("title", hasValue ? "Clear search" : "Search");
-  };
-
-  const clearSearch = () => {
-    input.value = "";
-    input.focus();
-    form.classList.remove("is-typing");
-    setHasValue();
-    scheduleQuery();
+    action.setAttribute("aria-label", "Search");
+    action.setAttribute("title", "Search");
   };
 
   const setTyping = () => {
@@ -164,17 +156,7 @@
     scheduleQuery();
   });
 
-  input.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-    clearSearch();
-  });
-
   action.addEventListener("click", () => {
-    if (input.value.trim().length > 0) {
-      clearSearch();
-      return;
-    }
-
     setHasValue();
     input.focus();
     queryDatabase();
