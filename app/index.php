@@ -99,15 +99,6 @@ mineacle_page_head('Home');
                 <span class="panel-media"<?php echo mineacle_home_image_style($home['hero']['image_url'] ?? '', '--media-image'); ?>></span>
                 <span class="sr-only">Hero banner</span>
             </article>
-
-            <aside class="panel player-panel" aria-label="Player summary">
-                <span class="skin-frame"<?php echo mineacle_home_image_style($home['player']['skin_url'] ?? '', '--skin-image'); ?>></span>
-                <span class="stat-bars"<?php echo mineacle_home_ratio_style($home['player']['players_online'] ?? 0, $home['player']['max_players'] ?? 0); ?>>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </span>
-            </aside>
         </section>
 
         <section class="tile-row" aria-label="Feature links">

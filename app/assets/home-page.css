@@ -22,9 +22,10 @@
   --control-height: 48px;
   --control-icon-size: 20px;
   --control-button-size: 24px;
+  --feature-tile-height: clamp(190px, 17vw, 260px);
+  --hero-height: max(430px, calc(100dvh - var(--feature-tile-height) - 198px));
   --panel-image: none;
   --media-image: none;
-  --skin-image: none;
   --fill: 0%;
 }
 
@@ -436,7 +437,7 @@ svg {
 
 .top-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(230px, 24%);
+  grid-template-columns: minmax(0, 1fr);
   gap: var(--gap);
 }
 
@@ -453,12 +454,8 @@ svg {
   background-size: cover;
 }
 
-.hero-panel,
-.player-panel {
-  min-height: clamp(320px, 31vw, 430px);
-}
-
 .hero-panel {
+  min-height: var(--hero-height);
   display: grid;
   place-items: center;
 }
@@ -476,67 +473,18 @@ svg {
   opacity: 0.72;
 }
 
-.player-panel {
-  display: grid;
-  align-content: center;
-  justify-items: center;
-  gap: 28px;
-  padding: 28px;
-}
-
-.skin-frame {
-  width: min(55%, 150px);
-  aspect-ratio: 1;
-  border-radius: var(--radius);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.04)),
-    var(--skin-image, none);
-  background-position: center;
-  background-size: cover;
-  box-shadow: inset 0 0 0 1px var(--line);
-}
-
-.stat-bars {
-  width: min(72%, 190px);
-  display: grid;
-  gap: 10px;
-}
-
-.stat-bars span {
-  height: 12px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-}
-
-.stat-bars span::before {
-  content: "";
-  width: var(--fill, 0%);
-  height: 100%;
-  display: block;
-  border-radius: inherit;
-  background: rgba(255, 255, 255, 0.42);
-}
-
-.stat-bars span:nth-child(2)::before {
-  opacity: 0.72;
-}
-
-.stat-bars span:nth-child(3)::before {
-  opacity: 0.46;
-}
-
 .tile-row {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: var(--gap);
   padding: var(--gap);
+  margin: 0;
   border-radius: var(--radius);
   background: #202020;
 }
 
 .feature-tile {
-  min-height: clamp(190px, 17vw, 260px);
+  min-height: var(--feature-tile-height);
   display: grid;
   place-items: center;
   background-color: var(--panel-soft);
@@ -1144,7 +1092,6 @@ svg {
   }
 
   .hero-panel,
-  .player-panel,
   .feature-tile,
   .world-card,
   .profile-skin-card {
