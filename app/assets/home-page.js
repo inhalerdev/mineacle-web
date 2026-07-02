@@ -10,8 +10,8 @@
   const statusNode = document.querySelector('[data-server-status]');
   const statusCount = document.querySelector('[data-server-status-count]');
   const serverIp = statusNode ? statusNode.dataset.serverIp || 'mineacle.net' : 'mineacle.net';
-  const statusRefreshMs = 3000;
-  const statusFetchTimeoutMs = 1200;
+  const statusRefreshMs = 5000;
+  const statusFetchTimeoutMs = 1600;
   const statusCacheKey = `mineacle:server-status:${serverIp}`;
   const statusCacheMaxAgeMs = 15000;
   const playerSearchDelayMs = 160;
@@ -351,30 +351,6 @@
     };
   };
 
-  const statusSourceRank = (source) => {
-    if (source === 'direct') return 4;
-    if (source === 'mcstatus') return 3;
-    if (source === 'mcsrvstat') return 3;
-    if (source === 'web_profiles') return 2;
-    return 1;
-  };
-
-  const chooseServerStatus = (results) => {
-    return results.reduce((best, next) => {
-      if (!next) return best;
-      if (!best) return next;
-
-      const nextRank = statusSourceRank(next.source);
-      const bestRank = statusSourceRank(best.source);
-
-      if (nextRank !== bestRank) {
-        return nextRank > bestRank ? next : best;
-      }
-
-      return next.onlineCount > best.onlineCount ? next : best;
-    }, null);
-  };
-
   const fetchStatusJson = async (url, timeoutMs = statusFetchTimeoutMs) => {
     const controller = new AbortController();
     const timeout = window.setTimeout(() => {
@@ -408,12 +384,6 @@
     return normalizeStatusPayload(payload);
   };
 
-  const loadFallbackServerStatus = async (url) => {
-    const payload = await fetchStatusJson(url, statusFetchTimeoutMs);
-
-    return normalizeStatusPayload(payload);
-  };
-
   const loadServerStatus = async () => {
     if (!statusNode || !statusCount) return;
     if (statusRequestActive) return;
@@ -421,20 +391,9 @@
     statusRequestActive = true;
 
     try {
-      const requests = [
-        loadLocalServerStatus(),
-        loadFallbackServerStatus(`https://api.mcstatus.io/v2/status/java/${encodeURIComponent(serverIp)}`),
-        loadFallbackServerStatus(`https://api.mcsrvstat.us/3/${encodeURIComponent(serverIp)}`)
-      ];
-      const results = await Promise.allSettled(requests);
-      const payload = chooseServerStatus(results.map((result) => {
-        return result.status === 'fulfilled' ? result.value : null;
-      }));
+      const payload = await loadLocalServerStatus();
 
       if (!payload) {
-        if (statusNode.classList.contains('is-loading')) {
-          setServerStatus(false, 0);
-        }
         return;
       }
 

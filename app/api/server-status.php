@@ -265,7 +265,7 @@ function mineacle_status_normalize(array $data, string $source): array
     ];
 }
 
-$directData = mineacle_status_direct_ping($serverIp, $fastMode ? 0.6 : 0.9);
+$directData = mineacle_status_direct_ping($serverIp, $fastMode ? 1.2 : 1.2);
 
 if ($directData) {
     $direct = mineacle_status_normalize($directData, 'direct');
