@@ -8,6 +8,8 @@
   const statusNode = document.querySelector('[data-server-status]');
   const statusCount = document.querySelector('[data-server-status-count]');
   const serverIp = statusNode ? statusNode.dataset.serverIp || 'mineacle.net' : 'mineacle.net';
+  const statusRefreshMs = 10000;
+  let statusRequestActive = false;
 
   const updateClearButton = () => {
     if (!searchInput || !clearButton) return;
@@ -36,7 +38,7 @@
     }
 
     const count = Number.isFinite(onlineCount) ? onlineCount : 0;
-    statusCount.textContent = `${count} currently playing`;
+    statusCount.textContent = `${count} Currently Playing`;
   };
 
   const readNumber = (value) => {
@@ -93,30 +95,41 @@
 
   const loadServerStatus = async () => {
     if (!statusNode || !statusCount) return;
+    if (statusRequestActive) return;
 
-    const fallbacks = [
-      `https://api.mcstatus.io/v2/status/java/${encodeURIComponent(serverIp)}`,
-      `https://api.mcsrvstat.us/3/${encodeURIComponent(serverIp)}`
-    ];
-    let payload = await loadLocalServerStatus();
+    statusRequestActive = true;
 
-    for (const url of fallbacks) {
-      if (payload && (!payload.online || payload.onlineCount > 0)) break;
+    try {
+      const fallbacks = [
+        `https://api.mcstatus.io/v2/status/java/${encodeURIComponent(serverIp)}`,
+        `https://api.mcsrvstat.us/3/${encodeURIComponent(serverIp)}`
+      ];
+      let payload = await loadLocalServerStatus();
 
-      const fallbackPayload = await loadFallbackServerStatus(url);
-      if (!fallbackPayload) continue;
+      for (const url of fallbacks) {
+        if (payload && (!payload.online || payload.onlineCount > 0)) break;
 
-      payload = !payload || fallbackPayload.onlineCount > payload.onlineCount ? fallbackPayload : payload;
+        const fallbackPayload = await loadFallbackServerStatus(url);
+        if (!fallbackPayload) continue;
+
+        payload = !payload || fallbackPayload.onlineCount > payload.onlineCount ? fallbackPayload : payload;
+      }
+
+      if (!payload) {
+        setServerStatus(false, 0);
+        return;
+      }
+
+      setServerStatus(payload.online, payload.onlineCount);
+    } finally {
+      statusRequestActive = false;
     }
-
-    if (!payload) {
-      setServerStatus(false, 0);
-      return;
-    }
-
-    setServerStatus(payload.online, payload.onlineCount);
   };
 
   loadServerStatus();
-  window.setInterval(loadServerStatus, 60000);
+  window.setInterval(loadServerStatus, statusRefreshMs);
+  window.addEventListener('focus', loadServerStatus);
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) loadServerStatus();
+  });
 })();

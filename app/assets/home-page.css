@@ -180,6 +180,7 @@ svg {
 }
 
 .server-status-dot {
+  position: relative;
   width: 11px;
   height: 11px;
   flex: 0 0 auto;
@@ -188,14 +189,50 @@ svg {
   box-shadow: 0 0 14px rgba(255, 75, 75, 0.6);
 }
 
+.server-status-dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 75, 75, 0.34);
+  opacity: 0;
+  animation: status-pulse 1.9s ease-out infinite;
+}
+
 .server-status.is-online .server-status-dot {
   background: var(--online);
   box-shadow: 0 0 14px rgba(75, 227, 106, 0.6);
 }
 
+.server-status.is-online .server-status-dot::after {
+  border-color: rgba(75, 227, 106, 0.34);
+}
+
 .server-status.is-loading .server-status-dot {
   background: var(--subtext);
   box-shadow: none;
+}
+
+.server-status.is-loading .server-status-dot::after {
+  animation: none;
+  border-color: transparent;
+}
+
+@keyframes status-pulse {
+  0% {
+    opacity: 0.52;
+    transform: scale(0.72);
+  }
+
+  70% {
+    opacity: 0;
+    transform: scale(1.42);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.42);
+  }
 }
 
 .search-box {
