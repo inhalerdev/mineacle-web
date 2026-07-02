@@ -12,6 +12,8 @@
   --accent: #7b3cff;
   --online: #4be36a;
   --offline: #ff4b4b;
+  --warning: #ffbf45;
+  --danger: #ff5a5a;
   --gap: 25px;
   --rail-width: 70px;
   --shell-max: 1920px;
@@ -174,6 +176,12 @@ svg {
   align-items: center;
 }
 
+.player-search {
+  position: relative;
+  min-width: 0;
+  width: 100%;
+}
+
 .server-status {
   min-height: var(--control-height);
   display: inline-flex;
@@ -331,6 +339,100 @@ svg {
 
 .search-clear:active {
   transform: none;
+}
+
+.player-search-results {
+  position: absolute;
+  z-index: 30;
+  top: calc(100% + 8px);
+  right: 0;
+  left: 0;
+  display: grid;
+  gap: 4px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #303030;
+  box-shadow: 0 16px 28px rgba(0, 0, 0, 0.34);
+}
+
+.player-search-results[hidden] {
+  display: none;
+}
+
+.player-search-option {
+  min-height: 42px;
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  gap: 12px;
+  align-items: center;
+  padding: 0 10px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.035);
+  color: var(--subtext);
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+  line-height: 1;
+}
+
+.player-search-option.is-name-only {
+  grid-template-columns: 28px minmax(0, 1fr);
+}
+
+.player-search-option.has-no-avatar {
+  grid-template-columns: minmax(0, 1fr) auto;
+}
+
+.player-search-option.has-no-avatar.is-name-only {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.player-search-head {
+  width: 28px;
+  height: 28px;
+  display: block;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px var(--line);
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+
+.player-search-name,
+.player-search-meta {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.player-search-name {
+  color: var(--heading);
+}
+
+.player-search-meta {
+  color: var(--subtext);
+  text-align: right;
+}
+
+.player-search-option.is-temp-banned .player-search-name {
+  color: var(--warning);
+}
+
+.player-search-option.is-perm-banned .player-search-name {
+  color: var(--danger);
+}
+
+.player-search-option.is-muted .player-search-name {
+  color: var(--subtext);
+}
+
+.player-search-option.is-temp-banned .player-search-meta {
+  color: rgba(255, 191, 69, 0.9);
+}
+
+.player-search-option.is-perm-banned .player-search-meta {
+  color: rgba(255, 90, 90, 0.9);
 }
 
 .top-row {
