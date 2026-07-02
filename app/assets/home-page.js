@@ -11,6 +11,8 @@
   const statusCount = document.querySelector('[data-server-status-count]');
   const serverIp = statusNode ? statusNode.dataset.serverIp || 'mineacle.net' : 'mineacle.net';
   const statusRefreshMs = 5000;
+  const statusCacheKey = `mineacle:server-status:${serverIp}`;
+  const statusCacheMaxAgeMs = 120000;
   const playerSearchDelayMs = 160;
   const playerSearchRefreshMs = 5000;
   let statusRequestActive = false;
@@ -292,6 +294,45 @@
     statusCount.textContent = `${count} Currently Playing`;
   };
 
+  const saveServerStatusCache = (payload) => {
+    if (!payload || !payload.online) return;
+
+    try {
+      window.localStorage.setItem(statusCacheKey, JSON.stringify({
+        online: Boolean(payload.online),
+        onlineCount: Number.isFinite(payload.onlineCount) ? payload.onlineCount : 0,
+        updatedAt: Date.now()
+      }));
+    } catch (_) {
+      // Local storage can be unavailable in private or restricted browsing.
+    }
+  };
+
+  const loadServerStatusCache = () => {
+    try {
+      const cached = JSON.parse(window.localStorage.getItem(statusCacheKey) || 'null');
+
+      if (!cached || Date.now() - cached.updatedAt > statusCacheMaxAgeMs) {
+        return null;
+      }
+
+      return {
+        online: Boolean(cached.online),
+        onlineCount: Number.isFinite(Number(cached.onlineCount)) ? Number(cached.onlineCount) : 0
+      };
+    } catch (_) {
+      return null;
+    }
+  };
+
+  const applyCachedServerStatus = () => {
+    const cached = loadServerStatusCache();
+
+    if (!cached) return;
+
+    setServerStatus(cached.online, cached.onlineCount);
+  };
+
   const readNumber = (value) => {
     const number = Number(value);
     return Number.isFinite(number) && number > 0 ? Math.floor(number) : 0;
@@ -311,7 +352,7 @@
 
   const loadLocalServerStatus = async () => {
     try {
-      const response = await fetch(`/api/server-status.php?t=${Date.now()}`, {
+      const response = await fetch(`/api/server-status.php?fast=1&t=${Date.now()}`, {
         headers: { Accept: 'application/json' },
         cache: 'no-store'
       });
@@ -352,21 +393,24 @@
     statusRequestActive = true;
 
     try {
-      const fallbacks = [
-        `https://api.mcstatus.io/v2/status/java/${encodeURIComponent(serverIp)}`,
-        `https://api.mcsrvstat.us/3/${encodeURIComponent(serverIp)}`
+      const requests = [
+        loadLocalServerStatus(),
+        loadFallbackServerStatus(`https://api.mcstatus.io/v2/status/java/${encodeURIComponent(serverIp)}`),
+        loadFallbackServerStatus(`https://api.mcsrvstat.us/3/${encodeURIComponent(serverIp)}`)
       ];
-      let payload = await loadLocalServerStatus();
+      let payload = null;
 
-      for (const url of fallbacks) {
-        if (payload && payload.source === 'direct') break;
-        if (payload && (!payload.online || payload.onlineCount > 0)) break;
+      await Promise.all(requests.map(async (request) => {
+        const next = await request;
 
-        const fallbackPayload = await loadFallbackServerStatus(url);
-        if (!fallbackPayload) continue;
+        if (!next) return;
 
-        payload = !payload || fallbackPayload.onlineCount > payload.onlineCount ? fallbackPayload : payload;
-      }
+        if (!payload || next.source === 'direct' || next.onlineCount > payload.onlineCount) {
+          payload = next;
+          setServerStatus(next.online, next.onlineCount);
+          saveServerStatusCache(next);
+        }
+      }));
 
       if (!payload) {
         setServerStatus(false, 0);
@@ -374,11 +418,13 @@
       }
 
       setServerStatus(payload.online, payload.onlineCount);
+      saveServerStatusCache(payload);
     } finally {
       statusRequestActive = false;
     }
   };
 
+  applyCachedServerStatus();
   loadServerStatus();
   window.setInterval(loadServerStatus, statusRefreshMs);
   window.addEventListener('focus', loadServerStatus);

@@ -22,6 +22,7 @@ $payload = [
     'server_ip' => $serverIp,
     'checked' => false,
 ];
+$fastMode = (string) ($_GET['fast'] ?? '') === '1';
 
 function mineacle_status_number(mixed $value): int
 {
@@ -40,12 +41,12 @@ function mineacle_status_number(mixed $value): int
     return 0;
 }
 
-function mineacle_status_read_url(string $url): ?array
+function mineacle_status_read_url(string $url, float $timeout = 1.2): ?array
 {
     $context = stream_context_create([
         'http' => [
             'method' => 'GET',
-            'timeout' => 3,
+            'timeout' => $timeout,
             'header' => "Accept: application/json\r\nUser-Agent: Mineacle-Web/1.0\r\n",
         ],
     ]);
@@ -166,16 +167,18 @@ function mineacle_status_server_parts(string $serverIp): array
     return [$host, $port];
 }
 
-function mineacle_status_direct_ping(string $serverIp): ?array
+function mineacle_status_direct_ping(string $serverIp, float $timeout = 0.8): ?array
 {
     [$host, $port] = mineacle_status_server_parts($serverIp);
-    $socket = @fsockopen($host, $port, $errno, $error, 2.0);
+    $socket = @fsockopen($host, $port, $errno, $error, $timeout);
 
     if (!$socket) {
         return null;
     }
 
-    stream_set_timeout($socket, 2);
+    $seconds = (int) floor($timeout);
+    $microseconds = (int) (($timeout - $seconds) * 1000000);
+    stream_set_timeout($socket, $seconds, $microseconds);
 
     $handshake = mineacle_status_varint(0)
         . mineacle_status_varint(767)
@@ -227,7 +230,7 @@ function mineacle_status_normalize(array $data, string $source): array
     ];
 }
 
-$directData = mineacle_status_direct_ping($serverIp);
+$directData = mineacle_status_direct_ping($serverIp, $fastMode ? 0.6 : 0.9);
 
 if ($directData) {
     $direct = mineacle_status_normalize($directData, 'direct');
@@ -241,13 +244,18 @@ if ($directData) {
     exit;
 }
 
+if ($fastMode) {
+    echo json_encode($payload, JSON_UNESCAPED_SLASHES);
+    exit;
+}
+
 $providers = [
     'mcsrvstat' => 'https://api.mcsrvstat.us/3/' . rawurlencode($serverIp),
     'mcstatus' => 'https://api.mcstatus.io/v2/status/java/' . rawurlencode($serverIp),
 ];
 
 foreach ($providers as $source => $url) {
-    $data = mineacle_status_read_url($url);
+    $data = mineacle_status_read_url($url, 1.2);
 
     if (!$data) {
         continue;
