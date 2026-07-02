@@ -10,6 +10,7 @@
   --accent: #7b3cff;
   --gap: 14px;
   --rail-width: 70px;
+  --shell-max: 1920px;
   --radius: 5px;
   --panel-image: none;
   --media-image: none;
@@ -65,7 +66,7 @@ svg {
 }
 
 .site-shell {
-  width: min(100%, 1440px);
+  width: min(100vw, var(--shell-max));
   min-height: 100vh;
   margin: 0 auto;
   display: grid;
