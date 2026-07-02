@@ -24,7 +24,7 @@ function mineacle_icon(string $name): string
     ];
 
     if (isset($officialIcons[$name])) {
-        return '<span class="site-icon" style="--icon-url: url(\'' . h($officialIcons[$name]) . '\')" aria-hidden="true"></span>';
+        return '<img class="site-icon" src="' . h($officialIcons[$name]) . '" alt="" aria-hidden="true">';
     }
 
     $icons = [

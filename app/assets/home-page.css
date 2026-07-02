@@ -14,7 +14,6 @@
   --panel-image: none;
   --media-image: none;
   --skin-image: none;
-  --icon-url: none;
   --fill: 0%;
 }
 
@@ -51,15 +50,9 @@ svg {
   width: 28px;
   height: 28px;
   display: block;
-  background: currentColor;
-  -webkit-mask-image: var(--icon-url);
-  mask-image: var(--icon-url);
-  -webkit-mask-position: center;
-  mask-position: center;
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-size: contain;
-  mask-size: contain;
+  object-fit: contain;
+  opacity: 0.76;
+  filter: invert(63%) sepia(0%) saturate(18%) hue-rotate(162deg) brightness(89%) contrast(88%);
 }
 
 .sr-only {
@@ -122,6 +115,12 @@ svg {
   outline: 0;
   color: var(--icon-active);
   background: rgba(255, 255, 255, 0.06);
+}
+
+.rail-link:hover .site-icon,
+.rail-link:focus-visible .site-icon {
+  opacity: 1;
+  filter: invert(100%);
 }
 
 .rail-nav,
