@@ -10,9 +10,10 @@
   const statusNode = document.querySelector('[data-server-status]');
   const statusCount = document.querySelector('[data-server-status-count]');
   const serverIp = statusNode ? statusNode.dataset.serverIp || 'mineacle.net' : 'mineacle.net';
-  const statusRefreshMs = 5000;
+  const statusRefreshMs = 2000;
+  const statusFetchTimeoutMs = 1200;
   const statusCacheKey = `mineacle:server-status:${serverIp}`;
-  const statusCacheMaxAgeMs = 120000;
+  const statusCacheMaxAgeMs = 15000;
   const playerSearchDelayMs = 160;
   const playerSearchRefreshMs = 5000;
   let statusRequestActive = false;
@@ -350,40 +351,43 @@
     };
   };
 
-  const loadLocalServerStatus = async () => {
-    try {
-      const response = await fetch(`/api/server-status.php?fast=1&t=${Date.now()}`, {
-        headers: { Accept: 'application/json' },
-        cache: 'no-store'
-      });
+  const fetchStatusJson = async (url, timeoutMs = statusFetchTimeoutMs) => {
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => {
+      controller.abort();
+    }, timeoutMs);
 
-      if (!response.ok) return null;
-      const payload = await response.json();
-
-      if (payload && payload.checked === false) {
-        return null;
-      }
-
-      return normalizeStatusPayload(payload);
-    } catch (_) {
-      return null;
-    }
-  };
-
-  const loadFallbackServerStatus = async (url) => {
     try {
       const response = await fetch(url, {
         headers: { Accept: 'application/json' },
-        cache: 'no-store'
+        cache: 'no-store',
+        signal: controller.signal
       });
 
       if (!response.ok) return null;
-      const payload = await response.json();
 
-      return normalizeStatusPayload(payload);
+      return await response.json();
     } catch (_) {
       return null;
+    } finally {
+      window.clearTimeout(timeout);
     }
+  };
+
+  const loadLocalServerStatus = async () => {
+    const payload = await fetchStatusJson(`/api/server-status.php?fast=1&t=${Date.now()}`, 900);
+
+    if (payload && payload.checked === false) {
+      return null;
+    }
+
+    return normalizeStatusPayload(payload);
+  };
+
+  const loadFallbackServerStatus = async (url) => {
+    const payload = await fetchStatusJson(url, statusFetchTimeoutMs);
+
+    return normalizeStatusPayload(payload);
   };
 
   const loadServerStatus = async () => {
@@ -400,12 +404,12 @@
       ];
       let payload = null;
 
-      await Promise.all(requests.map(async (request) => {
+      await Promise.allSettled(requests.map(async (request) => {
         const next = await request;
 
         if (!next) return;
 
-        if (!payload || next.source === 'direct' || next.onlineCount > payload.onlineCount) {
+        if (!payload || (next.source === 'direct' && payload.source !== 'web_profiles') || next.onlineCount > payload.onlineCount) {
           payload = next;
           setServerStatus(next.online, next.onlineCount);
           saveServerStatusCache(next);

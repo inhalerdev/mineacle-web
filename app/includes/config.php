@@ -36,6 +36,9 @@ return [
         'litebans_bans' => getenv('LITEBANS_BANS_TABLE') ?: 'litebans_bans',
         'litebans_mutes' => getenv('LITEBANS_MUTES_TABLE') ?: 'litebans_mutes',
     ],
+    'home' => [
+        'database_enabled' => strtolower((string) getenv('HOME_DATABASE_ENABLED')) === 'true',
+    ],
     'skins' => [
         'provider' => strtolower((string) (getenv('SKIN_PROVIDER') ?: 'mineskin')),
         'head_size' => (int) (getenv('SKIN_HEAD_SIZE') ?: 64),

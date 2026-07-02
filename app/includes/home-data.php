@@ -82,6 +82,12 @@ function mineacle_home_all(PDO $pdo, string $sql, array $params = []): array
 function mineacle_home_data(): array
 {
     $data = mineacle_home_defaults();
+    $config = mineacle_config();
+
+    if (!((bool) ($config['home']['database_enabled'] ?? false))) {
+        return $data;
+    }
+
     $pdo = mineacle_db();
 
     if (!$pdo) {

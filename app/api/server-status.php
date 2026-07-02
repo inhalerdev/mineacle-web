@@ -41,6 +41,41 @@ function mineacle_status_number(mixed $value): int
     return 0;
 }
 
+function mineacle_status_web_profiles_count(): ?array
+{
+    $pdo = mineacle_db();
+
+    if (!$pdo instanceof PDO) {
+        return null;
+    }
+
+    $config = mineacle_config();
+    $tables = $config['tables'] ?? [];
+    $table = (string) ($tables['player_profiles'] ?? 'mineacle_web_profiles');
+
+    if ($table !== 'mineacle_web_profiles' || !preg_match('/^[A-Za-z0-9_]+$/', $table)) {
+        return null;
+    }
+
+    try {
+        $statement = $pdo->query('SELECT COUNT(*) AS players_online FROM `' . $table . '` WHERE online = 1');
+        $row = $statement ? $statement->fetch() : false;
+
+        if (!is_array($row)) {
+            return null;
+        }
+
+        return [
+            'online' => true,
+            'players_online' => mineacle_status_number($row['players_online'] ?? 0),
+            'players_max' => 0,
+            'source' => 'web_profiles',
+        ];
+    } catch (Throwable) {
+        return null;
+    }
+}
+
 function mineacle_status_read_url(string $url, float $timeout = 1.2): ?array
 {
     $context = stream_context_create([
@@ -228,6 +263,19 @@ function mineacle_status_normalize(array $data, string $source): array
         'players_max' => mineacle_status_number($players['max'] ?? $data['players_max'] ?? $data['max_players'] ?? null),
         'source' => $source,
     ];
+}
+
+$profileCount = mineacle_status_web_profiles_count();
+
+if ($profileCount !== null) {
+    $payload['online'] = $profileCount['online'];
+    $payload['players_online'] = $profileCount['players_online'];
+    $payload['players_max'] = $profileCount['players_max'];
+    $payload['source'] = $profileCount['source'];
+    $payload['checked'] = true;
+
+    echo json_encode($payload, JSON_UNESCAPED_SLASHES);
+    exit;
 }
 
 $directData = mineacle_status_direct_ping($serverIp, $fastMode ? 0.6 : 0.9);
