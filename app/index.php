@@ -37,6 +37,13 @@ function mineacle_icon(string $name): string
     return $icons[$name] ?? $icons['logo'];
 }
 
+function mineacle_home_is_video_url(string $url): bool
+{
+    $path = parse_url($url, PHP_URL_PATH);
+
+    return is_string($path) && preg_match('/\.(m4v|mp4|mov|webm)$/i', $path) === 1;
+}
+
 $navLinks = [
     ['key' => 'home', 'url' => (string) ($site['home_url'] ?? '/')],
     ['key' => 'stats', 'url' => (string) ($site['stats_url'] ?? '#')],
@@ -48,6 +55,8 @@ $tiles = array_slice($home['tiles'], 0, 4);
 $worlds = array_slice(array_values($home['worlds']), 0, 3);
 $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
+$heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
+$heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
 
 mineacle_page_head('Home');
 ?>
@@ -96,9 +105,15 @@ mineacle_page_head('Home');
         </section>
 
         <section class="top-row">
-            <article class="panel hero-panel"<?php echo mineacle_home_image_style($home['hero']['background_image_url'] ?? ''); ?> aria-label="Hero">
+            <article class="panel hero-panel"<?php echo $heroBackgroundIsVideo ? '' : mineacle_home_image_style($home['hero']['background_image_url'] ?? ''); ?> aria-label="Hero">
                 <?php if ($heroBackground !== ''): ?>
-                    <img class="hero-background" src="<?php echo h(mineacle_home_safe_url($heroBackground)); ?>" alt="" aria-hidden="true">
+                    <?php if ($heroBackgroundIsVideo): ?>
+                        <video class="hero-background hero-background-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+                            <source src="<?php echo h($heroBackgroundUrl); ?>" type="video/mp4">
+                        </video>
+                    <?php else: ?>
+                        <img class="hero-background" src="<?php echo h($heroBackgroundUrl); ?>" alt="" aria-hidden="true">
+                    <?php endif; ?>
                 <?php endif; ?>
                 <?php if (trim((string) ($home['hero']['image_url'] ?? '')) !== ''): ?>
                     <span class="panel-media"<?php echo mineacle_home_image_style($home['hero']['image_url'] ?? '', '--media-image'); ?>></span>

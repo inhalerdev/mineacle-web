@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS home_social_links (
 
 INSERT INTO home_sections (section_key, image_url, background_image_url, link_url)
 VALUES
-  ('hero', NULL, '/assets/brand/hero-mov.gif', '#'),
+  ('hero', NULL, '/assets/brand/hero-mov.m4v', '#'),
   ('community', NULL, NULL, NULL),
   ('footer', NULL, NULL, NULL)
 ON DUPLICATE KEY UPDATE section_key = VALUES(section_key);

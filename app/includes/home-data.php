@@ -11,7 +11,7 @@ function mineacle_home_defaults(): array
     return [
         'hero' => [
             'image_url' => '',
-            'background_image_url' => '/assets/brand/hero-mov.gif',
+            'background_image_url' => '/assets/brand/hero-mov.m4v',
             'link_url' => '',
         ],
         'player' => [

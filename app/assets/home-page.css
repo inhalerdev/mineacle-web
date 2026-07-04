@@ -487,6 +487,10 @@ svg {
   object-position: center;
 }
 
+.hero-background-video {
+  background: #101010;
+}
+
 .hero-panel > :not(.hero-background) {
   position: relative;
   z-index: 2;
