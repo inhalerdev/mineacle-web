@@ -68,7 +68,7 @@ $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
 $heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
-$heroAssetVersion = 'base39';
+$heroAssetVersion = 'base41';
 
 mineacle_page_head('Home');
 ?>
@@ -139,8 +139,8 @@ mineacle_page_head('Home');
                     </h1>
                     <p class="hero-text">Join the Java Edition server, track your progress, and jump into the community from one clean hub.</p>
                     <div class="hero-actions" aria-label="Server actions">
-                        <button class="hero-action hero-action-primary" type="button" data-copy-server-ip data-server-ip="<?php echo h($minecraftIp); ?>">
-                            <span data-copy-server-label>Join Server</span>
+                        <button class="hero-action hero-action-primary" type="button" data-copy-server-ip data-server-ip="<?php echo h($minecraftIp); ?>" data-default-label="Copy Server IP" aria-label="Copy Mineacle server IP">
+                            <span data-copy-server-label>Copy Server IP</span>
                             <strong><?php echo h($minecraftIp); ?></strong>
                         </button>
                         <button class="hero-action hero-action-secondary" type="button" data-open-join-modal>
@@ -211,6 +211,12 @@ mineacle_page_head('Home');
         </div>
         <div class="join-modal-media">
             <img data-join-gif data-src="<?php echo h(mineacle_home_versioned_url('/assets/brand/mineacle-how-to-join.gif', $heroAssetVersion)); ?>" alt="How to join Mineacle on Java Edition">
+        </div>
+        <div class="join-modal-actions">
+            <button class="hero-action hero-action-primary join-modal-copy-ip" type="button" data-copy-server-ip data-server-ip="<?php echo h($minecraftIp); ?>" data-default-label="Copy IP" aria-label="Copy Mineacle server IP">
+                <span data-copy-server-label>Copy IP</span>
+                <strong><?php echo h($minecraftIp); ?></strong>
+            </button>
         </div>
     </section>
 </div>

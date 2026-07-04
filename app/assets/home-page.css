@@ -530,8 +530,8 @@ svg {
 }
 
 .hero-logo-title img {
-  width: min(100%, 560px);
-  max-height: 240px;
+  width: min(100%, 460px);
+  max-height: 190px;
   display: block;
   object-fit: contain;
   object-position: left center;
@@ -625,7 +625,7 @@ svg {
   background: #101010;
   box-shadow: 0 28px 70px rgba(0, 0, 0, 0.62);
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
 }
 
 .join-modal-panel:focus {
@@ -697,6 +697,18 @@ svg {
 .join-modal-media img {
   width: 100%;
   display: block;
+}
+
+.join-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--line);
+  background: #101010;
+}
+
+.join-modal-copy-ip {
+  min-width: 190px;
 }
 
 body.has-join-modal {

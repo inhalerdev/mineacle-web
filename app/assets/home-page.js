@@ -11,8 +11,7 @@
   const statusCount = document.querySelector('[data-server-status-count]');
   const heroGreeting = document.querySelector('[data-hero-greeting]');
   const heroPlayer = document.querySelector('[data-hero-player]');
-  const copyServerIpButton = document.querySelector('[data-copy-server-ip]');
-  const copyServerIpLabel = document.querySelector('[data-copy-server-label]');
+  const copyServerIpButtons = document.querySelectorAll('[data-copy-server-ip]');
   const copyServerIpFeedback = document.querySelector('[data-copy-server-feedback]');
   const joinModal = document.querySelector('[data-join-modal]');
   const joinModalPanel = joinModal ? joinModal.querySelector('.join-modal-panel') : null;
@@ -66,10 +65,13 @@
     }
   };
 
-  const copyServerIp = async () => {
-    if (!copyServerIpButton) return;
+  const copyServerIp = async (event) => {
+    const button = event.currentTarget;
+    if (!(button instanceof HTMLElement)) return;
 
-    const ip = copyServerIpButton.dataset.serverIp || serverIp || 'mineacle.net';
+    const label = button.querySelector('[data-copy-server-label]');
+    const defaultLabel = button.dataset.defaultLabel || (label ? label.textContent : 'Copy Server IP');
+    const ip = button.dataset.serverIp || serverIp || 'mineacle.net';
     let copied;
 
     try {
@@ -83,8 +85,8 @@
       copied = fallbackCopyText(ip);
     }
 
-    if (copyServerIpLabel) {
-      copyServerIpLabel.textContent = copied ? 'IP Copied' : 'Copy Failed';
+    if (label) {
+      label.textContent = copied ? 'IP Copied' : 'Copy Failed';
     }
 
     if (copyServerIpFeedback) {
@@ -92,7 +94,7 @@
     }
 
     window.setTimeout(() => {
-      if (copyServerIpLabel) copyServerIpLabel.textContent = 'Join Server';
+      if (label) label.textContent = defaultLabel || 'Copy Server IP';
       if (copyServerIpFeedback) copyServerIpFeedback.textContent = '';
     }, 2200);
   };
@@ -125,9 +127,9 @@
 
   setHeroGreeting();
 
-  if (copyServerIpButton) {
-    copyServerIpButton.addEventListener('click', copyServerIp);
-  }
+  copyServerIpButtons.forEach((button) => {
+    button.addEventListener('click', copyServerIp);
+  });
 
   openJoinModalButtons.forEach((button) => {
     button.addEventListener('click', openJoinModal);
