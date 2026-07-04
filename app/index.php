@@ -55,12 +55,26 @@ function mineacle_home_versioned_url(string $url, string $version): string
     return $url . $separator . 'v=' . rawurlencode($version);
 }
 
+function mineacle_footer_link(mixed $url): string
+{
+    $value = trim((string) $url);
+
+    if (str_starts_with($value, 'mailto:')) {
+        $email = substr($value, 7);
+
+        return filter_var($email, FILTER_VALIDATE_EMAIL) ? $value : '#';
+    }
+
+    return mineacle_home_link($value);
+}
+
 $navLinks = [
     ['key' => 'home', 'url' => (string) ($site['home_url'] ?? '/')],
-    ['key' => 'stats', 'url' => (string) ($site['stats_url'] ?? '#')],
-    ['key' => 'store', 'url' => (string) ($site['store_url'] ?? '#')],
+    ['key' => 'vote', 'url' => (string) ($site['vote_url'] ?? '#')],
     ['key' => 'bans', 'url' => (string) ($site['bans_url'] ?? '#')],
 ];
+
+$storeLink = ['key' => 'store', 'url' => (string) ($site['store_url'] ?? '#')];
 
 $footerQuickLinks = [
     ['label' => 'Home', 'url' => (string) ($site['home_url'] ?? '/')],
@@ -82,13 +96,26 @@ $footerSocialLinks = [
     ['key' => 'youtube', 'label' => 'YouTube', 'url' => (string) ($site['youtube_url'] ?? '#')],
 ];
 
+$supportLink = trim((string) ($site['support_url'] ?? ''));
+
+if ($supportLink === '') {
+    $supportLink = filter_var($supportEmail, FILTER_VALIDATE_EMAIL) ? 'mailto:' . $supportEmail : '#';
+}
+
+$footerLegalLinks = [
+    ['label' => 'Terms of Service', 'url' => (string) ($site['terms_url'] ?? '#')],
+    ['label' => 'Privacy Policy', 'url' => (string) ($site['privacy_url'] ?? '#')],
+    ['label' => 'Refund Policy', 'url' => (string) ($site['refund_url'] ?? '#')],
+    ['label' => 'Support', 'url' => $supportLink],
+];
+
 $tiles = array_slice($home['tiles'], 0, 4);
 $worlds = array_slice(array_values($home['worlds']), 0, 3);
 $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
 $heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
-$heroAssetVersion = 'base47';
+$heroAssetVersion = 'base49';
 
 mineacle_page_head('Home');
 ?>
@@ -104,6 +131,9 @@ mineacle_page_head('Home');
                     <?php echo mineacle_icon((string) $link['key']); ?>
                 </a>
             <?php endforeach; ?>
+            <a class="rail-link rail-store-button" href="<?php echo h(mineacle_home_link($storeLink['url'])); ?>" aria-label="Store">
+                <?php echo mineacle_icon((string) $storeLink['key']); ?>
+            </a>
         </nav>
 
         <div class="rail-social" aria-label="Social links">
@@ -234,7 +264,14 @@ mineacle_page_head('Home');
 
                 <p class="footer-bottom">
                     <img src="assets/brand/nav-logo.png" alt="" aria-hidden="true">
-                    <span>Copyright © <?php echo h((string) $year); ?> Mineacle Studios. All Rights Reserved. The Mineacle Network is not affiliated with or endorsed by Mojang Studios or Microsoft. Purchases support Mineacle Studios. Support: <?php echo h($supportEmail); ?>.</span>
+                    <span>
+                        Copyright © <?php echo h((string) $year); ?> Mineacle Studios. All Rights Reserved. The Mineacle Network is not affiliated with or endorsed by Mojang Studios or Microsoft.
+                        <span class="footer-policy-links">
+                            <?php foreach ($footerLegalLinks as $link): ?>
+                                <a href="<?php echo h(mineacle_footer_link($link['url'])); ?>"><?php echo h($link['label']); ?></a>
+                            <?php endforeach; ?>
+                        </span>
+                    </span>
                 </p>
             </div>
         </footer>

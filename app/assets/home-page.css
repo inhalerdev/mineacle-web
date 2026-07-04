@@ -149,6 +149,24 @@ svg {
   filter: invert(100%);
 }
 
+.rail-store-button {
+  margin-top: 8px;
+  color: var(--heading);
+  background: rgba(123, 60, 255, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(123, 60, 255, 0.44);
+}
+
+.rail-store-button .site-icon {
+  opacity: 1;
+  filter: invert(100%);
+}
+
+.rail-store-button:hover,
+.rail-store-button:focus-visible {
+  background: rgba(123, 60, 255, 0.28);
+  box-shadow: inset 0 0 0 1px rgba(162, 113, 255, 0.7);
+}
+
 .rail-nav,
 .rail-social {
   display: grid;
@@ -914,7 +932,8 @@ body.has-join-modal {
 .footer-panel {
   min-height: clamp(390px, 31vw, 540px);
   display: grid;
-  padding: clamp(34px, 4vw, 56px);
+  margin: 0 calc(var(--gap) * -1) calc(var(--gap) * -1);
+  padding: clamp(34px, 4vw, 56px) calc(var(--gap) + clamp(34px, 4vw, 56px));
   background: #181818;
 }
 
@@ -1024,6 +1043,26 @@ body.has-join-modal {
   line-height: 1.35;
 }
 
+.footer-policy-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  margin-left: 8px;
+}
+
+.footer-policy-links a {
+  color: var(--heading);
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.28);
+  text-underline-offset: 3px;
+}
+
+.footer-policy-links a:hover,
+.footer-policy-links a:focus-visible {
+  opacity: 0.72;
+  outline: 0;
+}
+
 .footer-bottom img {
   width: 19px;
   height: 19px;
@@ -1038,7 +1077,7 @@ body.has-join-modal {
   }
 
   .footer-panel {
-    padding: 36px;
+    padding: 36px calc(var(--gap) + 36px);
   }
 }
 
@@ -1460,7 +1499,7 @@ body.has-join-modal {
   }
 
   .footer-panel {
-    padding: 32px 20px;
+    padding: 32px calc(var(--gap) + 20px);
   }
 
   .footer-inner {
