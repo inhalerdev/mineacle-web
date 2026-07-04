@@ -62,13 +62,33 @@ $navLinks = [
     ['key' => 'bans', 'url' => (string) ($site['bans_url'] ?? '#')],
 ];
 
+$footerQuickLinks = [
+    ['label' => 'Home', 'url' => (string) ($site['home_url'] ?? '/')],
+    ['label' => 'Player Stats', 'url' => (string) ($site['stats_url'] ?? '/players')],
+    ['label' => 'Store', 'url' => (string) ($site['store_url'] ?? '#')],
+    ['label' => 'Vote', 'url' => (string) ($site['vote_url'] ?? '#')],
+];
+
+$footerCommunityLinks = [
+    ['label' => 'Discord', 'url' => (string) ($site['discord_url'] ?? '#')],
+    ['label' => 'X/Twitter', 'url' => (string) ($site['x_url'] ?? '#')],
+    ['label' => 'YouTube', 'url' => (string) ($site['youtube_url'] ?? '#')],
+    ['label' => 'TikTok', 'url' => (string) ($site['tiktok_url'] ?? '#')],
+];
+
+$footerSocialLinks = [
+    ['key' => 'discord', 'label' => 'Discord', 'url' => (string) ($site['discord_url'] ?? '#')],
+    ['key' => 'x', 'label' => 'X/Twitter', 'url' => (string) ($site['x_url'] ?? '#')],
+    ['key' => 'youtube', 'label' => 'YouTube', 'url' => (string) ($site['youtube_url'] ?? '#')],
+];
+
 $tiles = array_slice($home['tiles'], 0, 4);
 $worlds = array_slice(array_values($home['worlds']), 0, 3);
 $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
 $heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
-$heroAssetVersion = 'base46';
+$heroAssetVersion = 'base47';
 
 mineacle_page_head('Home');
 ?>
@@ -182,18 +202,40 @@ mineacle_page_head('Home');
             </div>
         </section>
 
-        <footer class="footer-panel"<?php echo mineacle_home_image_style($home['footer']['background_image_url'] ?? ''); ?> aria-label="Legal notice">
+        <footer class="footer-panel" aria-label="Footer">
             <div class="footer-inner">
-                <div class="footer-brand" aria-label="Mineacle Studios">
-                    <img src="assets/brand/m-studios.png" alt="Mineacle Studios">
-                </div>
-
-                <section class="footer-legal" aria-labelledby="footerLegalTitle">
-                    <h2 id="footerLegalTitle">Legal Notice</h2>
-                    <p>The Mineacle Network is not affiliated with Mojang Studios or Microsoft, nor should it be considered endorsed by Mojang Studios or Microsoft. Any contributions or purchases made through Mineacle support the Mineacle Studios team.</p>
-                    <p>For support or purchase history, please contact Mineacle Support at <?php echo h($supportEmail); ?>.</p>
-                    <p><em>Minecraft, Mojang Studios, and related marks are property of their respective owners. Copyright 2009-<?php echo h((string) $year); ?>.</em></p>
+                <section class="footer-about" aria-label="Mineacle Studios">
+                    <div class="footer-brand">
+                        <img src="assets/brand/m-studios.png" alt="Mineacle Studios">
+                    </div>
+                    <p>Mineacle Studios is a small team of Minecraft developers building the custom systems behind the Mineacle Network. After over a year of trial, error, and refinement, we are creating a smooth, polished, community-driven survival experience while staying true to the Minecraft everyone already loves.</p>
+                    <div class="footer-socials" aria-label="Social links">
+                        <?php foreach ($footerSocialLinks as $link): ?>
+                            <a href="<?php echo h(mineacle_home_link($link['url'])); ?>" aria-label="<?php echo h($link['label']); ?>">
+                                <?php echo mineacle_icon((string) $link['key']); ?>
+                            </a>
+                        <?php endforeach; ?>
+                    </div>
                 </section>
+
+                <nav class="footer-links" aria-label="Quick links">
+                    <h2>Quick Links:</h2>
+                    <?php foreach ($footerQuickLinks as $link): ?>
+                        <a href="<?php echo h(mineacle_home_link($link['url'])); ?>"><?php echo h($link['label']); ?></a>
+                    <?php endforeach; ?>
+                </nav>
+
+                <nav class="footer-links" aria-label="Community links">
+                    <h2>Community:</h2>
+                    <?php foreach ($footerCommunityLinks as $link): ?>
+                        <a href="<?php echo h(mineacle_home_link($link['url'])); ?>"><?php echo h($link['label']); ?></a>
+                    <?php endforeach; ?>
+                </nav>
+
+                <p class="footer-bottom">
+                    <img src="assets/brand/nav-logo.png" alt="" aria-hidden="true">
+                    <span>Copyright © <?php echo h((string) $year); ?> Mineacle Studios. All Rights Reserved. The Mineacle Network is not affiliated with or endorsed by Mojang Studios or Microsoft. Purchases support Mineacle Studios. Support: <?php echo h($supportEmail); ?>.</span>
+                </p>
             </div>
         </footer>
     </main>
