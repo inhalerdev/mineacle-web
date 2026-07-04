@@ -11,7 +11,7 @@ function mineacle_home_defaults(): array
     return [
         'hero' => [
             'image_url' => '',
-            'background_image_url' => '/assets/brand/hero-banner-v1.png',
+            'background_image_url' => '/assets/brand/hero-mov.gif',
             'link_url' => '',
         ],
         'player' => [
@@ -103,7 +103,7 @@ function mineacle_home_data(): array
 
         $hero = mineacle_home_first(
             $pdo,
-            "SELECT image_url, background_image_url, link_url FROM {$sections} WHERE section_key = :section_key AND is_enabled = 1 LIMIT 1",
+            "SELECT link_url FROM {$sections} WHERE section_key = :section_key AND is_enabled = 1 LIMIT 1",
             ['section_key' => 'hero']
         );
 
