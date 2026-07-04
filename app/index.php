@@ -44,6 +44,17 @@ function mineacle_home_is_video_url(string $url): bool
     return is_string($path) && preg_match('/\.(m4v|mp4|mov|webm)$/i', $path) === 1;
 }
 
+function mineacle_home_versioned_url(string $url, string $version): string
+{
+    if ($url === '' || $url === '#') {
+        return $url;
+    }
+
+    $separator = strpos($url, '?') === false ? '?' : '&';
+
+    return $url . $separator . 'v=' . rawurlencode($version);
+}
+
 $navLinks = [
     ['key' => 'home', 'url' => (string) ($site['home_url'] ?? '/')],
     ['key' => 'stats', 'url' => (string) ($site['stats_url'] ?? '#')],
@@ -109,7 +120,7 @@ mineacle_page_head('Home');
                 <?php if ($heroBackground !== ''): ?>
                     <?php if ($heroBackgroundIsVideo): ?>
                         <video class="hero-background hero-background-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-                            <source src="<?php echo h($heroBackgroundUrl); ?>" type="video/mp4">
+                            <source src="<?php echo h(mineacle_home_versioned_url($heroBackgroundUrl, 'base37')); ?>" type="video/mp4">
                         </video>
                     <?php else: ?>
                         <img class="hero-background" src="<?php echo h($heroBackgroundUrl); ?>" alt="" aria-hidden="true">
