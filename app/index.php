@@ -68,7 +68,7 @@ $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
 $heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
-$heroAssetVersion = 'base45';
+$heroAssetVersion = 'base46';
 
 mineacle_page_head('Home');
 ?>
@@ -137,7 +137,7 @@ mineacle_page_head('Home');
                     <h1 class="hero-logo-title">
                         <img src="<?php echo h(mineacle_home_versioned_url('/assets/brand/hero-logo.png', $heroAssetVersion)); ?>" alt="Mineacle Network">
                     </h1>
-                    <p class="hero-text">Java Edition support for Minecraft 1.21.1-1.21.6+. Copy the server IP, add Mineacle to Multiplayer, and join from desktop.</p>
+                    <p class="hero-text">Java Edition support for Minecraft 1.21.11 to 26+. Copy the server IP, add Mineacle to Multiplayer, and join from desktop.</p>
                     <div class="hero-actions" aria-label="Server actions">
                         <button class="hero-action hero-action-primary hero-play-now" type="button" data-copy-server-ip data-server-ip="<?php echo h($minecraftIp); ?>" data-default-label="Join on Java Edition" aria-label="Copy Mineacle server IP">
                             <img class="hero-action-icon" src="assets/icons/play-button-arrowhead.png" alt="" aria-hidden="true">
@@ -205,7 +205,7 @@ mineacle_page_head('Home');
             <img src="assets/icons/clear-search.svg" alt="" aria-hidden="true">
         </button>
         <div class="join-modal-copy">
-            <p>Java Edition 1.21.1-1.21.6+</p>
+            <p>Java Edition 1.21.11 to 26+</p>
             <h2 id="joinModalTitle">Join Mineacle</h2>
         </div>
         <div class="join-modal-media">
