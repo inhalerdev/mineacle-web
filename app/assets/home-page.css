@@ -472,7 +472,9 @@ svg {
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(180deg, rgba(8, 8, 8, 0.08), rgba(8, 8, 8, 0.34));
+  background:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0.62)),
+    rgba(0, 0, 0, 0.18);
   pointer-events: none;
 }
 
