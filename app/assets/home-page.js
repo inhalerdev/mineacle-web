@@ -9,6 +9,16 @@
   const playerSearchResults = document.querySelector('[data-player-search-results]');
   const statusNode = document.querySelector('[data-server-status]');
   const statusCount = document.querySelector('[data-server-status-count]');
+  const heroGreeting = document.querySelector('[data-hero-greeting]');
+  const heroPlayer = document.querySelector('[data-hero-player]');
+  const copyServerIpButton = document.querySelector('[data-copy-server-ip]');
+  const copyServerIpLabel = document.querySelector('[data-copy-server-label]');
+  const copyServerIpFeedback = document.querySelector('[data-copy-server-feedback]');
+  const joinModal = document.querySelector('[data-join-modal]');
+  const joinModalPanel = joinModal ? joinModal.querySelector('.join-modal-panel') : null;
+  const joinGif = document.querySelector('[data-join-gif]');
+  const openJoinModalButtons = document.querySelectorAll('[data-open-join-modal]');
+  const closeJoinModalButtons = document.querySelectorAll('[data-close-join-modal]');
   const serverIp = statusNode ? statusNode.dataset.serverIp || 'mineacle.net' : 'mineacle.net';
   const statusRefreshMs = 5000;
   const statusFetchTimeoutMs = 1800;
@@ -19,6 +29,119 @@
   let playerSearchTimer = 0;
   let playerSearchAbort = null;
   let playerSearchRun = 0;
+  let joinModalLastFocus = null;
+
+  const setHeroGreeting = () => {
+    if (!heroGreeting) return;
+
+    const hour = new Date().getHours();
+    let dayPart = 'Evening';
+
+    if (hour >= 5 && hour < 12) {
+      dayPart = 'Morning';
+    } else if (hour >= 12 && hour < 17) {
+      dayPart = 'Afternoon';
+    }
+
+    heroGreeting.textContent = `Good ${dayPart}`;
+
+    if (heroPlayer) {
+      heroPlayer.textContent = 'player';
+    }
+  };
+
+  const fallbackCopyText = (text) => {
+    const input = document.createElement('textarea');
+    input.value = text;
+    input.setAttribute('readonly', '');
+    input.style.position = 'fixed';
+    input.style.left = '-999px';
+    document.body.append(input);
+    input.select();
+
+    try {
+      return document.execCommand('copy');
+    } finally {
+      input.remove();
+    }
+  };
+
+  const copyServerIp = async () => {
+    if (!copyServerIpButton) return;
+
+    const ip = copyServerIpButton.dataset.serverIp || serverIp || 'mineacle.net';
+    let copied;
+
+    try {
+      if (navigator.clipboard && window.isSecureContext) {
+        await navigator.clipboard.writeText(ip);
+        copied = true;
+      } else {
+        copied = fallbackCopyText(ip);
+      }
+    } catch (_) {
+      copied = fallbackCopyText(ip);
+    }
+
+    if (copyServerIpLabel) {
+      copyServerIpLabel.textContent = copied ? 'IP Copied' : 'Copy Failed';
+    }
+
+    if (copyServerIpFeedback) {
+      copyServerIpFeedback.textContent = copied ? `${ip} copied to clipboard.` : `Copy ${ip} manually.`;
+    }
+
+    window.setTimeout(() => {
+      if (copyServerIpLabel) copyServerIpLabel.textContent = 'Join Server';
+      if (copyServerIpFeedback) copyServerIpFeedback.textContent = '';
+    }, 2200);
+  };
+
+  const openJoinModal = () => {
+    if (!joinModal || !joinModalPanel) return;
+
+    joinModalLastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    if (joinGif && !joinGif.getAttribute('src')) {
+      joinGif.setAttribute('src', joinGif.dataset.src || '');
+    }
+
+    joinModal.hidden = false;
+    document.body.classList.add('has-join-modal');
+    joinModalPanel.focus({ preventScroll: true });
+  };
+
+  const closeJoinModal = () => {
+    if (!joinModal) return;
+
+    joinModal.hidden = true;
+    document.body.classList.remove('has-join-modal');
+
+    if (joinModalLastFocus) {
+      joinModalLastFocus.focus({ preventScroll: true });
+      joinModalLastFocus = null;
+    }
+  };
+
+  setHeroGreeting();
+
+  if (copyServerIpButton) {
+    copyServerIpButton.addEventListener('click', copyServerIp);
+  }
+
+  openJoinModalButtons.forEach((button) => {
+    button.addEventListener('click', openJoinModal);
+  });
+
+  closeJoinModalButtons.forEach((button) => {
+    button.addEventListener('click', closeJoinModal);
+  });
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && joinModal && !joinModal.hidden) {
+      closeJoinModal();
+    }
+  });
 
   const updateClearButton = () => {
     if (!searchInput || !clearButton) return;

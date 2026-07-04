@@ -68,6 +68,7 @@ $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
 $heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
+$heroAssetVersion = 'base38';
 
 mineacle_page_head('Home');
 ?>
@@ -120,7 +121,7 @@ mineacle_page_head('Home');
                 <?php if ($heroBackground !== ''): ?>
                     <?php if ($heroBackgroundIsVideo): ?>
                         <video class="hero-background hero-background-video" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-                            <source src="<?php echo h(mineacle_home_versioned_url($heroBackgroundUrl, 'base37')); ?>" type="video/mp4">
+                            <source src="<?php echo h(mineacle_home_versioned_url($heroBackgroundUrl, $heroAssetVersion)); ?>" type="video/mp4">
                         </video>
                     <?php else: ?>
                         <img class="hero-background" src="<?php echo h($heroBackgroundUrl); ?>" alt="" aria-hidden="true">
@@ -129,6 +130,23 @@ mineacle_page_head('Home');
                 <?php if (trim((string) ($home['hero']['image_url'] ?? '')) !== ''): ?>
                     <span class="panel-media"<?php echo mineacle_home_image_style($home['hero']['image_url'] ?? '', '--media-image'); ?>></span>
                 <?php endif; ?>
+                <div class="hero-copy">
+                    <p class="hero-kicker">
+                        <span data-hero-greeting>Good Evening</span>, <span data-hero-player>player</span>
+                    </p>
+                    <h1>Mineacle Network</h1>
+                    <p class="hero-text">Join the Java Edition server, track your progress, and jump into the community from one clean hub.</p>
+                    <div class="hero-actions" aria-label="Server actions">
+                        <button class="hero-action hero-action-primary" type="button" data-copy-server-ip data-server-ip="<?php echo h($minecraftIp); ?>">
+                            <span data-copy-server-label>Join Server</span>
+                            <strong><?php echo h($minecraftIp); ?></strong>
+                        </button>
+                        <button class="hero-action hero-action-secondary" type="button" data-open-join-modal>
+                            How to Join
+                        </button>
+                    </div>
+                    <p class="hero-feedback" data-copy-server-feedback aria-live="polite"></p>
+                </div>
                 <span class="sr-only">Hero banner</span>
             </article>
         </section>
@@ -178,5 +196,20 @@ mineacle_page_head('Home');
             </div>
         </footer>
     </main>
+</div>
+<div class="join-modal" data-join-modal hidden>
+    <div class="join-modal-backdrop" data-close-join-modal></div>
+    <section class="join-modal-panel" role="dialog" aria-modal="true" aria-labelledby="joinModalTitle" tabindex="-1">
+        <button class="join-modal-close" type="button" data-close-join-modal aria-label="Close how to join">
+            <img src="assets/icons/clear-search.svg" alt="" aria-hidden="true">
+        </button>
+        <div class="join-modal-copy">
+            <p>Java Edition</p>
+            <h2 id="joinModalTitle">How to Join Mineacle</h2>
+        </div>
+        <div class="join-modal-media">
+            <img data-join-gif data-src="<?php echo h(mineacle_home_versioned_url('/assets/brand/mineacle-how-to-join.gif', $heroAssetVersion)); ?>" alt="How to join Mineacle on Java Edition">
+        </div>
+    </section>
 </div>
 <?php mineacle_page_end(); ?>
