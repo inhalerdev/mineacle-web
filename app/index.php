@@ -68,7 +68,7 @@ $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
 $heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
-$heroAssetVersion = 'base38';
+$heroAssetVersion = 'base39';
 
 mineacle_page_head('Home');
 ?>
@@ -134,7 +134,9 @@ mineacle_page_head('Home');
                     <p class="hero-kicker">
                         <span data-hero-greeting>Good Evening</span>, <span data-hero-player>player</span>
                     </p>
-                    <h1>Mineacle Network</h1>
+                    <h1 class="hero-logo-title">
+                        <img src="<?php echo h(mineacle_home_versioned_url('/assets/brand/hero-logo.png', $heroAssetVersion)); ?>" alt="Mineacle Network">
+                    </h1>
                     <p class="hero-text">Join the Java Edition server, track your progress, and jump into the community from one clean hub.</p>
                     <div class="hero-actions" aria-label="Server actions">
                         <button class="hero-action hero-action-primary" type="button" data-copy-server-ip data-server-ip="<?php echo h($minecraftIp); ?>">

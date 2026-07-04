@@ -524,11 +524,18 @@ svg {
   letter-spacing: 0;
 }
 
-.hero-copy h1 {
+.hero-logo-title {
   margin: 0;
-  color: var(--heading);
-  font-size: clamp(2.75rem, 2rem + 3.2vw, 6rem);
-  line-height: 0.95;
+  line-height: 1;
+}
+
+.hero-logo-title img {
+  width: min(100%, 560px);
+  max-height: 240px;
+  display: block;
+  object-fit: contain;
+  object-position: left center;
+  filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.42));
 }
 
 .hero-text {
