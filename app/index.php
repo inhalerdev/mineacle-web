@@ -116,7 +116,7 @@ $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
 $heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
-$heroAssetVersion = 'base53';
+$heroAssetVersion = 'base54';
 
 mineacle_page_head('Home');
 ?>
