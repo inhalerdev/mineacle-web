@@ -70,7 +70,7 @@ function mineacle_footer_link(mixed $url): string
 
 $navLinks = [
     ['key' => 'home', 'url' => (string) ($site['home_url'] ?? '/')],
-    ['key' => 'vote', 'url' => (string) ($site['vote_url'] ?? '#')],
+    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => (string) ($site['stats_url'] ?? '/players')],
     ['key' => 'bans', 'url' => (string) ($site['bans_url'] ?? '#')],
 ];
 
@@ -116,7 +116,7 @@ $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
 $heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
-$heroAssetVersion = 'base50';
+$heroAssetVersion = 'base53';
 
 mineacle_page_head('Home');
 ?>
@@ -129,7 +129,7 @@ mineacle_page_head('Home');
         <nav class="rail-nav" aria-label="Server links">
             <?php foreach ($navLinks as $link): ?>
                 <?php $isActiveNavLink = (string) $link['key'] === $currentNavKey; ?>
-                <a class="rail-link<?php echo $isActiveNavLink ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_home_link($link['url'])); ?>" aria-label="<?php echo h($link['key']); ?>"<?php echo $isActiveNavLink ? ' aria-current="page"' : ''; ?>>
+                <a class="rail-link<?php echo $isActiveNavLink ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_home_link($link['url'])); ?>" aria-label="<?php echo h((string) ($link['label'] ?? $link['key'])); ?>"<?php echo $isActiveNavLink ? ' aria-current="page"' : ''; ?>>
                     <?php echo mineacle_icon((string) $link['key']); ?>
                 </a>
             <?php endforeach; ?>
