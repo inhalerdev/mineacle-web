@@ -45,6 +45,10 @@ return [
     'home' => [
         'database_enabled' => strtolower((string) getenv('HOME_DATABASE_ENABLED')) === 'true',
     ],
+    'admin' => [
+        'password' => (string) getenv('ADMIN_PASSWORD'),
+        'password_hash' => (string) getenv('ADMIN_PASSWORD_HASH'),
+    ],
     'skins' => [
         'provider' => strtolower((string) (getenv('SKIN_PROVIDER') ?: 'mineskin')),
         'head_size' => (int) (getenv('SKIN_HEAD_SIZE') ?: 64),

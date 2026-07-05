@@ -800,7 +800,8 @@ svg {
   flex: 0 0 auto;
 }
 
-body.has-join-modal {
+body.has-join-modal,
+body.has-announcement-modal {
   overflow: hidden;
 }
 
@@ -870,6 +871,15 @@ body.has-join-modal {
   box-shadow: inset 0 0 0 1px var(--line);
 }
 
+.announcement-card img {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  display: block;
+  border-radius: var(--radius);
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.06);
+}
+
 .announcement-card p,
 .announcement-card h3,
 .announcement-card span {
@@ -898,18 +908,126 @@ body.has-join-modal {
   line-height: 1.45;
 }
 
-.announcement-card a {
+.announcement-card button {
   align-self: end;
   justify-self: start;
   margin-top: 6px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--heading);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+  line-height: 1;
+}
+
+.announcement-card button:hover,
+.announcement-card button:focus-visible {
+  opacity: 0.72;
+  outline: 0;
+}
+
+.announcement-modal[hidden] {
+  display: none;
+}
+
+.announcement-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  padding: var(--gap);
+}
+
+.announcement-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.76);
+}
+
+.announcement-modal-panel {
+  position: relative;
+  width: min(760px, calc(100vw - (var(--gap) * 2)));
+  max-height: calc(100dvh - (var(--gap) * 2));
+  overflow: auto;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: #101010;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.62);
+}
+
+.announcement-modal-panel:focus {
+  outline: 0;
+}
+
+.announcement-modal-media[hidden] {
+  display: none;
+}
+
+.announcement-modal-media {
+  background: #050505;
+}
+
+.announcement-modal-media img {
+  width: 100%;
+  max-height: 340px;
+  display: block;
+  object-fit: cover;
+}
+
+.announcement-modal-copy {
+  display: grid;
+  gap: 14px;
+  padding: 24px;
+}
+
+.announcement-modal-copy p,
+.announcement-modal-copy h2,
+.announcement-modal-body {
+  margin: 0;
+}
+
+.announcement-modal-copy > p:first-child {
+  color: var(--subtext);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.announcement-modal-copy h2 {
+  padding-right: 42px;
+  color: var(--heading);
+  font-size: clamp(1.45rem, 1.05rem + 1vw, 2.15rem);
+  line-height: 1;
+}
+
+.announcement-modal-copy p,
+.announcement-modal-body {
+  color: var(--subtext);
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+  line-height: 1.55;
+}
+
+.announcement-modal-body {
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+}
+
+.announcement-modal-copy a {
+  justify-self: start;
   color: var(--heading);
   font-size: var(--ui-font-size);
   font-weight: var(--ui-font-weight);
   line-height: 1;
 }
 
-.announcement-card a:hover,
-.announcement-card a:focus-visible {
+.announcement-modal-copy a:hover,
+.announcement-modal-copy a:focus-visible {
   opacity: 0.72;
   outline: 0;
 }
@@ -1156,6 +1274,10 @@ body.has-join-modal {
 
   .profile-quick-stats {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .admin-grid {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -1612,6 +1734,230 @@ body.has-join-modal {
 .player-card-status.is-online span {
   background: var(--online);
   box-shadow: 0 0 10px rgba(75, 227, 106, 0.45);
+}
+
+.admin-page {
+  min-height: 100vh;
+  display: grid;
+  align-content: start;
+  gap: var(--gap);
+  padding: var(--gap);
+  background: var(--canvas);
+}
+
+.admin-panel {
+  border-radius: var(--radius);
+  padding: clamp(22px, 2.6vw, 36px);
+  background: var(--panel);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.admin-hero {
+  min-height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--gap);
+  background:
+    linear-gradient(135deg, rgba(123, 60, 255, 0.18), rgba(255, 255, 255, 0.035)),
+    var(--panel);
+}
+
+.admin-hero p,
+.admin-hero h1,
+.admin-hero span,
+.admin-panel h2,
+.admin-muted,
+.admin-notice {
+  margin: 0;
+}
+
+.admin-hero p {
+  color: var(--subtext);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.admin-hero h1 {
+  margin-top: 10px;
+  color: var(--heading);
+  font-size: clamp(2rem, 1.35rem + 2vw, 3.8rem);
+  line-height: 1;
+}
+
+.admin-hero span,
+.admin-muted,
+.admin-notice {
+  color: var(--subtext);
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+  line-height: 1.45;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);
+  gap: var(--gap);
+  align-items: start;
+}
+
+.admin-login,
+.admin-form,
+.admin-recent {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-login form,
+.admin-form {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-panel h2 {
+  color: var(--heading);
+  font-size: clamp(1rem, 0.9rem + 0.35vw, 1.28rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.admin-form label,
+.admin-login label {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-form label span,
+.admin-login label span {
+  color: var(--subtext);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.admin-form input,
+.admin-form textarea,
+.admin-login input {
+  width: 100%;
+  min-height: var(--control-height);
+  border: 0;
+  border-radius: var(--radius);
+  padding: 0 14px;
+  outline: 0;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--heading);
+  box-shadow: inset 0 0 0 1px var(--line);
+  font: inherit;
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+}
+
+.admin-form textarea {
+  min-height: 110px;
+  resize: vertical;
+  padding: 14px;
+  line-height: 1.45;
+}
+
+.admin-form input::placeholder,
+.admin-form textarea::placeholder,
+.admin-login input::placeholder {
+  color: var(--subtext);
+  opacity: 0.72;
+}
+
+.admin-form-row {
+  display: grid;
+  grid-template-columns: minmax(0, 180px) auto;
+  gap: 16px;
+  align-items: end;
+}
+
+.admin-checkbox {
+  min-height: var(--control-height);
+  display: flex !important;
+  align-items: center;
+  gap: 10px !important;
+}
+
+.admin-checkbox input {
+  width: 18px;
+  min-height: 18px;
+  accent-color: var(--accent);
+}
+
+.admin-button {
+  min-height: var(--control-height);
+  justify-self: start;
+  border: 1px solid rgba(123, 60, 255, 0.52);
+  border-radius: var(--radius);
+  padding: 0 18px;
+  background: rgba(123, 60, 255, 0.2);
+  color: var(--heading);
+  cursor: pointer;
+  font: inherit;
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+  line-height: 1;
+}
+
+.admin-button:hover,
+.admin-button:focus-visible {
+  outline: 0;
+  border-color: rgba(162, 113, 255, 0.74);
+  background: rgba(123, 60, 255, 0.28);
+}
+
+.admin-button-secondary {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.admin-notice {
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.admin-notice.is-success {
+  color: var(--online);
+}
+
+.admin-notice.is-error {
+  color: var(--danger);
+}
+
+.admin-recent-list {
+  display: grid;
+  gap: 10px;
+}
+
+.admin-recent-list article {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.admin-recent-list span,
+.admin-recent-list small {
+  color: var(--subtext);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.admin-recent-list strong {
+  color: var(--heading);
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+  line-height: 1.25;
 }
 
 @media (max-width: 980px) {

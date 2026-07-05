@@ -16,6 +16,17 @@
   const joinGif = document.querySelector('[data-join-gif]');
   const openJoinModalButtons = document.querySelectorAll('[data-open-join-modal]');
   const closeJoinModalButtons = document.querySelectorAll('[data-close-join-modal]');
+  const announcementModal = document.querySelector('[data-announcement-modal]');
+  const announcementModalPanel = announcementModal ? announcementModal.querySelector('.announcement-modal-panel') : null;
+  const announcementButtons = document.querySelectorAll('[data-open-announcement-modal]');
+  const closeAnnouncementButtons = document.querySelectorAll('[data-close-announcement-modal]');
+  const announcementModalEyebrow = document.querySelector('[data-announcement-modal-eyebrow]');
+  const announcementModalTitle = document.querySelector('[data-announcement-modal-title]');
+  const announcementModalSummary = document.querySelector('[data-announcement-modal-summary]');
+  const announcementModalContent = document.querySelector('[data-announcement-modal-content]');
+  const announcementModalMedia = document.querySelector('[data-announcement-modal-media]');
+  const announcementModalImage = document.querySelector('[data-announcement-modal-image]');
+  const announcementModalLink = document.querySelector('[data-announcement-modal-link]');
   const serverIp = statusNode ? statusNode.dataset.serverIp || 'mineacle.net' : 'mineacle.net';
   const statusRefreshMs = 5000;
   const statusFetchTimeoutMs = 1800;
@@ -27,6 +38,7 @@
   let playerSearchAbort = null;
   let playerSearchRun = 0;
   let joinModalLastFocus = null;
+  let announcementModalLastFocus = null;
 
   const disableSimpleAssetGrabs = () => {
     const protectedMediaSelector = 'img, video, picture, svg, source';
@@ -148,6 +160,74 @@
     }
   };
 
+  const fillTextWithBreaks = (node, text) => {
+    if (!node) return;
+
+    node.textContent = '';
+
+    String(text || '').split(/\r?\n/).forEach((line, index) => {
+      if (index > 0) {
+        node.append(document.createElement('br'));
+      }
+
+      node.append(document.createTextNode(line));
+    });
+  };
+
+  const openAnnouncementModal = (event) => {
+    const button = event.currentTarget;
+    if (!(button instanceof HTMLElement) || !announcementModal || !announcementModalPanel) return;
+
+    announcementModalLastFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+
+    if (announcementModalEyebrow) {
+      announcementModalEyebrow.textContent = button.dataset.announcementEyebrow || 'Update';
+    }
+
+    if (announcementModalTitle) {
+      announcementModalTitle.textContent = button.dataset.announcementTitle || 'Announcement';
+    }
+
+    if (announcementModalSummary) {
+      announcementModalSummary.textContent = button.dataset.announcementSummary || '';
+    }
+
+    fillTextWithBreaks(announcementModalContent, button.dataset.announcementContent || button.dataset.announcementSummary || '');
+
+    const imageUrl = button.dataset.announcementImage || '';
+    if (announcementModalMedia && announcementModalImage) {
+      if (imageUrl !== '') {
+        announcementModalImage.src = imageUrl;
+        announcementModalMedia.hidden = false;
+      } else {
+        announcementModalImage.removeAttribute('src');
+        announcementModalMedia.hidden = true;
+      }
+    }
+
+    const linkUrl = button.dataset.announcementLink || '#';
+    if (announcementModalLink) {
+      announcementModalLink.hidden = linkUrl === '#';
+      announcementModalLink.href = linkUrl;
+    }
+
+    announcementModal.hidden = false;
+    document.body.classList.add('has-announcement-modal');
+    announcementModalPanel.focus({ preventScroll: true });
+  };
+
+  const closeAnnouncementModal = () => {
+    if (!announcementModal) return;
+
+    announcementModal.hidden = true;
+    document.body.classList.remove('has-announcement-modal');
+
+    if (announcementModalLastFocus) {
+      announcementModalLastFocus.focus({ preventScroll: true });
+      announcementModalLastFocus = null;
+    }
+  };
+
   copyServerIpButtons.forEach((button) => {
     button.addEventListener('click', copyServerIp);
   });
@@ -160,9 +240,21 @@
     button.addEventListener('click', closeJoinModal);
   });
 
+  announcementButtons.forEach((button) => {
+    button.addEventListener('click', openAnnouncementModal);
+  });
+
+  closeAnnouncementButtons.forEach((button) => {
+    button.addEventListener('click', closeAnnouncementModal);
+  });
+
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && joinModal && !joinModal.hidden) {
       closeJoinModal();
+    }
+
+    if (event.key === 'Escape' && announcementModal && !announcementModal.hidden) {
+      closeAnnouncementModal();
     }
   });
 

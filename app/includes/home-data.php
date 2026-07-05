@@ -27,6 +27,8 @@ function mineacle_home_defaults(): array
                 'title' => 'Network Update',
                 'eyebrow' => 'Latest',
                 'body' => 'Mineacle announcements, launch notes, and important server updates will appear here.',
+                'content' => 'Use the Mineacle admin page to publish full announcement details, add images, and keep players updated without touching code.',
+                'image_url' => '',
                 'link_url' => '#',
             ],
             [
@@ -34,6 +36,8 @@ function mineacle_home_defaults(): array
                 'title' => 'Java Edition Support',
                 'eyebrow' => 'Server',
                 'body' => 'Mineacle currently supports Java Edition clients from 1.21.11 to 26+.',
+                'content' => 'Players can copy the server IP from the hero section, add Mineacle to Multiplayer, and join from Java Edition on desktop.',
+                'image_url' => '',
                 'link_url' => '#',
             ],
             [
@@ -41,6 +45,8 @@ function mineacle_home_defaults(): array
                 'title' => 'Community Notices',
                 'eyebrow' => 'Community',
                 'body' => 'Events, vote rewards, Discord updates, and player notices will be posted here.',
+                'content' => 'This space is ready for changelogs, event notes, maintenance windows, and community updates from the Mineacle team.',
+                'image_url' => '',
                 'link_url' => '#',
             ],
         ],
@@ -164,7 +170,7 @@ function mineacle_home_data(): array
         try {
             $announcementRows = mineacle_home_all(
                 $pdo,
-                "SELECT announcement_key, title, eyebrow, body, link_url FROM {$announcements} WHERE is_enabled = 1 ORDER BY sort_order ASC, id ASC LIMIT 3"
+                "SELECT announcement_key, title, eyebrow, body, content, image_url, link_url FROM {$announcements} WHERE is_enabled = 1 ORDER BY sort_order ASC, id ASC LIMIT 3"
             );
 
             if ($announcementRows) {

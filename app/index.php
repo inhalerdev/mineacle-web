@@ -111,7 +111,6 @@ $footerLegalLinks = [
 ];
 
 $announcements = array_slice($home['announcements'], 0, 3);
-$worlds = array_slice(array_values($home['worlds']), 0, 3);
 $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
@@ -218,25 +217,20 @@ mineacle_page_head('Home');
                 $announcementTag = trim((string) ($announcement['eyebrow'] ?? 'Update'));
                 $announcementTitle = trim((string) ($announcement['title'] ?? 'Announcement'));
                 $announcementBody = trim((string) ($announcement['body'] ?? 'More details will be posted soon.'));
+                $announcementContent = trim((string) ($announcement['content'] ?? ''));
+                $announcementImage = mineacle_home_safe_url($announcement['image_url'] ?? '');
                 ?>
                 <article class="announcement-card">
+                    <?php if ($announcementImage !== ''): ?>
+                        <img src="<?php echo h($announcementImage); ?>" alt="" loading="lazy" decoding="async" draggable="false">
+                    <?php endif; ?>
                     <p><?php echo h($announcementTag !== '' ? $announcementTag : 'Update'); ?></p>
                     <h3><?php echo h($announcementTitle !== '' ? $announcementTitle : 'Announcement'); ?></h3>
                     <span><?php echo h($announcementBody !== '' ? $announcementBody : 'More details will be posted soon.'); ?></span>
-                    <?php if ($announcementUrl !== '#'): ?>
-                        <a href="<?php echo h($announcementUrl); ?>" aria-label="<?php echo h('Read ' . $announcementTitle); ?>">Read update</a>
-                    <?php endif; ?>
+                    <button type="button" data-open-announcement-modal data-announcement-title="<?php echo h($announcementTitle !== '' ? $announcementTitle : 'Announcement'); ?>" data-announcement-eyebrow="<?php echo h($announcementTag !== '' ? $announcementTag : 'Update'); ?>" data-announcement-summary="<?php echo h($announcementBody !== '' ? $announcementBody : 'More details will be posted soon.'); ?>" data-announcement-content="<?php echo h($announcementContent !== '' ? $announcementContent : $announcementBody); ?>" data-announcement-image="<?php echo h($announcementImage); ?>" data-announcement-link="<?php echo h($announcementUrl); ?>">Read More</button>
                 </article>
             <?php endforeach; ?>
             </div>
-        </section>
-
-        <section class="world-row" aria-label="World status">
-            <?php foreach ($worlds as $world): ?>
-                <article class="panel world-card"<?php echo mineacle_home_panel_style($world['image_url'] ?? '', $world['players_online'] ?? 0, $world['max_players'] ?? 0); ?> aria-label="<?php echo h((string) ($world['world_key'] ?? 'world')); ?>">
-                    <span></span>
-                </article>
-            <?php endforeach; ?>
         </section>
 
         <section class="community-panel"<?php echo mineacle_home_image_style($home['community']['background_image_url'] ?? ''); ?> aria-label="Community">
@@ -297,6 +291,24 @@ mineacle_page_head('Home');
             </div>
         </footer>
     </main>
+</div>
+<div class="announcement-modal" data-announcement-modal hidden>
+    <div class="announcement-modal-backdrop" data-close-announcement-modal></div>
+    <section class="announcement-modal-panel" role="dialog" aria-modal="true" aria-labelledby="announcementModalTitle" tabindex="-1">
+        <button class="join-modal-close" type="button" data-close-announcement-modal aria-label="Close announcement">
+            <img src="assets/icons/clear-search.svg" alt="" aria-hidden="true">
+        </button>
+        <div class="announcement-modal-media" data-announcement-modal-media hidden>
+            <img src="" alt="" data-announcement-modal-image draggable="false">
+        </div>
+        <div class="announcement-modal-copy">
+            <p data-announcement-modal-eyebrow>Update</p>
+            <h2 id="announcementModalTitle" data-announcement-modal-title>Announcement</h2>
+            <p data-announcement-modal-summary></p>
+            <div class="announcement-modal-body" data-announcement-modal-content></div>
+            <a href="#" data-announcement-modal-link hidden>Open update</a>
+        </div>
+    </section>
 </div>
 <div class="join-modal" data-join-modal hidden>
     <div class="join-modal-backdrop" data-close-join-modal></div>
