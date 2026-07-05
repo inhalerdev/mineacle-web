@@ -33,6 +33,7 @@ return [
     ],
     'tables' => [
         'sections' => getenv('HOME_SECTIONS_TABLE') ?: 'home_sections',
+        'announcements' => getenv('HOME_ANNOUNCEMENTS_TABLE') ?: 'home_announcements',
         'tiles' => getenv('HOME_TILES_TABLE') ?: 'home_feature_tiles',
         'worlds' => getenv('HOME_WORLDS_TABLE') ?: 'home_world_stats',
         'player_summary' => getenv('HOME_PLAYER_TABLE') ?: 'home_player_summary',

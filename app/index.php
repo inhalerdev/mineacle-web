@@ -110,7 +110,7 @@ $footerLegalLinks = [
     ['label' => 'Support', 'url' => $supportLink],
 ];
 
-$tiles = array_slice($home['tiles'], 0, 4);
+$announcements = array_slice($home['announcements'], 0, 3);
 $worlds = array_slice(array_values($home['worlds']), 0, 3);
 $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
@@ -205,12 +205,30 @@ mineacle_page_head('Home');
             </article>
         </section>
 
-        <section class="tile-row" aria-label="Feature links">
-            <?php foreach ($tiles as $index => $tile): ?>
-                <article class="panel feature-tile feature-tile-<?php echo h((string) ($index + 1)); ?>"<?php echo mineacle_home_image_style($tile['image_url'] ?? ''); ?> aria-label="<?php echo h((string) ($tile['tile_key'] ?? 'Feature')); ?>">
-                    <span></span>
+        <section class="announcements-section" aria-label="Announcements">
+            <div class="section-heading">
+                <p>Latest</p>
+                <h2>Announcements</h2>
+            </div>
+
+            <div class="announcements-grid">
+            <?php foreach ($announcements as $announcement): ?>
+                <?php
+                $announcementUrl = mineacle_home_link($announcement['link_url'] ?? '#');
+                $announcementTag = trim((string) ($announcement['eyebrow'] ?? 'Update'));
+                $announcementTitle = trim((string) ($announcement['title'] ?? 'Announcement'));
+                $announcementBody = trim((string) ($announcement['body'] ?? 'More details will be posted soon.'));
+                ?>
+                <article class="announcement-card">
+                    <p><?php echo h($announcementTag !== '' ? $announcementTag : 'Update'); ?></p>
+                    <h3><?php echo h($announcementTitle !== '' ? $announcementTitle : 'Announcement'); ?></h3>
+                    <span><?php echo h($announcementBody !== '' ? $announcementBody : 'More details will be posted soon.'); ?></span>
+                    <?php if ($announcementUrl !== '#'): ?>
+                        <a href="<?php echo h($announcementUrl); ?>" aria-label="<?php echo h('Read ' . $announcementTitle); ?>">Read update</a>
+                    <?php endif; ?>
                 </article>
             <?php endforeach; ?>
+            </div>
         </section>
 
         <section class="world-row" aria-label="World status">

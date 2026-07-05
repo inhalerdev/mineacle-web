@@ -21,11 +21,28 @@ function mineacle_home_defaults(): array
             'players_online' => 0,
             'max_players' => 0,
         ],
-        'tiles' => [
-            ['tile_key' => 'tile_1', 'link_url' => (string) ($site['store_url'] ?? '#'), 'image_url' => ''],
-            ['tile_key' => 'tile_2', 'link_url' => (string) ($site['stats_url'] ?? '#'), 'image_url' => ''],
-            ['tile_key' => 'tile_3', 'link_url' => (string) ($site['vote_url'] ?? '#'), 'image_url' => ''],
-            ['tile_key' => 'tile_4', 'link_url' => (string) ($site['staff_url'] ?? '#'), 'image_url' => ''],
+        'announcements' => [
+            [
+                'announcement_key' => 'network_update',
+                'title' => 'Network Update',
+                'eyebrow' => 'Latest',
+                'body' => 'Mineacle announcements, launch notes, and important server updates will appear here.',
+                'link_url' => '#',
+            ],
+            [
+                'announcement_key' => 'java_support',
+                'title' => 'Java Edition Support',
+                'eyebrow' => 'Server',
+                'body' => 'Mineacle currently supports Java Edition clients from 1.21.11 to 26+.',
+                'link_url' => '#',
+            ],
+            [
+                'announcement_key' => 'community',
+                'title' => 'Community Notices',
+                'eyebrow' => 'Community',
+                'body' => 'Events, vote rewards, Discord updates, and player notices will be posted here.',
+                'link_url' => '#',
+            ],
         ],
         'worlds' => [
             'overworld' => ['world_key' => 'overworld', 'players_online' => 0, 'max_players' => 0, 'image_url' => ''],
@@ -96,7 +113,7 @@ function mineacle_home_data(): array
 
     try {
         $sections = mineacle_home_table('sections');
-        $tiles = mineacle_home_table('tiles');
+        $announcements = mineacle_home_table('announcements');
         $worlds = mineacle_home_table('worlds');
         $playerSummary = mineacle_home_table('player_summary');
         $socialLinks = mineacle_home_table('social_links');
@@ -144,13 +161,17 @@ function mineacle_home_data(): array
             $data['player'] = array_merge($data['player'], $player);
         }
 
-        $tileRows = mineacle_home_all(
-            $pdo,
-            "SELECT tile_key, link_url, image_url FROM {$tiles} WHERE is_enabled = 1 ORDER BY sort_order ASC, id ASC LIMIT 4"
-        );
+        try {
+            $announcementRows = mineacle_home_all(
+                $pdo,
+                "SELECT announcement_key, title, eyebrow, body, link_url FROM {$announcements} WHERE is_enabled = 1 ORDER BY sort_order ASC, id ASC LIMIT 3"
+            );
 
-        if ($tileRows) {
-            $data['tiles'] = array_values(array_pad($tileRows, 4, ['tile_key' => 'empty', 'link_url' => '#', 'image_url' => '']));
+            if ($announcementRows) {
+                $data['announcements'] = $announcementRows;
+            }
+        } catch (Throwable) {
+            // The announcements table may not exist on older installs yet.
         }
 
         $worldRows = mineacle_home_all(

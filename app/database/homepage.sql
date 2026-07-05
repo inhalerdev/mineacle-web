@@ -1,4 +1,4 @@
--- noinspection SqlNoDataSourceInspection
+-- noinspection SqlNoDataSourceInspectionForFile
 
 CREATE TABLE IF NOT EXISTS home_sections (
   id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -23,6 +23,21 @@ CREATE TABLE IF NOT EXISTS home_feature_tiles (
   PRIMARY KEY (id),
   UNIQUE KEY home_feature_tiles_tile_key_unique (tile_key),
   KEY home_feature_tiles_sort_order_index (sort_order)
+);
+
+CREATE TABLE IF NOT EXISTS home_announcements (
+  id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  announcement_key VARCHAR(64) NOT NULL,
+  title VARCHAR(120) NOT NULL,
+  eyebrow VARCHAR(48) DEFAULT 'Update',
+  body VARCHAR(420) NOT NULL,
+  link_url VARCHAR(512) DEFAULT '#',
+  sort_order INT NOT NULL DEFAULT 0,
+  is_enabled TINYINT(1) NOT NULL DEFAULT 1,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (id),
+  UNIQUE KEY home_announcements_key_unique (announcement_key),
+  KEY home_announcements_sort_order_index (sort_order)
 );
 
 CREATE TABLE IF NOT EXISTS home_world_stats (
@@ -77,6 +92,13 @@ VALUES
   ('vote', '#', NULL, 30),
   ('staff', '#', NULL, 40)
 ON DUPLICATE KEY UPDATE tile_key = VALUES(tile_key);
+
+INSERT INTO home_announcements (announcement_key, title, eyebrow, body, link_url, sort_order)
+VALUES
+  ('network_update', 'Network Update', 'Latest', 'Mineacle announcements, launch notes, and important server updates will appear here.', '#', 10),
+  ('java_support', 'Java Edition Support', 'Server', 'Mineacle currently supports Java Edition clients from 1.21.11 to 26+.', '#', 20),
+  ('community', 'Community Notices', 'Community', 'Events, vote rewards, Discord updates, and player notices will be posted here.', '#', 30)
+ON DUPLICATE KEY UPDATE announcement_key = VALUES(announcement_key);
 
 INSERT INTO home_world_stats (world_key, players_online, max_players, image_url, sort_order)
 VALUES
