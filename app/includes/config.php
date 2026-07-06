@@ -45,6 +45,12 @@ return [
     'home' => [
         'database_enabled' => strtolower((string) getenv('HOME_DATABASE_ENABLED')) === 'true',
     ],
+    'creators' => [
+        'youtube_api_key' => (string) getenv('YOUTUBE_API_KEY'),
+        'youtube_queries' => getenv('YOUTUBE_CREATOR_QUERIES') ?: '#mineacle,#mineaclenetwork,mineacle,mineaclenetwork,mineacle network',
+        'youtube_limit' => (int) (getenv('YOUTUBE_CREATOR_LIMIT') ?: 8),
+        'youtube_results_per_query' => (int) (getenv('YOUTUBE_CREATOR_RESULTS_PER_QUERY') ?: 6),
+    ],
     'admin' => [
         'username' => (string) getenv('ADMIN_USERNAME'),
         'password' => (string) getenv('ADMIN_PASSWORD'),

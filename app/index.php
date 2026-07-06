@@ -108,7 +108,6 @@ $announcementCount = count($announcements);
 $announcementCanSlide = $announcementCount > 3;
 $announcementPageSize = 3;
 $announcementPageCount = max(1, (int) ceil($announcementCount / $announcementPageSize));
-$socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
 $heroBackgroundIsVideo = mineacle_home_is_video_url($heroBackgroundUrl);
@@ -204,7 +203,7 @@ mineacle_page_head('Home');
         <?php if ($announcementCount > 0): ?>
         <section class="announcements-section<?php echo $announcementCanSlide ? ' has-carousel' : ''; ?>" aria-label="Announcements">
             <div class="section-heading">
-                <h2>Latest Network <strong>Updates</strong></h2>
+                <h2><span>Latest Server</span> <strong>Updates</strong></h2>
             </div>
 
             <div class="announcements-shell" data-announcement-carousel>
@@ -250,18 +249,12 @@ mineacle_page_head('Home');
         </section>
         <?php endif; ?>
 
-        <section class="community-panel"<?php echo mineacle_home_image_style($home['community']['background_image_url'] ?? ''); ?> aria-label="Community">
-            <div class="community-art">
-                <span class="panel-media"<?php echo mineacle_home_image_style($home['community']['image_url'] ?? '', '--media-image'); ?>></span>
+        <section class="creators-panel" aria-label="Creator videos">
+            <div class="section-heading creators-heading">
+                <h2><span>Mineacle</span> <strong>Creators</strong></h2>
             </div>
-
-            <div class="social-stack" aria-label="Social destinations">
-                <?php foreach ($socialLinks as $link): ?>
-                    <div class="social-row" aria-label="<?php echo h((string) ($link['platform_key'] ?? 'Social')); ?>">
-                        <?php echo mineacle_icon((string) ($link['platform_key'] ?? 'logo')); ?>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+            <div class="creator-videos" data-creator-videos aria-live="polite"></div>
+            <p class="creator-status" data-creator-status>Finding latest creator videos...</p>
         </section>
 
         <footer class="footer-panel" aria-label="Footer">

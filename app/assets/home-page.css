@@ -545,8 +545,7 @@ svg {
 .hero-panel {
   min-height: var(--hero-height);
   display: grid;
-  align-items: center;
-  justify-items: center;
+  place-items: center;
   padding: clamp(42px, 6vw, 92px);
   background-color: #101010;
   background-image: var(--panel-image, none);
@@ -585,6 +584,8 @@ svg {
 
 .hero-copy {
   width: min(100%, 620px);
+  align-self: center;
+  justify-self: center;
   display: grid;
   gap: 18px;
   justify-items: center;
@@ -874,8 +875,8 @@ body.has-announcement-modal {
 
 .section-heading h2 {
   color: var(--heading);
-  font-size: clamp(1rem, 0.86rem + 0.45vw, 1.35rem);
-  font-weight: 800;
+  font-size: clamp(1.42rem, 1.05rem + 1vw, 2.1rem);
+  font-weight: 600;
   line-height: 1;
   text-transform: uppercase;
 }
@@ -1364,6 +1365,127 @@ body.has-announcement-modal {
   height: 34px;
 }
 
+.creators-panel {
+  display: grid;
+  gap: var(--gap);
+  padding: var(--gap);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 85, 255, 0.075), rgba(255, 255, 255, 0.025)),
+    #111111;
+}
+
+.creators-heading h2 {
+  font-size: clamp(1.28rem, 0.98rem + 0.8vw, 1.85rem);
+}
+
+.creator-videos {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--gap);
+}
+
+.creator-card {
+  min-width: 0;
+  display: grid;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.025)),
+    #202020;
+  color: var(--heading);
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
+}
+
+.creator-card:hover,
+.creator-card:focus-visible {
+  border-color: rgba(255, 85, 255, 0.48);
+  background:
+    linear-gradient(180deg, rgba(255, 85, 255, 0.12), rgba(255, 255, 255, 0.035)),
+    #202020;
+  outline: 0;
+  transform: translateY(-2px);
+}
+
+.creator-card-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  display: block;
+  overflow: hidden;
+  background: #151515;
+}
+
+.creator-card-media img {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  transition: transform 240ms ease;
+}
+
+.creator-card:hover .creator-card-media img,
+.creator-card:focus-visible .creator-card-media img {
+  transform: scale(1.035);
+}
+
+.creator-play {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 85, 255, 0.88);
+  color: #ffffff;
+  font-size: 0.72rem;
+  line-height: 1;
+}
+
+.creator-card-copy {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+}
+
+.creator-card-copy strong {
+  overflow: hidden;
+  color: var(--heading);
+  font-size: var(--ui-font-size);
+  font-weight: 800;
+  line-height: 1.3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.creator-card-copy small,
+.creator-status {
+  color: var(--subtext);
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+  line-height: 1.4;
+}
+
+.creator-card-copy small {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.creator-status {
+  margin: 0;
+  text-align: center;
+}
+
+.creator-status[hidden] {
+  display: none;
+}
+
 .footer-panel {
   min-height: clamp(230px, 18vw, 315px);
   display: grid;
@@ -1616,6 +1738,10 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 }
 
 @media (max-width: 1200px) {
+  .creator-videos {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .footer-inner {
     grid-template-columns: minmax(280px, 1fr) minmax(130px, 0.36fr) minmax(270px, 0.64fr);
     gap: clamp(28px, 5vw, 74px);
@@ -2533,6 +2659,10 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   }
 
   .players-filter {
+    grid-template-columns: 1fr;
+  }
+
+  .creator-videos {
     grid-template-columns: 1fr;
   }
 

@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base75';
+    return 'base76';
 }
 
 function mineacle_page_public_link(mixed $url): string

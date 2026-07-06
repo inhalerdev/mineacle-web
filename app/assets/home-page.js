@@ -32,6 +32,8 @@
   const announcementPrevButton = document.querySelector('[data-announcement-prev]');
   const announcementNextButton = document.querySelector('[data-announcement-next]');
   const announcementDots = document.querySelectorAll('[data-announcement-dot]');
+  const creatorVideos = document.querySelector('[data-creator-videos]');
+  const creatorStatus = document.querySelector('[data-creator-status]');
   const adminImageDrop = document.querySelector('[data-admin-image-drop]');
   const adminImageInput = document.querySelector('[data-admin-image-input]');
   const adminUploadLabel = document.querySelector('[data-admin-upload-label]');
@@ -47,6 +49,7 @@
   let playerSearchRun = 0;
   let joinModalLastFocus = null;
   let announcementModalLastFocus = null;
+  const videoFallbackSvg = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"%3E%3Crect width="640" height="360" fill="%23202020"/%3E%3Cpath fill="%23ff55ff" d="M282 238V122l104 58-104 58z"/%3E%3C/svg%3E';
 
   const disableSimpleAssetGrabs = () => {
     const protectedMediaSelector = 'img, video, picture, svg, source';
@@ -408,6 +411,113 @@
     setFileLabel();
   };
 
+  const normalizeCreatorVideo = (video) => {
+    if (!video || typeof video !== 'object') return null;
+
+    const title = String(video.title || '').trim();
+    const url = String(video.url || '').trim();
+
+    if (!title || !url) return null;
+
+    return {
+      title,
+      url,
+      channel: String(video.channel || 'YouTube').trim(),
+      thumbnail: String(video.thumbnail || '').trim(),
+      publishedAt: String(video.published_at || '').trim()
+    };
+  };
+
+  const formatCreatorDate = (value) => {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) return '';
+
+    return new Intl.DateTimeFormat(undefined, {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
+    }).format(date);
+  };
+
+  const createCreatorCard = (video) => {
+    const card = document.createElement('a');
+    card.className = 'creator-card';
+    card.href = video.url;
+    card.target = '_blank';
+    card.rel = 'noopener noreferrer';
+
+    const media = document.createElement('span');
+    media.className = 'creator-card-media';
+
+    const image = document.createElement('img');
+    image.src = video.thumbnail || videoFallbackSvg;
+    image.alt = '';
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    image.draggable = false;
+
+    const play = document.createElement('span');
+    play.className = 'creator-play';
+    play.textContent = '▶';
+    play.setAttribute('aria-hidden', 'true');
+
+    const copy = document.createElement('span');
+    copy.className = 'creator-card-copy';
+
+    const title = document.createElement('strong');
+    title.textContent = video.title;
+
+    const meta = document.createElement('small');
+    const date = formatCreatorDate(video.publishedAt);
+    meta.textContent = date ? `${video.channel} · ${date}` : video.channel;
+
+    media.append(image, play);
+    copy.append(title, meta);
+    card.append(media, copy);
+
+    return card;
+  };
+
+  const setupCreatorVideos = async () => {
+    if (!creatorVideos) return;
+
+    try {
+      const response = await fetch(`/api/creator-videos.php?t=${Date.now()}`, {
+        headers: { Accept: 'application/json' },
+        cache: 'no-store'
+      });
+
+      if (!response.ok) {
+        if (creatorStatus) {
+          creatorStatus.hidden = false;
+          creatorStatus.textContent = 'Creator videos are unavailable right now.';
+        }
+
+        return;
+      }
+
+      const payload = await response.json();
+      const videos = Array.isArray(payload.videos)
+        ? payload.videos.map(normalizeCreatorVideo).filter(Boolean)
+        : [];
+
+      creatorVideos.replaceChildren(...videos.slice(0, 8).map(createCreatorCard));
+
+      if (creatorStatus) {
+        creatorStatus.hidden = videos.length > 0;
+        creatorStatus.textContent = payload.configured === false
+          ? 'Connect a YouTube API key to show creator videos.'
+          : 'No creator videos found yet.';
+      }
+    } catch (_) {
+      if (creatorStatus) {
+        creatorStatus.hidden = false;
+        creatorStatus.textContent = 'Creator videos are unavailable right now.';
+      }
+    }
+  };
+
   copyServerIpButtons.forEach((button) => {
     button.addEventListener('click', copyServerIp);
   });
@@ -430,6 +540,7 @@
 
   setupAnnouncementCarousel();
   setupAdminImageDrop();
+  setupCreatorVideos();
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && joinModal && !joinModal.hidden) {
