@@ -21,35 +21,7 @@ function mineacle_home_defaults(): array
             'players_online' => 0,
             'max_players' => 0,
         ],
-        'announcements' => [
-            [
-                'announcement_key' => 'network_update',
-                'title' => 'Network Update',
-                'eyebrow' => 'Latest',
-                'body' => 'Mineacle announcements, launch notes, and important server updates will appear here.',
-                'content' => 'Use the Mineacle admin page to publish full announcement details, add images, and keep players updated without touching code.',
-                'image_url' => '',
-                'link_url' => '#',
-            ],
-            [
-                'announcement_key' => 'java_support',
-                'title' => 'Java Edition Support',
-                'eyebrow' => 'Server',
-                'body' => 'Mineacle currently supports Java Edition clients from 1.21.11 to 26+.',
-                'content' => 'Players can copy the server IP from the hero section, add Mineacle to Multiplayer, and join from Java Edition on desktop.',
-                'image_url' => '',
-                'link_url' => '#',
-            ],
-            [
-                'announcement_key' => 'community',
-                'title' => 'Community Notices',
-                'eyebrow' => 'Community',
-                'body' => 'Events, vote rewards, Discord updates, and player notices will be posted here.',
-                'content' => 'This space is ready for changelogs, event notes, maintenance windows, and community updates from the Mineacle team.',
-                'image_url' => '',
-                'link_url' => '#',
-            ],
-        ],
+        'announcements' => [],
         'worlds' => [
             'overworld' => ['world_key' => 'overworld', 'players_online' => 0, 'max_players' => 0, 'image_url' => ''],
             'nether' => ['world_key' => 'nether', 'players_online' => 0, 'max_players' => 0, 'image_url' => ''],
@@ -102,6 +74,19 @@ function mineacle_home_all(PDO $pdo, string $sql, array $params = []): array
     return is_array($rows) ? $rows : [];
 }
 
+function mineacle_home_is_stock_announcement(array $announcement): bool
+{
+    $key = (string) ($announcement['announcement_key'] ?? '');
+    $body = trim((string) ($announcement['body'] ?? ''));
+    $stockBodies = [
+        'network_update' => 'Mineacle announcements, launch notes, and important server updates will appear here.',
+        'java_support' => 'Mineacle currently supports Java Edition clients from 1.21.11 to 26+.',
+        'community' => 'Events, vote rewards, Discord updates, and player notices will be posted here.',
+    ];
+
+    return isset($stockBodies[$key]) && $body === $stockBodies[$key];
+}
+
 function mineacle_home_apply_announcements(array $data, PDO $pdo): array
 {
     try {
@@ -110,6 +95,9 @@ function mineacle_home_apply_announcements(array $data, PDO $pdo): array
             $pdo,
             "SELECT announcement_key, title, eyebrow, body, content, image_url, link_url FROM {$announcements} WHERE is_enabled = 1 ORDER BY sort_order ASC, id ASC LIMIT 12"
         );
+        $announcementRows = array_values(array_filter($announcementRows, static function (array $announcement): bool {
+            return !mineacle_home_is_stock_announcement($announcement);
+        }));
 
         if ($announcementRows) {
             $data['announcements'] = $announcementRows;
@@ -126,9 +114,12 @@ function mineacle_home_data(): array
     $data = mineacle_home_defaults();
     $config = mineacle_config();
     $useHomeDatabase = (bool) ($config['home']['database_enabled'] ?? false);
-    $hasDatabasePassword = trim((string) (($config['mysql']['password'] ?? ''))) !== '';
+    $mysql = is_array($config['mysql'] ?? null) ? $config['mysql'] : [];
+    $hasDatabaseConnection = trim((string) ($mysql['host'] ?? '')) !== ''
+        && trim((string) ($mysql['database'] ?? '')) !== ''
+        && trim((string) ($mysql['username'] ?? '')) !== '';
 
-    if (!$useHomeDatabase && !$hasDatabasePassword) {
+    if (!$useHomeDatabase && !$hasDatabaseConnection) {
         return $data;
     }
 

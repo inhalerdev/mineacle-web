@@ -167,6 +167,17 @@ svg {
   margin-top: 8px;
 }
 
+.rail-store-button .site-icon {
+  filter: brightness(0) saturate(100%) invert(57%) sepia(100%) saturate(3195%) hue-rotate(247deg) brightness(105%) contrast(103%);
+}
+
+.rail-store-button:hover .site-icon,
+.rail-store-button:focus-visible .site-icon,
+.rail-store-button.is-active .site-icon,
+.rail-store-button[aria-current="page"] .site-icon {
+  filter: brightness(0) saturate(100%) invert(76%) sepia(76%) saturate(1417%) hue-rotate(246deg) brightness(103%) contrast(103%);
+}
+
 .rail-nav,
 .rail-social {
   display: grid;
@@ -299,6 +310,20 @@ svg {
   100% {
     opacity: 0;
     transform: scale(1.42);
+  }
+}
+
+@keyframes discord-spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+
+  62% {
+    transform: rotate(360deg) scale(1.08);
+  }
+
+  100% {
+    transform: rotate(360deg) scale(1);
   }
 }
 
@@ -855,9 +880,13 @@ body.has-announcement-modal {
 
 .announcements-shell {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 42px;
+  grid-template-columns: minmax(0, 1fr);
   gap: 12px;
   align-items: center;
+}
+
+.announcements-section.has-carousel .announcements-shell {
+  grid-template-columns: 42px minmax(0, 1fr) 42px;
 }
 
 .announcements-viewport {
@@ -866,6 +895,9 @@ body.has-announcement-modal {
   scroll-behavior: smooth;
   scroll-snap-type: x mandatory;
   scrollbar-width: none;
+}
+
+.announcements-section.has-carousel .announcements-viewport {
   cursor: grab;
 }
 
@@ -995,10 +1027,13 @@ body.has-announcement-modal {
 }
 
 .announcement-dots {
-  grid-column: 2;
   display: flex;
   justify-content: center;
   gap: 8px;
+}
+
+.announcements-section.has-carousel .announcement-dots {
+  grid-column: 2;
 }
 
 .announcement-dots button {
@@ -1284,6 +1319,18 @@ body.has-announcement-modal {
   color: var(--heading);
   opacity: 0.72;
   outline: 0;
+}
+
+.rail-social .rail-link[aria-label="Discord"]:hover,
+.rail-social .rail-link[aria-label="Discord"]:focus-visible {
+  background: rgba(88, 101, 242, 0.16);
+}
+
+a[aria-label="Discord"]:hover .site-icon,
+a[aria-label="Discord"]:focus-visible .site-icon {
+  animation: discord-spin 0.62s cubic-bezier(0.2, 0.8, 0.2, 1);
+  filter: brightness(0) saturate(100%) invert(41%) sepia(79%) saturate(2122%) hue-rotate(219deg) brightness(98%) contrast(93%);
+  transform-origin: center;
 }
 
 .footer-links {

@@ -112,6 +112,7 @@ $footerLegalLinks = [
 
 $announcements = array_slice($home['announcements'], 0, 12);
 $announcementCount = count($announcements);
+$announcementCanSlide = $announcementCount > 3;
 $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
@@ -205,16 +206,19 @@ mineacle_page_head('Home');
             </article>
         </section>
 
-        <section class="announcements-section" aria-label="Announcements">
+        <?php if ($announcementCount > 0): ?>
+        <section class="announcements-section<?php echo $announcementCanSlide ? ' has-carousel' : ''; ?>" aria-label="Announcements">
             <div class="section-heading">
                 <p>Latest</p>
                 <h2>Announcements</h2>
             </div>
 
             <div class="announcements-shell" data-announcement-carousel>
-                <button class="announcement-nav announcement-nav-prev" type="button" data-announcement-prev aria-label="Previous announcement"<?php echo $announcementCount < 2 ? ' disabled' : ''; ?>>
-                    <span aria-hidden="true">‹</span>
-                </button>
+                <?php if ($announcementCanSlide): ?>
+                    <button class="announcement-nav announcement-nav-prev" type="button" data-announcement-prev aria-label="Previous announcement">
+                        <span aria-hidden="true">‹</span>
+                    </button>
+                <?php endif; ?>
 
                 <div class="announcements-viewport" data-announcement-track tabindex="0" aria-label="Announcement carousel">
                     <div class="announcements-grid">
@@ -240,11 +244,13 @@ mineacle_page_head('Home');
                     </div>
                 </div>
 
-                <button class="announcement-nav announcement-nav-next" type="button" data-announcement-next aria-label="Next announcement"<?php echo $announcementCount < 2 ? ' disabled' : ''; ?>>
-                    <span aria-hidden="true">›</span>
-                </button>
+                <?php if ($announcementCanSlide): ?>
+                    <button class="announcement-nav announcement-nav-next" type="button" data-announcement-next aria-label="Next announcement">
+                        <span aria-hidden="true">›</span>
+                    </button>
+                <?php endif; ?>
 
-                <?php if ($announcementCount > 1): ?>
+                <?php if ($announcementCanSlide): ?>
                     <div class="announcement-dots" aria-label="Announcement pages">
                         <?php foreach ($announcements as $index => $_): ?>
                             <button type="button" data-announcement-dot="<?php echo h((string) $index); ?>" aria-label="Go to announcement <?php echo h((string) ($index + 1)); ?>"<?php echo $index === 0 ? ' class="is-active"' : ''; ?>></button>
@@ -253,6 +259,7 @@ mineacle_page_head('Home');
                 <?php endif; ?>
             </div>
         </section>
+        <?php endif; ?>
 
         <section class="community-panel"<?php echo mineacle_home_image_style($home['community']['background_image_url'] ?? ''); ?> aria-label="Community">
             <div class="community-art">

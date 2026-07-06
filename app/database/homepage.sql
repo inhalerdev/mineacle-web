@@ -95,13 +95,6 @@ VALUES
   ('staff', '#', NULL, 40)
 ON DUPLICATE KEY UPDATE tile_key = VALUES(tile_key);
 
-INSERT INTO home_announcements (announcement_key, title, eyebrow, body, image_url, content, link_url, sort_order)
-VALUES
-  ('network_update', 'Network Update', 'Latest', 'Mineacle announcements, launch notes, and important server updates will appear here.', NULL, 'Use the Mineacle admin page to publish full announcement details, add images, and keep players updated without touching code.', '#', 10),
-  ('java_support', 'Java Edition Support', 'Server', 'Mineacle currently supports Java Edition clients from 1.21.11 to 26+.', NULL, 'Players can copy the server IP from the hero section, add Mineacle to Multiplayer, and join from Java Edition on desktop.', '#', 20),
-  ('community', 'Community Notices', 'Community', 'Events, vote rewards, Discord updates, and player notices will be posted here.', NULL, 'This space is ready for changelogs, event notes, maintenance windows, and community updates from the Mineacle team.', '#', 30)
-ON DUPLICATE KEY UPDATE announcement_key = VALUES(announcement_key);
-
 INSERT INTO home_world_stats (world_key, players_online, max_players, image_url, sort_order)
 VALUES
   ('overworld', 0, 0, NULL, 10),
