@@ -247,14 +247,21 @@
     let dragStartX = 0;
     let dragStartScroll = 0;
 
+    const getMaxScroll = () => Math.max(0, announcementTrack.scrollWidth - announcementTrack.clientWidth);
+
+    const getCardScrollTarget = (index) => {
+      const card = cards[Math.max(0, Math.min(cards.length - 1, index))];
+      return card ? Math.min(card.offsetLeft, getMaxScroll()) : 0;
+    };
+
     const getActiveIndex = () => {
       const scrollLeft = announcementTrack.scrollLeft;
       let activeIndex = 0;
       let shortestDistance = Number.POSITIVE_INFINITY;
 
       cards.forEach((card, index) => {
-        const distance = Math.abs(card.offsetLeft - scrollLeft);
-        if (distance < shortestDistance) {
+        const distance = Math.abs(getCardScrollTarget(index) - scrollLeft);
+        if (distance <= shortestDistance) {
           shortestDistance = distance;
           activeIndex = index;
         }
@@ -265,7 +272,15 @@
 
     const updateCarouselState = () => {
       const activeIndex = getActiveIndex();
-      const maxScroll = Math.max(0, announcementTrack.scrollWidth - announcementTrack.clientWidth - 2);
+      const maxScroll = Math.max(0, getMaxScroll() - 2);
+      let activeDotTarget = 0;
+
+      announcementDots.forEach((dot) => {
+        const dotIndex = Number(dot.getAttribute('data-announcement-dot'));
+        if (dotIndex <= activeIndex) {
+          activeDotTarget = dotIndex;
+        }
+      });
 
       if (announcementPrevButton) {
         announcementPrevButton.disabled = announcementTrack.scrollLeft <= 2;
@@ -277,16 +292,13 @@
 
       announcementDots.forEach((dot) => {
         const dotIndex = Number(dot.getAttribute('data-announcement-dot'));
-        dot.classList.toggle('is-active', dotIndex === activeIndex);
+        dot.classList.toggle('is-active', dotIndex === activeDotTarget);
       });
     };
 
     const scrollToAnnouncement = (index) => {
-      const nextCard = cards[Math.max(0, Math.min(cards.length - 1, index))];
-      if (!nextCard) return;
-
       announcementTrack.scrollTo({
-        left: nextCard.offsetLeft,
+        left: getCardScrollTarget(index),
         behavior: 'smooth'
       });
     };

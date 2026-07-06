@@ -106,6 +106,8 @@ $footerLegalLinks = [
 $announcements = array_slice($home['announcements'], 0, 12);
 $announcementCount = count($announcements);
 $announcementCanSlide = $announcementCount > 3;
+$announcementPageSize = 3;
+$announcementPageCount = max(1, (int) ceil($announcementCount / $announcementPageSize));
 $socialLinks = array_slice($home['social_links'], 0, 4);
 $heroBackground = trim((string) ($home['hero']['background_image_url'] ?? ''));
 $heroBackgroundUrl = mineacle_home_safe_url($heroBackground);
@@ -238,9 +240,10 @@ mineacle_page_head('Home');
 
                 <?php if ($announcementCanSlide): ?>
                     <div class="announcement-dots" aria-label="Announcement pages">
-                        <?php foreach ($announcements as $index => $_): ?>
-                            <button type="button" data-announcement-dot="<?php echo h((string) $index); ?>" aria-label="Go to announcement <?php echo h((string) ($index + 1)); ?>"<?php echo $index === 0 ? ' class="is-active"' : ''; ?>></button>
-                        <?php endforeach; ?>
+                        <?php for ($pageIndex = 0; $pageIndex < $announcementPageCount; $pageIndex++): ?>
+                            <?php $targetIndex = min($announcementCount - 1, $pageIndex * $announcementPageSize); ?>
+                            <button type="button" data-announcement-dot="<?php echo h((string) $targetIndex); ?>" aria-label="Go to announcement page <?php echo h((string) ($pageIndex + 1)); ?>"<?php echo $pageIndex === 0 ? ' class="is-active"' : ''; ?>></button>
+                        <?php endfor; ?>
                     </div>
                 <?php endif; ?>
             </div>
