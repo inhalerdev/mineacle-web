@@ -2,66 +2,90 @@
 
 declare(strict_types=1);
 
+$mineacleEnv = static function (array $keys, string $default = ''): string {
+    foreach ($keys as $key) {
+        $value = getenv($key);
+
+        if (is_string($value) && $value !== '') {
+            return $value;
+        }
+
+        $envValue = $_ENV[$key] ?? null;
+
+        if (is_string($envValue) && $envValue !== '') {
+            return $envValue;
+        }
+
+        $serverValue = $_SERVER[$key] ?? null;
+
+        if (is_string($serverValue) && $serverValue !== '') {
+            return $serverValue;
+        }
+    }
+
+    return $default;
+};
+
 return [
     'site' => [
-        'name' => getenv('SITE_NAME') ?: 'Mineacle',
-        'home_url' => getenv('HOME_URL') ?: '/',
-        'stats_url' => getenv('STATS_URL') ?: '/leaderboards',
-        'store_url' => getenv('STORE_URL') ?: '#',
-        'bans_url' => getenv('BANS_URL') ?: '#',
-        'vote_url' => getenv('VOTE_URL') ?: '#',
-        'staff_url' => getenv('STAFF_URL') ?: '#',
-        'discord_url' => getenv('DISCORD_URL') ?: '#',
-        'x_url' => getenv('X_URL') ?: '#',
-        'youtube_url' => getenv('YOUTUBE_URL') ?: '#',
-        'tiktok_url' => getenv('TIKTOK_URL') ?: '#',
-        'terms_url' => getenv('TERMS_URL') ?: '#',
-        'privacy_url' => getenv('PRIVACY_URL') ?: '#',
-        'refund_url' => getenv('REFUND_URL') ?: '#',
-        'support_url' => getenv('SUPPORT_URL') ?: '',
-        'support_email' => getenv('SUPPORT_EMAIL') ?: 'support@mineacle.net',
-        'minecraft_ip' => getenv('MINECRAFT_IP') ?: 'mineacle.net',
+        'name' => $mineacleEnv(['SITE_NAME', 'site_name'], 'Mineacle'),
+        'home_url' => $mineacleEnv(['HOME_URL', 'home_url'], '/'),
+        'stats_url' => $mineacleEnv(['STATS_URL', 'stats_url'], '/leaderboards'),
+        'store_url' => $mineacleEnv(['STORE_URL', 'store_url'], '#'),
+        'bans_url' => $mineacleEnv(['BANS_URL', 'bans_url'], '#'),
+        'vote_url' => $mineacleEnv(['VOTE_URL', 'vote_url'], '#'),
+        'staff_url' => $mineacleEnv(['STAFF_URL', 'staff_url'], '#'),
+        'discord_url' => $mineacleEnv(['DISCORD_URL', 'discord_url'], '#'),
+        'x_url' => $mineacleEnv(['X_URL', 'x_url'], '#'),
+        'youtube_url' => $mineacleEnv(['YOUTUBE_URL', 'youtube_url'], '#'),
+        'tiktok_url' => $mineacleEnv(['TIKTOK_URL', 'tiktok_url'], '#'),
+        'terms_url' => $mineacleEnv(['TERMS_URL', 'terms_url'], '#'),
+        'privacy_url' => $mineacleEnv(['PRIVACY_URL', 'privacy_url'], '#'),
+        'refund_url' => $mineacleEnv(['REFUND_URL', 'refund_url'], '#'),
+        'support_url' => $mineacleEnv(['SUPPORT_URL', 'support_url']),
+        'support_email' => $mineacleEnv(['SUPPORT_EMAIL', 'support_email'], 'support@mineacle.net'),
+        'minecraft_ip' => $mineacleEnv(['MINECRAFT_IP', 'minecraft_ip'], 'mineacle.net'),
     ],
     'mysql' => [
-        'host' => getenv('DB_HOST') ?: 'db.fr-pari1.bengt.wasmernet.com',
-        'port' => (int) (getenv('DB_PORT') ?: 10272),
-        'database' => getenv('DB_NAME') ?: 'litebans_mineacle',
-        'username' => getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: 'user_9ca32e8a'),
-        'password' => getenv('DB_PASSWORD') ?: '',
-        'charset' => getenv('DB_CHARSET') ?: 'utf8mb4',
-        'timeout' => (int) (getenv('DB_TIMEOUT') ?: 1),
+        'host' => $mineacleEnv(['DB_HOST', 'db_host'], 'db.fr-pari1.bengt.wasmernet.com'),
+        'port' => (int) $mineacleEnv(['DB_PORT', 'db_port'], '10272'),
+        'database' => $mineacleEnv(['DB_NAME', 'db_name'], 'litebans_mineacle'),
+        'username' => $mineacleEnv(['DB_USERNAME', 'DB_USER', 'db_username', 'db_user'], 'user_9ca32e8a'),
+        'password' => $mineacleEnv(['DB_PASSWORD', 'db_password']),
+        'charset' => $mineacleEnv(['DB_CHARSET', 'db_charset'], 'utf8mb4'),
+        'timeout' => (int) $mineacleEnv(['DB_TIMEOUT', 'db_timeout'], '1'),
     ],
     'tables' => [
-        'sections' => getenv('HOME_SECTIONS_TABLE') ?: 'home_sections',
-        'announcements' => getenv('HOME_ANNOUNCEMENTS_TABLE') ?: 'home_announcements',
-        'tiles' => getenv('HOME_TILES_TABLE') ?: 'home_feature_tiles',
-        'worlds' => getenv('HOME_WORLDS_TABLE') ?: 'home_world_stats',
-        'player_summary' => getenv('HOME_PLAYER_TABLE') ?: 'home_player_summary',
-        'social_links' => getenv('HOME_SOCIAL_TABLE') ?: 'home_social_links',
-        'player_profiles' => getenv('PLAYER_PROFILES_TABLE') ?: 'mineacle_web_profiles',
-        'litebans_bans' => getenv('LITEBANS_BANS_TABLE') ?: 'litebans_bans',
-        'litebans_mutes' => getenv('LITEBANS_MUTES_TABLE') ?: 'litebans_mutes',
+        'sections' => $mineacleEnv(['HOME_SECTIONS_TABLE', 'home_sections_table'], 'home_sections'),
+        'announcements' => $mineacleEnv(['HOME_ANNOUNCEMENTS_TABLE', 'home_announcements_table'], 'home_announcements'),
+        'tiles' => $mineacleEnv(['HOME_TILES_TABLE', 'home_tiles_table'], 'home_feature_tiles'),
+        'worlds' => $mineacleEnv(['HOME_WORLDS_TABLE', 'home_worlds_table'], 'home_world_stats'),
+        'player_summary' => $mineacleEnv(['HOME_PLAYER_TABLE', 'home_player_table'], 'home_player_summary'),
+        'social_links' => $mineacleEnv(['HOME_SOCIAL_TABLE', 'home_social_table'], 'home_social_links'),
+        'player_profiles' => $mineacleEnv(['PLAYER_PROFILES_TABLE', 'player_profiles_table'], 'mineacle_web_profiles'),
+        'litebans_bans' => $mineacleEnv(['LITEBANS_BANS_TABLE', 'litebans_bans_table'], 'litebans_bans'),
+        'litebans_mutes' => $mineacleEnv(['LITEBANS_MUTES_TABLE', 'litebans_mutes_table'], 'litebans_mutes'),
     ],
     'home' => [
-        'database_enabled' => strtolower((string) getenv('HOME_DATABASE_ENABLED')) === 'true',
+        'database_enabled' => strtolower($mineacleEnv(['HOME_DATABASE_ENABLED', 'home_database_enabled'])) === 'true',
     ],
     'creators' => [
-        'youtube_api_key' => (string) getenv('YOUTUBE_API_KEY'),
-        'youtube_queries' => getenv('YOUTUBE_CREATOR_QUERIES') ?: '#mineacle,#mineaclenetwork,mineacle,mineaclenetwork,mineacle network',
-        'youtube_limit' => (int) (getenv('YOUTUBE_CREATOR_LIMIT') ?: 8),
-        'youtube_results_per_query' => (int) (getenv('YOUTUBE_CREATOR_RESULTS_PER_QUERY') ?: 6),
+        'youtube_api_key' => $mineacleEnv(['YOUTUBE_API_KEY', 'youtube_api_key']),
+        'youtube_queries' => $mineacleEnv(['YOUTUBE_CREATOR_QUERIES', 'youtube_creator_queries'], '#mineacle,#mineaclenetwork,mineacle,mineaclenetwork,mineacle network'),
+        'youtube_limit' => (int) $mineacleEnv(['YOUTUBE_CREATOR_LIMIT', 'youtube_creator_limit'], '8'),
+        'youtube_results_per_query' => (int) $mineacleEnv(['YOUTUBE_CREATOR_RESULTS_PER_QUERY', 'youtube_creator_results_per_query'], '6'),
     ],
     'admin' => [
-        'username' => (string) getenv('ADMIN_USERNAME'),
-        'password' => (string) getenv('ADMIN_PASSWORD'),
-        'password_hash' => (string) getenv('ADMIN_PASSWORD_HASH'),
+        'username' => $mineacleEnv(['ADMIN_USERNAME', 'admin_username']),
+        'password' => $mineacleEnv(['ADMIN_PASSWORD', 'admin_password']),
+        'password_hash' => $mineacleEnv(['ADMIN_PASSWORD_HASH', 'admin_password_hash']),
     ],
     'skins' => [
-        'provider' => strtolower((string) (getenv('SKIN_PROVIDER') ?: 'mineskin')),
-        'head_size' => (int) (getenv('SKIN_HEAD_SIZE') ?: 64),
-        'chest_size' => (int) (getenv('SKIN_CHEST_SIZE') ?: 180),
+        'provider' => strtolower($mineacleEnv(['SKIN_PROVIDER', 'skin_provider'], 'mineskin')),
+        'head_size' => (int) $mineacleEnv(['SKIN_HEAD_SIZE', 'skin_head_size'], '64'),
+        'chest_size' => (int) $mineacleEnv(['SKIN_CHEST_SIZE', 'skin_chest_size'], '180'),
     ],
     'security' => [
-        'debug' => strtolower((string) getenv('APP_DEBUG')) === 'true',
+        'debug' => strtolower($mineacleEnv(['APP_DEBUG', 'app_debug'])) === 'true',
     ],
 ];

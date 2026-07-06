@@ -39,7 +39,7 @@
   const adminUploadLabel = document.querySelector('[data-admin-upload-label]');
   const serverIp = statusNode ? statusNode.dataset.serverIp || 'mineacle.net' : 'mineacle.net';
   const statusRefreshMs = 5000;
-  const statusFetchTimeoutMs = 1800;
+  const statusFetchTimeoutMs = 4200;
   const statusCacheKey = `mineacle:server-status:${serverIp}`;
   const statusCacheMaxAgeMs = 15000;
   const playerSearchDelayMs = 160;
@@ -865,13 +865,31 @@
   };
 
   const loadLocalServerStatus = async () => {
-    const payload = await fetchStatusJson(`/api/server-status.php?fast=1&t=${Date.now()}`);
+    const payload = await fetchStatusJson(`/api/server-status.php?t=${Date.now()}`);
 
     if (payload && payload.checked === false) {
       return null;
     }
 
     return normalizeStatusPayload(payload);
+  };
+
+  const loadExternalServerStatus = async () => {
+    const providers = [
+      `https://api.mcsrvstat.us/3/${encodeURIComponent(serverIp)}`,
+      `https://api.mcstatus.io/v2/status/java/${encodeURIComponent(serverIp)}`
+    ];
+
+    for (const url of providers) {
+      const payload = await fetchStatusJson(`${url}?t=${Date.now()}`, 2600);
+      const status = normalizeStatusPayload(payload);
+
+      if (status && status.online) {
+        return status;
+      }
+    }
+
+    return null;
   };
 
   const loadServerStatus = async () => {
@@ -881,7 +899,7 @@
     statusRequestActive = true;
 
     try {
-      const payload = await loadLocalServerStatus();
+      const payload = await loadLocalServerStatus() || await loadExternalServerStatus();
 
       if (!payload) {
         return;

@@ -70,7 +70,7 @@ function mineacle_footer_link(mixed $url): string
 
 $navLinks = [
     ['key' => 'home', 'url' => (string) ($site['home_url'] ?? '/')],
-    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => (string) ($site['stats_url'] ?? '/players')],
+    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => '/leaderboards'],
     ['key' => 'bans', 'url' => (string) ($site['bans_url'] ?? '#')],
 ];
 
@@ -79,7 +79,7 @@ $currentNavKey = 'home';
 
 $footerQuickLinks = [
     ['label' => 'Home', 'url' => (string) ($site['home_url'] ?? '/')],
-    ['label' => 'Leaderboards', 'url' => (string) ($site['stats_url'] ?? '/players')],
+    ['label' => 'Leaderboards', 'url' => '/leaderboards'],
     ['label' => 'Store', 'url' => (string) ($site['store_url'] ?? '#')],
     ['label' => 'Vote', 'url' => (string) ($site['vote_url'] ?? '#')],
 ];
@@ -251,7 +251,8 @@ mineacle_page_head('Home');
 
         <section class="creators-panel" aria-label="Creator videos">
             <div class="section-heading creators-heading">
-                <h2><span>Mineacle</span> <strong>Creators</strong></h2>
+                <h2 class="sr-only">Mineacle Creators</h2>
+                <img class="creators-logo" src="/assets/brand/mineacle-creators.png" alt="" aria-hidden="true" draggable="false">
             </div>
             <div class="creator-videos" data-creator-videos aria-live="polite"></div>
             <p class="creator-status" data-creator-status>Finding latest creator videos...</p>

@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base79';
+    return 'base81';
 }
 
 function mineacle_page_public_link(mixed $url): string
@@ -91,7 +91,7 @@ function mineacle_page_footer(array $site): void
 
     $quickLinks = [
         ['label' => 'Home', 'url' => (string) ($site['home_url'] ?? '/')],
-        ['label' => 'Leaderboards', 'url' => (string) ($site['stats_url'] ?? '/players')],
+        ['label' => 'Leaderboards', 'url' => '/leaderboards'],
         ['label' => 'Store', 'url' => (string) ($site['store_url'] ?? '#')],
         ['label' => 'Vote', 'url' => (string) ($site['vote_url'] ?? '#')],
     ];

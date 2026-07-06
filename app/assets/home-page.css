@@ -1375,8 +1375,17 @@ body.has-announcement-modal {
     #111111;
 }
 
-.creators-heading h2 {
-  font-size: clamp(1.28rem, 0.98rem + 0.8vw, 1.85rem);
+.creators-heading {
+  justify-items: center;
+  padding-top: 2px;
+}
+
+.creators-logo {
+  width: min(420px, 72vw);
+  max-height: 186px;
+  display: block;
+  object-fit: contain;
+  filter: drop-shadow(0 14px 30px rgba(0, 0, 0, 0.36));
 }
 
 .creator-videos {

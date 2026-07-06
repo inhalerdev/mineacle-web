@@ -1,7 +1,7 @@
 RewriteEngine On
 RewriteRule ^admin\.php$ /admin [R=302,L]
 RewriteRule ^admin/?$ admin.php [L,QSA]
-RewriteRule ^leaderboards/?$ players.php [L,QSA]
-RewriteRule ^players/?$ players.php [L,QSA]
+RewriteRule ^leaderboards/?$ leaderboards.php [L,QSA]
+RewriteRule ^players/?$ /leaderboards [R=302,L]
 RewriteRule ^player/?$ player.php [L,QSA]
 RewriteRule ^player/([^/]+)/?$ player.php?name=$1 [L,QSA]

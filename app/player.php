@@ -82,7 +82,7 @@ function mineacle_profile_punishment(array $player): array
 
 $navLinks = [
     ['key' => 'home', 'url' => $site['home_url'] ?? '/'],
-    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => $site['stats_url'] ?? '/leaderboards'],
+    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => '/leaderboards'],
     ['key' => 'bans', 'url' => $site['bans_url'] ?? '#'],
 ];
 $storeLink = ['key' => 'store', 'url' => $site['store_url'] ?? '#'];

@@ -7,6 +7,7 @@ require_once __DIR__ . '/../includes/db.php';
 mineacle_security_headers();
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store, max-age=0');
+@set_time_limit(5);
 
 $site = mineacle_config()['site'] ?? [];
 $serverIp = trim((string) ($site['minecraft_ip'] ?? 'mineacle.net'));
@@ -22,7 +23,6 @@ $payload = [
     'server_ip' => $serverIp,
     'checked' => false,
 ];
-$fastMode = (string) ($_GET['fast'] ?? '') === '1';
 
 function mineacle_status_number(mixed $value): int
 {
@@ -74,27 +74,6 @@ function mineacle_status_web_profiles_count(): ?array
     } catch (Throwable) {
         return null;
     }
-}
-
-function mineacle_status_read_url(string $url, float $timeout = 1.2): ?array
-{
-    $context = stream_context_create([
-        'http' => [
-            'method' => 'GET',
-            'timeout' => $timeout,
-            'header' => "Accept: application/json\r\nUser-Agent: Mineacle-Web/1.0\r\n",
-        ],
-    ]);
-
-    $response = @file_get_contents($url, false, $context);
-
-    if (!is_string($response) || $response === '') {
-        return null;
-    }
-
-    $data = json_decode($response, true);
-
-    return is_array($data) ? $data : null;
 }
 
 function mineacle_status_varint(int $value): string
@@ -274,18 +253,7 @@ function mineacle_status_apply(array &$payload, array $status): void
     $payload['checked'] = true;
 }
 
-if ($fastMode) {
-    $profileCount = mineacle_status_web_profiles_count();
-
-    if ($profileCount !== null) {
-        mineacle_status_apply($payload, $profileCount);
-
-        echo json_encode($payload, JSON_UNESCAPED_SLASHES);
-        exit;
-    }
-}
-
-$directData = mineacle_status_direct_ping($serverIp, $fastMode ? 0.65 : 1.2);
+$directData = mineacle_status_direct_ping($serverIp, 0.75);
 
 if ($directData) {
     $direct = mineacle_status_normalize($directData, 'direct');
@@ -295,42 +263,13 @@ if ($directData) {
     exit;
 }
 
-if ($fastMode) {
-    $payload['checked'] = true;
+$profileCount = mineacle_status_web_profiles_count();
+
+if ($profileCount !== null) {
+    mineacle_status_apply($payload, $profileCount);
 
     echo json_encode($payload, JSON_UNESCAPED_SLASHES);
     exit;
-}
-
-$providers = [
-    'mcsrvstat' => 'https://api.mcsrvstat.us/3/' . rawurlencode($serverIp),
-    'mcstatus' => 'https://api.mcstatus.io/v2/status/java/' . rawurlencode($serverIp),
-];
-
-foreach ($providers as $source => $url) {
-    $data = mineacle_status_read_url($url, 1.2);
-
-    if (!$data) {
-        continue;
-    }
-
-    $next = mineacle_status_normalize($data, $source);
-    $payload['checked'] = true;
-
-    if (!$payload['online'] || $next['players_online'] > $payload['players_online']) {
-        $payload['online'] = $next['online'];
-        $payload['players_online'] = $next['players_online'];
-        $payload['players_max'] = $next['players_max'];
-        $payload['source'] = $next['source'];
-    }
-}
-
-if (!$payload['checked']) {
-    $profileCount = mineacle_status_web_profiles_count();
-
-    if ($profileCount !== null) {
-        mineacle_status_apply($payload, $profileCount);
-    }
 }
 
 echo json_encode($payload, JSON_UNESCAPED_SLASHES);
