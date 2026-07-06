@@ -1078,10 +1078,10 @@ body.has-announcement-modal {
   width: min(760px, calc(100vw - (var(--gap) * 2)));
   max-height: calc(100dvh - (var(--gap) * 2));
   overflow: auto;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 8px;
   background: #101010;
-  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.62);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.62), 0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
 .announcement-modal-panel:focus {
@@ -1090,8 +1090,16 @@ body.has-announcement-modal {
 
 .announcement-modal-close {
   z-index: 8;
-  background: rgba(16, 16, 16, 0.9);
-  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.34), inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  background: #202020;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.34);
+}
+
+.announcement-modal-close:hover,
+.announcement-modal-close:focus-visible {
+  background: #272727;
+  border-color: rgba(255, 255, 255, 0.24);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.34);
 }
 
 .announcement-modal-close img {
@@ -1103,6 +1111,7 @@ body.has-announcement-modal {
 }
 
 .announcement-modal-media {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
   background: #050505;
 }
 
