@@ -154,6 +154,7 @@ function mineacle_stats_players(int $limit = 25, int $offset = 0, string $sort =
     $allowedSorts = [
         'playtime' => 'playtime_seconds',
         'money' => 'balance_cents',
+        'kd' => 'kd_ratio',
         'kills' => 'kills',
         'deaths' => 'deaths',
         'rank' => 'rank_weight',

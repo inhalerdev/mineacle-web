@@ -14,6 +14,12 @@ if ($query === '' && $pathInfo !== '') {
 }
 
 $query = substr(trim($query), 0, 64);
+
+if ($query === '') {
+    header('Location: /leaderboards', true, 302);
+    exit;
+}
+
 $player = null;
 $loadError = false;
 
@@ -76,7 +82,7 @@ function mineacle_profile_punishment(array $player): array
 
 $navLinks = [
     ['key' => 'home', 'url' => $site['home_url'] ?? '/'],
-    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => $site['stats_url'] ?? '/players'],
+    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => $site['stats_url'] ?? '/leaderboards'],
     ['key' => 'bans', 'url' => $site['bans_url'] ?? '#'],
 ];
 $storeLink = ['key' => 'store', 'url' => $site['store_url'] ?? '#'];
@@ -118,12 +124,7 @@ mineacle_page_head($pageTitle);
     <main class="home-grid profile-page" aria-label="Player profile">
         <?php mineacle_page_search_header($site); ?>
 
-        <?php if ($query === ''): ?>
-            <section class="panel profile-message">
-                <h1>Player Profile</h1>
-                <p>Search for a player from the home page to open their profile.</p>
-            </section>
-        <?php elseif ($loadError): ?>
+        <?php if ($loadError): ?>
             <section class="panel profile-message">
                 <h1>Unable to load player stats right now</h1>
                 <p>Please try again shortly.</p>

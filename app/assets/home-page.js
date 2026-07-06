@@ -483,9 +483,8 @@
     if (!creatorVideos) return;
 
     try {
-      const response = await fetch(`/api/creator-videos.php?t=${Date.now()}`, {
-        headers: { Accept: 'application/json' },
-        cache: 'no-store'
+      const response = await fetch('/api/creator-videos.php', {
+        headers: { Accept: 'application/json' }
       });
 
       if (!response.ok) {
