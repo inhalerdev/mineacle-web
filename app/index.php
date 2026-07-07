@@ -118,7 +118,7 @@ mineacle_page_head('Home');
 <div class="site-shell">
     <aside class="rail" aria-label="Primary navigation">
         <a class="rail-logo" href="<?php echo h(mineacle_home_link($site['home_url'] ?? '/')); ?>" aria-label="Home">
-            <img src="assets/brand/nav-logo.png" alt="">
+            <img src="assets/brand/nav-logo-web.png" alt="">
         </a>
 
         <nav class="rail-nav" aria-label="Server links">
@@ -171,8 +171,8 @@ mineacle_page_head('Home');
             <article class="panel hero-panel"<?php echo $heroBackgroundIsVideo ? '' : mineacle_home_image_style($home['hero']['background_image_url'] ?? ''); ?> aria-label="Hero">
                 <?php if ($heroBackground !== ''): ?>
                     <?php if ($heroBackgroundIsVideo): ?>
-                        <video class="hero-background hero-background-video" autoplay muted loop playsinline preload="auto" controlslist="nodownload noplaybackrate" disablepictureinpicture draggable="false" aria-hidden="true">
-                            <source src="<?php echo h(mineacle_home_versioned_url($heroBackgroundUrl, $heroAssetVersion)); ?>" type="video/mp4">
+                        <video class="hero-background hero-background-video" data-hero-video autoplay muted loop playsinline preload="none" controlslist="nodownload noplaybackrate" disablepictureinpicture draggable="false" aria-hidden="true">
+                            <source data-src="<?php echo h(mineacle_home_versioned_url($heroBackgroundUrl, $heroAssetVersion)); ?>" type="video/mp4">
                         </video>
                     <?php else: ?>
                         <img class="hero-background" src="<?php echo h($heroBackgroundUrl); ?>" alt="" draggable="false" aria-hidden="true">
@@ -183,7 +183,7 @@ mineacle_page_head('Home');
                 <?php endif; ?>
                 <div class="hero-copy">
                     <h1 class="hero-logo-title">
-                        <img src="<?php echo h(mineacle_home_versioned_url('/assets/brand/hero-logo.png', $heroAssetVersion)); ?>" alt="Mineacle Network">
+                        <img src="<?php echo h(mineacle_home_versioned_url('/assets/brand/hero-logo-web.png', $heroAssetVersion)); ?>" alt="Mineacle Network">
                     </h1>
                     <p class="hero-text">Java Edition support for Minecraft 1.21.11 to 26+. Copy the server IP, add Mineacle to Multiplayer, and join from desktop.</p>
                     <div class="hero-actions" aria-label="Server actions">
@@ -252,7 +252,7 @@ mineacle_page_head('Home');
         <section class="creators-panel" aria-label="Creator videos">
             <div class="section-heading creators-heading">
                 <h2 class="sr-only">Mineacle Creators</h2>
-                <img class="creators-logo" src="/assets/brand/mineacle-creators.png" alt="" aria-hidden="true" draggable="false">
+                <img class="creators-logo" src="/assets/brand/mineacle-creators-web.png" alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async">
             </div>
             <div class="creator-videos" data-creator-videos aria-live="polite"></div>
             <p class="creator-status" data-creator-status>Finding latest creator videos...</p>
@@ -262,7 +262,7 @@ mineacle_page_head('Home');
             <div class="footer-inner">
                 <section class="footer-about" aria-label="Mineacle Studios">
                     <div class="footer-brand">
-                        <img src="assets/brand/m-studios.png" alt="Mineacle Studios">
+                        <img src="assets/brand/m-studios-web.png" alt="Mineacle Studios">
                     </div>
                     <p>Mineacle Studios is a small team of Minecraft developers building the custom systems behind the Mineacle Network. After over a year of trial, error, and refinement, we are creating a smooth, polished, community-driven survival experience while staying true to the Minecraft everyone already loves.</p>
                     <div class="footer-socials" aria-label="Social links">
@@ -287,12 +287,12 @@ mineacle_page_head('Home');
                             <strong>Report a Bug</strong>
                             <small>Found an issue? Send it to Mineacle Studios.</small>
                         </span>
-                        <img src="assets/brand/bug-mob.png" alt="" aria-hidden="true" draggable="false">
+                        <img src="assets/brand/bug-mob-web.png" alt="" aria-hidden="true" draggable="false" loading="lazy" decoding="async">
                     </a>
                 </section>
 
                 <p class="footer-bottom">
-                    <img src="assets/brand/nav-logo.png" alt="" aria-hidden="true">
+                    <img src="assets/brand/nav-logo-web.png" alt="" aria-hidden="true">
                     <span>
                         Copyright © <?php echo h((string) $year); ?> Mineacle Studios. All Rights Reserved. The Mineacle Network is not affiliated with or endorsed by Mojang Studios or Microsoft.
                         <span class="footer-policy-links">

@@ -286,7 +286,7 @@ mineacle_page_head('Leaderboards');
 <div class="site-shell">
     <aside class="rail" aria-label="Primary navigation">
         <a class="rail-logo" href="<?php echo h(mineacle_players_link($site['home_url'] ?? '/')); ?>" aria-label="Home">
-            <img src="/assets/brand/nav-logo.png" alt="">
+            <img src="/assets/brand/nav-logo-web.png" alt="">
         </a>
 
         <nav class="rail-nav" aria-label="Server links">

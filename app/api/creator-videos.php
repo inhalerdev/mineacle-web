@@ -7,6 +7,9 @@ require_once __DIR__ . '/../includes/db.php';
 mineacle_security_headers();
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: public, max-age=600');
+@set_time_limit(6);
+
+$startedAt = microtime(true);
 
 function mineacle_creator_response(array $payload, int $status = 200): void
 {
@@ -28,7 +31,7 @@ function mineacle_creator_fetch_json(string $url): ?array
     $context = stream_context_create([
         'http' => [
             'method' => 'GET',
-            'timeout' => 2.5,
+            'timeout' => 1.2,
             'header' => "Accept: application/json\r\nUser-Agent: Mineacle-Web/1.0\r\n",
         ],
     ]);
@@ -77,6 +80,10 @@ $perQuery = max(1, min(10, (int) ($creatorConfig['youtube_results_per_query'] ??
 $videos = [];
 
 foreach ($queries as $query) {
+    if (microtime(true) - $startedAt > 4.2) {
+        break;
+    }
+
     $url = 'https://www.googleapis.com/youtube/v3/search'
         . '?part=snippet'
         . '&type=video'

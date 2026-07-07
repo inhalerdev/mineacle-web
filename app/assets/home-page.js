@@ -37,9 +37,11 @@
   const adminImageDrop = document.querySelector('[data-admin-image-drop]');
   const adminImageInput = document.querySelector('[data-admin-image-input]');
   const adminUploadLabel = document.querySelector('[data-admin-upload-label]');
+  const heroVideo = document.querySelector('[data-hero-video]');
   const serverIp = statusNode ? statusNode.dataset.serverIp || 'mineacle.net' : 'mineacle.net';
-  const statusRefreshMs = 5000;
+  const statusRefreshMs = 15000;
   const statusFetchTimeoutMs = 4200;
+  const creatorFetchTimeoutMs = 4500;
   const statusCacheKey = `mineacle:server-status:${serverIp}`;
   const statusCacheMaxAgeMs = 15000;
   const playerSearchDelayMs = 160;
@@ -49,7 +51,34 @@
   let playerSearchRun = 0;
   let joinModalLastFocus = null;
   let announcementModalLastFocus = null;
+  let externalStatusFailureCount = 0;
+  let lastExternalStatusCheck = 0;
   const videoFallbackSvg = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"%3E%3Crect width="640" height="360" fill="%23202020"/%3E%3Cpath fill="%23ff55ff" d="M282 238V122l104 58-104 58z"/%3E%3C/svg%3E';
+
+  const runWhenIdle = (callback, timeout = 1200) => {
+    if ('requestIdleCallback' in window) {
+      window.requestIdleCallback(callback, { timeout });
+      return;
+    }
+
+    window.setTimeout(callback, Math.min(timeout, 800));
+  };
+
+  const loadHeroVideo = () => {
+    if (!(heroVideo instanceof HTMLVideoElement)) return;
+
+    const source = heroVideo.querySelector('source[data-src]');
+    if (!(source instanceof HTMLSourceElement)) return;
+    if (source.getAttribute('src')) return;
+
+    source.setAttribute('src', source.dataset.src || '');
+    heroVideo.load();
+
+    const playPromise = heroVideo.play();
+    if (playPromise && typeof playPromise.catch === 'function') {
+      playPromise.catch(() => {});
+    }
+  };
 
   const disableSimpleAssetGrabs = () => {
     const protectedMediaSelector = 'img, video, picture, svg, source';
@@ -482,9 +511,15 @@
   const setupCreatorVideos = async () => {
     if (!creatorVideos) return;
 
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => {
+      controller.abort();
+    }, creatorFetchTimeoutMs);
+
     try {
       const response = await fetch('/api/creator-videos.php', {
-        headers: { Accept: 'application/json' }
+        headers: { Accept: 'application/json' },
+        signal: controller.signal
       });
 
       if (!response.ok) {
@@ -514,6 +549,8 @@
         creatorStatus.hidden = false;
         creatorStatus.textContent = 'Creator videos are unavailable right now.';
       }
+    } finally {
+      window.clearTimeout(timeout);
     }
   };
 
@@ -539,7 +576,8 @@
 
   setupAnnouncementCarousel();
   setupAdminImageDrop();
-  setupCreatorVideos();
+  runWhenIdle(loadHeroVideo, 900);
+  runWhenIdle(setupCreatorVideos, 1800);
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && joinModal && !joinModal.hidden) {
@@ -875,6 +913,12 @@
   };
 
   const loadExternalServerStatus = async () => {
+    if (externalStatusFailureCount >= 2 && Date.now() - lastExternalStatusCheck < 60000) {
+      return null;
+    }
+
+    lastExternalStatusCheck = Date.now();
+
     const providers = [
       `https://api.mcsrvstat.us/3/${encodeURIComponent(serverIp)}`,
       `https://api.mcstatus.io/v2/status/java/${encodeURIComponent(serverIp)}`
@@ -885,10 +929,12 @@
       const status = normalizeStatusPayload(payload);
 
       if (status && status.online) {
+        externalStatusFailureCount = 0;
         return status;
       }
     }
 
+    externalStatusFailureCount += 1;
     return null;
   };
 
