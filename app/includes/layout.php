@@ -30,6 +30,55 @@ function mineacle_page_public_link(mixed $url): string
     return filter_var($value, FILTER_VALIDATE_URL) ? $value : '#';
 }
 
+function mineacle_page_home_url(array $site = []): string
+{
+    $value = trim((string) ($site['home_url'] ?? ''));
+
+    if ($value === '' || $value === '/' || $value === './' || $value === '/index.php' || $value === 'index.php') {
+        return 'https://mineacle.net/';
+    }
+
+    $safe = mineacle_page_public_link($value);
+
+    return $safe !== '#' ? $safe : 'https://mineacle.net/';
+}
+
+function mineacle_page_leaderboards_url(array $site = []): string
+{
+    $value = trim((string) ($site['stats_url'] ?? ''));
+    $normalized = strtolower(trim($value, " \t\n\r\0\x0B/"));
+
+    if ($value === '#') {
+        return '#';
+    }
+
+    if ($value === '' || in_array($normalized, ['leaderboards', 'leaderboards.php', 'players', 'players.php'], true)) {
+        return 'https://mineacle.net/leaderboards.php';
+    }
+
+    $safe = mineacle_page_public_link($value);
+
+    if ($safe === '#') {
+        return 'https://mineacle.net/leaderboards.php';
+    }
+
+    if ($safe === '/leaderboards' || $safe === '/players' || $safe === '/players.php') {
+        return 'https://mineacle.net/leaderboards.php';
+    }
+
+    if ($safe === '/leaderboards.php') {
+        return 'https://mineacle.net/leaderboards.php';
+    }
+
+    $path = parse_url($safe, PHP_URL_PATH);
+
+    if (is_string($path) && in_array($path, ['/leaderboards', '/leaderboards.php', '/players', '/players.php'], true)) {
+        return 'https://mineacle.net/leaderboards.php';
+    }
+
+    return $safe;
+}
+
 function mineacle_page_icon(string $name): string
 {
     $officialIcons = [
@@ -90,8 +139,8 @@ function mineacle_page_footer(array $site): void
     }
 
     $quickLinks = [
-        ['label' => 'Home', 'url' => (string) ($site['home_url'] ?? '/')],
-        ['label' => 'Leaderboards', 'url' => '/leaderboards'],
+        ['label' => 'Home', 'url' => mineacle_page_home_url($site)],
+        ['label' => 'Leaderboards', 'url' => mineacle_page_leaderboards_url($site)],
         ['label' => 'Store', 'url' => (string) ($site['store_url'] ?? '#')],
         ['label' => 'Vote', 'url' => (string) ($site['vote_url'] ?? '#')],
     ];

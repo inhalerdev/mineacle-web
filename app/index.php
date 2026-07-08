@@ -68,9 +68,12 @@ function mineacle_footer_link(mixed $url): string
     return mineacle_home_link($value);
 }
 
+$homeUrl = mineacle_page_home_url($site);
+$leaderboardsUrl = mineacle_page_leaderboards_url($site);
+
 $navLinks = [
-    ['key' => 'home', 'url' => (string) ($site['home_url'] ?? '/')],
-    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => '/leaderboards'],
+    ['key' => 'home', 'url' => $homeUrl],
+    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => $leaderboardsUrl],
     ['key' => 'bans', 'url' => (string) ($site['bans_url'] ?? '#')],
 ];
 
@@ -78,8 +81,8 @@ $storeLink = ['key' => 'store', 'url' => (string) ($site['store_url'] ?? '#')];
 $currentNavKey = 'home';
 
 $footerQuickLinks = [
-    ['label' => 'Home', 'url' => (string) ($site['home_url'] ?? '/')],
-    ['label' => 'Leaderboards', 'url' => '/leaderboards'],
+    ['label' => 'Home', 'url' => $homeUrl],
+    ['label' => 'Leaderboards', 'url' => $leaderboardsUrl],
     ['label' => 'Store', 'url' => (string) ($site['store_url'] ?? '#')],
     ['label' => 'Vote', 'url' => (string) ($site['vote_url'] ?? '#')],
 ];
@@ -117,7 +120,7 @@ mineacle_page_head('Home');
 ?>
 <div class="site-shell">
     <aside class="rail" aria-label="Primary navigation">
-        <a class="rail-logo" href="<?php echo h(mineacle_home_link($site['home_url'] ?? '/')); ?>" aria-label="Home">
+        <a class="rail-logo" href="<?php echo h($homeUrl); ?>" aria-label="Home">
             <img src="assets/brand/nav-logo-web.png" alt="">
         </a>
 

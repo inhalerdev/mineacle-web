@@ -29,8 +29,8 @@ $mineacleEnv = static function (array $keys, string $default = ''): string {
 return [
     'site' => [
         'name' => $mineacleEnv(['SITE_NAME', 'site_name'], 'Mineacle'),
-        'home_url' => $mineacleEnv(['HOME_URL', 'home_url'], '/'),
-        'stats_url' => $mineacleEnv(['STATS_URL', 'stats_url'], '/leaderboards'),
+        'home_url' => $mineacleEnv(['HOME_URL', 'home_url'], 'https://mineacle.net/'),
+        'stats_url' => $mineacleEnv(['STATS_URL', 'stats_url'], 'https://mineacle.net/leaderboards.php'),
         'store_url' => $mineacleEnv(['STORE_URL', 'store_url'], '#'),
         'bans_url' => $mineacleEnv(['BANS_URL', 'bans_url'], '#'),
         'vote_url' => $mineacleEnv(['VOTE_URL', 'vote_url'], '#'),

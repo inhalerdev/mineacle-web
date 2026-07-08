@@ -6,6 +6,8 @@ require_once __DIR__ . '/includes/layout.php';
 require_once __DIR__ . '/includes/stats-lib.php';
 
 $site = mineacle_config()['site'] ?? [];
+$homeUrl = mineacle_page_home_url($site);
+$leaderboardsUrl = mineacle_page_leaderboards_url($site);
 $requestedSort = trim((string) ($_GET['sort'] ?? 'kd'));
 $search = trim((string) ($_GET['search'] ?? ''));
 $leaderboardTabs = [
@@ -56,7 +58,7 @@ function mineacle_players_tab_url(string $sort, string $search): string
         $params['search'] = $search;
     }
 
-    return '/leaderboards?' . http_build_query($params);
+    return 'https://mineacle.net/leaderboards.php?' . http_build_query($params);
 }
 
 function mineacle_players_sort_label(string $sort, array $tabs): string
@@ -255,8 +257,8 @@ function mineacle_players_render_team_podium(array $team): void
 }
 
 $navLinks = [
-    ['key' => 'home', 'url' => $site['home_url'] ?? '/'],
-    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => '/leaderboards'],
+    ['key' => 'home', 'url' => $homeUrl],
+    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => $leaderboardsUrl],
     ['key' => 'bans', 'url' => $site['bans_url'] ?? '#'],
 ];
 $storeLink = ['key' => 'store', 'url' => $site['store_url'] ?? '#'];
@@ -285,7 +287,7 @@ mineacle_page_head('Leaderboards');
 ?>
 <div class="site-shell">
     <aside class="rail" aria-label="Primary navigation">
-        <a class="rail-logo" href="<?php echo h(mineacle_players_link($site['home_url'] ?? '/')); ?>" aria-label="Home">
+        <a class="rail-logo" href="<?php echo h($homeUrl); ?>" aria-label="Home">
             <img src="/assets/brand/nav-logo-web.png" alt="">
         </a>
 
@@ -332,7 +334,7 @@ mineacle_page_head('Leaderboards');
                     <?php endforeach; ?>
                 </nav>
 
-                <form class="players-filter" method="get" action="/leaderboards">
+                <form class="players-filter" method="get" action="<?php echo h($leaderboardsUrl); ?>">
                     <input type="hidden" name="sort" value="<?php echo h($sort); ?>">
                     <label class="sr-only" for="playersSearch">Search players or teams</label>
                     <input id="playersSearch" name="search" type="search" placeholder="<?php echo $sort === 'team' ? 'Search teams..' : 'Search players..'; ?>" value="<?php echo h($search); ?>" autocomplete="off">

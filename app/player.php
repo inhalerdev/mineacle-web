@@ -6,6 +6,8 @@ require_once __DIR__ . '/includes/layout.php';
 require_once __DIR__ . '/includes/stats-lib.php';
 
 $site = mineacle_config()['site'] ?? [];
+$homeUrl = mineacle_page_home_url($site);
+$leaderboardsUrl = mineacle_page_leaderboards_url($site);
 $query = trim((string) ($_GET['name'] ?? $_GET['player'] ?? $_GET['search'] ?? ''));
 $pathInfo = trim((string) ($_SERVER['PATH_INFO'] ?? ''), '/');
 
@@ -16,7 +18,7 @@ if ($query === '' && $pathInfo !== '') {
 $query = substr(trim($query), 0, 64);
 
 if ($query === '') {
-    header('Location: /leaderboards', true, 302);
+    header('Location: ' . $leaderboardsUrl, true, 302);
     exit;
 }
 
@@ -81,8 +83,8 @@ function mineacle_profile_punishment(array $player): array
 }
 
 $navLinks = [
-    ['key' => 'home', 'url' => $site['home_url'] ?? '/'],
-    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => '/leaderboards'],
+    ['key' => 'home', 'url' => $homeUrl],
+    ['key' => 'stats', 'label' => 'Leaderboards', 'url' => $leaderboardsUrl],
     ['key' => 'bans', 'url' => $site['bans_url'] ?? '#'],
 ];
 $storeLink = ['key' => 'store', 'url' => $site['store_url'] ?? '#'];
@@ -94,7 +96,7 @@ mineacle_page_head($pageTitle);
 ?>
 <div class="site-shell">
     <aside class="rail" aria-label="Primary navigation">
-        <a class="rail-logo" href="<?php echo h(mineacle_profile_link($site['home_url'] ?? '/')); ?>" aria-label="Home">
+        <a class="rail-logo" href="<?php echo h($homeUrl); ?>" aria-label="Home">
             <img src="/assets/brand/nav-logo-web.png" alt="">
         </a>
 
