@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base84';
+    return 'base86';
 }
 
 function mineacle_page_public_link(mixed $url): string
@@ -92,9 +92,10 @@ function mineacle_page_leaderboards_url(array $site = []): string
 
 function mineacle_page_icon(string $name): string
 {
+    $assetVersion = rawurlencode(mineacle_page_asset_version());
     $officialIcons = [
         'home' => '/assets/icons/home.svg',
-        'stats' => '/assets/icons/leaderboard.svg',
+        'stats' => '/assets/icons/leaderboard.svg?v=' . $assetVersion,
         'store' => '/assets/icons/basket-shopping.svg',
         'bans' => '/assets/icons/gavel.svg',
         'discord' => '/assets/icons/discord.svg',
@@ -142,6 +143,8 @@ function mineacle_page_search_header(array $site): void
 function mineacle_page_footer(array $site): void
 {
     $year = date('Y');
+    $assetVersion = mineacle_page_asset_version();
+    $footerLogoUrl = '/assets/brand/mncl-studios-web.png?v=' . rawurlencode($assetVersion);
     $supportEmail = (string) ($site['support_email'] ?? 'support@mineacle.net');
     $supportLink = trim((string) ($site['support_url'] ?? ''));
 
@@ -170,7 +173,7 @@ function mineacle_page_footer(array $site): void
     echo '<footer class="footer-panel" aria-label="Footer">';
     echo '<div class="footer-inner">';
     echo '<section class="footer-about" aria-label="Mineacle Studios">';
-    echo '<div class="footer-brand"><img src="/assets/brand/mncl-studios-web.png" alt="Mineacle Studios" draggable="false"></div>';
+    echo '<div class="footer-brand"><img src="' . h($footerLogoUrl) . '" alt="Mineacle Studios" draggable="false"></div>';
     echo '<p>Mineacle Studios is a small team of Minecraft developers building the custom systems behind the Mineacle Network. After over a year of trial, error, and refinement, we are creating a smooth, polished, community-driven survival experience while staying true to the Minecraft everyone already loves.</p>';
     echo '<div class="footer-socials" aria-label="Social links">';
     foreach ($socialLinks as $link) {

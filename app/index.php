@@ -13,9 +13,10 @@ $year = date('Y');
 
 function mineacle_icon(string $name): string
 {
+    $assetVersion = rawurlencode(mineacle_page_asset_version());
     $officialIcons = [
         'home' => 'assets/icons/home.svg',
-        'stats' => 'assets/icons/leaderboard.svg',
+        'stats' => 'assets/icons/leaderboard.svg?v=' . $assetVersion,
         'store' => 'assets/icons/basket-shopping.svg',
         'bans' => 'assets/icons/gavel.svg',
         'staff' => 'assets/icons/gavel.svg',
@@ -265,7 +266,7 @@ mineacle_page_head('Home');
             <div class="footer-inner">
                 <section class="footer-about" aria-label="Mineacle Studios">
                     <div class="footer-brand">
-                        <img src="assets/brand/mncl-studios-web.png" alt="Mineacle Studios">
+                        <img src="<?php echo h(mineacle_home_versioned_url('/assets/brand/mncl-studios-web.png', $heroAssetVersion)); ?>" alt="Mineacle Studios" draggable="false" loading="lazy" decoding="async">
                     </div>
                     <p>Mineacle Studios is a small team of Minecraft developers building the custom systems behind the Mineacle Network. After over a year of trial, error, and refinement, we are creating a smooth, polished, community-driven survival experience while staying true to the Minecraft everyone already loves.</p>
                     <div class="footer-socials" aria-label="Social links">
