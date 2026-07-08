@@ -17,6 +17,9 @@
   --font-sans: "Manrope", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --gap: 25px;
   --rail-width: 70px;
+  --rail-item-size: 46px;
+  --rail-icon-size: 27px;
+  --rail-stack-gap: 18px;
   --radius: 5px;
   --ui-font-size: 0.875rem;
   --ui-font-weight: 700;
@@ -113,15 +116,15 @@ svg {
   display: grid;
   grid-template-rows: auto 1fr auto;
   justify-items: center;
-  gap: 24px;
+  gap: 0;
   padding: 18px 0 20px;
   background: var(--rail);
 }
 
 .rail-logo,
 .rail-link {
-  width: 48px;
-  height: 48px;
+  width: var(--rail-item-size);
+  height: var(--rail-item-size);
   display: grid;
   place-items: center;
   border-radius: var(--radius);
@@ -129,6 +132,8 @@ svg {
 }
 
 .rail-logo {
+  width: 48px;
+  height: 48px;
   color: var(--accent);
 }
 
@@ -139,6 +144,12 @@ svg {
   display: block;
   object-fit: contain;
   filter: drop-shadow(0 0 4px rgba(123, 60, 255, 0.65));
+}
+
+.rail-link svg,
+.rail-link .site-icon {
+  width: var(--rail-icon-size);
+  height: var(--rail-icon-size);
 }
 
 .rail-link:hover,
@@ -162,7 +173,7 @@ svg {
 }
 
 .rail-store-button {
-  margin-top: 8px;
+  margin-top: 0;
 }
 
 .rail-store-button .site-icon {
@@ -179,13 +190,14 @@ svg {
 .rail-nav,
 .rail-social {
   display: grid;
-  gap: 12px;
+  grid-auto-rows: var(--rail-item-size);
+  gap: var(--rail-stack-gap);
   justify-items: center;
 }
 
 .rail-nav {
   align-content: start;
-  padding-top: 72px;
+  padding-top: clamp(72px, 8vh, 110px);
 }
 
 .rail-social {
