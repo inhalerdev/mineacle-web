@@ -17,7 +17,7 @@ $loadError = false;
 
 try {
     if ($view === 'teams') {
-        $teams = mineacle_stats_teams(50, 0, 'kd', $search);
+        $teams = mineacle_stats_teams(50, 0, 'overall', $search);
     } else {
         $players = mineacle_stats_players(200, 0, 'playtime', $search);
     }
@@ -79,6 +79,47 @@ function mineacle_leaderboards_team_money(array $team): string
     return '$' . number_format($balance, 2);
 }
 
+function mineacle_leaderboards_team_online_label(array $team): string
+{
+    $online = mineacle_stats_int($team['online_members'] ?? 0);
+    $members = mineacle_stats_int($team['members'] ?? 0);
+
+    return number_format($online) . ' / ' . number_format($members);
+}
+
+function mineacle_leaderboards_team_caption(array $team): string
+{
+    $onlineMembers = is_array($team['online_member_list'] ?? null) ? $team['online_member_list'] : [];
+    $names = [];
+
+    foreach ($onlineMembers as $member) {
+        if (!is_array($member)) {
+            continue;
+        }
+
+        $name = trim((string) ($member['display_name'] ?? ''));
+
+        if ($name === '') {
+            $name = trim((string) ($member['username'] ?? ''));
+        }
+
+        if ($name !== '') {
+            $names[] = $name;
+        }
+    }
+
+    if ($names !== []) {
+        $shown = array_slice($names, 0, 3);
+        $remaining = count($names) - count($shown);
+
+        return 'Online: ' . implode(', ', $shown) . ($remaining > 0 ? ' +' . $remaining : '');
+    }
+
+    $owner = trim((string) ($team['owner_name'] ?? ''));
+
+    return $owner !== '' ? 'Owner: ' . $owner : 'Team profile';
+}
+
 function mineacle_leaderboards_kd(int $kills, int $deaths, mixed $stored = null): string
 {
     $ratio = mineacle_stats_float($stored);
@@ -102,7 +143,7 @@ $hasResults = $view === 'teams' ? $teams !== [] : $players !== [];
 $resultCount = $view === 'teams' ? count($teams) : count($players);
 $viewTitle = $view === 'teams' ? 'Teams' : 'Survival Players';
 $viewDescription = $view === 'teams'
-    ? 'Top 50 teams from Mineacle Core team standings, ranked by team K/D performance.'
+    ? 'Top 50 teams from Mineacle Core team standings, ranked by capital, K/D, kills, and members.'
     : 'Top 200 Survival players from Mineacle Core profile stats.';
 
 mineacle_page_head('Leaderboards');
@@ -191,11 +232,9 @@ mineacle_page_head('Leaderboards');
                         <span>Team</span>
                         <span>Members</span>
                         <span>Online</span>
-                        <span>Balance</span>
+                        <span>Capital</span>
                         <span>Kills</span>
                         <span>K/D</span>
-                        <span>K/D Rank</span>
-                        <span>Capital Rank</span>
                     </div>
 
                     <div class="players-list">
@@ -209,18 +248,16 @@ mineacle_page_head('Leaderboards');
                                 <span class="leaderboard-team-rank">#<?php echo h((string) $rank); ?></span>
                                 <span class="player-card-main">
                                     <strong><?php echo h(mineacle_leaderboards_team_name($team)); ?></strong>
-                                    <span><?php echo trim((string) ($team['owner_name'] ?? '')) !== '' ? 'Owner: ' . h((string) $team['owner_name']) : 'Team profile'; ?></span>
+                                    <span><?php echo h(mineacle_leaderboards_team_caption($team)); ?></span>
                                 </span>
                                 <span class="player-card-stat"><?php echo h(number_format(mineacle_stats_int($team['members'] ?? 0))); ?></span>
                                 <span class="player-card-status <?php echo mineacle_stats_int($team['online_members'] ?? 0) > 0 ? 'is-online' : 'is-offline'; ?>">
                                     <span aria-hidden="true"></span>
-                                    <?php echo h(number_format(mineacle_stats_int($team['online_members'] ?? 0))); ?>
+                                    <?php echo h(mineacle_leaderboards_team_online_label($team)); ?>
                                 </span>
                                 <span class="player-card-stat"><?php echo h(mineacle_leaderboards_team_money($team)); ?></span>
                                 <span class="player-card-stat"><?php echo h(number_format($kills)); ?></span>
                                 <span class="player-card-stat"><?php echo h(mineacle_leaderboards_kd($kills, $deaths, $team['kd_ratio'] ?? 0)); ?></span>
-                                <span class="player-card-stat"><?php echo h(mineacle_stats_rank_label($team['kd_rank'] ?? 0)); ?></span>
-                                <span class="player-card-stat"><?php echo h(mineacle_stats_rank_label($team['capital_rank'] ?? 0)); ?></span>
                             </article>
                         <?php endforeach; ?>
                     </div>
