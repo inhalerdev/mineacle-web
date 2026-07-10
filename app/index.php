@@ -14,11 +14,13 @@ $year = date('Y');
 function mineacle_icon(string $name): string
 {
     $assetVersion = rawurlencode(mineacle_page_asset_version());
+    $iconVersion = '?v=' . $assetVersion;
     $officialIcons = [
-        'home' => 'assets/icons/home.svg',
-        'stats' => 'assets/icons/leaderboard.svg?v=' . $assetVersion,
-        'store' => 'assets/icons/basket-shopping.svg',
-        'bans' => 'assets/icons/gavel.svg',
+        'home' => 'assets/icons/rail-home.png' . $iconVersion,
+        'stats' => 'assets/icons/rail-leaderboard.png' . $iconVersion,
+        'vote' => 'assets/icons/rail-vote.png' . $iconVersion,
+        'store' => 'assets/icons/rail-store.png' . $iconVersion,
+        'bans' => 'assets/icons/rail-bans.png' . $iconVersion,
         'staff' => 'assets/icons/gavel.svg',
         'discord' => 'assets/icons/discord.svg',
         'x' => 'assets/icons/x-twitter.svg',
