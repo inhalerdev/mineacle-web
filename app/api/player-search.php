@@ -408,7 +408,7 @@ if ($tableSql === null || $table !== 'mineacle_web_profiles') {
     ], 500);
 }
 
-$pdo = mineacle_db();
+$pdo = mineacle_core_db();
 
 if (!$pdo instanceof PDO) {
     mineacle_player_response([
@@ -540,7 +540,8 @@ try {
         ];
     }
 
-    $statuses = mineacle_player_litebans_statuses($pdo, $tables, $players);
+    $litebansPdo = mineacle_litebans_db();
+    $statuses = $litebansPdo instanceof PDO ? mineacle_player_litebans_statuses($litebansPdo, $tables, $players) : [];
 
     foreach ($players as $index => $player) {
         $uuid = (string) ($player['uuid'] ?? '');

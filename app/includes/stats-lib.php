@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_stats_table_sql(string $table): ?string
 {
-    if ($table !== 'mineacle_web_profiles' || !preg_match('/^[A-Za-z0-9_]+$/', $table)) {
+    if (!in_array($table, ['mineacle_web_profiles', 'mineacle_web_teams'], true) || !preg_match('/^[A-Za-z0-9_]+$/', $table)) {
         return null;
     }
 
@@ -78,9 +78,57 @@ function mineacle_stats_select_list(array $columns): string
     return implode(', ', $select);
 }
 
+function mineacle_stats_column_from_candidates(array $columns, array $candidates): ?string
+{
+    foreach ($candidates as $candidate) {
+        $actual = $columns[strtolower((string) $candidate)] ?? null;
+
+        if (is_string($actual) && mineacle_stats_column_sql($actual) !== null) {
+            return $actual;
+        }
+    }
+
+    return null;
+}
+
+function mineacle_stats_team_select_list(array $columns): string
+{
+    $map = [
+        'team_id' => [['team_id', 'id', 'uuid'], "''"],
+        'name' => [['team_name', 'name', 'display_name'], "''"],
+        'tag' => [['tag', 'team_tag', 'prefix'], "''"],
+        'owner_uuid' => [['owner_uuid', 'leader_uuid', 'owner'], "''"],
+        'owner_name' => [['owner_name', 'leader_name', 'leader', 'owner_username'], "''"],
+        'members' => [['members', 'member_count', 'total_members', 'players'], '0'],
+        'online_members' => [['online_members', 'online_count', 'members_online', 'online'], '0'],
+        'balance_cents' => [['balance_cents', 'bank_balance_cents', 'team_balance_cents'], '0'],
+        'balance' => [['balance', 'bank_balance', 'team_balance'], '0'],
+        'kills' => [['kills', 'team_kills', 'total_kills'], '0'],
+        'deaths' => [['deaths', 'team_deaths', 'total_deaths'], '0'],
+        'kd_ratio' => [['kd_ratio', 'kdr', 'team_kd_ratio'], '0'],
+        'playtime_seconds' => [['playtime_seconds', 'total_playtime_seconds', 'team_playtime_seconds'], '0'],
+        'wins' => [['wins', 'team_wins'], '0'],
+        'losses' => [['losses', 'team_losses'], '0'],
+        'points' => [['points', 'score', 'rating', 'elo'], '0'],
+        'created_at' => [['created_at', 'created', 'founded_at'], '0'],
+        'updated_at' => [['updated_at', 'updated', 'last_updated'], '0'],
+    ];
+    $select = [];
+
+    foreach ($map as $alias => [$candidates, $default]) {
+        $actual = mineacle_stats_column_from_candidates($columns, $candidates);
+        $actualSql = is_string($actual) ? mineacle_stats_column_sql($actual) : null;
+        $aliasSql = mineacle_stats_column_sql((string) $alias);
+
+        $select[] = ($actualSql ?? $default) . ' AS ' . $aliasSql;
+    }
+
+    return implode(', ', $select);
+}
+
 function mineacle_stats_profile_by_query(string $query): ?array
 {
-    $pdo = mineacle_db();
+    $pdo = mineacle_core_db();
 
     if (!$pdo instanceof PDO) {
         throw new RuntimeException('Stats database is not connected.');
@@ -134,7 +182,7 @@ function mineacle_stats_profile_by_query(string $query): ?array
 
 function mineacle_stats_players(int $limit = 25, int $offset = 0, string $sort = 'playtime', string $search = ''): array
 {
-    $pdo = mineacle_db();
+    $pdo = mineacle_core_db();
 
     if (!$pdo instanceof PDO) {
         throw new RuntimeException('Stats database is not connected.');
@@ -179,7 +227,7 @@ function mineacle_stats_players(int $limit = 25, int $offset = 0, string $sort =
         }
     }
 
-    $limit = max(1, min(100, $limit));
+    $limit = max(1, min(200, $limit));
     $offset = max(0, $offset);
     $search = trim(substr($search, 0, 64));
     $params = [];
@@ -234,6 +282,108 @@ function mineacle_stats_players(int $limit = 25, int $offset = 0, string $sort =
     }
 
     return $players;
+}
+
+function mineacle_stats_teams(int $limit = 50, int $offset = 0, string $sort = 'points', string $search = ''): array
+{
+    $pdo = mineacle_core_db();
+
+    if (!$pdo instanceof PDO) {
+        throw new RuntimeException('Stats database is not connected.');
+    }
+
+    $config = mineacle_config();
+    $tables = $config['tables'] ?? [];
+    $table = (string) ($tables['teams'] ?? 'mineacle_web_teams');
+    $tableSql = mineacle_stats_table_sql($table);
+
+    if ($tableSql === null) {
+        throw new RuntimeException('Teams table is not available.');
+    }
+
+    $columns = mineacle_stats_columns($pdo, $tableSql);
+    $select = mineacle_stats_team_select_list($columns);
+    $sortCandidates = [
+        'points' => ['points', 'score', 'rating', 'elo'],
+        'balance' => ['balance_cents', 'bank_balance_cents', 'team_balance_cents', 'balance', 'bank_balance', 'team_balance'],
+        'kills' => ['kills', 'team_kills', 'total_kills'],
+        'kd' => ['kd_ratio', 'kdr', 'team_kd_ratio'],
+        'members' => ['members', 'member_count', 'total_members', 'players'],
+        'wins' => ['wins', 'team_wins'],
+        'playtime' => ['playtime_seconds', 'total_playtime_seconds', 'team_playtime_seconds'],
+        'updated' => ['updated_at', 'updated', 'last_updated'],
+        'name' => ['team_name', 'name', 'display_name'],
+    ];
+    $sortColumn = mineacle_stats_column_from_candidates($columns, $sortCandidates[$sort] ?? $sortCandidates['points']);
+    $orderColumn = is_string($sortColumn) ? mineacle_stats_column_sql($sortColumn) : null;
+    $nameColumn = mineacle_stats_column_from_candidates($columns, ['team_name', 'name', 'display_name']);
+    $nameSql = is_string($nameColumn) ? mineacle_stats_column_sql($nameColumn) : null;
+    $searchColumns = [];
+
+    foreach (['team_name', 'name', 'display_name', 'tag', 'team_tag', 'owner_name', 'leader_name'] as $column) {
+        if (isset($columns[$column])) {
+            $columnSql = mineacle_stats_column_sql($columns[$column]);
+
+            if ($columnSql !== null) {
+                $searchColumns[] = $columnSql;
+            }
+        }
+    }
+
+    $limit = max(1, min(50, $limit));
+    $offset = max(0, $offset);
+    $search = trim(substr($search, 0, 64));
+    $params = [];
+    $sql = 'SELECT ' . $select . ' FROM ' . $tableSql;
+
+    if ($search !== '' && $searchColumns !== []) {
+        $searchParts = [];
+
+        foreach ($searchColumns as $index => $columnSql) {
+            $param = ':search' . $index;
+            $searchParts[] = $columnSql . ' LIKE ' . $param;
+            $params[$param] = '%' . $search . '%';
+        }
+
+        $sql .= ' WHERE ' . implode(' OR ', $searchParts);
+    }
+
+    $order = [];
+
+    if ($orderColumn !== null) {
+        $order[] = $orderColumn . ' DESC';
+    }
+
+    if ($nameSql !== null) {
+        $order[] = $nameSql . ' ASC';
+    }
+
+    if ($order === []) {
+        $order[] = '1 ASC';
+    }
+
+    $sql .= ' ORDER BY ' . implode(', ', $order) . ' LIMIT :limit OFFSET :offset';
+    $statement = $pdo->prepare($sql);
+
+    foreach ($params as $param => $value) {
+        $statement->bindValue($param, $value, PDO::PARAM_STR);
+    }
+
+    $statement->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $statement->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $statement->execute();
+    $teams = [];
+
+    foreach ($statement->fetchAll() as $index => $row) {
+        if (!is_array($row)) {
+            continue;
+        }
+
+        $row['rank'] = $offset + $index + 1;
+        $teams[] = $row;
+    }
+
+    return $teams;
 }
 
 function mineacle_players(int $limit = 25, int $offset = 0, string $sort = 'playtime', string $search = ''): array
@@ -566,10 +716,16 @@ function mineacle_stats_litebans_status(PDO $pdo, string $table, string $type, s
 
 function mineacle_stats_punishment_status(PDO $pdo, string $uuid): array
 {
+    $litebansPdo = mineacle_litebans_db();
+
+    if (!$litebansPdo instanceof PDO) {
+        return mineacle_stats_empty_status();
+    }
+
     $config = mineacle_config();
     $tables = $config['tables'] ?? [];
-    $ban = mineacle_stats_litebans_status($pdo, (string) ($tables['litebans_bans'] ?? 'litebans_bans'), 'ban', $uuid);
-    $mute = mineacle_stats_litebans_status($pdo, (string) ($tables['litebans_mutes'] ?? 'litebans_mutes'), 'mute', $uuid);
+    $ban = mineacle_stats_litebans_status($litebansPdo, (string) ($tables['litebans_bans'] ?? 'litebans_bans'), 'ban', $uuid);
+    $mute = mineacle_stats_litebans_status($litebansPdo, (string) ($tables['litebans_mutes'] ?? 'litebans_mutes'), 'mute', $uuid);
     $state = 'clear';
 
     if ($ban['active']) {

@@ -38,27 +38,28 @@ function mineacle_security_headers(): void
     header('Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=()');
 }
 
-function mineacle_db(): ?PDO
+function mineacle_db(?string $database = null): ?PDO
 {
-    static $pdo = false;
-
-    if ($pdo instanceof PDO) {
-        return $pdo;
-    }
-
-    if ($pdo === null) {
-        return null;
-    }
+    static $connections = [];
 
     $config = mineacle_config();
     $mysql = $config['mysql'] ?? [];
 
     $host = trim((string) ($mysql['host'] ?? ''));
-    $database = trim((string) ($mysql['database'] ?? ''));
+    $databaseName = trim((string) ($database ?? ($mysql['site_database'] ?? $mysql['database'] ?? '')));
     $username = trim((string) ($mysql['username'] ?? ''));
 
-    if ($host === '' || $database === '' || $username === '') {
-        $pdo = null;
+    if ($host === '' || $databaseName === '' || $username === '') {
+        return null;
+    }
+
+    $connectionKey = $host . ':' . (string) ($mysql['port'] ?? 3306) . '/' . $databaseName . '/' . $username;
+
+    if (($connections[$connectionKey] ?? false) instanceof PDO) {
+        return $connections[$connectionKey];
+    }
+
+    if (array_key_exists($connectionKey, $connections) && $connections[$connectionKey] === null) {
         return null;
     }
 
@@ -66,18 +67,42 @@ function mineacle_db(): ?PDO
     $password = (string) ($mysql['password'] ?? '');
     $charset = trim((string) ($mysql['charset'] ?? 'utf8mb4'));
     $timeout = max(1, min(10, (int) ($mysql['timeout'] ?? 2)));
-    $dsn = sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s', $host, $port, $database, $charset);
+    $dsn = sprintf('mysql:host=%s;port=%d;dbname=%s;charset=%s', $host, $port, $databaseName, $charset);
 
     try {
-        $pdo = new PDO($dsn, $username, $password, [
+        $connections[$connectionKey] = new PDO($dsn, $username, $password, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
             PDO::ATTR_EMULATE_PREPARES => false,
             PDO::ATTR_TIMEOUT => $timeout,
         ]);
     } catch (PDOException) {
-        $pdo = null;
+        $connections[$connectionKey] = null;
     }
 
-    return $pdo instanceof PDO ? $pdo : null;
+    return $connections[$connectionKey] instanceof PDO ? $connections[$connectionKey] : null;
+}
+
+function mineacle_core_db(): ?PDO
+{
+    $config = mineacle_config();
+    $mysql = $config['mysql'] ?? [];
+
+    return mineacle_db((string) ($mysql['core_database'] ?? $mysql['database'] ?? 'mineacle_core'));
+}
+
+function mineacle_site_db(): ?PDO
+{
+    $config = mineacle_config();
+    $mysql = $config['mysql'] ?? [];
+
+    return mineacle_db((string) ($mysql['site_database'] ?? $mysql['database'] ?? 'mineacle_site'));
+}
+
+function mineacle_litebans_db(): ?PDO
+{
+    $config = mineacle_config();
+    $mysql = $config['mysql'] ?? [];
+
+    return mineacle_db((string) ($mysql['litebans_database'] ?? 'mineacle_litebans'));
 }

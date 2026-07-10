@@ -431,7 +431,7 @@ $errors = [];
 $recentAnnouncements = [];
 $editingAnnouncement = [];
 $editingAnnouncementId = mineacle_admin_announcement_id();
-$pdo = mineacle_db();
+$pdo = mineacle_site_db();
 $tableSql = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {

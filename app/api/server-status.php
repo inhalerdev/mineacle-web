@@ -43,7 +43,7 @@ function mineacle_status_number(mixed $value): int
 
 function mineacle_status_web_profiles_count(): ?array
 {
-    $pdo = mineacle_db();
+    $pdo = mineacle_core_db();
 
     if (!$pdo instanceof PDO) {
         return null;

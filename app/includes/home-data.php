@@ -123,7 +123,7 @@ function mineacle_home_data(): array
         return $data;
     }
 
-    $pdo = mineacle_db();
+    $pdo = mineacle_site_db();
 
     if (!$pdo) {
         return $data;
