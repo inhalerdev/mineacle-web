@@ -1602,8 +1602,9 @@ body.has-announcement-modal {
 .footer-panel {
   min-height: clamp(230px, 18vw, 315px);
   display: grid;
-  margin: 0 calc(var(--gap) * -1) calc(var(--gap) * -1);
-  padding: clamp(22px, 2.4vw, 34px) calc(var(--gap) + clamp(28px, 3.4vw, 48px));
+  margin: 0;
+  border-radius: var(--radius);
+  padding: clamp(22px, 2.4vw, 34px) clamp(28px, 3.4vw, 48px);
   background: #181818;
 }
 
@@ -1862,7 +1863,7 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   }
 
   .footer-panel {
-    padding: 26px calc(var(--gap) + 30px);
+    padding: 26px 30px;
   }
 
   .profile-quick-stats {
@@ -3121,7 +3122,7 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   }
 
   .footer-panel {
-    padding: 32px calc(var(--gap) + 20px);
+    padding: 32px 20px;
   }
 
   .footer-inner {

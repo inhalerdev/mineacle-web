@@ -23,7 +23,7 @@ function mineacle_creator_queries(mixed $value): array
     $queries = array_map('trim', explode(',', (string) $value));
     $queries = array_values(array_filter($queries, static fn (string $query): bool => $query !== ''));
 
-    return $queries !== [] ? $queries : ['#mineacle', '#mineaclenetwork', 'mineacle', 'mineaclenetwork', 'mineacle network'];
+    return $queries !== [] ? $queries : ['#mineacle', '#mineaclenetwork', 'mineacle', 'mineaclenetwork'];
 }
 
 function mineacle_creator_fetch_json(string $url): ?array

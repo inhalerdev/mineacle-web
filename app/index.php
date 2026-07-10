@@ -165,7 +165,7 @@ mineacle_page_head('Home');
                 <?php endif; ?>
                 <div class="hero-copy">
                     <h1 class="hero-logo-title">
-                        <img src="<?php echo h(mineacle_home_versioned_url('/assets/brand/hero-logo-web.png', $heroAssetVersion)); ?>" alt="Mineacle Network">
+                        <img src="<?php echo h(mineacle_home_versioned_url('/assets/brand/hero-logo-web.png', $heroAssetVersion)); ?>" alt="Mineacle">
                     </h1>
                     <div class="hero-actions" aria-label="Server actions">
                         <button class="hero-action hero-action-primary hero-copy-ip" type="button" data-copy-server-ip data-server-ip="<?php echo h($minecraftIp); ?>" data-default-label="Play Now" data-copied-label="IP Copied" data-failed-label="Copy Failed" aria-label="Copy Mineacle server IP">
@@ -248,7 +248,7 @@ mineacle_page_head('Home');
                     <div class="footer-brand">
                         <img src="<?php echo h(mineacle_home_versioned_url('/assets/brand/mncl-studios-web.png', $heroAssetVersion)); ?>" alt="Mineacle Studios" draggable="false" loading="lazy" decoding="async">
                     </div>
-                    <p>Mineacle Studios is a small team of Minecraft developers building the custom systems behind the Mineacle Network. After over a year of trial, error, and refinement, we are creating a smooth, polished, community-driven survival experience while staying true to the Minecraft everyone already loves.</p>
+                    <p>Mineacle Studios is a small team of Minecraft developers building the custom systems behind Mineacle. After over a year of trial, error, and refinement, we are creating a smooth, polished, community-driven survival experience while staying true to the Minecraft everyone already loves.</p>
                     <div class="footer-socials" aria-label="Social links">
                         <?php foreach ($footerSocialLinks as $link): ?>
                             <a href="<?php echo h(mineacle_home_link($link['url'])); ?>" aria-label="<?php echo h($link['label']); ?>">
@@ -278,7 +278,7 @@ mineacle_page_head('Home');
                 <p class="footer-bottom">
                     <img src="assets/brand/nav-logo-web.png" alt="" aria-hidden="true">
                     <span>
-                        Copyright © <?php echo h((string) $year); ?> Mineacle Studios. All Rights Reserved. The Mineacle Network is not affiliated with or endorsed by Mojang Studios or Microsoft.
+                        Copyright © <?php echo h((string) $year); ?> Mineacle Studios. All Rights Reserved. Mineacle is not affiliated with or endorsed by Mojang Studios or Microsoft.
                         <span class="footer-policy-links">
                             <?php foreach ($footerLegalLinks as $link): ?>
                                 <a href="<?php echo h(mineacle_footer_link($link['url'])); ?>"><?php echo h($link['label']); ?></a>

@@ -71,7 +71,7 @@ return [
     ],
     'creators' => [
         'youtube_api_key' => $mineacleEnv(['YOUTUBE_API_KEY', 'youtube_api_key']),
-        'youtube_queries' => $mineacleEnv(['YOUTUBE_CREATOR_QUERIES', 'youtube_creator_queries'], '#mineacle,#mineaclenetwork,mineacle,mineaclenetwork,mineacle network'),
+        'youtube_queries' => $mineacleEnv(['YOUTUBE_CREATOR_QUERIES', 'youtube_creator_queries'], '#mineacle,#mineaclenetwork,mineacle,mineaclenetwork'),
         'youtube_limit' => (int) $mineacleEnv(['YOUTUBE_CREATOR_LIMIT', 'youtube_creator_limit'], '8'),
         'youtube_results_per_query' => (int) $mineacleEnv(['YOUTUBE_CREATOR_RESULTS_PER_QUERY', 'youtube_creator_results_per_query'], '6'),
     ],

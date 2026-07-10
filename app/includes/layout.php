@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base96';
+    return 'base97';
 }
 
 function mineacle_page_clean_text(string $value): string
@@ -231,7 +231,7 @@ function mineacle_page_footer(array $site): void
     echo '<div class="footer-inner">';
     echo '<section class="footer-about" aria-label="Mineacle Studios">';
     echo '<div class="footer-brand"><img src="' . h($footerLogoUrl) . '" alt="Mineacle Studios" draggable="false"></div>';
-    echo '<p>Mineacle Studios is a small team of Minecraft developers building the custom systems behind the Mineacle Network. After over a year of trial, error, and refinement, we are creating a smooth, polished, community-driven survival experience while staying true to the Minecraft everyone already loves.</p>';
+    echo '<p>Mineacle Studios is a small team of Minecraft developers building the custom systems behind Mineacle. After over a year of trial, error, and refinement, we are creating a smooth, polished, community-driven survival experience while staying true to the Minecraft everyone already loves.</p>';
     echo '<div class="footer-socials" aria-label="Social links">';
     foreach ($socialLinks as $link) {
         echo '<a href="' . h(mineacle_page_public_link($link['url'])) . '" aria-label="' . h($link['label']) . '">' . mineacle_page_icon((string) $link['key']) . '</a>';
@@ -250,7 +250,7 @@ function mineacle_page_footer(array $site): void
     echo '</a>';
     echo '</section>';
     echo '<p class="footer-bottom"><img src="/assets/brand/nav-logo-web.png" alt="" aria-hidden="true" draggable="false"><span>';
-    echo 'Copyright © ' . h((string) $year) . ' Mineacle Studios. All Rights Reserved. The Mineacle Network is not affiliated with or endorsed by Mojang Studios or Microsoft.';
+    echo 'Copyright © ' . h((string) $year) . ' Mineacle Studios. All Rights Reserved. Mineacle is not affiliated with or endorsed by Mojang Studios or Microsoft.';
     echo ' <span class="footer-policy-links">';
     foreach ($legalLinks as $link) {
         echo '<a href="' . h(mineacle_page_public_link($link['url'])) . '">' . h($link['label']) . '</a>';
