@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base102';
+    return 'base103';
 }
 
 function mineacle_page_clean_text(string $value): string
@@ -260,15 +260,18 @@ function mineacle_page_footer(array $site): void
     echo '</footer>';
 }
 
-function mineacle_page_head(string $title = 'Home'): void
+function mineacle_page_head(string $title = 'Home', array $options = []): void
 {
     mineacle_security_headers();
     $config = mineacle_config();
     $site = $config['site'] ?? [];
     $name = mineacle_page_clean_text((string) ($site['name'] ?? 'Mineacle')) ?: 'Mineacle';
-    $metaTitle = mineacle_page_meta_title($title, $name);
-    $metaDescription = mineacle_page_meta_description($title, $name);
-    $canonicalUrl = mineacle_page_canonical_url();
+    $customTitle = mineacle_page_clean_text((string) ($options['meta_title'] ?? ''));
+    $customDescription = mineacle_page_clean_text((string) ($options['meta_description'] ?? ''));
+    $customCanonical = trim((string) ($options['canonical_url'] ?? ''));
+    $metaTitle = $customTitle !== '' ? $customTitle : mineacle_page_meta_title($title, $name);
+    $metaDescription = $customDescription !== '' ? $customDescription : mineacle_page_meta_description($title, $name);
+    $canonicalUrl = $customCanonical !== '' ? $customCanonical : mineacle_page_canonical_url();
     $isAdmin = strcasecmp(mineacle_page_clean_text($title), 'Admin') === 0;
 
     echo '<!doctype html>';
@@ -288,8 +291,9 @@ function mineacle_page_head(string $title = 'Home'): void
     echo '<meta name="twitter:title" content="' . h($metaTitle) . '">';
     echo '<meta name="twitter:description" content="' . h($metaDescription) . '">';
 
-    if ($isAdmin) {
-        echo '<meta name="robots" content="noindex,nofollow">';
+    if ($isAdmin || ($options['robots'] ?? '') !== '') {
+        $robots = $isAdmin ? 'noindex,nofollow' : (string) $options['robots'];
+        echo '<meta name="robots" content="' . h($robots) . '">';
     }
 
     $assetVersion = mineacle_page_asset_version();

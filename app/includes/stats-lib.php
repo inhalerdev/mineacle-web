@@ -245,7 +245,7 @@ function mineacle_stats_team_online_members(PDO $pdo, array $teams): array
     return $members;
 }
 
-function mineacle_stats_profile_by_query(string $query): ?array
+function mineacle_stats_profile_by_username(string $username): ?array
 {
     $pdo = mineacle_core_db();
 
@@ -263,30 +263,16 @@ function mineacle_stats_profile_by_query(string $query): ?array
     }
 
     $columns = mineacle_stats_columns($pdo, $tableSql);
+    $usernameColumn = $columns['username'] ?? null;
+    $usernameSql = is_string($usernameColumn) ? mineacle_stats_column_sql($usernameColumn) : null;
+
+    if ($usernameSql === null) {
+        throw new RuntimeException('Player username column is not available.');
+    }
+
     $select = mineacle_stats_select_list($columns);
-    $where = [];
-    $params = [];
-
-    foreach (['uuid', 'username', 'display_name'] as $column) {
-        $actual = $columns[$column] ?? null;
-        $columnSql = is_string($actual) ? mineacle_stats_column_sql($actual) : null;
-
-        if ($columnSql === null) {
-            continue;
-        }
-
-        $param = ':' . $column;
-        $where[] = 'LOWER(' . $columnSql . ') = LOWER(' . $param . ')';
-        $params[$param] = $query;
-    }
-
-    if ($where === []) {
-        return null;
-    }
-
-    $sql = 'SELECT ' . $select . ' FROM ' . $tableSql . ' WHERE ' . implode(' OR ', $where) . ' LIMIT 1';
-    $statement = $pdo->prepare($sql);
-    $statement->execute($params);
+    $statement = $pdo->prepare('SELECT ' . $select . ' FROM ' . $tableSql . ' WHERE LOWER(' . $usernameSql . ') = LOWER(:username) LIMIT 1');
+    $statement->execute([':username' => $username]);
     $row = $statement->fetch();
 
     if (!is_array($row)) {
@@ -297,6 +283,77 @@ function mineacle_stats_profile_by_query(string $query): ?array
     $row['punishment_status'] = mineacle_stats_punishment_status($pdo, (string) ($row['uuid'] ?? ''));
 
     return $row;
+}
+
+function mineacle_stats_search_where(array $columns, array $candidates, string $search, array &$params): array
+{
+    $search = trim(substr($search, 0, 64));
+
+    if ($search === '') {
+        return [];
+    }
+
+    $parts = [];
+
+    foreach ($candidates as $candidate) {
+        $actual = $columns[strtolower((string) $candidate)] ?? null;
+        $columnSql = is_string($actual) ? mineacle_stats_column_sql($actual) : null;
+
+        if ($columnSql === null) {
+            continue;
+        }
+
+        $param = ':search' . count($params);
+        $parts[] = $columnSql . ' LIKE ' . $param;
+        $params[$param] = '%' . $search . '%';
+    }
+
+    return $parts === [] ? [] : ['(' . implode(' OR ', $parts) . ')'];
+}
+
+function mineacle_stats_players_count(string $sort = 'overall', string $search = ''): int
+{
+    $pdo = mineacle_core_db();
+
+    if (!$pdo instanceof PDO) {
+        throw new RuntimeException('Stats database is not connected.');
+    }
+
+    $config = mineacle_config();
+    $tables = $config['tables'] ?? [];
+    $table = (string) ($tables['player_profiles'] ?? 'mineacle_web_profiles');
+    $tableSql = mineacle_stats_table_sql($table);
+
+    if ($tableSql === null) {
+        throw new RuntimeException('Player profiles table is not available.');
+    }
+
+    $columns = mineacle_stats_columns($pdo, $tableSql);
+    $killsColumn = mineacle_stats_column_from_candidates($columns, ['kills']);
+    $killsSql = is_string($killsColumn) ? mineacle_stats_column_sql($killsColumn) : null;
+    $onlineColumn = mineacle_stats_column_from_candidates($columns, ['online']);
+    $onlineSql = is_string($onlineColumn) ? mineacle_stats_column_sql($onlineColumn) : null;
+    $params = [];
+    $where = mineacle_stats_search_where($columns, ['username', 'display_name', 'team_name'], $search, $params);
+
+    if ($sort === 'kd_qualified' && $killsSql !== null) {
+        $where[] = $killsSql . ' >= 25';
+    }
+
+    if ($sort === 'online' && $onlineSql !== null) {
+        $where[] = $onlineSql . ' = 1';
+    }
+
+    $sql = 'SELECT COUNT(*) FROM ' . $tableSql;
+
+    if ($where !== []) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+
+    $statement = $pdo->prepare($sql);
+    $statement->execute($params);
+
+    return max(0, (int) $statement->fetchColumn());
 }
 
 function mineacle_stats_players(int $limit = 25, int $offset = 0, string $sort = 'playtime', string $search = ''): array
@@ -420,11 +477,13 @@ function mineacle_stats_players(int $limit = 25, int $offset = 0, string $sort =
     } elseif ($sort === 'kills') {
         $appendOrder($killsSql !== null ? $killsSql . ' DESC' : null);
         $appendOrder($kdSql !== null ? $kdSql . ' DESC' : null);
+        $appendOrder($deathsSql !== null ? $deathsSql . ' ASC' : null);
     } elseif ($sort === 'deaths') {
         $appendOrder($deathsSql !== null ? $deathsSql . ' DESC' : null);
     } elseif ($sort === 'kd' || $sort === 'kd_qualified') {
         $appendOrder($kdSql !== null ? $kdSql . ' DESC' : null);
         $appendOrder($killsSql !== null ? $killsSql . ' DESC' : null);
+        $appendOrder($deathsSql !== null ? $deathsSql . ' ASC' : null);
     } elseif ($sort === 'rank') {
         $appendOrder($rankSql !== null ? $rankSql . ' DESC' : null);
     } elseif ($sort === 'team') {
@@ -478,6 +537,45 @@ function mineacle_stats_players(int $limit = 25, int $offset = 0, string $sort =
     return $players;
 }
 
+function mineacle_stats_teams_count(string $sort = 'overall', string $search = ''): int
+{
+    $pdo = mineacle_core_db();
+
+    if (!$pdo instanceof PDO) {
+        throw new RuntimeException('Stats database is not connected.');
+    }
+
+    $config = mineacle_config();
+    $tables = $config['tables'] ?? [];
+    $table = (string) ($tables['teams'] ?? 'mineacle_web_teams');
+    $tableSql = mineacle_stats_table_sql($table);
+
+    if ($tableSql === null) {
+        throw new RuntimeException('Teams table is not available.');
+    }
+
+    $columns = mineacle_stats_columns($pdo, $tableSql);
+    $killsColumn = mineacle_stats_column_from_candidates($columns, ['total_kills', 'kills', 'team_kills']);
+    $killsSql = is_string($killsColumn) ? mineacle_stats_column_sql($killsColumn) : null;
+    $params = [];
+    $where = mineacle_stats_search_where($columns, ['team_name', 'name', 'display_name', 'tag', 'team_tag', 'owner_name', 'leader_name'], $search, $params);
+
+    if ($sort === 'kd_qualified' && $killsSql !== null) {
+        $where[] = $killsSql . ' >= 25';
+    }
+
+    $sql = 'SELECT COUNT(*) FROM ' . $tableSql;
+
+    if ($where !== []) {
+        $sql .= ' WHERE ' . implode(' AND ', $where);
+    }
+
+    $statement = $pdo->prepare($sql);
+    $statement->execute($params);
+
+    return max(0, (int) $statement->fetchColumn());
+}
+
 function mineacle_stats_teams(int $limit = 50, int $offset = 0, string $sort = 'overall', string $search = ''): array
 {
     $pdo = mineacle_core_db();
@@ -497,13 +595,15 @@ function mineacle_stats_teams(int $limit = 50, int $offset = 0, string $sort = '
 
     $columns = mineacle_stats_columns($pdo, $tableSql);
     $select = mineacle_stats_team_select_list($columns);
-    $sort = in_array($sort, ['overall', 'balance', 'capital', 'kills', 'kd', 'kd_qualified', 'members', 'activity', 'online', 'updated', 'name'], true)
+    $sort = in_array($sort, ['overall', 'balance', 'capital', 'kills', 'kd', 'kd_qualified', 'members', 'online', 'updated', 'name'], true)
         ? $sort
         : 'overall';
     $nameColumn = mineacle_stats_column_from_candidates($columns, ['team_name', 'name', 'display_name']);
     $nameSql = is_string($nameColumn) ? mineacle_stats_column_sql($nameColumn) : null;
     $killsColumn = mineacle_stats_column_from_candidates($columns, ['total_kills', 'kills', 'team_kills']);
     $killsSql = is_string($killsColumn) ? mineacle_stats_column_sql($killsColumn) : null;
+    $deathsColumn = mineacle_stats_column_from_candidates($columns, ['total_deaths', 'deaths', 'team_deaths']);
+    $deathsSql = is_string($deathsColumn) ? mineacle_stats_column_sql($deathsColumn) : null;
     $balanceColumn = mineacle_stats_column_from_candidates($columns, ['total_balance_cents', 'balance_cents', 'bank_balance_cents', 'team_balance_cents']);
     $balanceSql = is_string($balanceColumn) ? mineacle_stats_column_sql($balanceColumn) : null;
     $kdColumn = mineacle_stats_column_from_candidates($columns, ['kd_ratio', 'kdr', 'team_kd_ratio']);
@@ -566,12 +666,14 @@ function mineacle_stats_teams(int $limit = 50, int $offset = 0, string $sort = '
     } elseif ($sort === 'kills') {
         $appendOrder($killsSql !== null ? $killsSql . ' DESC' : null);
         $appendOrder($kdSql !== null ? $kdSql . ' DESC' : null);
+        $appendOrder($deathsSql !== null ? $deathsSql . ' ASC' : null);
     } elseif ($sort === 'kd' || $sort === 'kd_qualified') {
         $appendOrder($kdSql !== null ? $kdSql . ' DESC' : null);
         $appendOrder($killsSql !== null ? $killsSql . ' DESC' : null);
+        $appendOrder($deathsSql !== null ? $deathsSql . ' ASC' : null);
     } elseif ($sort === 'members') {
         $appendOrder($membersSql !== null ? $membersSql . ' DESC' : null);
-    } elseif ($sort === 'activity' || $sort === 'online') {
+    } elseif ($sort === 'online') {
         $appendOrder($onlineMembersSql !== null ? $onlineMembersSql . ' DESC' : null);
         $appendOrder($membersSql !== null ? $membersSql . ' DESC' : null);
         $appendOrder($updatedSql !== null ? $updatedSql . ' DESC' : null);
@@ -637,7 +739,7 @@ function mineacle_players(int $limit = 25, int $offset = 0, string $sort = 'play
 
 function mineacle_player(string $query): ?array
 {
-    return mineacle_stats_profile_by_query($query);
+    return mineacle_stats_profile_by_username($query);
 }
 
 function mineacle_stats_username(array $player): string

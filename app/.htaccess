@@ -4,7 +4,7 @@ RewriteRule ^admin/?$ admin.php [L,QSA]
 RewriteRule ^leaderboards/?$ leaderboards.php [L,QSA]
 RewriteRule ^players/?$ /leaderboards.php [R=302,L]
 RewriteRule ^player/?$ player.php [L,QSA]
-RewriteRule ^player/([^/]+)/?$ player.php?name=$1 [L,QSA]
+RewriteRule ^player/([^/]+)/?$ player.php?username=$1 [L,QSA]
 
 <IfModule mod_expires.c>
     ExpiresActive On
