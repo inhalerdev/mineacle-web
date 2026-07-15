@@ -1869,10 +1869,6 @@ a[aria-label="Discord"]:focus-visible .site-icon {
     padding: 26px 30px;
   }
 
-  .profile-quick-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .admin-grid {
     grid-template-columns: 1fr;
   }
@@ -1882,118 +1878,97 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   align-content: start;
 }
 
-.profile-hero {
-  min-height: clamp(360px, 31vw, 520px);
+.profile-dashboard {
   display: grid;
-  grid-template-columns: minmax(250px, 30%) minmax(0, 1fr);
   gap: var(--gap);
-  align-items: stretch;
-  padding: clamp(28px, 4vw, 52px);
 }
 
-.profile-skin-card {
-  min-height: 280px;
+.profile-overview-card {
+  min-height: clamp(260px, 24vw, 350px);
   display: grid;
-  place-items: end center;
-  border-radius: var(--radius);
+  grid-template-columns: clamp(120px, 13vw, 190px) minmax(0, 1fr) minmax(300px, 0.36fr);
+  gap: clamp(22px, 3vw, 52px);
+  align-items: center;
+  padding: clamp(28px, 3vw, 48px);
   background:
-    radial-gradient(circle at 50% 64%, rgba(123, 60, 255, 0.2), transparent 48%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+    radial-gradient(circle at 88% 20%, rgba(255, 85, 255, 0.08), transparent 36%),
+    linear-gradient(135deg, rgba(18, 20, 27, 0.98), rgba(13, 14, 18, 0.96));
 }
 
-.profile-skin-card img {
-  width: min(72%, 230px);
-  max-height: 310px;
+.profile-avatar-card {
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.055);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.profile-avatar-card img {
+  width: 100%;
+  height: 100%;
   display: block;
-  object-fit: contain;
   image-rendering: pixelated;
+  object-fit: cover;
+}
+
+.profile-avatar-card span {
+  color: var(--heading);
+  font-size: clamp(3rem, 2rem + 4vw, 6rem);
+  font-weight: 800;
+  line-height: 1;
 }
 
 .profile-identity {
   min-width: 0;
   display: grid;
   align-content: center;
+  justify-items: start;
   gap: 12px;
 }
 
-.profile-identity .profile-kicker {
-  margin: 0;
-  color: var(--subtext);
-  font-size: 0.72rem;
-  font-weight: 800;
-  line-height: 1;
-  text-transform: uppercase;
-}
-
 .profile-identity h1 {
+  max-width: 100%;
+  overflow-wrap: anywhere;
   margin: 0;
   color: var(--heading);
-  font-size: clamp(2rem, 1.1rem + 3vw, 4.3rem);
+  font-size: clamp(2.3rem, 1.35rem + 2.55vw, 4.35rem);
   line-height: 0.98;
 }
 
 .profile-identity p {
+  max-width: 720px;
   margin: 0;
   color: var(--subtext);
   font-size: var(--ui-font-size);
   font-weight: var(--ui-font-weight);
-}
-
-.profile-online {
-  min-height: var(--control-height);
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  color: var(--subtext);
-  font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
-  line-height: 1;
-}
-
-.profile-online span {
-  position: relative;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--offline);
-}
-
-.profile-online span::after {
-  content: "";
-  position: absolute;
-  inset: -6px;
-  border-radius: inherit;
-  border: 1px solid rgba(255, 75, 75, 0.34);
-  opacity: 0;
-  animation: status-pulse 1.9s ease-out infinite;
-}
-
-.profile-online.is-online span {
-  background: var(--online);
-}
-
-.profile-online.is-online span::after {
-  border-color: rgba(75, 227, 106, 0.34);
+  line-height: 1.55;
 }
 
 .profile-pills {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 6px;
 }
 
 .profile-pill {
   min-height: 34px;
   display: inline-flex;
   align-items: center;
-  border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 0 12px;
-  background: rgba(255, 255, 255, 0.045);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 0 1px var(--line);
   color: var(--heading);
   font-size: var(--ui-font-size);
   font-weight: var(--ui-font-weight);
+  line-height: 1;
+}
+
+.profile-pill.is-rank {
+  background: rgba(255, 85, 255, 0.2);
+  color: #ff88ff;
 }
 
 .profile-pill.is-clear {
@@ -2012,142 +1987,253 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   color: var(--subtext);
 }
 
-.profile-quick-stats {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 18px;
-  margin-top: 12px;
-  padding-top: 22px;
-  border-top: 1px solid var(--line);
-}
-
-.profile-quick-stat {
-  min-width: 0;
-  display: grid;
-  gap: 6px;
-}
-
-.profile-quick-stat span {
-  min-width: 0;
-  overflow: hidden;
+.profile-online,
+.profile-meta-line {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
   color: var(--subtext);
-  font-size: 0.72rem;
-  font-weight: 800;
-  line-height: 1;
-  text-overflow: ellipsis;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-
-.profile-quick-stat strong {
-  min-width: 0;
-  overflow-wrap: anywhere;
-  color: var(--heading);
-  font-size: clamp(1.08rem, 0.94rem + 0.38vw, 1.34rem);
-  font-weight: 800;
-  line-height: 1.05;
-}
-
-.profile-content-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--gap);
-}
-
-.profile-section {
-  display: grid;
-  gap: 18px;
-  align-content: start;
-  padding: clamp(22px, 2.5vw, 34px);
-  background: var(--panel);
-  box-shadow: inset 0 0 0 1px var(--line);
-}
-
-.profile-section-wide {
-  grid-column: 1 / -1;
-}
-
-.profile-section h2 {
-  margin: 0;
-  color: var(--heading);
-  font-size: clamp(1rem, 0.9rem + 0.35vw, 1.28rem);
-  font-weight: 800;
-  line-height: 1;
-}
-
-.profile-stat-list {
-  display: grid;
-}
-
-.profile-stat-list.is-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0 22px;
-}
-
-.profile-stat-row {
-  min-width: 0;
-  min-height: 46px;
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 0;
-  border-top: 1px solid var(--line);
-}
-
-.profile-stat-row:first-child,
-.profile-stat-list.is-grid .profile-stat-row:nth-child(-n + 2) {
-  border-top: 0;
-}
-
-.profile-stat-row span,
-.profile-stat-row strong {
-  min-width: 0;
   font-size: var(--ui-font-size);
   font-weight: var(--ui-font-weight);
   line-height: 1.25;
 }
 
-.profile-stat-row span {
-  color: var(--subtext);
+.profile-online > span {
+  width: 9px;
+  height: 9px;
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--offline);
 }
 
-.profile-stat-row strong {
-  max-width: 62%;
-  overflow-wrap: anywhere;
-  color: var(--heading);
-  text-align: right;
+.profile-online.is-online > span {
+  background: var(--online);
 }
 
-.profile-stat-grid {
+.profile-meta-line {
+  gap: 12px;
+}
+
+.profile-meta-line span + span::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  display: inline-block;
+  margin-right: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  vertical-align: middle;
+}
+
+.profile-team-card {
+  min-width: 0;
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: var(--gap);
-}
-
-.profile-stat {
-  min-height: 112px;
-  display: grid;
-  align-content: center;
-  gap: 10px;
-  padding: 18px;
+  gap: 11px;
   border-radius: var(--radius);
-  background: var(--panel);
+  padding: clamp(18px, 2vw, 28px);
+  background: rgba(0, 0, 0, 0.16);
   box-shadow: inset 0 0 0 1px var(--line);
 }
 
-.profile-stat span {
-  color: var(--subtext);
-  font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
+.profile-team-card h2,
+.profile-panel-heading h2 {
+  margin: 0;
+  color: var(--heading);
+  font-size: clamp(1rem, 0.9rem + 0.38vw, 1.28rem);
+  font-weight: 800;
+  line-height: 1.05;
 }
 
-.profile-stat strong {
+.profile-team-card h2 {
+  color: #ff55ff;
+}
+
+.profile-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: 0;
+  padding: clamp(22px, 2.6vw, 34px);
+  background: linear-gradient(135deg, rgba(18, 20, 27, 0.98), rgba(13, 14, 18, 0.96));
+}
+
+.profile-stat-tile {
+  min-width: 0;
+  display: grid;
+  justify-items: center;
+  gap: 7px;
+  padding: 0 clamp(12px, 1.4vw, 24px);
+  text-align: center;
+}
+
+.profile-stat-tile + .profile-stat-tile {
+  border-left: 1px solid var(--line);
+}
+
+.profile-stat-tile span {
+  color: var(--subtext);
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.profile-stat-tile strong {
   min-width: 0;
   overflow-wrap: anywhere;
   color: var(--heading);
-  font-size: clamp(1rem, 0.92rem + 0.3vw, 1.25rem);
-  line-height: 1.1;
+  font-size: clamp(1.45rem, 1.05rem + 1vw, 2.2rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+.profile-stat-tile small {
+  color: var(--subtext);
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+  line-height: 1.25;
+}
+
+.profile-stat-tile.is-accent strong {
+  color: #ff55ff;
+}
+
+.profile-lower-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(330px, 0.62fr);
+  gap: var(--gap);
+}
+
+.profile-table-card {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+  padding: clamp(22px, 2.5vw, 34px);
+  background: linear-gradient(135deg, rgba(18, 20, 27, 0.98), rgba(13, 14, 18, 0.96));
+}
+
+.profile-panel-heading h2::after {
+  content: "";
+  width: 54px;
+  height: 2px;
+  display: block;
+  margin-top: 12px;
+  border-radius: 999px;
+  background: #ff55ff;
+}
+
+.profile-combat-table {
+  display: grid;
+}
+
+.profile-combat-table > div,
+.profile-snapshot-row {
+  min-width: 0;
+  min-height: 50px;
+  display: grid;
+  gap: 14px;
+  align-items: center;
+  border-top: 1px solid var(--line);
+}
+
+.profile-combat-table > div {
+  grid-template-columns: minmax(150px, 1fr) minmax(110px, 0.72fr) minmax(130px, 0.72fr);
+}
+
+.profile-snapshot-row {
+  grid-template-columns: minmax(0, 1fr) minmax(120px, auto);
+}
+
+.profile-combat-table > div:first-child,
+.profile-snapshot-row:first-child {
+  border-top: 0;
+}
+
+.profile-combat-table span,
+.profile-combat-table strong,
+.profile-snapshot-row span,
+.profile-snapshot-row strong {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  color: var(--subtext);
+  font-size: var(--ui-font-size);
+  font-weight: var(--ui-font-weight);
+  line-height: 1.3;
+}
+
+.profile-combat-table strong,
+.profile-snapshot-row strong {
+  color: var(--heading);
+}
+
+.profile-snapshot-row strong {
+  text-align: right;
+}
+
+.profile-snapshot-list {
+  display: grid;
+}
+
+@media (max-width: 1280px) {
+  .profile-overview-card {
+    grid-template-columns: clamp(112px, 15vw, 170px) minmax(0, 1fr);
+  }
+
+  .profile-team-card {
+    grid-column: 1 / -1;
+  }
+
+  .profile-stat-strip {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px 0;
+  }
+
+  .profile-stat-tile:nth-child(4) {
+    border-left: 0;
+  }
+
+  .profile-lower-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 980px) {
+  .profile-overview-card {
+    grid-template-columns: 1fr;
+    justify-items: start;
+  }
+
+  .profile-avatar-card {
+    width: min(140px, 46vw);
+  }
+
+  .profile-stat-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-stat-tile:nth-child(odd) {
+    border-left: 0;
+  }
+
+  .profile-combat-table > div {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 12px 0;
+  }
+
+  .profile-snapshot-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 12px 0;
+  }
+
+  .profile-snapshot-row strong {
+    text-align: left;
+  }
+
+  .profile-meta-line span + span::before {
+    display: none;
+  }
 }
 
 .profile-message {
@@ -3204,27 +3290,6 @@ a[aria-label="Discord"]:focus-visible .site-icon {
     width: 100%;
   }
 
-  .profile-stat-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .profile-hero,
-  .profile-content-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-section-wide {
-    grid-column: auto;
-  }
-
-  .profile-stat-list.is-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-stat-list.is-grid .profile-stat-row:nth-child(2) {
-    border-top: 1px solid var(--line);
-  }
-
   .players-filter {
     grid-template-columns: 1fr;
   }
@@ -3295,17 +3360,8 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 
   .hero-panel,
   .announcement-card,
-  .world-card,
-  .profile-skin-card {
+  .world-card {
     min-height: 190px;
-  }
-
-  .profile-stat-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .profile-quick-stats {
-    grid-template-columns: 1fr;
   }
 
   .player-card {

@@ -245,6 +245,167 @@ function mineacle_stats_team_online_members(PDO $pdo, array $teams): array
     return $members;
 }
 
+function mineacle_stats_team_money_label(array $team): string
+{
+    $formatted = trim((string) ($team['balance_formatted'] ?? ''));
+
+    if ($formatted !== '') {
+        return $formatted;
+    }
+
+    $cents = mineacle_stats_int($team['balance_cents'] ?? 0);
+
+    if ($cents > 0) {
+        return '$' . number_format($cents / 100, 2);
+    }
+
+    return '$' . number_format(mineacle_stats_float($team['balance'] ?? 0), 2);
+}
+
+function mineacle_stats_kd_label(int $kills, int $deaths, mixed $stored = null): string
+{
+    $ratio = mineacle_stats_float($stored);
+
+    if ($ratio <= 0 && ($kills > 0 || $deaths > 0)) {
+        $ratio = $kills / max(1, $deaths);
+    }
+
+    return number_format($ratio, 2);
+}
+
+function mineacle_stats_team_rank(PDO $pdo, string $tableSql, array $columns, array $team): int
+{
+    $teamId = trim((string) ($team['team_id'] ?? ''));
+    $teamName = trim((string) ($team['name'] ?? ''));
+    $teamIdColumn = mineacle_stats_column_from_candidates($columns, ['team_id', 'id', 'uuid']);
+    $teamIdSql = is_string($teamIdColumn) ? mineacle_stats_column_sql($teamIdColumn) : null;
+    $nameColumn = mineacle_stats_column_from_candidates($columns, ['team_name', 'name', 'display_name']);
+    $nameSql = is_string($nameColumn) ? mineacle_stats_column_sql($nameColumn) : null;
+    $balanceColumn = mineacle_stats_column_from_candidates($columns, ['total_balance_cents', 'balance_cents', 'bank_balance_cents', 'team_balance_cents']);
+    $balanceSql = is_string($balanceColumn) ? mineacle_stats_column_sql($balanceColumn) : null;
+    $kdColumn = mineacle_stats_column_from_candidates($columns, ['kd_ratio', 'kdr', 'team_kd_ratio']);
+    $kdSql = is_string($kdColumn) ? mineacle_stats_column_sql($kdColumn) : null;
+    $killsColumn = mineacle_stats_column_from_candidates($columns, ['total_kills', 'kills', 'team_kills']);
+    $killsSql = is_string($killsColumn) ? mineacle_stats_column_sql($killsColumn) : null;
+    $membersColumn = mineacle_stats_column_from_candidates($columns, ['member_count', 'members', 'total_members', 'players']);
+    $membersSql = is_string($membersColumn) ? mineacle_stats_column_sql($membersColumn) : null;
+    $select = [
+        $teamIdSql !== null ? $teamIdSql . ' AS team_id' : "'' AS team_id",
+        $nameSql !== null ? $nameSql . ' AS name' : "'' AS name",
+    ];
+    $order = [];
+
+    foreach ([$balanceSql, $kdSql, $killsSql, $membersSql] as $columnSql) {
+        if ($columnSql !== null) {
+            $order[] = $columnSql . ' DESC';
+        }
+    }
+
+    if ($nameSql !== null) {
+        $order[] = $nameSql . ' ASC';
+    }
+
+    if ($order === []) {
+        return 0;
+    }
+
+    try {
+        $statement = $pdo->query('SELECT ' . implode(', ', $select) . ' FROM ' . $tableSql . ' ORDER BY ' . implode(', ', $order) . ' LIMIT 500');
+    } catch (Throwable) {
+        return 0;
+    }
+
+    foreach ($statement->fetchAll() as $index => $row) {
+        $rowTeamId = trim((string) ($row['team_id'] ?? ''));
+        $rowName = trim((string) ($row['name'] ?? ''));
+
+        if (($teamId !== '' && strcasecmp($rowTeamId, $teamId) === 0) || ($teamName !== '' && strcasecmp($rowName, $teamName) === 0)) {
+            return $index + 1;
+        }
+    }
+
+    return 0;
+}
+
+function mineacle_stats_team_by_profile(array $player): ?array
+{
+    $teamId = trim((string) ($player['team_id'] ?? ''));
+    $teamName = trim((string) ($player['team_name'] ?? ''));
+
+    if ($teamId === '' && ($teamName === '' || strcasecmp($teamName, 'No Team') === 0)) {
+        return null;
+    }
+
+    $pdo = mineacle_core_db();
+
+    if (!$pdo instanceof PDO) {
+        return null;
+    }
+
+    $config = mineacle_config();
+    $tables = $config['tables'] ?? [];
+    $table = (string) ($tables['teams'] ?? 'mineacle_web_teams');
+    $tableSql = mineacle_stats_table_sql($table);
+
+    if ($tableSql === null) {
+        return null;
+    }
+
+    try {
+        $columns = mineacle_stats_columns($pdo, $tableSql);
+    } catch (Throwable) {
+        return null;
+    }
+
+    $select = mineacle_stats_team_select_list($columns);
+    $where = [];
+    $params = [];
+    $teamIdColumn = mineacle_stats_column_from_candidates($columns, ['team_id', 'id', 'uuid']);
+    $teamIdSql = is_string($teamIdColumn) ? mineacle_stats_column_sql($teamIdColumn) : null;
+    $nameColumn = mineacle_stats_column_from_candidates($columns, ['team_name', 'name', 'display_name']);
+    $nameSql = is_string($nameColumn) ? mineacle_stats_column_sql($nameColumn) : null;
+
+    if ($teamId !== '' && $teamIdSql !== null) {
+        $where[] = 'LOWER(' . $teamIdSql . ') = LOWER(:team_id)';
+        $params[':team_id'] = $teamId;
+    }
+
+    if ($teamName !== '' && $nameSql !== null) {
+        $where[] = 'LOWER(' . $nameSql . ') = LOWER(:team_name)';
+        $params[':team_name'] = $teamName;
+    }
+
+    if ($where === []) {
+        return null;
+    }
+
+    try {
+        $statement = $pdo->prepare('SELECT ' . $select . ' FROM ' . $tableSql . ' WHERE ' . implode(' OR ', $where) . ' LIMIT 1');
+        $statement->execute($params);
+        $team = $statement->fetch();
+    } catch (Throwable) {
+        return null;
+    }
+
+    if (!is_array($team)) {
+        return null;
+    }
+
+    $onlineMembers = mineacle_stats_team_online_members($pdo, [$team]);
+    $matchedTeamId = trim((string) ($team['team_id'] ?? ''));
+    $members = $matchedTeamId !== '' ? ($onlineMembers[$matchedTeamId] ?? []) : [];
+
+    $team['online_member_list'] = $members;
+
+    if (mineacle_stats_int($team['online_members'] ?? 0) <= 0 && $members !== []) {
+        $team['online_members'] = count($members);
+    }
+
+    $team['rank'] = mineacle_stats_team_rank($pdo, $tableSql, $columns, $team);
+
+    return $team;
+}
+
 function mineacle_stats_profile_by_username(string $username): ?array
 {
     $pdo = mineacle_core_db();
