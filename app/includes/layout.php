@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base104';
+    return 'base105';
 }
 
 function mineacle_page_clean_text(string $value): string
@@ -115,31 +115,31 @@ function mineacle_page_leaderboards_url(array $site = []): string
     }
 
     if ($value === '' || in_array($normalized, ['leaderboards', 'leaderboards.php', 'players', 'players.php'], true)) {
-        return 'https://mineacle.net/leaderboards.php';
+        return 'https://mineacle.net/leaderboards';
     }
 
     $safe = mineacle_page_public_link($value);
 
     if ($safe === '#') {
-        return 'https://mineacle.net/leaderboards.php';
+        return 'https://mineacle.net/leaderboards';
     }
 
     if (mineacle_page_is_local_host($safe)) {
-        return 'https://mineacle.net/leaderboards.php';
+        return 'https://mineacle.net/leaderboards';
     }
 
     if ($safe === '/leaderboards' || $safe === '/players' || $safe === '/players.php') {
-        return 'https://mineacle.net/leaderboards.php';
+        return 'https://mineacle.net/leaderboards';
     }
 
     if ($safe === '/leaderboards.php') {
-        return 'https://mineacle.net/leaderboards.php';
+        return 'https://mineacle.net/leaderboards';
     }
 
     $path = parse_url($safe, PHP_URL_PATH);
 
     if (is_string($path) && in_array($path, ['/leaderboards', '/leaderboards.php', '/players', '/players.php'], true)) {
-        return 'https://mineacle.net/leaderboards.php';
+        return 'https://mineacle.net/leaderboards';
     }
 
     return $safe;

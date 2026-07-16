@@ -8,6 +8,14 @@ require_once __DIR__ . '/includes/stats-lib.php';
 $site = mineacle_config()['site'] ?? [];
 $homeUrl = mineacle_page_home_url($site);
 $leaderboardsUrl = mineacle_page_leaderboards_url($site);
+$directPath = parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
+
+if ($directPath === '/leaderboards.php') {
+    $queryString = trim((string) ($_SERVER['QUERY_STRING'] ?? ''));
+    header('Location: https://mineacle.net/leaderboards' . ($queryString !== '' ? '?' . $queryString : ''), true, 301);
+    exit;
+}
+
 $rawCategory = strtolower(trim((string) ($_GET['category'] ?? '')));
 $legacyView = strtolower(trim((string) ($_GET['view'] ?? '')));
 $legacyScope = strtolower(trim((string) ($_GET['scope'] ?? '')));
@@ -220,7 +228,7 @@ function mineacle_leaderboards_url(string $category, string $view = '', string $
         $params['page'] = $page;
     }
 
-    return 'https://mineacle.net/leaderboards.php?' . http_build_query($params);
+    return 'https://mineacle.net/leaderboards?' . http_build_query($params);
 }
 
 function mineacle_leaderboards_money_from_cents(int $cents): string

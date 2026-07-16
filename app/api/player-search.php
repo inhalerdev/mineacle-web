@@ -146,12 +146,12 @@ function mineacle_player_skin_size(mixed $value, int $fallback): int
 
 function mineacle_player_skin_assets(?string $uuid, string $name, array $config): array
 {
-    $provider = strtolower(trim((string) ($config['provider'] ?? 'mineskin')));
+    $provider = strtolower(trim((string) ($config['provider'] ?? 'crafty')));
     $headSize = mineacle_player_skin_size($config['head_size'] ?? null, 64);
     $chestSize = mineacle_player_skin_size($config['chest_size'] ?? null, 180);
 
-    if (!in_array($provider, ['mineskin', 'minotar', 'mc-heads', 'crafatar'], true)) {
-        $provider = 'mineskin';
+    if (!in_array($provider, ['crafty', 'mineskin', 'minotar', 'mc-heads', 'crafatar'], true)) {
+        $provider = 'crafty';
     }
 
     $uuidOnly = $provider === 'crafatar';
@@ -162,6 +162,16 @@ function mineacle_player_skin_assets(?string $uuid, string $name, array $config)
             'provider' => $provider,
             'head' => null,
             'chest' => null,
+            'bust' => null,
+        ];
+    }
+
+    if ($provider === 'crafty') {
+        return [
+            'provider' => $provider,
+            'head' => 'https://render.crafty.gg/2d/head/' . $identifier . '?size=' . $headSize,
+            'chest' => 'https://render.crafty.gg/3d/bust/' . $identifier . '?width=' . $chestSize . '&height=' . max(240, $chestSize + 120) . '&x=-25&z=35&shadow=false',
+            'bust' => 'https://render.crafty.gg/3d/bust/' . $identifier . '?width=520&height=620&x=-25&z=35&shadow=false',
         ];
     }
 
@@ -170,6 +180,7 @@ function mineacle_player_skin_assets(?string $uuid, string $name, array $config)
             'provider' => $provider,
             'head' => 'https://minotar.net/helm/' . $identifier . '/' . $headSize . '.png',
             'chest' => 'https://minotar.net/armor/bust/' . $identifier . '/' . $chestSize . '.png',
+            'bust' => 'https://minotar.net/armor/bust/' . $identifier . '/' . $chestSize . '.png',
         ];
     }
 
@@ -178,6 +189,7 @@ function mineacle_player_skin_assets(?string $uuid, string $name, array $config)
             'provider' => $provider,
             'head' => 'https://mc-heads.net/avatar/' . $identifier . '/' . $headSize . '.png',
             'chest' => 'https://mc-heads.net/body/' . $identifier . '/' . $chestSize . '.png',
+            'bust' => 'https://mc-heads.net/body/' . $identifier . '/' . $chestSize . '.png',
         ];
     }
 
@@ -186,6 +198,7 @@ function mineacle_player_skin_assets(?string $uuid, string $name, array $config)
             'provider' => $provider,
             'head' => 'https://crafatar.com/renders/head/' . $identifier . '?scale=4&overlay',
             'chest' => 'https://crafatar.com/renders/body/' . $identifier . '?scale=4&overlay',
+            'bust' => 'https://crafatar.com/renders/body/' . $identifier . '?scale=4&overlay',
         ];
     }
 
@@ -193,6 +206,7 @@ function mineacle_player_skin_assets(?string $uuid, string $name, array $config)
         'provider' => $provider,
         'head' => 'https://mineskin.eu/helm/' . $identifier . '/' . $headSize . '.png',
         'chest' => 'https://mineskin.eu/armor/bust/' . $identifier . '/' . $chestSize . '.png',
+        'bust' => 'https://mineskin.eu/armor/bust/' . $identifier . '/' . $chestSize . '.png',
     ];
 }
 

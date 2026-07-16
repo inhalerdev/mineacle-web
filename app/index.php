@@ -2,6 +2,29 @@
 
 declare(strict_types=1);
 
+$frontPath = parse_url((string) ($_SERVER['REQUEST_URI'] ?? '/'), PHP_URL_PATH);
+$frontPath = is_string($frontPath) ? rtrim($frontPath, '/') : '';
+
+if ($frontPath === '') {
+    $frontPath = '/';
+}
+
+if (preg_match('#^/player/([A-Za-z0-9_]{1,32})$#', $frontPath, $frontMatch) === 1) {
+    $_GET['username'] = rawurldecode($frontMatch[1]);
+    require __DIR__ . '/player.php';
+    exit;
+}
+
+if ($frontPath === '/player') {
+    require __DIR__ . '/player.php';
+    exit;
+}
+
+if ($frontPath === '/leaderboards' || $frontPath === '/players') {
+    require __DIR__ . '/leaderboards.php';
+    exit;
+}
+
 require_once __DIR__ . '/includes/layout.php';
 require_once __DIR__ . '/includes/home-data.php';
 

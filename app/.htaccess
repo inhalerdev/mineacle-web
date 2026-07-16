@@ -1,8 +1,12 @@
 RewriteEngine On
 RewriteRule ^admin\.php$ /admin [R=302,L]
 RewriteRule ^admin/?$ admin.php [L,QSA]
+RewriteCond %{THE_REQUEST} \s/+leaderboards\.php[?\s] [NC]
+RewriteRule ^leaderboards\.php$ /leaderboards [R=302,L]
+RewriteCond %{THE_REQUEST} \s/+player\.php\?username=([^&\s]+) [NC]
+RewriteRule ^player\.php$ /player/%1? [R=302,L]
 RewriteRule ^leaderboards/?$ leaderboards.php [L,QSA]
-RewriteRule ^players/?$ /leaderboards.php [R=302,L]
+RewriteRule ^players/?$ /leaderboards [R=302,L]
 RewriteRule ^player/?$ player.php [L,QSA]
 RewriteRule ^player/([^/]+)/?$ player.php?username=$1 [L,QSA]
 

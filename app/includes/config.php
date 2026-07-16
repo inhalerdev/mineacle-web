@@ -30,7 +30,7 @@ return [
     'site' => [
         'name' => $mineacleEnv(['SITE_NAME', 'site_name'], 'Mineacle'),
         'home_url' => $mineacleEnv(['HOME_URL', 'home_url'], 'https://mineacle.net/'),
-        'stats_url' => $mineacleEnv(['STATS_URL', 'stats_url'], 'https://mineacle.net/leaderboards.php'),
+        'stats_url' => $mineacleEnv(['STATS_URL', 'stats_url'], 'https://mineacle.net/leaderboards'),
         'store_url' => $mineacleEnv(['STORE_URL', 'store_url'], 'https://store.mineacle.net/'),
         'bans_url' => $mineacleEnv(['BANS_URL', 'bans_url'], '#'),
         'vote_url' => $mineacleEnv(['VOTE_URL', 'vote_url'], '#'),
@@ -85,7 +85,7 @@ return [
         'password_hash' => $mineacleEnv(['ADMIN_PASSWORD_HASH', 'admin_password_hash']),
     ],
     'skins' => [
-        'provider' => strtolower($mineacleEnv(['SKIN_PROVIDER', 'skin_provider'], 'mineskin')),
+        'provider' => strtolower($mineacleEnv(['SKIN_PROVIDER', 'skin_provider'], 'crafty')),
         'head_size' => (int) $mineacleEnv(['SKIN_HEAD_SIZE', 'skin_head_size'], '64'),
         'chest_size' => (int) $mineacleEnv(['SKIN_CHEST_SIZE', 'skin_chest_size'], '180'),
     ],
