@@ -193,7 +193,7 @@ function mineacle_profile_view_model(array $player, ?array $team): array
     return [
         'username' => mineacle_stats_username($player),
         'display_name' => $displayName,
-        'headline' => $rankName . ' ' . $displayName,
+        'ranked_name_html' => mineacle_stats_ranked_name_html($player, 'profile-ranked-name'),
         'rank_name' => $rankName,
         'skin_head' => trim((string) ($skin['head'] ?? '')),
         'skin_bust' => trim((string) (($skin['bust'] ?? '') ?: ($skin['chest'] ?? ''))),
@@ -328,7 +328,7 @@ mineacle_page_head($pageTitle, $metaOptions);
                 </div>
 
                 <div class="profile-player-lockup">
-                    <h1><?php echo h((string) $viewModel['headline']); ?></h1>
+                    <h1><?php echo $viewModel['ranked_name_html']; ?></h1>
                     <div class="profile-state-lines">
                         <p>
                             <strong class="<?php echo $viewModel['online'] ? 'is-online' : 'is-offline'; ?>"><?php echo h((string) $viewModel['status_label']); ?></strong>

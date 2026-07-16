@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 require_once __DIR__ . '/../includes/db.php';
+require_once __DIR__ . '/../includes/stats-lib.php';
 
 mineacle_security_headers();
 header('Content-Type: application/json; charset=utf-8');
@@ -482,6 +483,15 @@ try {
         'first_joined',
         'created_at',
     ]);
+    $displayColumn = mineacle_player_first_column($columns, [
+        'display_name',
+        'username',
+    ]);
+    $rankKeyColumn = mineacle_player_first_column($columns, ['rank_key']);
+    $rankNameColumn = mineacle_player_first_column($columns, ['rank_name']);
+    $rankPrefixColumn = mineacle_player_first_column($columns, ['rank_prefix']);
+    $rankColorColumn = mineacle_player_first_column($columns, ['rank_color']);
+    $rankWeightColumn = mineacle_player_first_column($columns, ['rank_weight']);
 
     $nameSql = mineacle_player_identifier($nameColumn);
 
@@ -495,6 +505,12 @@ try {
     $select = [
         $nameSql . ' AS username',
         $uuidColumn ? mineacle_player_identifier($uuidColumn) . ' AS uuid' : 'NULL AS uuid',
+        $displayColumn ? mineacle_player_identifier($displayColumn) . ' AS display_name' : $nameSql . ' AS display_name',
+        $rankKeyColumn ? mineacle_player_identifier($rankKeyColumn) . ' AS rank_key' : "'' AS rank_key",
+        $rankNameColumn ? mineacle_player_identifier($rankNameColumn) . ' AS rank_name' : "'' AS rank_name",
+        $rankPrefixColumn ? mineacle_player_identifier($rankPrefixColumn) . ' AS rank_prefix' : "'' AS rank_prefix",
+        $rankColorColumn ? mineacle_player_identifier($rankColorColumn) . ' AS rank_color' : "'' AS rank_color",
+        $rankWeightColumn ? mineacle_player_identifier($rankWeightColumn) . ' AS rank_weight' : '0 AS rank_weight',
         $playtimeColumn ? mineacle_player_identifier($playtimeColumn) . ' AS playtime_seconds' : 'NULL AS playtime_seconds',
         $lastSeenColumn ? mineacle_player_identifier($lastSeenColumn) . ' AS last_seen' : 'NULL AS last_seen',
         $joinedColumn ? mineacle_player_identifier($joinedColumn) . ' AS joined_at' : 'NULL AS joined_at',
@@ -537,9 +553,21 @@ try {
         }
 
         $playtimeSeconds = mineacle_player_int($row['playtime_seconds'] ?? null);
+        $rankPlayer = [
+            'username' => $name,
+            'display_name' => $row['display_name'] ?? $name,
+            'rank_key' => $row['rank_key'] ?? '',
+            'rank_name' => $row['rank_name'] ?? '',
+            'rank_prefix' => $row['rank_prefix'] ?? '',
+            'rank_color' => $row['rank_color'] ?? '',
+            'rank_weight' => $row['rank_weight'] ?? 0,
+        ];
 
         $players[] = [
             'name' => $name,
+            'display_name' => mineacle_stats_display_name($rankPlayer),
+            'rank_label' => mineacle_stats_rank_name($rankPlayer),
+            'rank_color' => mineacle_stats_rank_color($rankPlayer),
             'uuid' => $row['uuid'] !== null ? (string) $row['uuid'] : null,
             'skin' => mineacle_player_skin_assets($row['uuid'] !== null ? (string) $row['uuid'] : null, $name, $skinConfig),
             'playtime_seconds' => $playtimeSeconds,

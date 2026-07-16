@@ -682,6 +682,9 @@
       const name = typeof player.name === 'string' ? player.name.trim() : '';
       if (name === '') return;
 
+      const displayName = typeof player.display_name === 'string' && player.display_name.trim() !== '' ? player.display_name.trim() : name;
+      const rankLabel = typeof player.rank_label === 'string' ? player.rank_label.trim() : '';
+      const rankColor = typeof player.rank_color === 'string' && /^#[0-9a-f]{6}$/i.test(player.rank_color.trim()) ? player.rank_color.trim() : '#ff55ff';
       const row = document.createElement('a');
       const nameNode = document.createElement('span');
       const actionNode = document.createElement('span');
@@ -709,8 +712,20 @@
         row.classList.add('has-no-avatar');
       }
 
-      nameNode.className = 'player-search-name';
-      nameNode.textContent = name;
+      nameNode.className = 'player-search-name ranked-player-name';
+
+      if (rankLabel !== '') {
+        const rankNode = document.createElement('span');
+        rankNode.className = 'ranked-player-name__rank';
+        rankNode.style.setProperty('--rank-color', rankColor);
+        rankNode.textContent = rankLabel;
+        nameNode.append(rankNode);
+      }
+
+      const displayNode = document.createElement('span');
+      displayNode.className = 'ranked-player-name__name';
+      displayNode.textContent = displayName;
+      nameNode.append(displayNode);
       row.append(nameNode);
 
       actionNode.className = 'player-search-action';

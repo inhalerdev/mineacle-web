@@ -44,7 +44,10 @@ function mineacle_stats_select_list(array $columns): string
         'uuid' => "''",
         'username' => "''",
         'display_name' => "''",
+        'rank_key' => "''",
         'rank_name' => "''",
+        'rank_prefix' => "''",
+        'rank_color' => "''",
         'rank_weight' => '0',
         'team_id' => "''",
         'team_name' => "''",
@@ -917,11 +920,55 @@ function mineacle_stats_display_name(array $player): string
     return $displayName !== '' ? $displayName : mineacle_stats_username($player);
 }
 
+function mineacle_stats_rank_is_default(string $value): bool
+{
+    $normalized = strtolower(trim($value));
+
+    return $normalized === '' || in_array($normalized, ['default', 'member', 'unranked', 'none', 'normal', 'player', 'user'], true);
+}
+
 function mineacle_stats_rank_name(array $player): string
 {
+    $rankKey = trim((string) ($player['rank_key'] ?? ''));
     $rankName = trim((string) ($player['rank_name'] ?? ''));
+    $rankPrefix = trim(strip_tags((string) ($player['rank_prefix'] ?? '')));
 
-    return $rankName !== '' ? $rankName : 'Member';
+    foreach ([$rankPrefix, $rankName, $rankKey] as $candidate) {
+        if (!mineacle_stats_rank_is_default($candidate)) {
+            return strtoupper($candidate);
+        }
+    }
+
+    return '';
+}
+
+function mineacle_stats_rank_color(array $player): string
+{
+    $rankName = strtolower(mineacle_stats_rank_name($player));
+    $color = strtolower(trim((string) ($player['rank_color'] ?? '')));
+
+    if ($rankName === 'mineacle+') {
+        return '#ff55ff';
+    }
+
+    return preg_match('/^#[0-9a-f]{6}$/', $color) === 1 ? $color : '#ff55ff';
+}
+
+function mineacle_stats_ranked_name_html(array $player, string $className = 'ranked-player-name'): string
+{
+    $displayName = mineacle_stats_display_name($player);
+    $rankName = mineacle_stats_rank_name($player);
+    $class = preg_match('/^[A-Za-z0-9_-]+$/', $className) === 1 ? $className : 'ranked-player-name';
+    $html = '<span class="' . h($class) . '">';
+
+    if ($rankName !== '') {
+        $html .= '<span class="' . h($class) . '__rank" style="--rank-color: ' . h(mineacle_stats_rank_color($player)) . '">' . h($rankName) . '</span>';
+    }
+
+    $html .= '<span class="' . h($class) . '__name">' . h($displayName) . '</span>';
+    $html .= '</span>';
+
+    return $html;
 }
 
 function mineacle_stats_team_name(array $player): string

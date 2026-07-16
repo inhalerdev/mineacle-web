@@ -442,7 +442,7 @@ mineacle_page_head('Leaderboards');
                                         <?php endif; ?>
                                     </span>
                                     <span>
-                                        <strong><?php echo h(mineacle_leaderboards_top_name($entry, $tableMode)); ?></strong>
+                                        <strong><?php echo mineacle_stats_ranked_name_html($entry, 'leaderboard-ranked-name'); ?></strong>
                                         <small><?php echo h(mineacle_leaderboards_top_metric($entry, $tableMode, $sort)); ?></small>
                                     </span>
                                 </a>
@@ -576,7 +576,7 @@ mineacle_page_head('Leaderboards');
                                     <?php endif; ?>
                                 </span>
                                 <span>
-                                    <strong><?php echo h(mineacle_stats_display_name($player)); ?></strong>
+                                    <strong><?php echo mineacle_stats_ranked_name_html($player, 'leaderboard-ranked-name'); ?></strong>
                                     <span>@<?php echo h(mineacle_stats_username($player)); ?></span>
                                 </span>
                             </span>
