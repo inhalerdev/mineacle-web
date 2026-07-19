@@ -21,7 +21,7 @@
   --danger: #ff5a5a;
   --rank-color: #ff55ff;
   --profile-summary-height: clamp(104px, 9vw, 138px);
-  --font-sans: "Manrope";
+  --font-sans: "Manrope", Arial, sans-serif;
   --gap: 25px;
   --rail-width: 70px;
   --rail-item-size: 46px;
@@ -58,7 +58,7 @@ body {
   margin: 0;
   background: var(--canvas);
   color: var(--subtext);
-  font-family: var(--font-sans), sans-serif;
+  font-family: var(--font-sans), Arial, sans-serif;
   font-weight: var(--ui-font-weight);
   font-optical-sizing: auto;
   text-rendering: geometricPrecision;
@@ -105,6 +105,13 @@ svg {
   object-fit: contain;
   opacity: 1;
   filter: invert(78%) sepia(0%) saturate(0%) hue-rotate(188deg) brightness(96%) contrast(88%);
+}
+
+.rail-link .site-icon,
+.leaderboard-category-card img,
+.leaderboard-top-avatar img,
+.player-card-head img {
+  image-rendering: pixelated;
 }
 
 .sr-only {
@@ -187,7 +194,7 @@ svg {
   width: var(--rail-icon-size);
   height: var(--rail-icon-size);
   filter: var(--rail-icon-filter);
-  transition: filter 180ms ease, opacity 180ms ease;
+  transition: filter 180ms ease, opacity 180ms ease, transform 180ms ease;
 }
 
 .rail-link:hover,
@@ -212,6 +219,11 @@ svg {
 .rail-link[aria-current="page"] svg,
 .rail-link[aria-current="page"] .site-icon {
   filter: var(--rail-icon-active-filter);
+}
+
+.rail-link:hover .site-icon,
+.rail-link:focus-visible .site-icon {
+  transform: translateY(-1px);
 }
 
 .rail-store-button {
@@ -2771,8 +2783,11 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 }
 
 .leaderboard-hero {
+  position: relative;
   overflow: hidden;
-  background: #191919;
+  background:
+    linear-gradient(135deg, rgba(255, 85, 255, 0.095), rgba(255, 85, 255, 0) 42%),
+    #191919;
 }
 
 .leaderboard-hero-main {
@@ -2782,7 +2797,34 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   padding: clamp(28px, 4vw, 58px);
 }
 
+.leaderboard-hero-main::before {
+  content: "";
+  position: absolute;
+  inset: auto clamp(20px, 4vw, 52px) clamp(18px, 3vw, 36px) auto;
+  width: clamp(140px, 18vw, 270px);
+  height: clamp(140px, 18vw, 270px);
+  border-radius: var(--radius);
+  background: rgba(255, 85, 255, 0.035);
+  pointer-events: none;
+}
+
+.leaderboard-hero-mark {
+  position: absolute;
+  right: clamp(38px, 6vw, 94px);
+  bottom: clamp(34px, 5vw, 70px);
+  width: clamp(92px, 11vw, 170px);
+  height: clamp(92px, 11vw, 170px);
+  display: block;
+  object-fit: contain;
+  image-rendering: pixelated;
+  opacity: 0.11;
+  filter: var(--rail-icon-active-filter);
+  pointer-events: none;
+}
+
 .leaderboard-copy {
+  position: relative;
+  z-index: 1;
   min-width: 0;
   max-width: 720px;
 }
@@ -2820,12 +2862,23 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 }
 
 .leaderboard-top-card {
+  position: relative;
   min-height: clamp(260px, 27dvh, 360px);
   display: grid;
   align-content: center;
   gap: 14px;
   padding: clamp(22px, 2.6vw, 34px);
-  background: #191919;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0)),
+    #191919;
+}
+
+.leaderboard-top-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 4px;
+  background: #ff55ff;
 }
 
 .leaderboard-top-card p,
@@ -2865,12 +2918,26 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   padding: 9px 11px;
   background: #303030;
   box-shadow: none;
+  transition: background 160ms ease, transform 160ms ease;
 }
 
 .leaderboard-top-entry:hover,
 .leaderboard-top-entry:focus-visible {
   outline: 0;
   background: #383838;
+  transform: translateY(-1px);
+}
+
+.leaderboard-top-entry.is-rank-1 {
+  background: #3a313a;
+}
+
+.leaderboard-top-entry.is-rank-2 {
+  background: #353035;
+}
+
+.leaderboard-top-entry.is-rank-3 {
+  background: #303030;
 }
 
 .leaderboard-top-rank {
@@ -2890,6 +2957,10 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   color: var(--heading);
   font-size: 1.1rem;
   font-weight: var(--font-extrabold);
+}
+
+.leaderboard-top-entry.is-rank-1 .leaderboard-top-avatar {
+  background: rgba(255, 85, 255, 0.18);
 }
 
 .leaderboard-top-avatar img {
@@ -2926,7 +2997,9 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 .leaderboard-hub {
   gap: clamp(16px, 2vw, 24px);
   overflow-x: auto;
-  background: #191919;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0)),
+    #191919;
 }
 
 .leaderboard-hub-top {
@@ -2945,9 +3018,11 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 
 .leaderboard-category-card {
   min-width: 0;
-  min-height: 72px;
+  min-height: 78px;
+  position: relative;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: 32px minmax(0, 1fr);
+  grid-template-columns: 42px minmax(0, 1fr);
   align-items: center;
   gap: 11px;
   border-radius: var(--radius);
@@ -2955,7 +3030,15 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   background: #303030;
   box-shadow: none;
   color: var(--subtext);
-  transition: background 160ms ease, color 160ms ease;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.leaderboard-category-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: transparent;
 }
 
 .leaderboard-category-card:hover,
@@ -2963,17 +3046,32 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   outline: 0;
   color: var(--heading);
   background: #393939;
+  transform: translateY(-1px);
 }
 
 .leaderboard-category-card.is-active,
 .leaderboard-category-card[aria-current="page"] {
   color: var(--heading);
-  background: rgba(255, 85, 255, 0.22);
+  background: rgba(255, 85, 255, 0.18);
+}
+
+.leaderboard-category-card.is-active::before,
+.leaderboard-category-card[aria-current="page"]::before {
+  background: #ff55ff;
+}
+
+.leaderboard-category-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.045);
 }
 
 .leaderboard-category-card img {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   display: block;
   object-fit: contain;
   filter: var(--rail-icon-filter);
@@ -2984,7 +3082,7 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   filter: var(--rail-icon-active-filter);
 }
 
-.leaderboard-category-card span {
+.leaderboard-category-copy {
   min-width: 0;
   display: grid;
   gap: 5px;
@@ -3020,6 +3118,15 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 86px;
   gap: 10px;
+}
+
+.leaderboard-search .search-box {
+  background: #303030;
+  transition: background 160ms ease;
+}
+
+.leaderboard-search .search-box:focus-within {
+  background: #383038;
 }
 
 .leaderboard-search-submit {
@@ -3078,7 +3185,7 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 .leaderboard-subfilters a.is-active,
 .leaderboard-subfilters a[aria-current="page"] {
   color: var(--heading);
-  background: rgba(255, 85, 255, 0.2);
+  background: rgba(255, 85, 255, 0.18);
 }
 
 .leaderboard-board {
@@ -3126,7 +3233,7 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   min-height: 44px;
   padding: 0 16px;
   border-radius: var(--radius);
-  background: #303030;
+  background: #242424;
 }
 
 .leaderboard-table-head span {
@@ -3161,12 +3268,22 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   padding: 11px 16px;
   background: #303030;
   box-shadow: none;
-  transition: background 160ms ease, color 160ms ease;
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
 .leaderboard-board .player-card:hover,
 .leaderboard-board .player-card:focus-visible {
   background: #393939;
+  transform: translateY(-1px);
+}
+
+.leaderboard-board .player-card.is-top-rank {
+  background: #353035;
+}
+
+.leaderboard-board .player-card.is-top-rank:hover,
+.leaderboard-board .player-card.is-top-rank:focus-visible {
+  background: #3c3340;
 }
 
 .leaderboard-team-rank {

@@ -471,6 +471,7 @@ mineacle_page_head('Leaderboards');
     <main class="home-grid players-page leaderboard-page" aria-label="Leaderboards">
         <section class="leaderboard-hero-shell" aria-label="Leaderboard overview">
             <div class="panel leaderboard-hero leaderboard-hero-main">
+                <img class="leaderboard-hero-mark" src="/assets/icons/rail-leaderboard.png?v=<?php echo h(rawurlencode($assetVersion)); ?>" alt="" aria-hidden="true" draggable="false">
                 <div class="leaderboard-copy">
                     <p>Survival Rankings</p>
                     <h1>Leaderboards</h1>
@@ -531,8 +532,10 @@ mineacle_page_head('Leaderboards');
                     <?php foreach ($categories as $key => $card): ?>
                         <?php $isActive = $category === $key; ?>
                         <a class="leaderboard-category-card<?php echo $isActive ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url((string) $key)); ?>"<?php echo $isActive ? ' aria-current="page"' : ''; ?>>
-                            <img src="<?php echo h(mineacle_leaderboards_category_icon((string) $key, $assetVersion)); ?>" alt="" aria-hidden="true" draggable="false">
-                            <span>
+                            <span class="leaderboard-category-icon" aria-hidden="true">
+                                <img src="<?php echo h(mineacle_leaderboards_category_icon((string) $key, $assetVersion)); ?>" alt="" draggable="false">
+                            </span>
+                            <span class="leaderboard-category-copy">
                                 <strong><?php echo h((string) $card['label']); ?></strong>
                                 <small><?php echo h((string) $card['copy']); ?></small>
                             </span>
@@ -605,7 +608,7 @@ mineacle_page_head('Leaderboards');
                         $kills = mineacle_stats_int($team['kills'] ?? 0);
                         $deaths = mineacle_stats_int($team['deaths'] ?? 0);
                         ?>
-                        <article class="player-card leaderboard-table-row leaderboard-team-row">
+                        <article class="player-card leaderboard-table-row leaderboard-team-row<?php echo $rank <= 3 ? ' is-top-rank' : ''; ?>">
                             <span class="leaderboard-team-rank">#<?php echo h((string) $rank); ?></span>
                             <span class="player-card-main">
                                 <strong><?php echo h(mineacle_leaderboards_team_name($team)); ?></strong>
@@ -642,7 +645,7 @@ mineacle_page_head('Leaderboards');
                         $online = mineacle_stats_online($player);
                         $rank = $offset + $index + 1;
                         ?>
-                        <a class="player-card leaderboard-table-row leaderboard-player-row" href="<?php echo h(mineacle_players_profile_url($player)); ?>">
+                        <a class="player-card leaderboard-table-row leaderboard-player-row<?php echo $rank <= 3 ? ' is-top-rank' : ''; ?>" href="<?php echo h(mineacle_players_profile_url($player)); ?>">
                             <span class="leaderboard-team-rank">#<?php echo h((string) $rank); ?></span>
                             <span class="player-card-main leaderboard-player-main">
                                 <span class="player-card-head">
