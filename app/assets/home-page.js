@@ -652,6 +652,10 @@
   const openTypedPlayerProfile = (event) => {
     if (!searchInput) return;
 
+    if (playerSearchForm && playerSearchForm.dataset.playerSearchSubmit === 'filter') {
+      return;
+    }
+
     const query = searchInput.value.trim();
 
     if (query === '') {

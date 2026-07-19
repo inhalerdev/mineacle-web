@@ -968,32 +968,41 @@ function mineacle_stats_rank_name(array $player): string
     return '';
 }
 
+function mineacle_stats_known_rank_color(string $rank): ?string
+{
+    if (mineacle_stats_rank_is_default($rank)) {
+        return null;
+    }
+
+    $normalized = strtolower(str_replace([' ', '_', '-'], '', trim($rank)));
+
+    if (in_array($normalized, ['admin', 'administrator'], true)) {
+        return '#ff5555';
+    }
+
+    if (in_array($normalized, ['developer', 'dev'], true)) {
+        return '#ffaa00';
+    }
+
+    if (in_array($normalized, ['mineacle+', 'mineacleplus', 'plus'], true)) {
+        return '#ff55ff';
+    }
+
+    return null;
+}
+
 function mineacle_stats_rank_color(array $player): string
 {
-    $rankSources = [
-        trim((string) ($player['rank_key'] ?? '')),
-        trim((string) ($player['rank_name'] ?? '')),
-        trim(strip_tags((string) ($player['rank_prefix'] ?? ''))),
-    ];
+    $rankKey = trim((string) ($player['rank_key'] ?? ''));
+    $rankPrefix = trim(strip_tags((string) ($player['rank_prefix'] ?? '')));
+    $rankName = trim((string) ($player['rank_name'] ?? ''));
     $color = strtolower(trim((string) ($player['rank_color'] ?? '')));
 
-    foreach ($rankSources as $source) {
-        if (mineacle_stats_rank_is_default($source)) {
-            continue;
-        }
+    foreach ([$rankKey, $rankPrefix, $rankName] as $source) {
+        $knownColor = mineacle_stats_known_rank_color($source);
 
-        $normalized = strtolower(str_replace([' ', '_', '-'], '', $source));
-
-        if (in_array($normalized, ['developer', 'dev'], true)) {
-            return '#ffaa00';
-        }
-
-        if (in_array($normalized, ['admin', 'administrator'], true)) {
-            return '#ff5555';
-        }
-
-        if (in_array($normalized, ['mineacle+', 'mineacleplus', 'plus'], true)) {
-            return '#ff55ff';
+        if ($knownColor !== null) {
+            return $knownColor;
         }
     }
 

@@ -2759,45 +2759,49 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 }
 
 .leaderboard-page {
+  align-content: start;
   gap: var(--gap);
 }
 
 .leaderboard-hero-shell {
-  min-height: 230px;
+  min-height: clamp(260px, 27dvh, 360px);
   display: grid;
-  grid-template-columns: minmax(0, 1.45fr) minmax(360px, 0.75fr);
+  grid-template-columns: minmax(0, 1.36fr) minmax(340px, 0.72fr);
   gap: var(--gap);
 }
 
 .leaderboard-hero {
   overflow: hidden;
-  background:
-    linear-gradient(135deg, rgba(52, 52, 52, 0.96), rgba(20, 20, 20, 0.98));
+  background: #191919;
 }
 
 .leaderboard-hero-main {
-  min-height: 230px;
+  min-height: clamp(260px, 27dvh, 360px);
   display: flex;
   align-items: center;
+  padding: clamp(28px, 4vw, 58px);
 }
 
 .leaderboard-copy {
   min-width: 0;
+  max-width: 720px;
 }
 
 .leaderboard-copy p,
 .leaderboard-copy span {
   margin: 0;
   color: var(--subtext);
-  font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
+  font-size: clamp(0.86rem, 0.76rem + 0.22vw, 1rem);
+  font-weight: var(--font-semibold);
   line-height: 1.45;
 }
 
 .leaderboard-copy p {
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #ff55ff;
-  font-size: 0.74rem;
+  font-size: clamp(0.72rem, 0.66rem + 0.16vw, 0.82rem);
+  font-weight: var(--font-bold);
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -2807,18 +2811,21 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 }
 
 .leaderboard-copy h1 {
-  margin: 0 0 14px;
+  margin: 0 0 16px;
   color: var(--heading);
-  font-size: clamp(3rem, 2rem + 3vw, 5.1rem);
+  font-size: clamp(3.1rem, 2rem + 3.4vw, 5.6rem);
+  font-weight: var(--font-extrabold);
   line-height: 0.92;
+  text-transform: uppercase;
 }
 
 .leaderboard-top-card {
-  min-height: 230px;
+  min-height: clamp(260px, 27dvh, 360px);
   display: grid;
   align-content: center;
-  gap: 12px;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.072), rgba(255, 255, 255, 0.035));
+  gap: 14px;
+  padding: clamp(22px, 2.6vw, 34px);
+  background: #191919;
 }
 
 .leaderboard-top-card p,
@@ -2828,15 +2835,16 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 
 .leaderboard-top-card p {
   color: #ff88ff;
-  font-size: 0.72rem;
-  font-weight: var(--ui-font-weight);
+  font-size: clamp(0.68rem, 0.62rem + 0.14vw, 0.78rem);
+  font-weight: var(--font-bold);
   line-height: 1;
   text-transform: uppercase;
 }
 
 .leaderboard-top-card h2 {
   color: var(--heading);
-  font-size: clamp(1rem, 0.9rem + 0.35vw, 1.28rem);
+  font-size: clamp(1.28rem, 1rem + 0.7vw, 1.85rem);
+  font-weight: var(--font-extrabold);
   line-height: 1;
 }
 
@@ -2848,40 +2856,40 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 
 .leaderboard-top-entry {
   min-width: 0;
-  min-height: 58px;
+  min-height: 64px;
   display: grid;
-  grid-template-columns: 42px 42px minmax(0, 1fr);
-  gap: 11px;
+  grid-template-columns: 44px 46px minmax(0, 1fr);
+  gap: 12px;
   align-items: center;
   border-radius: var(--radius);
-  padding: 8px 10px;
-  background: rgba(255, 255, 255, 0.055);
-  box-shadow: inset 0 0 0 1px var(--line);
+  padding: 9px 11px;
+  background: #303030;
+  box-shadow: none;
 }
 
 .leaderboard-top-entry:hover,
 .leaderboard-top-entry:focus-visible {
   outline: 0;
-  background: rgba(255, 255, 255, 0.075);
+  background: #383838;
 }
 
 .leaderboard-top-rank {
   color: #ff55ff;
-  font-size: 1rem;
-  font-weight: var(--ui-font-weight);
+  font-size: 1.05rem;
+  font-weight: var(--font-extrabold);
   line-height: 1;
 }
 
 .leaderboard-top-avatar {
-  width: 42px;
-  height: 42px;
+  width: 46px;
+  height: 46px;
   display: grid;
   place-items: center;
   border-radius: var(--radius);
-  background: rgba(255, 85, 255, 0.2);
+  background: #454545;
   color: var(--heading);
   font-size: 1.1rem;
-  font-weight: var(--ui-font-weight);
+  font-weight: var(--font-extrabold);
 }
 
 .leaderboard-top-avatar img {
@@ -2904,163 +2912,179 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 .leaderboard-top-entry strong {
   color: var(--heading);
   font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
+  font-weight: var(--font-bold);
   line-height: 1.1;
 }
 
 .leaderboard-top-entry small {
   color: var(--subtext);
   font-size: 0.74rem;
-  font-weight: var(--ui-font-weight);
+  font-weight: var(--font-semibold);
   line-height: 1.25;
 }
 
 .leaderboard-hub {
-  gap: 16px;
+  gap: clamp(16px, 2vw, 24px);
   overflow-x: auto;
+  background: #191919;
 }
 
 .leaderboard-hub-top {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.38fr);
-  gap: clamp(18px, 2vw, 28px);
-  align-items: center;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.4fr);
+  gap: clamp(18px, 2.4vw, 34px);
+  align-items: end;
 }
 
 .leaderboard-category-grid {
   min-width: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(116px, 1fr));
+  gap: 12px;
 }
 
 .leaderboard-category-card {
-  min-width: 132px;
-  min-height: 46px;
-  display: inline-grid;
-  align-content: center;
-  gap: 4px;
+  min-width: 0;
+  min-height: 72px;
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  align-items: center;
+  gap: 11px;
   border-radius: var(--radius);
-  padding: 8px 14px;
-  background: rgba(255, 255, 255, 0.055);
-  box-shadow: inset 0 0 0 1px var(--line);
+  padding: 12px;
+  background: #303030;
+  box-shadow: none;
   color: var(--subtext);
-  transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  transition: background 160ms ease, color 160ms ease;
 }
 
 .leaderboard-category-card:hover,
 .leaderboard-category-card:focus-visible {
   outline: 0;
   color: var(--heading);
-  background: rgba(255, 255, 255, 0.08);
+  background: #393939;
 }
 
 .leaderboard-category-card.is-active,
 .leaderboard-category-card[aria-current="page"] {
   color: var(--heading);
   background: rgba(255, 85, 255, 0.22);
-  box-shadow: inset 0 0 0 1px rgba(255, 85, 255, 0.66);
 }
 
-.leaderboard-category-card span,
+.leaderboard-category-card img {
+  width: 30px;
+  height: 30px;
+  display: block;
+  object-fit: contain;
+  filter: var(--rail-icon-filter);
+}
+
+.leaderboard-category-card.is-active img,
+.leaderboard-category-card[aria-current="page"] img {
+  filter: var(--rail-icon-active-filter);
+}
+
+.leaderboard-category-card span {
+  min-width: 0;
+  display: grid;
+  gap: 5px;
+}
+
+.leaderboard-category-card strong,
 .leaderboard-category-card small {
-  max-width: 100%;
+  min-width: 0;
   overflow: hidden;
   font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
   line-height: 1;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-.leaderboard-category-card small {
-  color: var(--subtext);
-  font-size: 0.66rem;
-  font-weight: var(--ui-font-weight);
+.leaderboard-category-card strong {
+  color: var(--heading);
+  font-weight: var(--font-bold);
 }
 
-.leaderboard-search div {
+.leaderboard-category-card small {
+  color: var(--subtext);
+  font-size: clamp(0.64rem, 0.58rem + 0.14vw, 0.74rem);
+  font-weight: var(--font-semibold);
+}
+
+.leaderboard-search {
+  position: relative;
+  min-width: 0;
+}
+
+.leaderboard-search-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 82px;
+  grid-template-columns: minmax(0, 1fr) 86px;
   gap: 10px;
 }
 
-.leaderboard-search input,
-.leaderboard-search button {
-  height: 46px;
+.leaderboard-search-submit {
+  height: var(--control-height);
   border: 0;
   border-radius: var(--radius);
-  font: inherit;
-  font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
-}
-
-.leaderboard-search input {
-  min-width: 0;
-  padding: 0 14px;
-  background: rgba(255, 255, 255, 0.82);
-  color: #171717;
-  outline: 0;
-}
-
-.leaderboard-search input::placeholder {
-  color: rgba(23, 23, 23, 0.58);
-}
-
-.leaderboard-search button {
   background: #ff55ff;
   color: #fff;
-  font-weight: var(--ui-font-weight);
+  font: inherit;
+  font-size: var(--ui-font-size);
+  font-weight: var(--font-bold);
   cursor: pointer;
   transition: background 160ms ease;
 }
 
-.leaderboard-search button:hover,
-.leaderboard-search button:focus-visible {
+.leaderboard-search-submit:hover,
+.leaderboard-search-submit:focus-visible {
   background: #ff88ff;
   outline: 0;
+}
+
+.leaderboard-search-results {
+  top: calc(100% + 10px);
+  box-shadow: none;
 }
 
 .leaderboard-subfilters {
   display: flex;
   flex-wrap: wrap;
-  gap: 9px;
+  gap: 10px;
 }
 
 .leaderboard-subfilters a {
-  min-height: 36px;
+  min-height: 40px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--radius);
-  padding: 0 13px;
-  background: rgba(255, 255, 255, 0.05);
-  box-shadow: inset 0 0 0 1px var(--line);
+  padding: 0 15px;
+  background: #303030;
+  box-shadow: none;
   color: var(--subtext);
   font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
+  font-weight: var(--font-semibold);
   line-height: 1;
-  transition: background 160ms ease, color 160ms ease, box-shadow 160ms ease;
+  transition: background 160ms ease, color 160ms ease;
 }
 
 .leaderboard-subfilters a:hover,
 .leaderboard-subfilters a:focus-visible {
   color: var(--heading);
   outline: 0;
-  background: rgba(255, 255, 255, 0.075);
+  background: #393939;
 }
 
 .leaderboard-subfilters a.is-active,
 .leaderboard-subfilters a[aria-current="page"] {
   color: var(--heading);
   background: rgba(255, 85, 255, 0.2);
-  box-shadow: inset 0 0 0 1px rgba(255, 85, 255, 0.68);
 }
 
 .leaderboard-board {
   display: grid;
-  gap: 16px;
-  padding: clamp(18px, 2vw, 26px);
+  gap: clamp(14px, 1.7vw, 20px);
+  padding: clamp(18px, 2.4vw, 30px);
 }
 
 .leaderboard-board-header {
@@ -3073,7 +3097,8 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 .leaderboard-board-header h2 {
   margin: 0 0 6px;
   color: var(--heading);
-  font-size: clamp(1.3rem, 1rem + 0.8vw, 1.9rem);
+  font-size: clamp(1.5rem, 1.1rem + 1vw, 2.2rem);
+  font-weight: var(--font-extrabold);
   line-height: 1;
 }
 
@@ -3082,7 +3107,7 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 .leaderboard-table-head span {
   color: var(--subtext);
   font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
+  font-weight: var(--font-semibold);
   line-height: 1.35;
 }
 
@@ -3096,30 +3121,34 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 
 .leaderboard-table-head {
   display: grid;
-  gap: 14px;
+  gap: 12px;
   align-items: center;
+  min-height: 44px;
   padding: 0 16px;
+  border-radius: var(--radius);
+  background: #303030;
 }
 
 .leaderboard-table-head span {
-  font-size: 0.72rem;
-  text-transform: uppercase;
+  font-size: clamp(0.68rem, 0.62rem + 0.14vw, 0.78rem);
+  font-weight: var(--font-bold);
 }
 
 .leaderboard-table-head-players,
 .leaderboard-player-row {
   min-width: 1120px;
-  grid-template-columns: 52px minmax(210px, 1.35fr) minmax(130px, 0.8fr) repeat(5, minmax(92px, 0.7fr)) minmax(110px, 0.75fr);
+  grid-template-columns: 58px minmax(230px, 1.5fr) minmax(130px, 0.82fr) repeat(5, minmax(92px, 0.68fr)) minmax(112px, 0.72fr);
 }
 
 .leaderboard-table-head-teams,
 .leaderboard-team-row {
   min-width: 980px;
-  grid-template-columns: 52px minmax(220px, 1.4fr) repeat(5, minmax(92px, 0.75fr));
+  grid-template-columns: 58px minmax(250px, 1.55fr) repeat(5, minmax(98px, 0.72fr));
 }
 
 .leaderboard-table-row {
   width: 100%;
+  grid-auto-flow: column;
 }
 
 .leaderboard-player-main {
@@ -3128,20 +3157,35 @@ a[aria-label="Discord"]:focus-visible .site-icon {
 }
 
 .leaderboard-board .player-card {
-  background: rgba(255, 255, 255, 0.045);
-  transition: background 160ms ease;
+  min-height: 68px;
+  padding: 11px 16px;
+  background: #303030;
+  box-shadow: none;
+  transition: background 160ms ease, color 160ms ease;
 }
 
 .leaderboard-board .player-card:hover,
 .leaderboard-board .player-card:focus-visible {
-  background: rgba(255, 255, 255, 0.066);
+  background: #393939;
 }
 
 .leaderboard-team-rank {
   color: #ff55ff;
   font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
+  font-weight: var(--font-extrabold);
   line-height: 1;
+}
+
+.leaderboard-board .player-card-main strong,
+.leaderboard-board .player-card-stat,
+.leaderboard-board .player-card-status {
+  font-weight: var(--font-semibold);
+}
+
+.leaderboard-board .player-card-main > span:not(.player-card-head) {
+  color: var(--subtext);
+  font-size: clamp(0.7rem, 0.64rem + 0.14vw, 0.8rem);
+  font-weight: var(--font-semibold);
 }
 
 .leaderboard-pagination {
@@ -3162,11 +3206,11 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   justify-content: center;
   border-radius: var(--radius);
   padding: 0 14px;
-  background: rgba(255, 255, 255, 0.055);
-  box-shadow: inset 0 0 0 1px var(--line);
+  background: #303030;
+  box-shadow: none;
   color: var(--heading);
   font-size: var(--ui-font-size);
-  font-weight: var(--ui-font-weight);
+  font-weight: var(--font-semibold);
 }
 
 .leaderboard-pagination a:hover,
@@ -3191,14 +3235,31 @@ a[aria-label="Discord"]:focus-visible .site-icon {
   .leaderboard-hub-top {
     grid-template-columns: 1fr;
   }
+
+  .leaderboard-category-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 780px) {
-  .leaderboard-category-card {
-    flex: 1 1 calc(50% - 10px);
+  .leaderboard-hero-shell {
+    min-height: 0;
   }
 
-  .leaderboard-search div {
+  .leaderboard-hero,
+  .leaderboard-top-card {
+    min-height: 220px;
+  }
+
+  .leaderboard-category-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .leaderboard-category-card {
+    min-height: 68px;
+  }
+
+  .leaderboard-search-grid {
     grid-template-columns: 1fr;
   }
 
