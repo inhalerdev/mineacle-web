@@ -679,6 +679,12 @@ svg {
   white-space: nowrap;
 }
 
+.ranked-player-name.is-plus-rank .ranked-player-name__name,
+.profile-ranked-name.is-plus-rank .profile-ranked-name__name,
+.leaderboard-ranked-name.is-plus-rank .leaderboard-ranked-name__name {
+  color: var(--rank-color, #ff55ff);
+}
+
 .player-search-action {
   display: inline-flex;
   align-items: center;
@@ -726,6 +732,10 @@ svg {
 
 .player-search-option.is-muted .ranked-player-name__name {
   color: var(--subtext);
+}
+
+.player-search-option .ranked-player-name.is-plus-rank .ranked-player-name__name {
+  color: var(--rank-color, #ff55ff);
 }
 
 .top-row {
@@ -2206,13 +2216,6 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   text-transform: uppercase;
 }
 
-.profile-username {
-  margin: -4px 0 0;
-  color: var(--subtext);
-  font-size: clamp(0.82rem, 0.74rem + 0.24vw, 0.96rem);
-  line-height: 1;
-}
-
 .profile-state-lines {
   display: grid;
   gap: 6px;
@@ -3566,9 +3569,11 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
 }
 
 .leaderboard-top-card {
+  height: clamp(320px, 32.5dvh, 370px);
   min-height: 0;
   display: grid;
-  align-content: stretch;
+  grid-template-rows: auto minmax(0, 1fr);
+  align-content: start;
   gap: 16px;
   border-radius: var(--radius);
   padding: clamp(18px, 2.2vw, 28px);
@@ -3637,6 +3642,8 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
 }
 
 .leaderboard-top-list {
+  align-content: start;
+  grid-auto-rows: min-content;
   gap: 8px;
   margin-top: 0;
 }
@@ -3935,6 +3942,25 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   font-size: var(--ui-font-size);
   font-weight: var(--font-semibold);
   line-height: 1.4;
+}
+
+.leaderboard-results {
+  display: contents;
+}
+
+.leaderboard-board .leaderboard-view-row,
+.leaderboard-board .leaderboard-results > * {
+  transition: opacity 140ms ease;
+}
+
+.leaderboard-board.is-view-loading {
+  cursor: progress;
+}
+
+.leaderboard-board.is-view-loading .leaderboard-view-row,
+.leaderboard-board.is-view-loading .leaderboard-results > * {
+  pointer-events: none;
+  opacity: 0.56;
 }
 
 .leaderboard-table-head {

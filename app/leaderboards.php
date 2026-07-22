@@ -331,7 +331,7 @@ $rows = $tableMode === 'teams' ? $teams : $players;
 $hasResults = $rows !== [];
 $shownStart = $hasResults ? $offset + 1 : 0;
 $shownEnd = $hasResults ? min($offset + count($rows), $resultTotal) : 0;
-$searchPlaceholder = $tableMode === 'teams' ? 'Search teams...' : 'Search players...';
+$searchPlaceholder = $tableMode === 'teams' ? 'Search for a team...' : 'Search for a player...';
 $topTitle = 'Top 3 ' . ($tableMode === 'teams' ? 'Global Teams' : 'Global Players');
 $leaderboardTitle = (string) $selected['title'];
 $leaderboardDescription = (string) $selected['description'];
@@ -450,7 +450,7 @@ mineacle_page_head('Leaderboards');
             </nav>
         </section>
 
-        <section class="panel leaderboard-board" aria-label="<?php echo h($leaderboardTitle); ?>">
+        <section class="panel leaderboard-board" id="rankings" aria-label="<?php echo h($leaderboardTitle); ?>">
             <div class="leaderboard-board-top">
                 <header class="profile-section-heading leaderboard-section-heading">
                     <span aria-hidden="true">
@@ -464,7 +464,7 @@ mineacle_page_head('Leaderboards');
 
                 <form class="leaderboard-search<?php echo $canSuggestPlayers ? ' player-search' : ''; ?>" method="get" action="<?php echo h($leaderboardsUrl); ?>"<?php echo $canSuggestPlayers ? ' data-player-search data-player-search-form data-player-search-submit="filter"' : ''; ?>>
                     <input type="hidden" name="category" value="<?php echo h($category); ?>">
-                    <input type="hidden" name="view" value="<?php echo h($view); ?>">
+                    <input type="hidden" name="view" value="<?php echo h($view); ?>" data-leaderboard-view-input>
                     <label class="sr-only" for="homeSearch"><?php echo h($searchPlaceholder); ?></label>
                     <div class="leaderboard-search-grid">
                         <div class="search-box">
@@ -491,7 +491,7 @@ mineacle_page_head('Leaderboards');
                 <nav class="leaderboard-subfilters" aria-label="<?php echo h((string) $categories[$category]['label']); ?> filters">
                     <?php foreach ($views as $viewKey => $viewData): ?>
                         <?php $isActiveView = $view === $viewKey; ?>
-                        <a class="<?php echo $isActiveView ? 'is-active' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, (string) $viewKey, $search)); ?>"<?php echo $isActiveView ? ' aria-current="page"' : ''; ?>>
+                        <a class="<?php echo $isActiveView ? 'is-active' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, (string) $viewKey, $search) . '#rankings'); ?>" data-leaderboard-view-link<?php echo $isActiveView ? ' aria-current="page"' : ''; ?>>
                             <?php echo h((string) $viewData['label']); ?>
                         </a>
                     <?php endforeach; ?>
@@ -500,19 +500,20 @@ mineacle_page_head('Leaderboards');
                 <span class="leaderboard-result-count"><?php echo $hasResults ? h(number_format($shownStart) . '-' . number_format($shownEnd) . ' of ' . number_format($resultTotal)) : h(number_format($resultTotal) . ' results'); ?></span>
             </div>
 
-            <p class="leaderboard-description"><?php echo h($leaderboardDescription); ?></p>
+            <div class="leaderboard-results" data-leaderboard-results>
+                <p class="leaderboard-description"><?php echo h($leaderboardDescription); ?></p>
 
-            <?php if ($loadError): ?>
-                <section class="profile-message">
-                    <h1>Unable to load leaderboards right now</h1>
-                    <p>Check the Mineacle Core database connection, then try again.</p>
-                </section>
-            <?php elseif (!$hasResults): ?>
-                <section class="profile-message">
-                    <h1>No leaderboard data found yet</h1>
-                    <p><?php echo $tableMode === 'teams' ? 'Teams will appear here once Mineacle Core writes team standings.' : 'Players will appear here once Mineacle Core writes profile stats.'; ?></p>
-                </section>
-            <?php elseif ($tableMode === 'teams'): ?>
+                <?php if ($loadError): ?>
+                    <section class="profile-message">
+                        <h1>Unable to load leaderboards right now</h1>
+                        <p>Check the Mineacle Core database connection, then try again.</p>
+                    </section>
+                <?php elseif (!$hasResults): ?>
+                    <section class="profile-message">
+                        <h1>No leaderboard data found yet</h1>
+                        <p><?php echo $tableMode === 'teams' ? 'Teams will appear here once Mineacle Core writes team standings.' : 'Players will appear here once Mineacle Core writes profile stats.'; ?></p>
+                    </section>
+                <?php elseif ($tableMode === 'teams'): ?>
                 <div class="leaderboard-table-head leaderboard-table-head-teams" aria-hidden="true">
                     <span>#</span>
                     <span>Team</span>
@@ -547,7 +548,7 @@ mineacle_page_head('Leaderboards');
                         </article>
                     <?php endforeach; ?>
                 </div>
-            <?php else: ?>
+                <?php else: ?>
                 <div class="leaderboard-table-head leaderboard-table-head-players" aria-hidden="true">
                     <span>#</span>
                     <span>Player</span>
@@ -577,7 +578,6 @@ mineacle_page_head('Leaderboards');
                                 </span>
                                 <span>
                                     <strong><?php echo mineacle_stats_ranked_name_html($player, 'leaderboard-ranked-name'); ?></strong>
-                                    <span>@<?php echo h(mineacle_stats_username($player)); ?></span>
                                 </span>
                             </span>
                             <span class="player-card-stat"><?php echo h(mineacle_stats_team_name($player)); ?></span>
@@ -593,17 +593,18 @@ mineacle_page_head('Leaderboards');
                         </a>
                     <?php endforeach; ?>
                 </div>
-            <?php endif; ?>
+                <?php endif; ?>
 
-            <?php if (!$loadError && $resultTotal > $perPage): ?>
-                <nav class="leaderboard-pagination" aria-label="Leaderboard pages">
-                    <?php $prevPage = max(1, $page - 1); ?>
-                    <?php $nextPage = min($totalPages, $page + 1); ?>
-                    <a class="<?php echo $page <= 1 ? 'is-disabled' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, $view, $search, $prevPage)); ?>"<?php echo $page <= 1 ? ' aria-disabled="true"' : ''; ?>>Previous</a>
-                    <span>Page <?php echo h((string) $page); ?> of <?php echo h((string) $totalPages); ?></span>
-                    <a class="<?php echo $page >= $totalPages ? 'is-disabled' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, $view, $search, $nextPage)); ?>"<?php echo $page >= $totalPages ? ' aria-disabled="true"' : ''; ?>>Next</a>
-                </nav>
-            <?php endif; ?>
+                <?php if (!$loadError && $resultTotal > $perPage): ?>
+                    <nav class="leaderboard-pagination" aria-label="Leaderboard pages">
+                        <?php $prevPage = max(1, $page - 1); ?>
+                        <?php $nextPage = min($totalPages, $page + 1); ?>
+                        <a class="<?php echo $page <= 1 ? 'is-disabled' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, $view, $search, $prevPage)); ?>"<?php echo $page <= 1 ? ' aria-disabled="true"' : ''; ?>>Previous</a>
+                        <span>Page <?php echo h((string) $page); ?> of <?php echo h((string) $totalPages); ?></span>
+                        <a class="<?php echo $page >= $totalPages ? 'is-disabled' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, $view, $search, $nextPage)); ?>"<?php echo $page >= $totalPages ? ' aria-disabled="true"' : ''; ?>>Next</a>
+                    </nav>
+                <?php endif; ?>
+            </div>
         </section>
 
         <?php mineacle_page_footer($site); ?>

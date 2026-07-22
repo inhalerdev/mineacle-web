@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base121';
+    return 'base123';
 }
 
 function mineacle_page_clean_text(string $value): string
@@ -215,7 +215,7 @@ function mineacle_page_search_header(array $site): void
     echo '<div class="player-search" data-player-search>';
     echo '<form class="search-box" action="/player" method="get" role="search" data-player-search-form>';
     echo '<img src="/assets/icons/search.png" alt="" aria-hidden="true" draggable="false">';
-    echo '<input id="homeSearch" name="name" type="search" placeholder="Search players.." autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="playerSearchResults">';
+    echo '<input id="homeSearch" name="name" type="search" placeholder="Search for a player..." autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="playerSearchResults">';
     echo '<button class="search-clear" type="button" aria-label="Clear search" hidden>';
     echo '<img src="/assets/icons/clear-search.svg" alt="" aria-hidden="true" draggable="false">';
     echo '</button>';
