@@ -468,7 +468,7 @@ mineacle_page_head('Leaderboards');
                     <label class="sr-only" for="homeSearch"><?php echo h($searchPlaceholder); ?></label>
                     <div class="leaderboard-search-grid">
                         <div class="search-box">
-                            <img src="/assets/icons/search-pixel.svg?v=<?php echo h(rawurlencode($assetVersion)); ?>" alt="" aria-hidden="true" draggable="false">
+                            <img src="/assets/icons/player-search.png?v=<?php echo h(rawurlencode($assetVersion)); ?>" alt="" aria-hidden="true" draggable="false">
                             <input id="homeSearch" name="search" type="search" placeholder="<?php echo h($searchPlaceholder); ?>" value="<?php echo h($search); ?>" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="leaderboardPlayerSearchResults">
                             <button class="search-clear" type="button" aria-label="Clear search" hidden>
                                 <img src="/assets/icons/clear-search-pixel.svg?v=<?php echo h(rawurlencode($assetVersion)); ?>" alt="" draggable="false">
