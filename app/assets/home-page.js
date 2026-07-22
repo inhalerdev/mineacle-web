@@ -54,7 +54,7 @@
   let announcementModalLastFocus = null;
   let leaderboardViewAbort = null;
   let leaderboardViewRun = 0;
-  let leaderboardTransitionTimer = 0;
+  let leaderboardCurrentUrl = `${window.location.pathname}${window.location.search}`;
   let externalStatusFailureCount = 0;
   let lastExternalStatusCheck = 0;
   const videoFallbackSvg = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360"%3E%3Crect width="640" height="360" fill="%23202020"/%3E%3Cpath fill="%23ff55ff" d="M282 238V122l104 58-104 58z"/%3E%3C/svg%3E';
@@ -628,13 +628,67 @@
     return !playerSearchForm || playerSearchForm.dataset.playerSearchEnabled !== 'false';
   };
 
+  const normalizeLeaderboardUrl = (value) => {
+    const source = new URL(value, window.location.href);
+    const isLeaderboardRoute = /^\/(?:leaderboards(?:\.php)?|players(?:\.php)?)\/?$/i.test(source.pathname);
+
+    if (!isLeaderboardRoute) return null;
+
+    const target = new URL('/leaderboards', window.location.origin);
+    target.search = source.search;
+
+    return target;
+  };
+
+  const setLeaderboardStatus = (message) => {
+    const status = document.querySelector('[data-leaderboard-status]');
+    if (status) status.textContent = message;
+  };
+
+  const failLeaderboardUpdate = () => {
+    setLeaderboardStatus('The leaderboard could not be updated. Please try again.');
+    return false;
+  };
+
+  const transplantChildren = (current, next) => {
+    const fragment = document.createDocumentFragment();
+
+    while (next.firstChild) {
+      fragment.append(next.firstChild);
+    }
+
+    current.replaceChildren(fragment);
+  };
+
+  const readLeaderboardView = (root) => {
+    const board = root.querySelector('#leaderboardRankings');
+
+    return {
+      board,
+      topCard: root.querySelector('.leaderboard-top-card'),
+      categoryGrid: root.querySelector('.leaderboard-category-grid'),
+      heading: board ? board.querySelector('.leaderboard-section-heading') : null,
+      filterRow: board ? board.querySelector('.leaderboard-view-row') : null,
+      results: board ? board.querySelector('[data-leaderboard-results]') : null,
+      categoryInput: board ? board.querySelector('[data-leaderboard-category-input]') : null,
+      viewInput: board ? board.querySelector('[data-leaderboard-view-input]') : null,
+      searchForm: root.querySelector('[data-player-search-form]'),
+      searchInput: root.querySelector('#homeSearch'),
+      searchLabel: board ? board.querySelector('label[for="homeSearch"]') : null
+    };
+  };
+
+  const hasCompleteLeaderboardView = (view) => {
+    return Object.values(view).every((node) => node instanceof Element);
+  };
+
   const loadLeaderboardView = async (url, pushHistory = true) => {
     const board = document.getElementById('leaderboardRankings');
 
     if (!leaderboardPage || !board) return false;
 
-    const targetUrl = new URL(url, window.location.href);
-    targetUrl.hash = '';
+    const targetUrl = normalizeLeaderboardUrl(url);
+    if (!targetUrl) return false;
 
     if (leaderboardViewAbort) {
       leaderboardViewAbort.abort();
@@ -648,7 +702,7 @@
     leaderboardViewAbort = controller;
     board.classList.add('is-view-loading');
     board.setAttribute('aria-busy', 'true');
-    leaderboardPage.classList.add('is-view-loading');
+    setLeaderboardStatus('Updating leaderboard...');
 
     try {
       const response = await fetch(targetUrl.href, {
@@ -657,96 +711,67 @@
           'X-Requested-With': 'fetch'
         },
         cache: 'no-store',
+        credentials: 'same-origin',
         signal: controller.signal
       });
 
-      if (!response.ok) return false;
+      if (!response.ok) {
+        return failLeaderboardUpdate();
+      }
 
       const html = await response.text();
       if (run !== leaderboardViewRun) return null;
 
       const nextDocument = new DOMParser().parseFromString(html, 'text/html');
-      const currentTopCard = document.querySelector('.leaderboard-top-card');
-      const nextTopCard = nextDocument.querySelector('.leaderboard-top-card');
-      const currentCategoryGrid = document.querySelector('.leaderboard-category-grid');
-      const nextCategoryGrid = nextDocument.querySelector('.leaderboard-category-grid');
-      const currentHeading = board.querySelector('.leaderboard-section-heading');
-      const nextHeading = nextDocument.querySelector('#leaderboardRankings .leaderboard-section-heading');
-      const currentViewRow = board.querySelector('.leaderboard-view-row');
-      const nextViewRow = nextDocument.querySelector('#leaderboardRankings .leaderboard-view-row');
-      const currentResults = board.querySelector('[data-leaderboard-results]');
-      const nextResults = nextDocument.querySelector('#leaderboardRankings [data-leaderboard-results]');
-      const currentCategoryInput = board.querySelector('[data-leaderboard-category-input]');
-      const nextCategoryInput = nextDocument.querySelector('#leaderboardRankings [data-leaderboard-category-input]');
-      const currentViewInput = board.querySelector('[data-leaderboard-view-input]');
-      const nextViewInput = nextDocument.querySelector('#leaderboardRankings [data-leaderboard-view-input]');
-      const nextBoard = nextDocument.getElementById('leaderboardRankings');
-      const nextSearchForm = nextDocument.querySelector('[data-player-search-form]');
-      const nextSearchInput = nextDocument.getElementById('homeSearch');
-      const currentSearchLabel = board.querySelector('label[for="homeSearch"]');
-      const nextSearchLabel = nextDocument.querySelector('#leaderboardRankings label[for="homeSearch"]');
+      const currentView = readLeaderboardView(document);
+      const nextView = readLeaderboardView(nextDocument);
 
-      if (!currentTopCard || !nextTopCard || !currentCategoryGrid || !nextCategoryGrid
-        || !currentHeading || !nextHeading
-        || !currentViewRow || !nextViewRow || !currentResults || !nextResults
-        || !currentCategoryInput || !nextCategoryInput || !currentViewInput || !nextViewInput
-        || !nextBoard || !playerSearchForm || !nextSearchForm || !searchInput || !nextSearchInput
-        || !currentSearchLabel || !nextSearchLabel) {
-        return false;
+      if (!hasCompleteLeaderboardView(currentView) || !hasCompleteLeaderboardView(nextView)) {
+        return failLeaderboardUpdate();
       }
 
-      board.classList.remove('is-view-loading');
-      board.removeAttribute('aria-busy');
-      leaderboardPage.classList.remove('is-view-loading');
+      const focusedElement = document.activeElement;
+      const focusAttribute = focusedElement instanceof HTMLAnchorElement
+        ? ['data-leaderboard-category-link', 'data-leaderboard-view-link'].find((attribute) => focusedElement.hasAttribute(attribute))
+        : null;
 
-      const applyView = () => {
-        currentTopCard.replaceWith(nextTopCard);
-        currentCategoryGrid.replaceWith(nextCategoryGrid);
-        currentHeading.replaceWith(nextHeading);
-        currentViewRow.replaceWith(nextViewRow);
-        currentResults.replaceWith(nextResults);
-        currentCategoryInput.value = nextCategoryInput.value;
-        currentViewInput.value = nextViewInput.value;
-        playerSearchForm.dataset.playerSearchEnabled = nextSearchForm.dataset.playerSearchEnabled || 'true';
-        searchInput.placeholder = nextSearchInput.placeholder;
-        searchInput.value = nextSearchInput.value;
-        currentSearchLabel.textContent = nextSearchLabel.textContent;
-        board.setAttribute('aria-label', nextBoard.getAttribute('aria-label') || 'Leaderboard rankings');
-        hidePlayerResults();
-        updateClearButton();
-        window.scrollTo(scrollLeft, scrollTop);
-      };
-
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      if (typeof document.startViewTransition === 'function' && !reduceMotion) {
-        const transition = document.startViewTransition(applyView);
-        await transition.updateCallbackDone;
-      } else {
-        applyView();
-
-        if (!reduceMotion) {
-          window.clearTimeout(leaderboardTransitionTimer);
-          leaderboardPage.classList.remove('is-view-entering');
-          window.requestAnimationFrame(() => {
-            leaderboardPage.classList.add('is-view-entering');
-            leaderboardTransitionTimer = window.setTimeout(() => {
-              leaderboardPage.classList.remove('is-view-entering');
-            }, 320);
-          });
-        }
-      }
+      transplantChildren(currentView.topCard, nextView.topCard);
+      transplantChildren(currentView.categoryGrid, nextView.categoryGrid);
+      transplantChildren(currentView.heading, nextView.heading);
+      transplantChildren(currentView.filterRow, nextView.filterRow);
+      transplantChildren(currentView.results, nextView.results);
+      currentView.topCard.setAttribute('aria-label', nextView.topCard.getAttribute('aria-label') || 'Top leaderboard entries');
+      currentView.categoryInput.value = nextView.categoryInput.value;
+      currentView.viewInput.value = nextView.viewInput.value;
+      currentView.searchForm.dataset.playerSearchEnabled = nextView.searchForm.dataset.playerSearchEnabled || 'true';
+      currentView.searchInput.placeholder = nextView.searchInput.placeholder;
+      currentView.searchInput.value = nextView.searchInput.value;
+      currentView.searchLabel.textContent = nextView.searchLabel.textContent;
+      currentView.board.setAttribute('aria-label', nextView.board.getAttribute('aria-label') || 'Leaderboard rankings');
+      hidePlayerResults();
+      updateClearButton();
 
       if (nextDocument.title) {
         document.title = nextDocument.title;
       }
 
+      const nextRelativeUrl = `${targetUrl.pathname}${targetUrl.search}`;
+
       if (pushHistory) {
-        window.history.pushState(
-          { mineacleLeaderboardView: true },
-          '',
-          `${targetUrl.pathname}${targetUrl.search}`
-        );
+        if (nextRelativeUrl !== leaderboardCurrentUrl) {
+          window.history.pushState({ mineacleLeaderboardView: true }, '', nextRelativeUrl);
+        }
+      }
+
+      leaderboardCurrentUrl = nextRelativeUrl;
+      setLeaderboardStatus('Leaderboard updated.');
+
+      if (focusAttribute) {
+        const nextFocusedControl = document.querySelector(`[${focusAttribute}][aria-current="page"]`);
+
+        if (nextFocusedControl instanceof HTMLElement) {
+          nextFocusedControl.focus({ preventScroll: true });
+        }
       }
 
       window.requestAnimationFrame(() => {
@@ -756,7 +781,7 @@
       return true;
     } catch (error) {
       if (error && error.name === 'AbortError') return null;
-      return false;
+      return failLeaderboardUpdate();
     } finally {
       if (leaderboardViewAbort === controller) {
         leaderboardViewAbort = null;
@@ -765,7 +790,6 @@
       if (run === leaderboardViewRun) {
         board.classList.remove('is-view-loading');
         board.removeAttribute('aria-busy');
-        leaderboardPage.classList.remove('is-view-loading');
       }
     }
   };
@@ -1012,11 +1036,7 @@
       actionUrl.hash = '';
 
       const filterUrl = `${actionUrl.pathname}${actionUrl.search}`;
-      const loaded = await loadLeaderboardView(filterUrl, true);
-
-      if (loaded === false) {
-        window.location.assign(filterUrl);
-      }
+      await loadLeaderboardView(filterUrl, true);
     });
   }
 
@@ -1042,18 +1062,13 @@
       return;
     }
 
-    const url = new URL(link.href, window.location.href);
-    if (url.pathname !== '/leaderboards') return;
-
-    const viewUrl = `${url.pathname}${url.search}`;
+    const url = normalizeLeaderboardUrl(link.href);
+    if (!url) return;
 
     event.preventDefault();
     hidePlayerResults();
 
-    const loaded = await loadLeaderboardView(viewUrl, true);
-    if (loaded === false) {
-      window.location.assign(viewUrl);
-    }
+    await loadLeaderboardView(`${url.pathname}${url.search}`, true);
   });
 
   if (leaderboardPage) {
@@ -1065,7 +1080,7 @@
       const loaded = await loadLeaderboardView(window.location.href, false);
 
       if (loaded === false) {
-        window.location.reload();
+        window.history.replaceState({ mineacleLeaderboardView: true }, '', leaderboardCurrentUrl);
       }
     });
   } else if ('scrollRestoration' in window.history) {

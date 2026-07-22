@@ -178,7 +178,7 @@ function mineacle_leaderboards_url(string $category, string $view = '', string $
         $params['page'] = $page;
     }
 
-    return 'https://mineacle.net/leaderboards?' . http_build_query($params);
+    return '/leaderboards?' . http_build_query($params);
 }
 
 function mineacle_leaderboards_money_from_cents(int $cents): string
@@ -451,6 +451,7 @@ mineacle_page_head('Leaderboards');
         </section>
 
         <section class="panel leaderboard-board" id="leaderboardRankings" aria-label="<?php echo h($leaderboardTitle); ?>">
+            <p class="sr-only" data-leaderboard-status aria-live="polite"></p>
             <div class="leaderboard-board-top">
                 <header class="profile-section-heading leaderboard-section-heading">
                     <span aria-hidden="true">
@@ -462,7 +463,7 @@ mineacle_page_head('Leaderboards');
                     </div>
                 </header>
 
-                <form class="leaderboard-search player-search" method="get" action="<?php echo h($leaderboardsUrl); ?>" data-player-search data-player-search-form data-player-search-submit="filter" data-player-search-enabled="<?php echo $canSuggestPlayers ? 'true' : 'false'; ?>">
+                <form class="leaderboard-search player-search" method="get" action="/leaderboards" data-player-search data-player-search-form data-player-search-submit="filter" data-player-search-enabled="<?php echo $canSuggestPlayers ? 'true' : 'false'; ?>">
                     <input type="hidden" name="category" value="<?php echo h($category); ?>" data-leaderboard-category-input>
                     <input type="hidden" name="view" value="<?php echo h($view); ?>" data-leaderboard-view-input>
                     <label class="sr-only" for="homeSearch"><?php echo h($searchPlaceholder); ?></label>

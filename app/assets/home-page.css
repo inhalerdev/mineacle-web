@@ -52,10 +52,7 @@
 html {
   min-height: 100%;
   background: var(--canvas);
-}
-
-@view-transition {
-  navigation: auto;
+  scrollbar-gutter: stable;
 }
 
 body {
@@ -157,7 +154,6 @@ svg {
 }
 
 .rail {
-  view-transition-name: mineacle-rail;
   position: sticky;
   top: var(--gap);
   grid-column: 1;
@@ -2886,53 +2882,6 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   gap: var(--gap);
 }
 
-.leaderboard-hero-shell {
-  min-height: clamp(260px, 27dvh, 360px);
-  display: grid;
-  grid-template-columns: minmax(0, 1.36fr) minmax(340px, 0.72fr);
-  gap: var(--gap);
-}
-
-.leaderboard-hero {
-  position: relative;
-  overflow: hidden;
-  background:
-    linear-gradient(135deg, rgba(255, 85, 255, 0.095), rgba(255, 85, 255, 0) 42%),
-    #191919;
-}
-
-.leaderboard-hero-main {
-  min-height: clamp(260px, 27dvh, 360px);
-  display: flex;
-  align-items: center;
-  padding: clamp(28px, 4vw, 58px);
-}
-
-.leaderboard-hero-main::before {
-  content: "";
-  position: absolute;
-  inset: auto clamp(20px, 4vw, 52px) clamp(18px, 3vw, 36px) auto;
-  width: clamp(140px, 18vw, 270px);
-  height: clamp(140px, 18vw, 270px);
-  border-radius: var(--radius);
-  background: rgba(255, 85, 255, 0.035);
-  pointer-events: none;
-}
-
-.leaderboard-hero-mark {
-  position: absolute;
-  right: clamp(38px, 6vw, 94px);
-  bottom: clamp(34px, 5vw, 70px);
-  width: clamp(92px, 11vw, 170px);
-  height: clamp(92px, 11vw, 170px);
-  display: block;
-  object-fit: contain;
-  image-rendering: pixelated;
-  opacity: 0.11;
-  filter: var(--rail-icon-active-filter);
-  pointer-events: none;
-}
-
 .leaderboard-copy {
   position: relative;
   z-index: 1;
@@ -3029,14 +2978,14 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   padding: 9px 11px;
   background: #303030;
   box-shadow: none;
-  transition: background 160ms ease, transform 160ms ease;
+  transition: background 140ms ease;
 }
 
 .leaderboard-top-entry:hover,
 .leaderboard-top-entry:focus-visible {
   outline: 0;
   background: #383838;
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .leaderboard-top-entry.is-rank-1 {
@@ -3103,21 +3052,6 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   font-size: 0.74rem;
   font-weight: var(--font-semibold);
   line-height: 1.25;
-}
-
-.leaderboard-hub {
-  gap: clamp(16px, 2vw, 24px);
-  overflow-x: auto;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0)),
-    #191919;
-}
-
-.leaderboard-hub-top {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(360px, 0.4fr);
-  gap: clamp(18px, 2.4vw, 34px);
-  align-items: end;
 }
 
 .leaderboard-category-grid {
@@ -3307,36 +3241,11 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   padding: clamp(18px, 2.4vw, 30px);
 }
 
-.leaderboard-board-header {
-  display: flex;
-  align-items: end;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.leaderboard-board-header h2 {
-  margin: 0 0 6px;
-  color: var(--heading);
-  font-size: clamp(1.5rem, 1.1rem + 1vw, 2.2rem);
-  font-weight: var(--font-extrabold);
-  line-height: 1;
-}
-
-.leaderboard-board-header p,
-.leaderboard-board-header span,
 .leaderboard-table-head span {
   color: var(--subtext);
   font-size: var(--ui-font-size);
   font-weight: var(--font-semibold);
   line-height: 1.35;
-}
-
-.leaderboard-board-header p {
-  margin: 0;
-}
-
-.leaderboard-board-header span {
-  white-space: nowrap;
 }
 
 .leaderboard-table-head {
@@ -3381,13 +3290,13 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   padding: 11px 16px;
   background: #303030;
   box-shadow: none;
-  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+  transition: background 140ms ease, color 140ms ease;
 }
 
 .leaderboard-board .player-card:hover,
 .leaderboard-board .player-card:focus-visible {
   background: #393939;
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .leaderboard-board .player-card.is-top-rank {
@@ -3460,40 +3369,7 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   color: var(--subtext);
 }
 
-@media (max-width: 1200px) {
-  .leaderboard-hero-shell,
-  .leaderboard-hub-top {
-    grid-template-columns: 1fr;
-  }
-
-  .leaderboard-category-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
 @media (max-width: 780px) {
-  .leaderboard-hero-shell {
-    min-height: 0;
-  }
-
-  .leaderboard-hero,
-  .leaderboard-top-card {
-    min-height: 220px;
-  }
-
-  .leaderboard-category-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
-  .leaderboard-category-card {
-    min-height: 68px;
-  }
-
-  .leaderboard-search-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .leaderboard-board-header,
   .leaderboard-pagination {
     align-items: stretch;
     justify-content: flex-start;
@@ -3511,6 +3387,8 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   display: grid;
   grid-template-rows: minmax(0, 1fr) var(--leaderboard-summary-height);
   overflow: hidden;
+  overflow-anchor: none;
+  contain: layout paint;
   padding: 0;
   background: #191919;
 }
@@ -3577,6 +3455,7 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   padding: clamp(18px, 2.2vw, 28px);
   background: #202020;
   box-shadow: none;
+  contain: layout paint;
 }
 
 .leaderboard-top-card::before {
@@ -3771,7 +3650,10 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
 }
 
 .leaderboard-board {
+  min-height: clamp(460px, 52dvh, 680px);
   gap: clamp(14px, 1.7vw, 20px);
+  overflow-anchor: none;
+  contain: layout paint;
   padding: clamp(20px, 2.6vw, 34px);
   background: #191919;
 }
@@ -3946,101 +3828,31 @@ a[aria-label="Discord"]:focus-visible .discord-icon-mark {
   display: contents;
 }
 
-.leaderboard-top-card {
-  view-transition-name: leaderboard-top-card;
-}
-
-.leaderboard-category-grid {
-  view-transition-name: leaderboard-categories;
-}
-
-.leaderboard-board {
-  view-transition-name: leaderboard-board;
-}
-
-.leaderboard-top-card,
-.leaderboard-category-grid,
-.leaderboard-board .leaderboard-view-row,
-.leaderboard-board .leaderboard-results > * {
-  transition: opacity 180ms ease;
-}
-
 .leaderboard-board.is-view-loading {
   cursor: progress;
 }
 
-.leaderboard-page.is-view-loading .leaderboard-top-card,
-.leaderboard-page.is-view-loading .leaderboard-category-grid,
-.leaderboard-board.is-view-loading .leaderboard-view-row,
-.leaderboard-board.is-view-loading .leaderboard-results > * {
+.leaderboard-board::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  z-index: 5;
+  width: 35%;
+  height: 3px;
+  visibility: hidden;
+  background: #ff55ff;
+  transform: translate3d(-110%, 0, 0);
   pointer-events: none;
-  opacity: 0.62;
 }
 
-::view-transition-old(root),
-::view-transition-new(root) {
-  mix-blend-mode: normal;
+.leaderboard-board.is-view-loading::after {
+  visibility: visible;
+  animation: leaderboard-request-progress 680ms linear infinite;
 }
 
-::view-transition-old(root) {
-  animation: mineacle-root-out 140ms ease both;
-}
-
-::view-transition-new(root) {
-  animation: mineacle-root-in 260ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-::view-transition-old(leaderboard-top-card),
-::view-transition-old(leaderboard-categories),
-::view-transition-old(leaderboard-board) {
-  animation: mineacle-view-out 150ms ease both;
-}
-
-::view-transition-new(leaderboard-top-card),
-::view-transition-new(leaderboard-categories),
-::view-transition-new(leaderboard-board) {
-  animation: mineacle-view-in 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-.leaderboard-page.is-view-entering .leaderboard-top-card,
-.leaderboard-page.is-view-entering .leaderboard-category-grid,
-.leaderboard-page.is-view-entering .leaderboard-view-row,
-.leaderboard-page.is-view-entering .leaderboard-results > * {
-  animation: mineacle-view-in 280ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-@keyframes mineacle-view-out {
+@keyframes leaderboard-request-progress {
   to {
-    opacity: 0.3;
-    transform: translateY(-3px);
-  }
-}
-
-@keyframes mineacle-root-out {
-  to {
-    opacity: 0.72;
-  }
-}
-
-@keyframes mineacle-root-in {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes mineacle-view-in {
-  from {
-    opacity: 0.25;
-    transform: translateY(6px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
+    transform: translate3d(310%, 0, 0);
   }
 }
 
@@ -4708,48 +4520,10 @@ body :where(h1, h2, h3, h4, h5, h6) :where(span, strong, b, small) {
   font-weight: var(--font-extrabold);
 }
 
-.home-grid,
-.admin-page {
-  animation: mineacle-page-enter 300ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-@keyframes mineacle-page-enter {
-  from {
-    opacity: 0;
-    transform: translateY(5px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(root),
-  ::view-transition-new(root),
-  ::view-transition-old(leaderboard-top-card),
-  ::view-transition-new(leaderboard-top-card),
-  ::view-transition-old(leaderboard-categories),
-  ::view-transition-new(leaderboard-categories),
-  ::view-transition-old(leaderboard-board),
-  ::view-transition-new(leaderboard-board) {
+  .leaderboard-board.is-view-loading::after {
+    width: 100%;
     animation: none;
-  }
-
-  .home-grid,
-  .admin-page,
-  .leaderboard-page.is-view-entering .leaderboard-top-card,
-  .leaderboard-page.is-view-entering .leaderboard-category-grid,
-  .leaderboard-page.is-view-entering .leaderboard-view-row,
-  .leaderboard-page.is-view-entering .leaderboard-results > * {
-    animation: none;
-  }
-
-  .leaderboard-top-card,
-  .leaderboard-category-grid,
-  .leaderboard-board .leaderboard-view-row,
-  .leaderboard-board .leaderboard-results > * {
-    transition: none;
+    transform: none;
   }
 }
