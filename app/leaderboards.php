@@ -31,33 +31,25 @@ $categories = [
         'copy' => 'Overall survival standings for Mineacle players.',
         'views' => [
             'overall' => [
-                'label' => 'Overall',
-                'title' => 'Players',
+                'label' => 'Global Overall',
+                'title' => 'Global Players',
                 'description' => 'Top players ranked by balance, kills, K/D, playtime, and username.',
                 'table' => 'players',
                 'sort' => 'overall',
                 'max' => 100,
             ],
             'richest' => [
-                'label' => 'Richest',
-                'title' => 'Richest Players',
+                'label' => 'Global Richest',
+                'title' => 'Global Richest Players',
                 'description' => 'Players with the strongest personal economy standings.',
                 'table' => 'players',
                 'sort' => 'money',
                 'max' => 100,
             ],
-            'kills' => [
-                'label' => 'Kills',
-                'title' => 'Top Killers',
-                'description' => 'Players ranked by confirmed kills, then K/D, then lowest deaths.',
-                'table' => 'players',
-                'sort' => 'kills',
-                'max' => 100,
-            ],
             'kd' => [
-                'label' => 'K/D',
-                'title' => 'Player K/D',
-                'description' => 'Qualified player K/D rankings. Players need at least 25 kills to appear here.',
+                'label' => 'Global K/D',
+                'title' => 'Top Global K/D',
+                'description' => 'Players ranked by global K/D. Players need at least 25 kills to qualify.',
                 'table' => 'players',
                 'sort' => 'kd_qualified',
                 'max' => 100,
@@ -69,24 +61,24 @@ $categories = [
         'copy' => 'Team standings for server contests and survival dominance.',
         'views' => [
             'overall' => [
-                'label' => 'Overall',
-                'title' => 'Teams',
+                'label' => 'Global Overall',
+                'title' => 'Global Teams',
                 'description' => 'Teams ranked by capital, K/D, kills, members, and name.',
                 'table' => 'teams',
                 'sort' => 'overall',
                 'max' => 50,
             ],
             'richest' => [
-                'label' => 'Richest',
-                'title' => 'Richest Teams',
+                'label' => 'Global Richest',
+                'title' => 'Global Richest Teams',
                 'description' => 'Teams controlling the most capital on Mineacle.',
                 'table' => 'teams',
                 'sort' => 'balance',
                 'max' => 50,
             ],
             'kd' => [
-                'label' => 'K/D',
-                'title' => 'Team K/D',
+                'label' => 'Global K/D',
+                'title' => 'Global Team K/D',
                 'description' => 'Qualified team K/D rankings. Teams need at least 25 total kills to appear here.',
                 'table' => 'teams',
                 'sort' => 'kd_qualified',
@@ -99,16 +91,16 @@ $categories = [
         'copy' => 'Money-focused rankings for players and teams.',
         'views' => [
             'players' => [
-                'label' => 'Players',
-                'title' => 'Richest Players',
+                'label' => 'Global Players',
+                'title' => 'Global Richest Players',
                 'description' => 'Players with the highest stored balances.',
                 'table' => 'players',
                 'sort' => 'money',
                 'max' => 100,
             ],
             'teams' => [
-                'label' => 'Teams',
-                'title' => 'Richest Teams',
+                'label' => 'Global Teams',
+                'title' => 'Global Richest Teams',
                 'description' => 'Teams with the highest collective capital.',
                 'table' => 'teams',
                 'sort' => 'balance',
@@ -121,24 +113,24 @@ $categories = [
         'copy' => 'PvP rankings for top killers and qualified K/D leaders.',
         'views' => [
             'kills' => [
-                'label' => 'Kills',
-                'title' => 'Top Killers',
+                'label' => 'Global Kills',
+                'title' => 'Global Top Killers',
                 'description' => 'Players ranked by kills, then K/D, then lowest deaths.',
                 'table' => 'players',
                 'sort' => 'kills',
                 'max' => 100,
             ],
             'player-kd' => [
-                'label' => 'Player K/D',
-                'title' => 'Player K/D',
+                'label' => 'Global Player K/D',
+                'title' => 'Global Player K/D',
                 'description' => 'Players ranked by K/D with a minimum of 25 kills.',
                 'table' => 'players',
                 'sort' => 'kd_qualified',
                 'max' => 100,
             ],
             'team-kd' => [
-                'label' => 'Team K/D',
-                'title' => 'Team K/D',
+                'label' => 'Global Team K/D',
+                'title' => 'Global Team K/D',
                 'description' => 'Teams ranked by K/D with a minimum of 25 total kills.',
                 'table' => 'teams',
                 'sort' => 'kd_qualified',
@@ -154,6 +146,8 @@ if (!isset($categories[$category])) {
 
 if ($category === 'players' && in_array($view, ['money', 'balance'], true)) {
     $view = 'richest';
+} elseif ($category === 'players' && in_array($view, ['kills', 'deaths', 'player-kd', 'global-kd'], true)) {
+    $view = 'kd';
 } elseif ($category === 'teams' && in_array($view, ['money', 'balance'], true)) {
     $view = 'richest';
 } elseif ($category === 'combat' && $view === 'kd') {
@@ -456,7 +450,7 @@ mineacle_page_head('Leaderboards');
                                 <?php if ($tableMode === 'players'): ?>
                                     <a class="leaderboard-top-entry is-rank-<?php echo h((string) $rank); ?>" href="<?php echo h(mineacle_players_profile_url($entry)); ?>">
                                         <span class="leaderboard-top-rank">#<?php echo h((string) $rank); ?></span>
-                                        <span class="leaderboard-top-avatar" aria-hidden="true">
+                                        <span class="leaderboard-top-avatar<?php echo $head !== '' ? ' has-player-head' : ''; ?>" aria-hidden="true">
                                             <?php if ($head !== ''): ?>
                                                 <img src="<?php echo h($head); ?>" alt="" loading="lazy" decoding="async" draggable="false">
                                             <?php else: ?>

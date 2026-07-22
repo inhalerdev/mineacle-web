@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base116';
+    return 'base118';
 }
 
 function mineacle_page_clean_text(string $value): string
@@ -19,8 +19,8 @@ function mineacle_page_meta_title(string $title, string $siteName): string
     $cleanTitle = mineacle_page_clean_text($title) ?: 'Home';
     $normalizedTitle = strtolower($cleanTitle);
 
-    if ($normalizedTitle === 'leaderboards') {
-        $cleanTitle = 'Leaderboard';
+    if (in_array($normalizedTitle, ['leaderboard', 'leaderboards'], true)) {
+        $cleanTitle = 'Leaderboards';
     }
 
     return $cleanTitle . ' | ' . $siteName;
@@ -160,11 +160,19 @@ function mineacle_page_icon(string $name): string
             . '</span>';
     }
 
+    if ($name === 'store') {
+        $mark = '/assets/icons/store.svg' . $iconVersion;
+
+        return '<span class="site-icon site-icon-layered store-icon" aria-hidden="true">'
+            . '<span class="store-icon-square"></span>'
+            . '<img class="store-icon-mark" src="' . h($mark) . '" alt="" draggable="false">'
+            . '</span>';
+    }
+
     $officialIcons = [
         'home' => '/assets/icons/home.svg' . $iconVersion,
         'stats' => '/assets/icons/leaderboard.svg' . $iconVersion,
         'vote' => '/assets/icons/vote.svg' . $iconVersion,
-        'store' => '/assets/icons/store.svg' . $iconVersion,
         'bans' => '/assets/icons/bans.svg' . $iconVersion,
         'x' => '/assets/icons/x-social.svg' . $iconVersion,
         'youtube' => '/assets/icons/youtube-pixel.svg' . $iconVersion,
@@ -314,7 +322,7 @@ function mineacle_page_head(string $title = 'Home', array $options = []): void
     echo '<link rel="icon" type="image/png" href="/assets/fav-web.png?v=' . h($assetVersion) . '">';
     echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
-    echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;600;700;800&display=swap">';
+    echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&display=swap">';
     echo '<link rel="stylesheet" href="/assets/home-page.css?v=' . h($assetVersion) . '">';
     echo '</head>';
     echo '<body>';
