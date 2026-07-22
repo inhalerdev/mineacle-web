@@ -437,7 +437,7 @@ mineacle_page_head('Leaderboards');
             <nav class="leaderboard-category-grid" aria-label="Leaderboard categories">
                 <?php foreach ($categories as $key => $card): ?>
                     <?php $isActive = $category === $key; ?>
-                    <a class="leaderboard-category-card<?php echo $isActive ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url((string) $key)); ?>"<?php echo $isActive ? ' aria-current="page"' : ''; ?>>
+                    <a class="leaderboard-category-card<?php echo $isActive ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url((string) $key)); ?>" data-leaderboard-category-link<?php echo $isActive ? ' aria-current="page"' : ''; ?>>
                         <span class="leaderboard-category-icon" aria-hidden="true">
                             <img src="<?php echo h(mineacle_leaderboards_category_icon((string) $key, $assetVersion)); ?>" alt="" draggable="false">
                         </span>
@@ -450,7 +450,7 @@ mineacle_page_head('Leaderboards');
             </nav>
         </section>
 
-        <section class="panel leaderboard-board" id="rankings" aria-label="<?php echo h($leaderboardTitle); ?>">
+        <section class="panel leaderboard-board" id="leaderboardRankings" aria-label="<?php echo h($leaderboardTitle); ?>">
             <div class="leaderboard-board-top">
                 <header class="profile-section-heading leaderboard-section-heading">
                     <span aria-hidden="true">
@@ -462,23 +462,21 @@ mineacle_page_head('Leaderboards');
                     </div>
                 </header>
 
-                <form class="leaderboard-search<?php echo $canSuggestPlayers ? ' player-search' : ''; ?>" method="get" action="<?php echo h($leaderboardsUrl); ?>"<?php echo $canSuggestPlayers ? ' data-player-search data-player-search-form data-player-search-submit="filter"' : ''; ?>>
-                    <input type="hidden" name="category" value="<?php echo h($category); ?>">
+                <form class="leaderboard-search player-search" method="get" action="<?php echo h($leaderboardsUrl); ?>" data-player-search data-player-search-form data-player-search-submit="filter" data-player-search-enabled="<?php echo $canSuggestPlayers ? 'true' : 'false'; ?>">
+                    <input type="hidden" name="category" value="<?php echo h($category); ?>" data-leaderboard-category-input>
                     <input type="hidden" name="view" value="<?php echo h($view); ?>" data-leaderboard-view-input>
                     <label class="sr-only" for="homeSearch"><?php echo h($searchPlaceholder); ?></label>
                     <div class="leaderboard-search-grid">
                         <div class="search-box">
                             <img src="/assets/icons/search-pixel.svg?v=<?php echo h(rawurlencode($assetVersion)); ?>" alt="" aria-hidden="true" draggable="false">
-                            <input id="homeSearch" name="search" type="search" placeholder="<?php echo h($searchPlaceholder); ?>" value="<?php echo h($search); ?>" autocomplete="off"<?php echo $canSuggestPlayers ? ' role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="leaderboardPlayerSearchResults"' : ''; ?>>
+                            <input id="homeSearch" name="search" type="search" placeholder="<?php echo h($searchPlaceholder); ?>" value="<?php echo h($search); ?>" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="leaderboardPlayerSearchResults">
                             <button class="search-clear" type="button" aria-label="Clear search" hidden>
                                 <img src="/assets/icons/clear-search-pixel.svg?v=<?php echo h(rawurlencode($assetVersion)); ?>" alt="" draggable="false">
                             </button>
                         </div>
                         <button class="leaderboard-search-submit" type="submit">Filter</button>
                     </div>
-                    <?php if ($canSuggestPlayers): ?>
-                        <div class="player-search-results leaderboard-search-results" id="leaderboardPlayerSearchResults" data-player-search-results role="listbox" hidden></div>
-                    <?php endif; ?>
+                    <div class="player-search-results leaderboard-search-results" id="leaderboardPlayerSearchResults" data-player-search-results role="listbox" hidden></div>
                 </form>
             </div>
 
@@ -491,7 +489,7 @@ mineacle_page_head('Leaderboards');
                 <nav class="leaderboard-subfilters" aria-label="<?php echo h((string) $categories[$category]['label']); ?> filters">
                     <?php foreach ($views as $viewKey => $viewData): ?>
                         <?php $isActiveView = $view === $viewKey; ?>
-                        <a class="<?php echo $isActiveView ? 'is-active' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, (string) $viewKey, $search) . '#rankings'); ?>" data-leaderboard-view-link<?php echo $isActiveView ? ' aria-current="page"' : ''; ?>>
+                        <a class="<?php echo $isActiveView ? 'is-active' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, (string) $viewKey, $search)); ?>" data-leaderboard-view-link<?php echo $isActiveView ? ' aria-current="page"' : ''; ?>>
                             <?php echo h((string) $viewData['label']); ?>
                         </a>
                     <?php endforeach; ?>
@@ -599,9 +597,9 @@ mineacle_page_head('Leaderboards');
                     <nav class="leaderboard-pagination" aria-label="Leaderboard pages">
                         <?php $prevPage = max(1, $page - 1); ?>
                         <?php $nextPage = min($totalPages, $page + 1); ?>
-                        <a class="<?php echo $page <= 1 ? 'is-disabled' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, $view, $search, $prevPage)); ?>"<?php echo $page <= 1 ? ' aria-disabled="true"' : ''; ?>>Previous</a>
+                        <a class="<?php echo $page <= 1 ? 'is-disabled' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, $view, $search, $prevPage)); ?>" data-leaderboard-page-link<?php echo $page <= 1 ? ' aria-disabled="true"' : ''; ?>>Previous</a>
                         <span>Page <?php echo h((string) $page); ?> of <?php echo h((string) $totalPages); ?></span>
-                        <a class="<?php echo $page >= $totalPages ? 'is-disabled' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, $view, $search, $nextPage)); ?>"<?php echo $page >= $totalPages ? ' aria-disabled="true"' : ''; ?>>Next</a>
+                        <a class="<?php echo $page >= $totalPages ? 'is-disabled' : ''; ?>" href="<?php echo h(mineacle_leaderboards_url($category, $view, $search, $nextPage)); ?>" data-leaderboard-page-link<?php echo $page >= $totalPages ? ' aria-disabled="true"' : ''; ?>>Next</a>
                     </nav>
                 <?php endif; ?>
             </div>
