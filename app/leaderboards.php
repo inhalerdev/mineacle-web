@@ -27,19 +27,20 @@ $perPage = 25;
 
 $categories = [
     'players' => [
-        'label' => 'Players',
-        'copy' => 'Overall survival standings for Mineacle players.',
+        'label' => 'Top Players Global',
+        'copy' => 'Global player standings across wealth, combat, and playtime.',
+        'section_label' => 'Global Player Rankings',
         'views' => [
             'overall' => [
-                'label' => 'Global Overall',
-                'title' => 'Global Players',
+                'label' => 'Overall',
+                'title' => 'Top Players Global',
                 'description' => 'Top players ranked by balance, kills, K/D, playtime, and username.',
                 'table' => 'players',
                 'sort' => 'overall',
                 'max' => 100,
             ],
             'richest' => [
-                'label' => 'Global Richest',
+                'label' => 'Richest',
                 'title' => 'Global Richest Players',
                 'description' => 'Players with the strongest personal economy standings.',
                 'table' => 'players',
@@ -47,7 +48,7 @@ $categories = [
                 'max' => 100,
             ],
             'kd' => [
-                'label' => 'Global K/D',
+                'label' => 'Top K/D',
                 'title' => 'Top Global K/D',
                 'description' => 'Players ranked by global K/D. Players need at least 25 kills to qualify.',
                 'table' => 'players',
@@ -57,19 +58,20 @@ $categories = [
         ],
     ],
     'teams' => [
-        'label' => 'Teams',
-        'copy' => 'Team standings for server contests and survival dominance.',
+        'label' => 'Top Teams Global',
+        'copy' => 'Global team standings across capital, combat, and membership.',
+        'section_label' => 'Global Team Rankings',
         'views' => [
             'overall' => [
-                'label' => 'Global Overall',
-                'title' => 'Global Teams',
+                'label' => 'Overall',
+                'title' => 'Top Teams Global',
                 'description' => 'Teams ranked by capital, K/D, kills, members, and name.',
                 'table' => 'teams',
                 'sort' => 'overall',
                 'max' => 50,
             ],
             'richest' => [
-                'label' => 'Global Richest',
+                'label' => 'Richest',
                 'title' => 'Global Richest Teams',
                 'description' => 'Teams controlling the most capital on Mineacle.',
                 'table' => 'teams',
@@ -77,7 +79,7 @@ $categories = [
                 'max' => 50,
             ],
             'kd' => [
-                'label' => 'Global K/D',
+                'label' => 'Top K/D',
                 'title' => 'Global Team K/D',
                 'description' => 'Qualified team K/D rankings. Teams need at least 25 total kills to appear here.',
                 'table' => 'teams',
@@ -86,59 +88,15 @@ $categories = [
             ],
         ],
     ],
-    'economy' => [
-        'label' => 'Economy',
-        'copy' => 'Money-focused rankings for players and teams.',
-        'views' => [
-            'players' => [
-                'label' => 'Global Players',
-                'title' => 'Global Richest Players',
-                'description' => 'Players with the highest stored balances.',
-                'table' => 'players',
-                'sort' => 'money',
-                'max' => 100,
-            ],
-            'teams' => [
-                'label' => 'Global Teams',
-                'title' => 'Global Richest Teams',
-                'description' => 'Teams with the highest collective capital.',
-                'table' => 'teams',
-                'sort' => 'balance',
-                'max' => 50,
-            ],
-        ],
-    ],
-    'combat' => [
-        'label' => 'Combat',
-        'copy' => 'PvP rankings for top killers and qualified K/D leaders.',
-        'views' => [
-            'kills' => [
-                'label' => 'Global Kills',
-                'title' => 'Global Top Killers',
-                'description' => 'Players ranked by kills, then K/D, then lowest deaths.',
-                'table' => 'players',
-                'sort' => 'kills',
-                'max' => 100,
-            ],
-            'player-kd' => [
-                'label' => 'Global Player K/D',
-                'title' => 'Global Player K/D',
-                'description' => 'Players ranked by K/D with a minimum of 25 kills.',
-                'table' => 'players',
-                'sort' => 'kd_qualified',
-                'max' => 100,
-            ],
-            'team-kd' => [
-                'label' => 'Global Team K/D',
-                'title' => 'Global Team K/D',
-                'description' => 'Teams ranked by K/D with a minimum of 25 total kills.',
-                'table' => 'teams',
-                'sort' => 'kd_qualified',
-                'max' => 50,
-            ],
-        ],
-    ],
 ];
+
+if ($category === 'economy') {
+    $category = $view === 'teams' ? 'teams' : 'players';
+    $view = 'richest';
+} elseif ($category === 'combat') {
+    $category = in_array($view, ['teams', 'team-kd'], true) ? 'teams' : 'players';
+    $view = 'kd';
+}
 
 if (!isset($categories[$category])) {
     $category = 'players';
@@ -150,10 +108,8 @@ if ($category === 'players' && in_array($view, ['money', 'balance'], true)) {
     $view = 'kd';
 } elseif ($category === 'teams' && in_array($view, ['money', 'balance'], true)) {
     $view = 'richest';
-} elseif ($category === 'combat' && $view === 'kd') {
-    $view = 'player-kd';
-} elseif ($category === 'combat' && $view === 'teams') {
-    $view = 'team-kd';
+} elseif ($category === 'teams' && in_array($view, ['kills', 'deaths', 'team-kd', 'global-kd'], true)) {
+    $view = 'kd';
 }
 
 $views = $categories[$category]['views'];
@@ -355,10 +311,8 @@ function mineacle_leaderboards_team_initial(array $team): string
 function mineacle_leaderboards_category_icon(string $category, string $assetVersion): string
 {
     $icons = [
-        'players' => 'leaderboard-top-overall.svg',
-        'teams' => 'leaderboard-top-teams.svg',
-        'economy' => 'leaderboard-balance-top.svg',
-        'combat' => 'top-pvp.svg',
+        'players' => 'top-player.svg',
+        'teams' => 'top-team.png',
     ];
     $file = $icons[$category] ?? 'leaderboard.svg';
 
@@ -378,9 +332,11 @@ $hasResults = $rows !== [];
 $shownStart = $hasResults ? $offset + 1 : 0;
 $shownEnd = $hasResults ? min($offset + count($rows), $resultTotal) : 0;
 $searchPlaceholder = $tableMode === 'teams' ? 'Search teams...' : 'Search players...';
-$topTitle = 'Top 3 ' . ($tableMode === 'teams' ? 'Teams' : 'Players');
+$topTitle = 'Top 3 ' . ($tableMode === 'teams' ? 'Global Teams' : 'Global Players');
 $leaderboardTitle = (string) $selected['title'];
 $leaderboardDescription = (string) $selected['description'];
+$leaderboardSectionLabel = (string) $categories[$category]['section_label'];
+$leaderboardFilterLabel = $category === 'teams' ? 'Team Rankings' : 'Player Rankings';
 $assetVersion = mineacle_page_asset_version();
 $canSuggestPlayers = $tableMode === 'players';
 
@@ -421,7 +377,7 @@ mineacle_page_head('Leaderboards');
                 <div class="leaderboard-copy">
                     <p>Survival Rankings</p>
                     <h1>Leaderboards</h1>
-                    <span>Track Mineacle's strongest players, richest teams, and qualified combat leaders.</span>
+                    <span>Track Mineacle's top global players and teams across survival, wealth, and combat.</span>
                 </div>
 
                 <aside class="leaderboard-top-card" aria-label="<?php echo h($topTitle); ?>">
@@ -501,7 +457,7 @@ mineacle_page_head('Leaderboards');
                         <img src="<?php echo h(mineacle_leaderboards_category_icon($category, $assetVersion)); ?>" alt="" draggable="false">
                     </span>
                     <div>
-                        <p><?php echo h((string) $categories[$category]['label']); ?> Leaderboard</p>
+                        <p><?php echo h($leaderboardSectionLabel); ?></p>
                         <h2><?php echo h($leaderboardTitle); ?></h2>
                     </div>
                 </header>
@@ -527,6 +483,11 @@ mineacle_page_head('Leaderboards');
             </div>
 
             <div class="leaderboard-view-row">
+                <span class="leaderboard-filter-context">
+                    <small>Global</small>
+                    <strong><?php echo h($leaderboardFilterLabel); ?></strong>
+                </span>
+
                 <nav class="leaderboard-subfilters" aria-label="<?php echo h((string) $categories[$category]['label']); ?> filters">
                     <?php foreach ($views as $viewKey => $viewData): ?>
                         <?php $isActiveView = $view === $viewKey; ?>
