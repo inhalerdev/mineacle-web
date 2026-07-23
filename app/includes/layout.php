@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base128';
+    return 'base129';
 }
 
 function mineacle_page_clean_text(string $value): string
@@ -330,14 +330,46 @@ function mineacle_page_head(string $title = 'Home', array $options = []): void
     echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
     echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&display=swap">';
-    echo '<link rel="stylesheet" href="/assets/home-page.css?v=' . h($assetVersion) . '">';
+    $stylesheets = $options['stylesheets'] ?? ['/assets/home-page.css'];
+
+    if (!is_array($stylesheets) || $stylesheets === []) {
+        $stylesheets = ['/assets/home-page.css'];
+    }
+
+    foreach ($stylesheets as $stylesheet) {
+        $stylesheetUrl = trim((string) $stylesheet);
+
+        if ($stylesheetUrl === '') {
+            continue;
+        }
+
+        $separator = str_contains($stylesheetUrl, '?') ? '&' : '?';
+        echo '<link rel="stylesheet" href="' . h($stylesheetUrl . $separator . 'v=' . $assetVersion) . '">';
+    }
     echo '</head>';
-    echo '<body>';
+    $bodyClass = mineacle_page_clean_text((string) ($options['body_class'] ?? ''));
+    echo $bodyClass !== '' ? '<body class="' . h($bodyClass) . '">' : '<body>';
 }
 
-function mineacle_page_end(): void
+function mineacle_page_end(array $options = []): void
 {
-    echo '<script src="/assets/home-page.js?v=' . h(mineacle_page_asset_version()) . '"></script>';
+    $scripts = $options['scripts'] ?? ['/assets/home-page.js'];
+
+    if (!is_array($scripts)) {
+        $scripts = ['/assets/home-page.js'];
+    }
+
+    foreach ($scripts as $script) {
+        $scriptUrl = trim((string) $script);
+
+        if ($scriptUrl === '') {
+            continue;
+        }
+
+        $separator = str_contains($scriptUrl, '?') ? '&' : '?';
+        echo '<script src="' . h($scriptUrl . $separator . 'v=' . mineacle_page_asset_version()) . '"></script>';
+    }
+
     echo '</body>';
     echo '</html>';
 }
