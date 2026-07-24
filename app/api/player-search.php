@@ -326,7 +326,7 @@ $tables = $config['tables'] ?? [];
 $table = (string) ($tables['player_profiles'] ?? 'mineacle_web_profiles');
 $tableSql = mineacle_player_identifier($table);
 
-if ($tableSql === null || $table !== 'mineacle_web_profiles') {
+if ($tableSql === null) {
     mineacle_player_response([
         'success' => false,
         'players' => [],

@@ -10,7 +10,7 @@ header('Cache-Control: no-store, max-age=0');
 
 $query = trim((string) ($_GET['username'] ?? $_GET['name'] ?? $_GET['player'] ?? ''));
 
-if ($query === '' || preg_match('/^[A-Za-z0-9_]{1,32}$/', $query) !== 1) {
+if ($query === '' || preg_match('/^[A-Za-z0-9_-]{1,64}$/', $query) !== 1) {
     http_response_code(400);
     echo json_encode([
         'ok' => false,

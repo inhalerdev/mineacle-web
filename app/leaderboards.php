@@ -6,13 +6,12 @@ require_once __DIR__ . '/includes/layout.php';
 require_once __DIR__ . '/includes/stats-lib.php';
 
 $site = mineacle_config()['site'] ?? [];
-$homeUrl = mineacle_page_home_url($site);
 $leaderboardsUrl = mineacle_page_leaderboards_url($site);
 $directPath = parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
 
 if ($directPath === '/leaderboards.php') {
     $queryString = trim((string) ($_SERVER['QUERY_STRING'] ?? ''));
-    header('Location: https://mineacle.net/leaderboards' . ($queryString !== '' ? '?' . $queryString : ''), true, 301);
+    header('Location: /leaderboards' . ($queryString !== '' ? '?' . $queryString : ''), true, 301);
     exit;
 }
 
@@ -148,13 +147,6 @@ try {
 } catch (Throwable) {
     $loadError = true;
     $totalPages = 1;
-}
-
-function mineacle_players_link(mixed $url): string
-{
-    $value = trim((string) $url);
-
-    return $value !== '' ? $value : '#';
 }
 
 function mineacle_players_profile_url(array $player): string
@@ -320,7 +312,6 @@ function mineacle_leaderboards_category_icon(string $category, string $assetVers
 }
 
 $navLinks = [
-    ['key' => 'home', 'url' => $homeUrl],
     ['key' => 'vote', 'url' => $site['vote_url'] ?? '#'],
     ['key' => 'stats', 'label' => 'Leaderboards', 'url' => $leaderboardsUrl],
     ['key' => 'bans', 'url' => $site['bans_url'] ?? '#'],
@@ -344,34 +335,34 @@ mineacle_page_head('Leaderboards');
 ?>
 <div class="site-shell">
     <aside class="rail" aria-label="Primary navigation">
-        <a class="rail-logo" href="<?php echo h($homeUrl); ?>" aria-label="Home">
+        <a class="rail-logo" href="<?php echo h($leaderboardsUrl); ?>" aria-label="Leaderboards" aria-current="page">
             <img src="/assets/brand/nav-logo-web.png" alt="">
         </a>
 
         <nav class="rail-nav" aria-label="Server links">
             <?php foreach ($navLinks as $link): ?>
                 <?php $isActiveNavLink = (string) $link['key'] === $currentNavKey; ?>
-                <a class="rail-link<?php echo $isActiveNavLink ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_players_link($link['url'])); ?>" aria-label="<?php echo h((string) ($link['label'] ?? $link['key'])); ?>"<?php echo $isActiveNavLink ? ' aria-current="page"' : ''; ?>>
+                <a class="rail-link<?php echo $isActiveNavLink ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_page_public_link($link['url'])); ?>" aria-label="<?php echo h((string) ($link['label'] ?? $link['key'])); ?>"<?php echo $isActiveNavLink ? ' aria-current="page"' : ''; ?>>
                     <?php echo mineacle_page_icon((string) $link['key']); ?>
                 </a>
             <?php endforeach; ?>
             <?php $isStoreActive = (string) $storeLink['key'] === $currentNavKey; ?>
-            <a class="rail-link rail-store-button<?php echo $isStoreActive ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_players_link($storeLink['url'])); ?>" aria-label="Store"<?php echo $isStoreActive ? ' aria-current="page"' : ''; ?>>
+            <a class="rail-link rail-store-button<?php echo $isStoreActive ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_page_public_link($storeLink['url'])); ?>" aria-label="Store"<?php echo $isStoreActive ? ' aria-current="page"' : ''; ?>>
                 <?php echo mineacle_page_icon((string) $storeLink['key']); ?>
             </a>
         </nav>
 
         <div class="rail-social" aria-label="Social links">
-            <a class="rail-link" href="<?php echo h(mineacle_players_link($site['discord_url'] ?? '#')); ?>" aria-label="Discord">
+            <a class="rail-link" href="<?php echo h(mineacle_page_public_link($site['discord_url'] ?? '#')); ?>" aria-label="Discord">
                 <?php echo mineacle_page_icon('discord'); ?>
             </a>
-            <a class="rail-link" href="<?php echo h(mineacle_players_link($site['x_url'] ?? '#')); ?>" aria-label="X">
+            <a class="rail-link" href="<?php echo h(mineacle_page_public_link($site['x_url'] ?? '#')); ?>" aria-label="X">
                 <?php echo mineacle_page_icon('x'); ?>
             </a>
         </div>
     </aside>
 
-    <main class="home-grid players-page leaderboard-page" aria-label="Leaderboards">
+    <main class="page-grid players-page leaderboard-page" aria-label="Leaderboards">
         <section class="panel leaderboard-overview" aria-label="Leaderboard overview">
             <div class="leaderboard-hero-content">
                 <div class="leaderboard-copy">
@@ -466,11 +457,11 @@ mineacle_page_head('Leaderboards');
                 <form class="leaderboard-search player-search" method="get" action="/leaderboards" data-player-search data-player-search-form data-player-search-submit="filter" data-player-search-enabled="<?php echo $canSuggestPlayers ? 'true' : 'false'; ?>">
                     <input type="hidden" name="category" value="<?php echo h($category); ?>" data-leaderboard-category-input>
                     <input type="hidden" name="view" value="<?php echo h($view); ?>" data-leaderboard-view-input>
-                    <label class="sr-only" for="homeSearch"><?php echo h($searchPlaceholder); ?></label>
+                    <label class="sr-only" for="playerSearchInput"><?php echo h($searchPlaceholder); ?></label>
                     <div class="leaderboard-search-grid">
                         <div class="search-box">
                             <img src="/assets/icons/player-search.png?v=<?php echo h(rawurlencode($assetVersion)); ?>" alt="" aria-hidden="true" draggable="false">
-                            <input id="homeSearch" name="search" type="search" placeholder="<?php echo h($searchPlaceholder); ?>" value="<?php echo h($search); ?>" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="leaderboardPlayerSearchResults">
+                            <input id="playerSearchInput" name="search" type="search" placeholder="<?php echo h($searchPlaceholder); ?>" value="<?php echo h($search); ?>" autocomplete="off" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="leaderboardPlayerSearchResults">
                             <button class="search-clear" type="button" aria-label="Clear search" hidden>
                                 <img src="/assets/icons/clear-search-pixel.svg?v=<?php echo h(rawurlencode($assetVersion)); ?>" alt="" draggable="false">
                             </button>

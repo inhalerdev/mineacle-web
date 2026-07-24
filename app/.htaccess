@@ -1,24 +1,30 @@
+DirectoryIndex index.php
 RewriteEngine On
-RewriteRule ^admin\.php$ /admin [R=302,L]
-RewriteRule ^admin/?$ admin.php [L,QSA]
+
+# The removed home route now has one canonical destination.
+RewriteCond %{THE_REQUEST} \s/+index\.php[?\s] [NC]
+RewriteRule ^index\.php$ /leaderboards [R=301,L]
+RewriteRule ^$ /leaderboards [R=301,L]
+
+# Keep one public URL for the rankings page.
 RewriteCond %{THE_REQUEST} \s/+leaderboards\.php[?\s] [NC]
-RewriteRule ^leaderboards\.php$ /leaderboards [R=302,L]
+RewriteRule ^leaderboards\.php$ /leaderboards [R=301,L]
+RewriteRule ^players(?:\.php)?/?$ /leaderboards [R=301,L,NE]
+RewriteRule ^leaderboards/?$ leaderboards.php [END,QSA]
+
+# Preserve existing player-profile URLs and canonicalize legacy query links.
 RewriteCond %{THE_REQUEST} \s/+player\.php\?username=([^&\s]+) [NC]
-RewriteRule ^player\.php$ /player/%1? [R=302,L]
-RewriteRule ^leaderboards/?$ leaderboards.php [L,QSA]
-RewriteRule ^players/?$ /leaderboards [R=302,L]
-RewriteRule ^player/?$ player.php [L,QSA]
-RewriteRule ^player/([^/]+)/?$ player.php?username=$1 [L,QSA]
+RewriteRule ^player\.php$ /player/%1? [R=301,L,NE]
+RewriteRule ^player/?$ player.php [END,QSA]
+RewriteRule ^player/([A-Za-z0-9_-]{1,64})/?$ player.php?username=$1 [END,QSA]
 
 <IfModule mod_expires.c>
     ExpiresActive On
     ExpiresByType text/css "access plus 7 days"
     ExpiresByType application/javascript "access plus 7 days"
     ExpiresByType image/png "access plus 30 days"
+    ExpiresByType image/webp "access plus 30 days"
     ExpiresByType image/svg+xml "access plus 30 days"
-    ExpiresByType image/gif "access plus 30 days"
-    ExpiresByType video/mp4 "access plus 30 days"
-    ExpiresByType video/x-m4v "access plus 30 days"
 </IfModule>
 
 <IfModule mod_deflate.c>

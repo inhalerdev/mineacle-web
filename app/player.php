@@ -6,13 +6,12 @@ require_once __DIR__ . '/includes/layout.php';
 require_once __DIR__ . '/includes/stats-lib.php';
 
 $site = mineacle_config()['site'] ?? [];
-$homeUrl = mineacle_page_home_url($site);
 $leaderboardsUrl = mineacle_page_leaderboards_url($site);
 $directPath = parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH);
 $directUsername = trim((string) ($_GET['username'] ?? ''));
 
 if ($directPath === '/player.php' && preg_match('/^[A-Za-z0-9_-]{1,64}$/', $directUsername) === 1) {
-    header('Location: https://mineacle.net/player/' . rawurlencode($directUsername), true, 301);
+    header('Location: /player/' . rawurlencode($directUsername), true, 301);
     exit;
 }
 
@@ -31,13 +30,6 @@ function mineacle_profile_requested_username(): string
     }
 
     return substr(trim($query), 0, 64);
-}
-
-function mineacle_profile_link(mixed $url): string
-{
-    $value = trim((string) $url);
-
-    return $value !== '' ? $value : '#';
 }
 
 function mineacle_profile_kd(array $player): string
@@ -248,7 +240,6 @@ if ($loadError) {
 }
 
 $navLinks = [
-    ['key' => 'home', 'url' => $homeUrl],
     ['key' => 'vote', 'url' => $site['vote_url'] ?? '#'],
     ['key' => 'stats', 'label' => 'Leaderboards', 'url' => $leaderboardsUrl],
     ['key' => 'bans', 'url' => $site['bans_url'] ?? '#'],
@@ -278,34 +269,34 @@ mineacle_page_head($pageTitle, $metaOptions);
 ?>
 <div class="site-shell">
     <aside class="rail" aria-label="Primary navigation">
-        <a class="rail-logo" href="<?php echo h($homeUrl); ?>" aria-label="Home">
+        <a class="rail-logo" href="<?php echo h($leaderboardsUrl); ?>" aria-label="Leaderboards">
             <img src="/assets/brand/nav-logo-web.png" alt="">
         </a>
 
         <nav class="rail-nav" aria-label="Server links">
             <?php foreach ($navLinks as $link): ?>
                 <?php $isActiveNavLink = (string) $link['key'] === $currentNavKey; ?>
-                <a class="rail-link<?php echo $isActiveNavLink ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_profile_link($link['url'])); ?>" aria-label="<?php echo h((string) ($link['label'] ?? $link['key'])); ?>"<?php echo $isActiveNavLink ? ' aria-current="page"' : ''; ?>>
+                <a class="rail-link<?php echo $isActiveNavLink ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_page_public_link($link['url'])); ?>" aria-label="<?php echo h((string) ($link['label'] ?? $link['key'])); ?>"<?php echo $isActiveNavLink ? ' aria-current="page"' : ''; ?>>
                     <?php echo mineacle_page_icon((string) $link['key']); ?>
                 </a>
             <?php endforeach; ?>
             <?php $isStoreActive = (string) $storeLink['key'] === $currentNavKey; ?>
-            <a class="rail-link rail-store-button<?php echo $isStoreActive ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_profile_link($storeLink['url'])); ?>" aria-label="Store"<?php echo $isStoreActive ? ' aria-current="page"' : ''; ?>>
+            <a class="rail-link rail-store-button<?php echo $isStoreActive ? ' is-active' : ''; ?>" href="<?php echo h(mineacle_page_public_link($storeLink['url'])); ?>" aria-label="Store"<?php echo $isStoreActive ? ' aria-current="page"' : ''; ?>>
                 <?php echo mineacle_page_icon((string) $storeLink['key']); ?>
             </a>
         </nav>
 
         <div class="rail-social" aria-label="Social links">
-            <a class="rail-link" href="<?php echo h(mineacle_profile_link($site['discord_url'] ?? '#')); ?>" aria-label="Discord">
+            <a class="rail-link" href="<?php echo h(mineacle_page_public_link($site['discord_url'] ?? '#')); ?>" aria-label="Discord">
                 <?php echo mineacle_page_icon('discord'); ?>
             </a>
-            <a class="rail-link" href="<?php echo h(mineacle_profile_link($site['x_url'] ?? '#')); ?>" aria-label="X">
+            <a class="rail-link" href="<?php echo h(mineacle_page_public_link($site['x_url'] ?? '#')); ?>" aria-label="X">
                 <?php echo mineacle_page_icon('x'); ?>
             </a>
         </div>
     </aside>
 
-    <main class="home-grid profile-page" aria-label="Player profile">
+    <main class="page-grid profile-page" aria-label="Player profile">
         <?php if ($loadError): ?>
             <section class="panel profile-message">
                 <h1>Unable to load player stats right now</h1>

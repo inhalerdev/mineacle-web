@@ -46,7 +46,7 @@ function mineacle_db(?string $database = null): ?PDO
     $mysql = $config['mysql'] ?? [];
 
     $host = trim((string) ($mysql['host'] ?? ''));
-    $databaseName = trim((string) ($database ?? ($mysql['site_database'] ?? $mysql['database'] ?? '')));
+    $databaseName = trim((string) ($database ?? ($mysql['core_database'] ?? '')));
     $username = trim((string) ($mysql['username'] ?? ''));
 
     if ($host === '' || $databaseName === '' || $username === '') {
@@ -88,15 +88,7 @@ function mineacle_core_db(): ?PDO
     $config = mineacle_config();
     $mysql = $config['mysql'] ?? [];
 
-    return mineacle_db((string) ($mysql['core_database'] ?? $mysql['database'] ?? 'mineacle_core'));
-}
-
-function mineacle_site_db(): ?PDO
-{
-    $config = mineacle_config();
-    $mysql = $config['mysql'] ?? [];
-
-    return mineacle_db((string) ($mysql['site_database'] ?? $mysql['database'] ?? 'mineacle_site'));
+    return mineacle_db((string) ($mysql['core_database'] ?? 'mineacle_core'));
 }
 
 function mineacle_litebans_db(): ?PDO

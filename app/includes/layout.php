@@ -6,7 +6,7 @@ require_once __DIR__ . '/db.php';
 
 function mineacle_page_asset_version(): string
 {
-    return 'base128';
+    return 'leaderboards-player-20260723';
 }
 
 function mineacle_page_clean_text(string $value): string
@@ -16,7 +16,7 @@ function mineacle_page_clean_text(string $value): string
 
 function mineacle_page_meta_title(string $title, string $siteName): string
 {
-    $cleanTitle = mineacle_page_clean_text($title) ?: 'Home';
+    $cleanTitle = mineacle_page_clean_text($title) ?: 'Leaderboards';
     $normalizedTitle = strtolower($cleanTitle);
 
     if (in_array($normalizedTitle, ['leaderboard', 'leaderboards'], true)) {
@@ -28,25 +28,17 @@ function mineacle_page_meta_title(string $title, string $siteName): string
 
 function mineacle_page_meta_description(string $title, string $siteName): string
 {
-    $cleanTitle = mineacle_page_clean_text($title) ?: 'Home';
+    $cleanTitle = mineacle_page_clean_text($title) ?: 'Leaderboards';
 
     if (in_array(strtolower($cleanTitle), ['leaderboard', 'leaderboards'], true)) {
         return 'View ' . $siteName . ' player leaderboards, rankings, and server stats.';
-    }
-
-    if (strcasecmp($cleanTitle, 'Admin') === 0) {
-        return 'Manage ' . $siteName . ' website announcements.';
     }
 
     if (strcasecmp($cleanTitle, 'Player') === 0) {
         return 'View a ' . $siteName . ' player profile and server stats.';
     }
 
-    if (strcasecmp($cleanTitle, 'Home') !== 0) {
-        return 'View ' . $cleanTitle . '\'s ' . $siteName . ' player profile and server stats.';
-    }
-
-    return $siteName . ' is a Minecraft Java Edition network with player stats, updates, and community links.';
+    return 'View ' . $cleanTitle . '\'s ' . $siteName . ' player profile and server stats.';
 }
 
 function mineacle_page_canonical_url(): string
@@ -57,8 +49,8 @@ function mineacle_page_canonical_url(): string
         $path = '/';
     }
 
-    if ($path === '/index.php') {
-        $path = '/';
+    if ($path === '/' || $path === '/index.php') {
+        $path = '/leaderboards';
     }
 
     return 'https://mineacle.net' . $path;
@@ -100,11 +92,6 @@ function mineacle_page_is_local_host(string $url): bool
     return preg_match('/^(10\.|192\.168\.|172\.(1[6-9]|2[0-9]|3[0-1])\.)/', $host) === 1;
 }
 
-function mineacle_page_home_url(array $site = []): string
-{
-    return 'https://mineacle.net/';
-}
-
 function mineacle_page_leaderboards_url(array $site = []): string
 {
     $value = trim((string) ($site['stats_url'] ?? ''));
@@ -115,31 +102,31 @@ function mineacle_page_leaderboards_url(array $site = []): string
     }
 
     if ($value === '' || in_array($normalized, ['leaderboards', 'leaderboards.php', 'players', 'players.php'], true)) {
-        return 'https://mineacle.net/leaderboards';
+        return '/leaderboards';
     }
 
     $safe = mineacle_page_public_link($value);
 
     if ($safe === '#') {
-        return 'https://mineacle.net/leaderboards';
+        return '/leaderboards';
     }
 
     if (mineacle_page_is_local_host($safe)) {
-        return 'https://mineacle.net/leaderboards';
+        return '/leaderboards';
     }
 
     if ($safe === '/leaderboards' || $safe === '/players' || $safe === '/players.php') {
-        return 'https://mineacle.net/leaderboards';
+        return '/leaderboards';
     }
 
     if ($safe === '/leaderboards.php') {
-        return 'https://mineacle.net/leaderboards';
+        return '/leaderboards';
     }
 
     $path = parse_url($safe, PHP_URL_PATH);
 
     if (is_string($path) && in_array($path, ['/leaderboards', '/leaderboards.php', '/players', '/players.php'], true)) {
-        return 'https://mineacle.net/leaderboards';
+        return '/leaderboards';
     }
 
     return $safe;
@@ -180,7 +167,6 @@ function mineacle_page_icon(string $name): string
     }
 
     $officialIcons = [
-        'home' => '/assets/icons/home.svg' . $iconVersion,
         'stats' => '/assets/icons/leaderboard.svg' . $iconVersion,
         'vote' => '/assets/icons/vote.svg' . $iconVersion,
         'bans' => '/assets/icons/bans.svg' . $iconVersion,
@@ -191,38 +177,7 @@ function mineacle_page_icon(string $name): string
         return '<img class="site-icon" src="' . h($officialIcons[$name]) . '" alt="" aria-hidden="true" draggable="false">';
     }
 
-    $icons = [
-        'youtube' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 8.5c.3 2.3.3 4.7 0 7-.2 1.4-1.2 2.4-2.6 2.6-4.2.4-8.6.4-12.8 0-1.4-.2-2.4-1.2-2.6-2.6-.3-2.3-.3-4.7 0-7 .2-1.4 1.2-2.4 2.6-2.6 4.2-.4 8.6-.4 12.8 0 1.4.2 2.4 1.2 2.6 2.6ZM10 15l5-3-5-3v6Z"/></svg>',
-        'tiktok' => '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h3c.2 2 1.4 3.4 3.4 3.8v3.1c-1.3-.1-2.4-.5-3.4-1.2V15a5 5 0 1 1-5-5h.6v3.2c-.2 0-.4-.1-.6-.1a1.9 1.9 0 1 0 1.9 1.9L14 3Z"/></svg>',
-    ];
-
-    return $icons[$name] ?? '';
-}
-
-function mineacle_page_search_header(array $site): void
-{
-    $minecraftIp = (string) ($site['minecraft_ip'] ?? 'mineacle.net');
-
-    echo '<section class="search-row" aria-label="Search">';
-    echo '<div class="server-status is-loading" data-server-status data-server-ip="' . h($minecraftIp) . '" aria-live="polite">';
-    echo '<span class="server-status-dot" aria-hidden="true"></span>';
-    echo '<span class="server-status-main">';
-    echo '<span class="server-status-label">Server Status</span>';
-    echo '<span class="server-status-count" data-server-status-count>Checking server</span>';
-    echo '</span>';
-    echo '</div>';
-    echo '<label class="sr-only" for="homeSearch">Search</label>';
-    echo '<div class="player-search" data-player-search>';
-    echo '<form class="search-box" action="/player" method="get" role="search" data-player-search-form>';
-    echo '<img src="/assets/icons/search.png" alt="" aria-hidden="true" draggable="false">';
-    echo '<input id="homeSearch" name="name" type="search" placeholder="Search for a player..." autocomplete="off" aria-autocomplete="list" aria-expanded="false" aria-controls="playerSearchResults">';
-    echo '<button class="search-clear" type="button" aria-label="Clear search" hidden>';
-    echo '<img src="/assets/icons/clear-search.svg" alt="" aria-hidden="true" draggable="false">';
-    echo '</button>';
-    echo '</form>';
-    echo '<div class="player-search-results" id="playerSearchResults" data-player-search-results role="listbox" aria-label="Player search results" hidden></div>';
-    echo '</div>';
-    echo '</section>';
+    return '';
 }
 
 function mineacle_page_footer(array $site): void
@@ -238,7 +193,6 @@ function mineacle_page_footer(array $site): void
     }
 
     $quickLinks = [
-        ['label' => 'Home', 'url' => mineacle_page_home_url($site)],
         ['label' => 'Leaderboards', 'url' => mineacle_page_leaderboards_url($site)],
         ['label' => 'Store', 'url' => (string) ($site['store_url'] ?? '#')],
         ['label' => 'Vote', 'url' => (string) ($site['vote_url'] ?? '#')],
@@ -288,7 +242,7 @@ function mineacle_page_footer(array $site): void
     echo '</footer>';
 }
 
-function mineacle_page_head(string $title = 'Home', array $options = []): void
+function mineacle_page_head(string $title = 'Leaderboards', array $options = []): void
 {
     mineacle_security_headers();
     $config = mineacle_config();
@@ -300,7 +254,6 @@ function mineacle_page_head(string $title = 'Home', array $options = []): void
     $metaTitle = $customTitle !== '' ? $customTitle : mineacle_page_meta_title($title, $name);
     $metaDescription = $customDescription !== '' ? $customDescription : mineacle_page_meta_description($title, $name);
     $canonicalUrl = $customCanonical !== '' ? $customCanonical : mineacle_page_canonical_url();
-    $isAdmin = strcasecmp(mineacle_page_clean_text($title), 'Admin') === 0;
 
     echo '<!doctype html>';
     echo '<html lang="en">';
@@ -319,8 +272,8 @@ function mineacle_page_head(string $title = 'Home', array $options = []): void
     echo '<meta name="twitter:title" content="' . h($metaTitle) . '">';
     echo '<meta name="twitter:description" content="' . h($metaDescription) . '">';
 
-    if ($isAdmin || ($options['robots'] ?? '') !== '') {
-        $robots = $isAdmin ? 'noindex,nofollow' : (string) $options['robots'];
+    if (($options['robots'] ?? '') !== '') {
+        $robots = (string) $options['robots'];
         echo '<meta name="robots" content="' . h($robots) . '">';
     }
 
@@ -330,14 +283,46 @@ function mineacle_page_head(string $title = 'Home', array $options = []): void
     echo '<link rel="preconnect" href="https://fonts.googleapis.com">';
     echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
     echo '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&display=swap">';
-    echo '<link rel="stylesheet" href="/assets/home-page.css?v=' . h($assetVersion) . '">';
+    $stylesheets = $options['stylesheets'] ?? ['/assets/site.css'];
+
+    if (!is_array($stylesheets) || $stylesheets === []) {
+        $stylesheets = ['/assets/site.css'];
+    }
+
+    foreach ($stylesheets as $stylesheet) {
+        $stylesheetUrl = trim((string) $stylesheet);
+
+        if ($stylesheetUrl === '') {
+            continue;
+        }
+
+        $separator = str_contains($stylesheetUrl, '?') ? '&' : '?';
+        echo '<link rel="stylesheet" href="' . h($stylesheetUrl . $separator . 'v=' . $assetVersion) . '">';
+    }
     echo '</head>';
-    echo '<body>';
+    $bodyClass = mineacle_page_clean_text((string) ($options['body_class'] ?? ''));
+    echo $bodyClass !== '' ? '<body class="' . h($bodyClass) . '">' : '<body>';
 }
 
-function mineacle_page_end(): void
+function mineacle_page_end(array $options = []): void
 {
-    echo '<script src="/assets/home-page.js?v=' . h(mineacle_page_asset_version()) . '"></script>';
+    $scripts = $options['scripts'] ?? ['/assets/site.js'];
+
+    if (!is_array($scripts)) {
+        $scripts = ['/assets/site.js'];
+    }
+
+    foreach ($scripts as $script) {
+        $scriptUrl = trim((string) $script);
+
+        if ($scriptUrl === '') {
+            continue;
+        }
+
+        $separator = str_contains($scriptUrl, '?') ? '&' : '?';
+        echo '<script src="' . h($scriptUrl . $separator . 'v=' . mineacle_page_asset_version()) . '"></script>';
+    }
+
     echo '</body>';
     echo '</html>';
 }
